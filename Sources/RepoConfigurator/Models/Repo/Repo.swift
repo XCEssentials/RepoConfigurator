@@ -18,7 +18,7 @@ struct Repo
     //---
 
     public
-    let swiftVersion: VersionNumber
+    let swiftVersion: VersionString
 
     public
     let tstSuffix: String

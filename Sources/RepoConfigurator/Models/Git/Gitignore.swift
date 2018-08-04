@@ -35,7 +35,7 @@ extension Git
         {
             return entries
                 .map{ type(of: self).processEntry($0, self.ignore3dPartySources) }
-                .joined(separator: "\n\n") // separate by 1 empty line
+                .joined(separator: "\n\n") // separate with 1 empty line
                 .appending("\n") // empty line in the EOF
         }
 

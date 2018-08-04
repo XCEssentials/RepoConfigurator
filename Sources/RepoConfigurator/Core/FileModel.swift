@@ -7,13 +7,15 @@ protocol FileModel
 //---
 
 public
-protocol ArbitraryNamedFile: FileModel {}
+protocol ArbitraryNamedFile: FileModel
+{
+    var fileName: String { get }
+}
 
 public
 extension ArbitraryNamedFile
 {
     func writeToFile(
-        named fileName: String,
         at targetPath: URL,
         trimRepeatingEmptyLines: Bool = true
         ) throws
