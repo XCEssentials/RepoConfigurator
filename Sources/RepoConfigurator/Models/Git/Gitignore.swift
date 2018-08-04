@@ -42,6 +42,16 @@ extension Git
         //---
 
         public
+        init(
+            entries: [Entry],
+            ignore3dPartySources: Bool
+            )
+        {
+            self.entries = entries
+            self.ignore3dPartySources = ignore3dPartySources
+        }
+
+        public
         static
         let defaultForApp: Gitignore = .init(
             entries: [
@@ -66,6 +76,20 @@ extension Git
             ],
             ignore3dPartySources: true
         )
+
+        public
+        init(
+            basedOn preset: Gitignore? = nil,
+            otherEntries: [Entry],
+            ignore3dPartySources: Bool? = nil
+            )
+        {
+            self.entries = otherEntries + (preset?.entries ?? [])
+
+            self.ignore3dPartySources = preset?.ignore3dPartySources
+                ?? ignore3dPartySources
+                ?? false
+        }
 
         //---
 
