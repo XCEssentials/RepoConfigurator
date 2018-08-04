@@ -10,7 +10,16 @@
 		941CFFC8211520D700326181 /* RepoConfigurator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 941CFFBE211520D700326181 /* RepoConfigurator.framework */; };
 		941CFFDE2115221000326181 /* RepoConfiguratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941CFFDA2115220600326181 /* RepoConfiguratorTests.swift */; };
 		941CFFDF2115222100326181 /* RepoConfigurator.h in Headers */ = {isa = PBXBuildFile; fileRef = 941CFFDC2115220600326181 /* RepoConfigurator.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		941CFFE02115222B00326181 /* Main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941CFFDD2115220600326181 /* Main.swift */; };
+		941CFFE02115222B00326181 /* Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941CFFDD2115220600326181 /* Shared.swift */; };
+		941CFFE52115838600326181 /* Repo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941CFFE42115838600326181 /* Repo.swift */; };
+		941CFFE82115897100326181 /* License-MIT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941CFFE72115897100326181 /* License-MIT.swift */; };
+		941CFFEA2115898E00326181 /* License.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941CFFE92115898E00326181 /* License.swift */; };
+		941CFFEE21158C5900326181 /* Xcode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941CFFED21158C5900326181 /* Xcode.swift */; };
+		941CFFF021158D6000326181 /* Xcode-Target.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941CFFEF21158D6000326181 /* Xcode-Target.swift */; };
+		941CFFF4211591E900326181 /* Core.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941CFFF3211591E900326181 /* Core.swift */; };
+		941CFFF62115947E00326181 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941CFFF52115947E00326181 /* Helpers.swift */; };
+		941CFFFB2115A78C00326181 /* Git.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941CFFFA2115A78C00326181 /* Git.swift */; };
+		941CFFFD2115A7A000326181 /* Gitignore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941CFFFC2115A7A000326181 /* Gitignore.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -28,7 +37,16 @@
 		941CFFC7211520D700326181 /* RepoConfiguratorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RepoConfiguratorTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		941CFFDA2115220600326181 /* RepoConfiguratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepoConfiguratorTests.swift; sourceTree = "<group>"; };
 		941CFFDC2115220600326181 /* RepoConfigurator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RepoConfigurator.h; sourceTree = "<group>"; };
-		941CFFDD2115220600326181 /* Main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Main.swift; sourceTree = "<group>"; };
+		941CFFDD2115220600326181 /* Shared.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shared.swift; sourceTree = "<group>"; };
+		941CFFE42115838600326181 /* Repo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repo.swift; sourceTree = "<group>"; };
+		941CFFE72115897100326181 /* License-MIT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "License-MIT.swift"; sourceTree = "<group>"; };
+		941CFFE92115898E00326181 /* License.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = License.swift; sourceTree = "<group>"; };
+		941CFFED21158C5900326181 /* Xcode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Xcode.swift; sourceTree = "<group>"; };
+		941CFFEF21158D6000326181 /* Xcode-Target.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Xcode-Target.swift"; sourceTree = "<group>"; };
+		941CFFF3211591E900326181 /* Core.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Core.swift; sourceTree = "<group>"; };
+		941CFFF52115947E00326181 /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
+		941CFFFA2115A78C00326181 /* Git.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Git.swift; sourceTree = "<group>"; };
+		941CFFFC2115A7A000326181 /* Gitignore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gitignore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,9 +106,58 @@
 			isa = PBXGroup;
 			children = (
 				941CFFDC2115220600326181 /* RepoConfigurator.h */,
-				941CFFDD2115220600326181 /* Main.swift */,
+				941CFFDD2115220600326181 /* Shared.swift */,
+				941CFFF3211591E900326181 /* Core.swift */,
+				941CFFF52115947E00326181 /* Helpers.swift */,
+				941CFFE12115765C00326181 /* Models */,
 			);
 			path = RepoConfigurator;
+			sourceTree = "<group>";
+		};
+		941CFFE12115765C00326181 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				941CFFF92115A77600326181 /* Git */,
+				941CFFE32115837600326181 /* Repo */,
+				941CFFE62115896200326181 /* License */,
+				941CFFE221157C6200326181 /* Xcode */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		941CFFE221157C6200326181 /* Xcode */ = {
+			isa = PBXGroup;
+			children = (
+				941CFFED21158C5900326181 /* Xcode.swift */,
+				941CFFEF21158D6000326181 /* Xcode-Target.swift */,
+			);
+			path = Xcode;
+			sourceTree = "<group>";
+		};
+		941CFFE32115837600326181 /* Repo */ = {
+			isa = PBXGroup;
+			children = (
+				941CFFE42115838600326181 /* Repo.swift */,
+			);
+			path = Repo;
+			sourceTree = "<group>";
+		};
+		941CFFE62115896200326181 /* License */ = {
+			isa = PBXGroup;
+			children = (
+				941CFFE92115898E00326181 /* License.swift */,
+				941CFFE72115897100326181 /* License-MIT.swift */,
+			);
+			path = License;
+			sourceTree = "<group>";
+		};
+		941CFFF92115A77600326181 /* Git */ = {
+			isa = PBXGroup;
+			children = (
+				941CFFFA2115A78C00326181 /* Git.swift */,
+				941CFFFC2115A7A000326181 /* Gitignore.swift */,
+			);
+			path = Git;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -201,7 +268,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				941CFFE02115222B00326181 /* Main.swift in Sources */,
+				941CFFE02115222B00326181 /* Shared.swift in Sources */,
+				941CFFE82115897100326181 /* License-MIT.swift in Sources */,
+				941CFFFD2115A7A000326181 /* Gitignore.swift in Sources */,
+				941CFFE52115838600326181 /* Repo.swift in Sources */,
+				941CFFF62115947E00326181 /* Helpers.swift in Sources */,
+				941CFFF4211591E900326181 /* Core.swift in Sources */,
+				941CFFEA2115898E00326181 /* License.swift in Sources */,
+				941CFFF021158D6000326181 /* Xcode-Target.swift in Sources */,
+				941CFFEE21158C5900326181 /* Xcode.swift in Sources */,
+				941CFFFB2115A78C00326181 /* Git.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
