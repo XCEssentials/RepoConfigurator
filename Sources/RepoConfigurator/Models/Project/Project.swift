@@ -13,9 +13,7 @@ struct Project: FixedNameFile
     public
     func prepareContent() throws -> IndentedText
     {
-        return Struct
-            .prepareSpec(specFormat, for: self)
-            .asIndentedText()
+        return Struct.generateSpec(specFormat, for: self)
     }
 
     //---

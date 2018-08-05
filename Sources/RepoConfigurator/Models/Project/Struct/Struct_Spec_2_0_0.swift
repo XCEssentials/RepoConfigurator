@@ -10,52 +10,50 @@ extension Struct
 extension Struct.Spec_2_0_0
 {
     static
-    func generate(for p: Project) -> Struct.RawSpec
+    func generate(for p: Project) -> IndentedText
     {
-        var result: Struct.RawSpec = []
-        var idention: Int = 0
+        var result: IndentedText = []
+        var indentation = Indentation()
         
         //---
-        
-        result <<< (idention, "# generated with XCEProjectGenerator")
-        result <<< (idention, "# https://github.com/XCEssentials/ProjectGenerator")
-        result <<< (idention, "# https://github.com/workshop/struct/wiki/Spec-format:-v2.0")
+
+        result <<< (indentation, "# https://github.com/lyptt/struct/wiki/Spec-format:-v2.0")
         
         //---
         
         // https://github.com/workshop/struct/wiki/Spec-format:-v2.0#version-number
         
-        result <<< (idention, Struct.Spec.key("version") + " \(Struct.Spec.v2_0_0.rawValue)")
+        result <<< (indentation, Struct.Spec.key("version") + " \(Struct.Spec.v2_0_0.rawValue)")
         
         //---
         
-        result <<< process(&idention, p.configurations)
+        result <<< process(&indentation, p.configurations)
         
         //---
         
-        result <<< process(&idention, p.targets)
+        result <<< process(&indentation, p.targets)
         
         //---
         
-        result <<< (idention, Struct.Spec.key("variants"))
+        result <<< (indentation, Struct.Spec.key("variants"))
         
-        idention += 1
+        indentation++
         
-        result <<< (idention, Struct.Spec.key("$base"))
+        result <<< (indentation, Struct.Spec.key("$base"))
         
-        idention += 1
+        indentation++
         
-        result <<< (idention, Struct.Spec.key("abstract") + " true")
+        result <<< (indentation, Struct.Spec.key("abstract") + " true")
         
-        idention -= 1
+        indentation--
         
-        result <<< (idention, Struct.Spec.key(p.name))
+        result <<< (indentation, Struct.Spec.key(p.name))
         
-        idention -= 1
+        indentation--
         
         //---
         
-        result <<< (0, "") // empty line in the EOF
+        result <<< "".asIndentedText() // empty line in the EOF
         
         //---
         
@@ -66,32 +64,32 @@ extension Struct.Spec_2_0_0
     
     static
     func process(
-        _ idention: inout Int,
+        _ indentation: inout Indentation,
         _ set: Project.BuildConfigurations
-        ) -> Struct.RawSpec
+        ) -> IndentedText
     {
         // https://github.com/lyptt/struct/wiki/Spec-format:-v1.2#configurations
         
         //---
         
-        var result: Struct.RawSpec = []
+        var result: IndentedText = []
         
         //---
         
-        result <<< (idention, Struct.Spec.key("configurations"))
+        result <<< (indentation, Struct.Spec.key("configurations"))
         
         //---
         
-        idention += 1
+        indentation++
         
         //---
         
-        result <<< process(&idention, set.all, set.debug)
-        result <<< process(&idention, set.all, set.release)
+        result <<< process(&indentation, set.all, set.debug)
+        result <<< process(&indentation, set.all, set.release)
         
         //---
         
-        idention -= 1
+        indentation--
         
         //---
         
@@ -102,28 +100,28 @@ extension Struct.Spec_2_0_0
     
     static
     func process(
-        _ idention: inout Int,
+        _ indentation: inout Indentation,
         _ b: Project.BuildConfiguration.Base,
         _ c: Project.BuildConfiguration
-        ) -> Struct.RawSpec
+        ) -> IndentedText
     {
         // https://github.com/lyptt/struct/wiki/Spec-format:-v2.0#configurations
         
         //---
         
-        var result: Struct.RawSpec = []
+        var result: IndentedText = []
         
         //---
         
-        result <<< (idention, Struct.Spec.key(c.name))
+        result <<< (indentation, Struct.Spec.key(c.name))
         
         //---
         
-        idention += 1
+        indentation++
         
         //---
         
-        result <<< (idention, Struct.Spec.key("type") + Struct.Spec.value(c.type))
+        result <<< (indentation, Struct.Spec.key("type") + Struct.Spec.value(c.type))
         
         //---
         
@@ -135,7 +133,7 @@ extension Struct.Spec_2_0_0
             // NOTE: when using xcconfig files,
             // any overrides or profiles will be ignored.
             
-            result <<< (idention, Struct.Spec.key("source") + Struct.Spec.value(externalConfig) )
+            result <<< (indentation, Struct.Spec.key("source") + Struct.Spec.value(externalConfig) )
         }
         else
         {
@@ -150,20 +148,20 @@ extension Struct.Spec_2_0_0
             
             // https://github.com/lyptt/struct/wiki/Spec-format:-v2.0#overrides
             
-            result <<< (idention, Struct.Spec.key("overrides"))
-            idention += 1
+            result <<< (indentation, Struct.Spec.key("overrides"))
+            indentation++
             
             for o in b.overrides + c.overrides
             {
-                result <<< (idention, Struct.Spec.key(o.key) + Struct.Spec.value(o.value))
+                result <<< (indentation, Struct.Spec.key(o.key) + Struct.Spec.value(o.value))
             }
             
-            idention -= 1
+            indentation--
         }
         
         //---
         
-        idention -= 1
+        indentation--
         
         //---
         
@@ -174,41 +172,41 @@ extension Struct.Spec_2_0_0
     
     static
     func process(
-        _ idention: inout Int,
+        _ indentation: inout Indentation,
         _ targets: [Project.Target]
-        ) -> Struct.RawSpec
+        ) -> IndentedText
     {
         // https://github.com/lyptt/struct/wiki/Spec-format:-v2.0#targets
         
         //---
         
-        var result: Struct.RawSpec = []
+        var result: IndentedText = []
         
         //---
         
-        result <<< (idention, Struct.Spec.key("targets"))
+        result <<< (indentation, Struct.Spec.key("targets"))
         
         //---
         
-        idention += 1
+        indentation++
         
         //---
         
         for t in targets
         {
-            result <<< process(&idention, t)
+            result <<< process(&indentation, t)
             
             //---
             
             for tst in t.tests
             {
-                result <<< process(&idention, tst)
+                result <<< process(&indentation, tst)
             }
         }
         
         //---
         
-        idention -= 1
+        indentation--
         
         //---
         
@@ -219,39 +217,39 @@ extension Struct.Spec_2_0_0
     
     static
     func process(
-        _ idention: inout Int,
+        _ indentation: inout Indentation,
         _ t: Project.Target
-        ) -> Struct.RawSpec
+        ) -> IndentedText
     {
         // https://github.com/lyptt/struct/wiki/Spec-format:-v2.0#targets
         
         //---
         
-        var result: Struct.RawSpec = []
+        var result: IndentedText = []
         
         //---
         
-        result <<< (idention, Struct.Spec.key(t.name))
+        result <<< (indentation, Struct.Spec.key(t.name))
         
         //---
         
-        idention += 1
+        indentation++
         
         //---
         
         // https://github.com/lyptt/struct/wiki/Spec-format:-v2.0#platform
         
-        result <<< (idention, Struct.Spec.key("platform") + Struct.Spec.value(t.platform.rawValue))
+        result <<< (indentation, Struct.Spec.key("platform") + Struct.Spec.value(t.platform.rawValue))
         
         //---
         
         // https://github.com/lyptt/struct/wiki/Spec-format:-v2.0#type
         
-        result <<< (idention, Struct.Spec.key("type") + Struct.Spec.value(t.type.rawValue))
+        result <<< (indentation, Struct.Spec.key("type") + Struct.Spec.value(t.type.rawValue))
         
         //---
         
-        result <<< process(&idention, t.dependencies)
+        result <<< process(&indentation, t.dependencies)
         
         //---
         
@@ -260,11 +258,11 @@ extension Struct.Spec_2_0_0
         if
             !t.includes.isEmpty
         {
-            result <<< (idention, "sources:")
+            result <<< (indentation, "sources:")
             
             for path in t.includes
             {
-                result <<< (idention, "-" + Struct.Spec.value(path))
+                result <<< (indentation, "-" + Struct.Spec.value(path))
             }
         }
         
@@ -275,16 +273,16 @@ extension Struct.Spec_2_0_0
         if
             !t.excludes.isEmpty
         {
-            result <<< (idention, Struct.Spec.key("excludes"))
-            idention += 1
-            result <<< (idention, Struct.Spec.key("files"))
+            result <<< (indentation, Struct.Spec.key("excludes"))
+            indentation++
+            result <<< (indentation, Struct.Spec.key("files"))
             
             for path in t.excludes
             {
-                result <<< (idention, "-" + Struct.Spec.value(path))
+                result <<< (indentation, "-" + Struct.Spec.value(path))
             }
             
-            idention -= 1
+            indentation--
         }
         
         //---
@@ -294,15 +292,15 @@ extension Struct.Spec_2_0_0
         if
             !t.sourceOptions.isEmpty
         {
-            result <<< (idention, "source_options:")
-            idention += 1
+            result <<< (indentation, "source_options:")
+            indentation++
             
             for (path, opt) in t.sourceOptions
             {
-                result <<< (idention, Struct.Spec.key(path) + Struct.Spec.value(opt))
+                result <<< (indentation, Struct.Spec.key(path) + Struct.Spec.value(opt))
             }
             
-            idention -= 1
+            indentation--
         }
         
         //---
@@ -312,21 +310,21 @@ extension Struct.Spec_2_0_0
         if
             !t.i18nResources.isEmpty
         {
-            result <<< (idention, Struct.Spec.key("i18n-resources"))
+            result <<< (indentation, Struct.Spec.key("i18n-resources"))
             
             for path in t.i18nResources
             {
-                result <<< (idention, "-" + Struct.Spec.value(path))
+                result <<< (indentation, "-" + Struct.Spec.value(path))
             }
         }
         
         //---
         
-        result <<< process(&idention, t.configurations)
+        result <<< process(&indentation, t.configurations)
         
         //---
         
-        result <<< process(&idention, scripts: t.scripts)
+        result <<< process(&indentation, scripts: t.scripts)
         
         //---
         
@@ -336,13 +334,13 @@ extension Struct.Spec_2_0_0
             t.includeCocoapods
         {
             result <<<
-                (idention,
+                (indentation,
                  Struct.Spec.key("includes_cocoapods") + Struct.Spec.value(t.includeCocoapods))
         }
         
         //---
         
-        idention -= 1
+        indentation--
         
         //---
         
@@ -353,15 +351,15 @@ extension Struct.Spec_2_0_0
     
     static
     func process(
-        _ idention: inout Int,
+        _ indentation: inout Indentation,
         _ deps: Project.Target.Dependencies
-        ) -> Struct.RawSpec
+        ) -> IndentedText
     {
         // https://github.com/lyptt/struct/wiki/Spec-format:-v2.0#references
         
         //---
         
-        var result: Struct.RawSpec = []
+        var result: IndentedText = []
         
         //---
         
@@ -371,14 +369,14 @@ extension Struct.Spec_2_0_0
             !deps.binaries.isEmpty ||
             !deps.projects.isEmpty
         {
-            result <<< (idention, Struct.Spec.key("references"))
+            result <<< (indentation, Struct.Spec.key("references"))
             
             //---
             
-            result <<< processDependencies(&idention, fromSDK: deps.fromSDKs)
-            result <<< processDependencies(&idention, targets: deps.otherTargets)
-            result <<< processDependencies(&idention, binaries: deps.binaries)
-            result <<< processDependencies(&idention, projects: deps.projects)
+            result <<< processDependencies(&indentation, fromSDK: deps.fromSDKs)
+            result <<< processDependencies(&indentation, targets: deps.otherTargets)
+            result <<< processDependencies(&indentation, binaries: deps.binaries)
+            result <<< processDependencies(&indentation, projects: deps.projects)
         }
         
         //---
@@ -390,21 +388,21 @@ extension Struct.Spec_2_0_0
     
     static
     func processDependencies(
-        _ idention: inout Int,
+        _ indentation: inout Indentation,
         fromSDK: [String]
-        ) -> Struct.RawSpec
+        ) -> IndentedText
     {
         // https://github.com/lyptt/struct/wiki/Spec-format:-v2.0#references
         
         //---
         
-        var result: Struct.RawSpec = []
+        var result: IndentedText = []
         
         //---
         
         for dep in fromSDK
         {
-            result <<< (idention, "-" + Struct.Spec.value("sdkroot:\(dep)"))
+            result <<< (indentation, "-" + Struct.Spec.value("sdkroot:\(dep)"))
         }
         
         //---
@@ -416,21 +414,21 @@ extension Struct.Spec_2_0_0
     
     static
     func processDependencies(
-        _ idention: inout Int,
+        _ indentation: inout Indentation,
         targets: [String]
-        ) -> Struct.RawSpec
+        ) -> IndentedText
     {
         // https://github.com/lyptt/struct/wiki/Spec-format:-v2.0#references
         
         //---
         
-        var result: Struct.RawSpec = []
+        var result: IndentedText = []
         
         //---
         
         for t in targets
         {
-            result <<< (idention, "-" + Struct.Spec.value(t))
+            result <<< (indentation, "-" + Struct.Spec.value(t))
         }
         
         //---
@@ -442,22 +440,22 @@ extension Struct.Spec_2_0_0
     
     static
     func processDependencies(
-        _ idention: inout Int,
+        _ indentation: inout Indentation,
         binaries: [Project.Target.BinaryDependency]
-        ) -> Struct.RawSpec
+        ) -> IndentedText
     {
         // https://github.com/lyptt/struct/wiki/Spec-format:-v2.0#references
         
         //---
         
-        var result: Struct.RawSpec = []
+        var result: IndentedText = []
         
         //---
         
         for b in binaries
         {
-            result <<< (idention, Struct.Spec.key("- location") + Struct.Spec.value(b.location))
-            result <<< (idention, Struct.Spec.key("  codeSignOnCopy") + Struct.Spec.value(b.codeSignOnCopy))
+            result <<< (indentation, Struct.Spec.key("- location") + Struct.Spec.value(b.location))
+            result <<< (indentation, Struct.Spec.key("  codeSignOnCopy") + Struct.Spec.value(b.codeSignOnCopy))
         }
         
         //---
@@ -469,28 +467,28 @@ extension Struct.Spec_2_0_0
     
     static
     func processDependencies(
-        _ idention: inout Int,
+        _ indentation: inout Indentation,
         projects: [Project.Target.ProjectDependencies]
-        ) -> Struct.RawSpec
+        ) -> IndentedText
     {
         // https://github.com/lyptt/struct/wiki/Spec-format:-v2.0#references
         
         //---
         
-        var result: Struct.RawSpec = []
+        var result: IndentedText = []
         
         //---
         
         for p in projects
         {
-            result <<< (idention, Struct.Spec.key("- location") + Struct.Spec.value(p.location))
-            result <<< (idention, Struct.Spec.key("  frameworks"))
+            result <<< (indentation, Struct.Spec.key("- location") + Struct.Spec.value(p.location))
+            result <<< (indentation, Struct.Spec.key("  frameworks"))
             
             for f in p.frameworks
             {
-                result <<< (idention, Struct.Spec.key("  - name") + Struct.Spec.value(f.name))
-                result <<< (idention, Struct.Spec.key("    copy") + Struct.Spec.value(f.copy))
-                result <<< (idention, Struct.Spec.key("    codeSignOnCopy") + Struct.Spec.value(f.codeSignOnCopy))
+                result <<< (indentation, Struct.Spec.key("  - name") + Struct.Spec.value(f.name))
+                result <<< (indentation, Struct.Spec.key("    copy") + Struct.Spec.value(f.copy))
+                result <<< (indentation, Struct.Spec.key("    codeSignOnCopy") + Struct.Spec.value(f.codeSignOnCopy))
             }
         }
         
@@ -503,32 +501,32 @@ extension Struct.Spec_2_0_0
     
     static
     func process(
-        _ idention: inout Int,
+        _ indentation: inout Indentation,
         _ set: Project.Target.BuildConfigurations
-        ) -> Struct.RawSpec
+        ) -> IndentedText
     {
         // https://github.com/lyptt/struct/issues/77#issuecomment-287573381
         
         //---
         
-        var result: Struct.RawSpec = []
+        var result: IndentedText = []
         
         //---
         
-        result <<< (idention, Struct.Spec.key("configurations"))
+        result <<< (indentation, Struct.Spec.key("configurations"))
         
         //---
         
-        idention += 1
+        indentation++
         
         //---
         
-        result <<< process(&idention, set.all, set.debug)
-        result <<< process(&idention, set.all, set.release)
+        result <<< process(&indentation, set.all, set.debug)
+        result <<< process(&indentation, set.all, set.release)
         
         //---
         
-        idention -= 1
+        indentation--
         
         //---
         
@@ -539,24 +537,24 @@ extension Struct.Spec_2_0_0
     
     static
     func process(
-        _ idention: inout Int,
+        _ indentation: inout Indentation,
         _ b: Project.Target.BuildConfiguration.Base,
         _ c: Project.Target.BuildConfiguration
-        ) -> Struct.RawSpec
+        ) -> IndentedText
     {
         // https://github.com/lyptt/struct/issues/77#issuecomment-287573381
         
         //---
         
-        var result: Struct.RawSpec = []
+        var result: IndentedText = []
         
         //---
         
-        result <<< (idention, Struct.Spec.key(c.name))
+        result <<< (indentation, Struct.Spec.key(c.name))
         
         //---
         
-        idention += 1
+        indentation++
         
         //---
         
@@ -564,12 +562,12 @@ extension Struct.Spec_2_0_0
         
         for o in b.overrides + c.overrides
         {
-            result <<< (idention, Struct.Spec.key(o.key) + Struct.Spec.value(o.value))
+            result <<< (indentation, Struct.Spec.key(o.key) + Struct.Spec.value(o.value))
         }
         
         //---
         
-        idention -= 1
+        indentation--
         
         //---
         
@@ -580,15 +578,15 @@ extension Struct.Spec_2_0_0
     
     static
     func process(
-        _ idention: inout Int,
+        _ indentation: inout Indentation,
         scripts: Project.Target.Scripts
-        ) -> Struct.RawSpec
+        ) -> IndentedText
     {
         // https://github.com/lyptt/struct/wiki/Spec-format:-v2.0#scripts
         
         //---
         
-        var result: Struct.RawSpec = []
+        var result: IndentedText = []
         
         //---
         
@@ -597,35 +595,35 @@ extension Struct.Spec_2_0_0
             !scripts.beforeBuilds.isEmpty ||
             !scripts.afterBuilds.isEmpty
         {
-            result <<< (idention, Struct.Spec.key("scripts"))
+            result <<< (indentation, Struct.Spec.key("scripts"))
             
             //---
             
-            idention += 1
+            indentation++
             
             //---
             
             if
                 !scripts.regulars.isEmpty
             {
-                result <<< processScripts(&idention, regulars: scripts.regulars)
+                result <<< processScripts(&indentation, regulars: scripts.regulars)
             }
             
             if
                 !scripts.beforeBuilds.isEmpty
             {
-                result <<< processScripts(&idention, beforeBuild: scripts.beforeBuilds)
+                result <<< processScripts(&indentation, beforeBuild: scripts.beforeBuilds)
             }
             
             if
                 !scripts.afterBuilds.isEmpty
             {
-                result <<< processScripts(&idention, afterBuild: scripts.afterBuilds)
+                result <<< processScripts(&indentation, afterBuild: scripts.afterBuilds)
             }
             
             //---
             
-            idention -= 1
+            indentation--
         }
         
         //---
@@ -637,21 +635,21 @@ extension Struct.Spec_2_0_0
     
     static
     func processScripts(
-        _ idention: inout Int,
+        _ indentation: inout Indentation,
         regulars: [String]
-        ) -> Struct.RawSpec
+        ) -> IndentedText
     {
         // https://github.com/lyptt/struct/wiki/Spec-format:-v2.0#scripts
         
         //---
         
-        var result: Struct.RawSpec = []
+        var result: IndentedText = []
         
         //---
         
         for s in regulars
         {
-            result <<< (idention, "-" + Struct.Spec.value(s))
+            result <<< (indentation, "-" + Struct.Spec.value(s))
         }
         
         //---
@@ -663,23 +661,23 @@ extension Struct.Spec_2_0_0
     
     static
     func processScripts(
-        _ idention: inout Int,
+        _ indentation: inout Indentation,
         beforeBuild: [String]
-        ) -> Struct.RawSpec
+        ) -> IndentedText
     {
         // https://github.com/lyptt/struct/wiki/Spec-format:-v2.0#scripts
         
         //---
         
-        var result: Struct.RawSpec = []
+        var result: IndentedText = []
         
         //---
         
-        result <<< (idention, Struct.Spec.key("prebuild"))
+        result <<< (indentation, Struct.Spec.key("prebuild"))
         
         for s in beforeBuild
         {
-            result <<< (idention, "-" + Struct.Spec.value(s))
+            result <<< (indentation, "-" + Struct.Spec.value(s))
         }
         
         //---
@@ -691,23 +689,23 @@ extension Struct.Spec_2_0_0
     
     static
     func processScripts(
-        _ idention: inout Int,
+        _ indentation: inout Indentation,
         afterBuild: [String]
-        ) -> Struct.RawSpec
+        ) -> IndentedText
     {
         // https://github.com/lyptt/struct/wiki/Spec-format:-v2.0#scripts
         
         //---
         
-        var result: Struct.RawSpec = []
+        var result: IndentedText = []
         
         //---
         
-        result <<< (idention, Struct.Spec.key("postbuild"))
+        result <<< (indentation, Struct.Spec.key("postbuild"))
         
         for s in afterBuild
         {
-            result <<< (idention, "-" + Struct.Spec.value(s))
+            result <<< (indentation, "-" + Struct.Spec.value(s))
         }
         
         //---

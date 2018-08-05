@@ -11,34 +11,24 @@ enum Struct {}
 extension Struct
 {
     static
-    func prepareSpec(
+    func generateSpec(
         _ format: Spec,
         for project: Project
-        ) -> String
+        ) -> IndentedText
     {
-        let rawSpec: RawSpec
-        
-        //---
-        
         switch format
         {
             case .v1_2_1:
-                rawSpec = Spec_1_2_1.generate(for: project)
+                return Spec_1_2_1.generate(for: project)
             
             case .v1_3_0:
-                rawSpec = Spec_1_3_0.generate(for: project)
+                return Spec_1_3_0.generate(for: project)
             
             case .v2_0_0:
-                rawSpec = Spec_2_0_0.generate(for: project)
+                return Spec_2_0_0.generate(for: project)
             
             case .v2_1_0:
-                rawSpec = Spec_2_1_0.generate(for: project)
+                return Spec_2_1_0.generate(for: project)
         }
-        
-        //---
-        
-        return rawSpec
-            .map { "\(Spec.ident($0))\($1)" }
-            .joined(separator: "\n")
     }
 }
