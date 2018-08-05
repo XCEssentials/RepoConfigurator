@@ -2,19 +2,19 @@
 extension Struct.Spec
 {
     static
-        func ident(_ idention: Int) -> String
+    func ident(_ idention: Int) -> String
     {
         return Array(repeating: "  ", count: idention).joined()
     }
 
     static
-        func key(_ v: Any) -> String
+    func key(_ v: Any) -> String
     {
         return "\(v):"
     }
 
     static
-        func value(_ v: Any) -> String
+    func value(_ v: Any) -> String
     {
         return " \"\(v)\""
     }

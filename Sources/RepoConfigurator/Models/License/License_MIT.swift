@@ -18,7 +18,7 @@ extension License
         //---
 
         public
-        var fileContent: String
+        func prepareContent() throws -> IndentedText
         {
             return """
                 MIT License
@@ -43,6 +43,7 @@ extension License
                 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
                 SOFTWARE.
                 """
+                .asIndentedText()
         }
     }
 }

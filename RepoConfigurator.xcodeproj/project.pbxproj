@@ -10,15 +10,23 @@
 		941CFFC8211520D700326181 /* RepoConfigurator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 941CFFBE211520D700326181 /* RepoConfigurator.framework */; };
 		941CFFDE2115221000326181 /* RepoConfiguratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941CFFDA2115220600326181 /* RepoConfiguratorTests.swift */; };
 		941CFFDF2115222100326181 /* RepoConfigurator.h in Headers */ = {isa = PBXBuildFile; fileRef = 941CFFDC2115220600326181 /* RepoConfigurator.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		941CFFE02115222B00326181 /* Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941CFFDD2115220600326181 /* Shared.swift */; };
+		941CFFE02115222B00326181 /* Versions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941CFFDD2115220600326181 /* Versions.swift */; };
 		941CFFE52115838600326181 /* Repo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941CFFE42115838600326181 /* Repo.swift */; };
 		941CFFE82115897100326181 /* License_MIT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941CFFE72115897100326181 /* License_MIT.swift */; };
 		941CFFEA2115898E00326181 /* License.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941CFFE92115898E00326181 /* License.swift */; };
 		941CFFF4211591E900326181 /* FileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941CFFF3211591E900326181 /* FileModel.swift */; };
-		941CFFF62115947E00326181 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941CFFF52115947E00326181 /* Helpers.swift */; };
 		941CFFFB2115A78C00326181 /* Git.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941CFFFA2115A78C00326181 /* Git.swift */; };
 		941CFFFD2115A7A000326181 /* Gitignore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941CFFFC2115A7A000326181 /* Gitignore.swift */; };
 		941CFFFF211609BC00326181 /* InfoPlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941CFFFE211609BC00326181 /* InfoPlist.swift */; };
+		9424AB092117542200262B79 /* Indentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9424AB082117542200262B79 /* Indentation.swift */; };
+		9424AB0B2117549500262B79 /* KeyValuePair.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9424AB0A2117549500262B79 /* KeyValuePair.swift */; };
+		9424AB0D211754B200262B79 /* DeviceFamily.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9424AB0C211754B200262B79 /* DeviceFamily.swift */; };
+		9424AB0F211754C100262B79 /* DeploymentTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9424AB0E211754C100262B79 /* DeploymentTarget.swift */; };
+		9424AB11211754FE00262B79 /* OSIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9424AB10211754FE00262B79 /* OSIdentifier.swift */; };
+		9424AB132117552100262B79 /* PathPrefix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9424AB122117552100262B79 /* PathPrefix.swift */; };
+		9481464E21176640009CB999 /* RawTextFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9481464D21176640009CB999 /* RawTextFile.swift */; };
+		94C4F9CB211665ED00CFB1DC /* Fastlane.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C4F9CA211665ED00CFB1DC /* Fastlane.swift */; };
+		94C4F9CD2116660900CFB1DC /* Fastlane_Fastfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C4F9CC2116660900CFB1DC /* Fastlane_Fastfile.swift */; };
 		94CB9FC02116535300641D6E /* Project_BuildConfig_Defaults_General.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CB9FBA2116535200641D6E /* Project_BuildConfig_Defaults_General.swift */; };
 		94CB9FC12116535300641D6E /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CB9FBB2116535200641D6E /* Project.swift */; };
 		94CB9FC22116535300641D6E /* Project_Variant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CB9FBC2116535300641D6E /* Project_Variant.swift */; };
@@ -54,15 +62,23 @@
 		941CFFC7211520D700326181 /* RepoConfiguratorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RepoConfiguratorTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		941CFFDA2115220600326181 /* RepoConfiguratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepoConfiguratorTests.swift; sourceTree = "<group>"; };
 		941CFFDC2115220600326181 /* RepoConfigurator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RepoConfigurator.h; sourceTree = "<group>"; };
-		941CFFDD2115220600326181 /* Shared.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shared.swift; sourceTree = "<group>"; };
+		941CFFDD2115220600326181 /* Versions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Versions.swift; sourceTree = "<group>"; };
 		941CFFE42115838600326181 /* Repo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repo.swift; sourceTree = "<group>"; };
 		941CFFE72115897100326181 /* License_MIT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = License_MIT.swift; sourceTree = "<group>"; };
 		941CFFE92115898E00326181 /* License.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = License.swift; sourceTree = "<group>"; };
 		941CFFF3211591E900326181 /* FileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileModel.swift; sourceTree = "<group>"; };
-		941CFFF52115947E00326181 /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		941CFFFA2115A78C00326181 /* Git.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Git.swift; sourceTree = "<group>"; };
 		941CFFFC2115A7A000326181 /* Gitignore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gitignore.swift; sourceTree = "<group>"; };
 		941CFFFE211609BC00326181 /* InfoPlist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoPlist.swift; sourceTree = "<group>"; };
+		9424AB082117542200262B79 /* Indentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Indentation.swift; sourceTree = "<group>"; };
+		9424AB0A2117549500262B79 /* KeyValuePair.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyValuePair.swift; sourceTree = "<group>"; };
+		9424AB0C211754B200262B79 /* DeviceFamily.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceFamily.swift; sourceTree = "<group>"; };
+		9424AB0E211754C100262B79 /* DeploymentTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeploymentTarget.swift; sourceTree = "<group>"; };
+		9424AB10211754FE00262B79 /* OSIdentifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSIdentifier.swift; sourceTree = "<group>"; };
+		9424AB122117552100262B79 /* PathPrefix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathPrefix.swift; sourceTree = "<group>"; };
+		9481464D21176640009CB999 /* RawTextFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RawTextFile.swift; sourceTree = "<group>"; };
+		94C4F9CA211665ED00CFB1DC /* Fastlane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fastlane.swift; sourceTree = "<group>"; };
+		94C4F9CC2116660900CFB1DC /* Fastlane_Fastfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fastlane_Fastfile.swift; sourceTree = "<group>"; };
 		94CB9FBA2116535200641D6E /* Project_BuildConfig_Defaults_General.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Project_BuildConfig_Defaults_General.swift; sourceTree = "<group>"; };
 		94CB9FBB2116535200641D6E /* Project.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
 		94CB9FBC2116535300641D6E /* Project_Variant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Project_Variant.swift; sourceTree = "<group>"; };
@@ -106,9 +122,15 @@
 			isa = PBXGroup;
 			children = (
 				941CFFF3211591E900326181 /* FileModel.swift */,
-				941CFFF52115947E00326181 /* Helpers.swift */,
 				941CFFDC2115220600326181 /* RepoConfigurator.h */,
-				941CFFDD2115220600326181 /* Shared.swift */,
+				941CFFDD2115220600326181 /* Versions.swift */,
+				9424AB082117542200262B79 /* Indentation.swift */,
+				9481464D21176640009CB999 /* RawTextFile.swift */,
+				9424AB0A2117549500262B79 /* KeyValuePair.swift */,
+				9424AB0C211754B200262B79 /* DeviceFamily.swift */,
+				9424AB0E211754C100262B79 /* DeploymentTarget.swift */,
+				9424AB10211754FE00262B79 /* OSIdentifier.swift */,
+				9424AB122117552100262B79 /* PathPrefix.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -159,6 +181,7 @@
 		941CFFE12115765C00326181 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				94C4F9C9211665C500CFB1DC /* Fastlane */,
 				941CFFF92115A77600326181 /* Git */,
 				94CB9FD22116571600641D6E /* InfoPlist */,
 				941CFFE62115896200326181 /* License */,
@@ -211,6 +234,15 @@
 				941CFFFC2115A7A000326181 /* Gitignore.swift */,
 			);
 			path = Git;
+			sourceTree = "<group>";
+		};
+		94C4F9C9211665C500CFB1DC /* Fastlane */ = {
+			isa = PBXGroup;
+			children = (
+				94C4F9CA211665ED00CFB1DC /* Fastlane.swift */,
+				94C4F9CC2116660900CFB1DC /* Fastlane_Fastfile.swift */,
+			);
+			path = Fastlane;
 			sourceTree = "<group>";
 		};
 		94CB9FD22116571600641D6E /* InfoPlist */ = {
@@ -343,17 +375,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				94C4F9CB211665ED00CFB1DC /* Fastlane.swift in Sources */,
+				94C4F9CD2116660900CFB1DC /* Fastlane_Fastfile.swift in Sources */,
 				941CFFF4211591E900326181 /* FileModel.swift in Sources */,
 				941CFFFB2115A78C00326181 /* Git.swift in Sources */,
 				941CFFFD2115A7A000326181 /* Gitignore.swift in Sources */,
-				941CFFF62115947E00326181 /* Helpers.swift in Sources */,
 				941CFFFF211609BC00326181 /* InfoPlist.swift in Sources */,
 				941CFFEA2115898E00326181 /* License.swift in Sources */,
 				941CFFE82115897100326181 /* License_MIT.swift in Sources */,
 				94CB9FC12116535300641D6E /* Project.swift in Sources */,
 				94CB9FC42116535300641D6E /* Project_BuildConfig.swift in Sources */,
+				9424AB0F211754C100262B79 /* DeploymentTarget.swift in Sources */,
 				94CB9FC32116535300641D6E /* Project_BuildConfig_Defaults.swift in Sources */,
 				94CB9FC02116535300641D6E /* Project_BuildConfig_Defaults_General.swift in Sources */,
+				9424AB132117552100262B79 /* PathPrefix.swift in Sources */,
+				9424AB092117542200262B79 /* Indentation.swift in Sources */,
 				94CB9FC52116535300641D6E /* Project_BuildConfig_Defaults_iOS.swift in Sources */,
 				94CB9FCE2116536600641D6E /* Project_Target.swift in Sources */,
 				94CB9FCD2116536600641D6E /* Project_Target_BuildConfig.swift in Sources */,
@@ -362,14 +398,18 @@
 				94CB9FCF2116536600641D6E /* Project_Target_Type.swift in Sources */,
 				94CB9FC22116535300641D6E /* Project_Variant.swift in Sources */,
 				941CFFE52115838600326181 /* Repo.swift in Sources */,
-				941CFFE02115222B00326181 /* Shared.swift in Sources */,
+				941CFFE02115222B00326181 /* Versions.swift in Sources */,
 				94CB9FDF2116585000641D6E /* Struct.swift in Sources */,
 				94CB9FDC2116583700641D6E /* Struct_Spec.swift in Sources */,
 				94CB9FD92116583700641D6E /* Struct_Spec_1_2_1.swift in Sources */,
+				9424AB0D211754B200262B79 /* DeviceFamily.swift in Sources */,
 				94CB9FDA2116583700641D6E /* Struct_Spec_1_3_0.swift in Sources */,
 				94CB9FDD2116583700641D6E /* Struct_Spec_2_0_0.swift in Sources */,
+				9424AB11211754FE00262B79 /* OSIdentifier.swift in Sources */,
 				94CB9FDB2116583700641D6E /* Struct_Spec_2_1_0.swift in Sources */,
 				94CB9FE12116625900641D6E /* Struct_Spec_InternalHelpers.swift in Sources */,
+				9481464E21176640009CB999 /* RawTextFile.swift in Sources */,
+				9424AB0B2117549500262B79 /* KeyValuePair.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -525,7 +565,11 @@
 				FRAMEWORK_VERSION = A;
 				INFOPLIST_FILE = Info/RepoConfigurator.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.XCEssentials.RepoConfigurator;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -547,7 +591,11 @@
 				FRAMEWORK_VERSION = A;
 				INFOPLIST_FILE = Info/RepoConfigurator.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.XCEssentials.RepoConfigurator;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -563,7 +611,11 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = UJA88X59XP;
 				INFOPLIST_FILE = Info/RepoConfiguratorTests.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.XCEssentials.RepoConfiguratorTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -578,7 +630,11 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = UJA88X59XP;
 				INFOPLIST_FILE = Info/RepoConfiguratorTests.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.XCEssentials.RepoConfiguratorTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;

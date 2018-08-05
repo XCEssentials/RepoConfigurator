@@ -31,12 +31,11 @@ extension Git
         //---
 
         public
-        var fileContent: String
+        func prepareContent() throws -> IndentedText
         {
             return entries
                 .map{ type(of: self).processEntry($0, self.ignore3dPartySources) }
-                .joined(separator: "\n\n") // separate with 1 empty line
-                .appending("\n") // empty line in the EOF
+                .reduce(into: IndentedText()){ $0 += $1 }
         }
 
         //---
@@ -98,7 +97,7 @@ extension Git
         func processEntry(
             _ entry: Entry,
             _ ignore3dPartySources: Bool
-            ) -> String
+            ) -> IndentedText
         {
             switch entry
             {
@@ -139,6 +138,7 @@ extension Git
                         #
                         #
                         """
+                        .asIndentedText()
 
                 case .cocoa:
                     return """
@@ -190,6 +190,7 @@ extension Git
                         #
                         #
                         """
+                        .asIndentedText()
 
                 case .cocoaPods:
                     return """
@@ -207,6 +208,7 @@ extension Git
                         #
                         #
                         """
+                        .asIndentedText()
 
                 case .carthage:
                     return """
@@ -222,6 +224,7 @@ extension Git
                         #
                         #
                         """
+                        .asIndentedText()
 
                 case .fastlane:
                     return """
@@ -243,6 +246,7 @@ extension Git
                         #
                         #
                         """
+                        .asIndentedText()
 
                 case .custom(let customEntry):
                     return """
@@ -257,6 +261,7 @@ extension Git
                         #
                         #
                         """
+                        .asIndentedText()
             }
         }
     }

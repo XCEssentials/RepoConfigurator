@@ -1,7 +1,7 @@
 public
 protocol FileModel
 {
-    var fileContent: String { get }
+    func prepareContent() throws -> IndentedText
 }
 
 //---
@@ -15,16 +15,21 @@ protocol ArbitraryNamedFile: FileModel
 public
 extension ArbitraryNamedFile
 {
-    func writeToFile(
+    func writeToFileSystem(
         at targetPath: URL,
-        trimRepeatingEmptyLines: Bool = true
+        trimRepeatingEmptyLines: Bool = true,
+        ifFileExists: RawTextFile.IfFileExistsPolicy = .override
         ) throws
     {
-        try fileContent.writeToFile(
-            named: fileName,
-            at: targetPath,
-            trimRepeatingEmptyLines: trimRepeatingEmptyLines
-        )
+        try RawTextFile(
+            fileName: fileName,
+            targetPath: targetPath,
+            content: prepareContent()
+            )
+            .writeToFileSystem(
+                trimRepeatingEmptyLines: trimRepeatingEmptyLines,
+                ifFileExists: ifFileExists
+            )
     }
 }
 
@@ -40,15 +45,20 @@ protocol FixedNameFile: FileModel
 public
 extension FixedNameFile
 {
-    func writeToFile(
+    func writeToFileSystem(
         at targetPath: URL,
-        trimRepeatingEmptyLines: Bool = true
+        trimRepeatingEmptyLines: Bool = true,
+        ifFileExists: RawTextFile.IfFileExistsPolicy = .override
         ) throws
     {
-        try fileContent.writeToFile(
-            named: type(of: self).fileName,
-            at: targetPath,
-            trimRepeatingEmptyLines: trimRepeatingEmptyLines
-        )
+        try RawTextFile(
+            fileName: type(of: self).fileName,
+            targetPath: targetPath,
+            content: prepareContent()
+            )
+            .writeToFileSystem(
+                trimRepeatingEmptyLines: trimRepeatingEmptyLines,
+                ifFileExists: ifFileExists
+            )
     }
 }

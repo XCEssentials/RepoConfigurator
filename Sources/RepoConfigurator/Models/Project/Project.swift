@@ -11,10 +11,11 @@ struct Project: FixedNameFile
     //---
 
     public
-    var fileContent: String
+    func prepareContent() throws -> IndentedText
     {
         return Struct
             .prepareSpec(specFormat, for: self)
+            .asIndentedText()
     }
 
     //---
