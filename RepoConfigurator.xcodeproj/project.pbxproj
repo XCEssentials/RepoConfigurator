@@ -14,7 +14,7 @@
 		941CFFE52115838600326181 /* Repo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941CFFE42115838600326181 /* Repo.swift */; };
 		941CFFE82115897100326181 /* License_MIT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941CFFE72115897100326181 /* License_MIT.swift */; };
 		941CFFEA2115898E00326181 /* License.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941CFFE92115898E00326181 /* License.swift */; };
-		941CFFF4211591E900326181 /* FileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941CFFF3211591E900326181 /* FileModel.swift */; };
+		941CFFF4211591E900326181 /* TextFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941CFFF3211591E900326181 /* TextFile.swift */; };
 		941CFFFB2115A78C00326181 /* Git.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941CFFFA2115A78C00326181 /* Git.swift */; };
 		941CFFFD2115A7A000326181 /* Gitignore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941CFFFC2115A7A000326181 /* Gitignore.swift */; };
 		941CFFFF211609BC00326181 /* InfoPlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941CFFFE211609BC00326181 /* InfoPlist.swift */; };
@@ -45,6 +45,7 @@
 		94CB9FDD2116583700641D6E /* Struct_Spec_2_0_0.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CB9FD82116583700641D6E /* Struct_Spec_2_0_0.swift */; };
 		94CB9FDF2116585000641D6E /* Struct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CB9FDE2116585000641D6E /* Struct.swift */; };
 		94CB9FE12116625900641D6E /* Struct_Spec_InternalHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CB9FE02116625900641D6E /* Struct_Spec_InternalHelpers.swift */; };
+		94DECE4E21188B4B0026F148 /* String+TextFilePiece.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DECE4D21188B4B0026F148 /* String+TextFilePiece.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,7 +67,7 @@
 		941CFFE42115838600326181 /* Repo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repo.swift; sourceTree = "<group>"; };
 		941CFFE72115897100326181 /* License_MIT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = License_MIT.swift; sourceTree = "<group>"; };
 		941CFFE92115898E00326181 /* License.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = License.swift; sourceTree = "<group>"; };
-		941CFFF3211591E900326181 /* FileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileModel.swift; sourceTree = "<group>"; };
+		941CFFF3211591E900326181 /* TextFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFile.swift; sourceTree = "<group>"; };
 		941CFFFA2115A78C00326181 /* Git.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Git.swift; sourceTree = "<group>"; };
 		941CFFFC2115A7A000326181 /* Gitignore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gitignore.swift; sourceTree = "<group>"; };
 		941CFFFE211609BC00326181 /* InfoPlist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoPlist.swift; sourceTree = "<group>"; };
@@ -97,6 +98,7 @@
 		94CB9FD82116583700641D6E /* Struct_Spec_2_0_0.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Struct_Spec_2_0_0.swift; sourceTree = "<group>"; };
 		94CB9FDE2116585000641D6E /* Struct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Struct.swift; sourceTree = "<group>"; };
 		94CB9FE02116625900641D6E /* Struct_Spec_InternalHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Struct_Spec_InternalHelpers.swift; sourceTree = "<group>"; };
+		94DECE4D21188B4B0026F148 /* String+TextFilePiece.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+TextFilePiece.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,16 +123,13 @@
 		941C0000211617C100326181 /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				941CFFF3211591E900326181 /* FileModel.swift */,
 				941CFFDC2115220600326181 /* RepoConfigurator.h */,
-				941CFFDD2115220600326181 /* Versions.swift */,
+				941CFFF3211591E900326181 /* TextFile.swift */,
 				9424AB082117542200262B79 /* Indentation.swift */,
 				9481464D21176640009CB999 /* RawTextFile.swift */,
-				9424AB0A2117549500262B79 /* KeyValuePair.swift */,
-				9424AB0C211754B200262B79 /* DeviceFamily.swift */,
 				9424AB0E211754C100262B79 /* DeploymentTarget.swift */,
 				9424AB10211754FE00262B79 /* OSIdentifier.swift */,
-				9424AB122117552100262B79 /* PathPrefix.swift */,
+				9424AB0A2117549500262B79 /* KeyValuePair.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -172,6 +171,7 @@
 		941CFFDB2115220600326181 /* RepoConfigurator */ = {
 			isa = PBXGroup;
 			children = (
+				94DECE4C21188AAD0026F148 /* Helpers */,
 				941C0000211617C100326181 /* Core */,
 				941CFFE12115765C00326181 /* Models */,
 			);
@@ -265,6 +265,17 @@
 				94CB9FE02116625900641D6E /* Struct_Spec_InternalHelpers.swift */,
 			);
 			path = Struct;
+			sourceTree = "<group>";
+		};
+		94DECE4C21188AAD0026F148 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				9424AB122117552100262B79 /* PathPrefix.swift */,
+				9424AB0C211754B200262B79 /* DeviceFamily.swift */,
+				941CFFDD2115220600326181 /* Versions.swift */,
+				94DECE4D21188B4B0026F148 /* String+TextFilePiece.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -377,10 +388,11 @@
 			files = (
 				94C4F9CB211665ED00CFB1DC /* Fastlane.swift in Sources */,
 				94C4F9CD2116660900CFB1DC /* Fastlane_Fastfile.swift in Sources */,
-				941CFFF4211591E900326181 /* FileModel.swift in Sources */,
+				941CFFF4211591E900326181 /* TextFile.swift in Sources */,
 				941CFFFB2115A78C00326181 /* Git.swift in Sources */,
 				941CFFFD2115A7A000326181 /* Gitignore.swift in Sources */,
 				941CFFFF211609BC00326181 /* InfoPlist.swift in Sources */,
+				94DECE4E21188B4B0026F148 /* String+TextFilePiece.swift in Sources */,
 				941CFFEA2115898E00326181 /* License.swift in Sources */,
 				941CFFE82115897100326181 /* License_MIT.swift in Sources */,
 				94CB9FC12116535300641D6E /* Project.swift in Sources */,

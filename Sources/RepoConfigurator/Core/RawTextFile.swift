@@ -29,18 +29,6 @@ func <<< (list: inout IndentedText, elements: IndentedText)
 
 //---
 
-extension String
-{
-    func asIndentedText(
-        with indentation: Indentation = Indentation()
-        ) -> IndentedText
-    {
-        return split(separator: "\n").map{ (indentation, String($0)) }
-    }
-}
-
-//---
-
 public
 struct RawTextFile
 {
