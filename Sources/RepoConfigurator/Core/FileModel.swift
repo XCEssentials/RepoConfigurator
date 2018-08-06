@@ -16,14 +16,14 @@ public
 extension ArbitraryNamedFile
 {
     func writeToFileSystem(
-        at targetPath: URL,
+        at targetFolder: URL,
         trimRepeatingEmptyLines: Bool = true,
         ifFileExists: RawTextFile.IfFileExistsPolicy = .override
-        ) throws
+        ) throws -> Bool
     {
-        try RawTextFile(
+        return try RawTextFile(
             fileName: fileName,
-            targetPath: targetPath,
+            targetFolder: targetFolder,
             content: prepareContent()
             )
             .writeToFileSystem(
@@ -46,14 +46,14 @@ public
 extension FixedNameFile
 {
     func writeToFileSystem(
-        at targetPath: URL,
+        at targetFolder: URL,
         trimRepeatingEmptyLines: Bool = true,
         ifFileExists: RawTextFile.IfFileExistsPolicy = .override
-        ) throws
+        ) throws -> Bool
     {
-        try RawTextFile(
+        return try RawTextFile(
             fileName: type(of: self).fileName,
-            targetPath: targetPath,
+            targetFolder: targetFolder,
             content: prepareContent()
             )
             .writeToFileSystem(

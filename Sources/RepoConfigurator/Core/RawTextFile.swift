@@ -57,7 +57,7 @@ struct RawTextFile
     let fileName: String
 
     public
-    let targetPath: URL
+    let targetFolder: URL
 
     public
     let content: IndentedText
@@ -75,7 +75,7 @@ struct RawTextFile
     func writeToFileSystem(
         trimRepeatingEmptyLines: Bool = true,
         ifFileExists: IfFileExistsPolicy = .override
-        ) throws
+        ) throws -> Bool
     {
         var fileContent = render()
 
@@ -92,14 +92,27 @@ struct RawTextFile
 
         //---
 
-        try fileContent.write(
-            to: targetPath.appendingPathComponent(
-                fileName,
-                isDirectory: false
-            ),
-            atomically: true,
-            encoding: .utf8
+        let fullFileName = targetFolder.appendingPathComponent(
+            fileName,
+            isDirectory: false
         )
+
+        if
+            (ifFileExists == .override) ||
+            !FileManager.default.fileExists(atPath: fullFileName.path)
+        {
+            try fileContent.write(
+                to: fullFileName,
+                atomically: true,
+                encoding: .utf8
+            )
+
+            return true
+        }
+        else
+        {
+            return false
+        }
     }
 }
 
