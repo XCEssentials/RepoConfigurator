@@ -1,5 +1,5 @@
 public
-extension Project
+extension Xcode.Project
 {
     public
     struct Target
@@ -13,12 +13,12 @@ extension Project
             
             public
             var debug = Target.BuildConfiguration(
-                Project.BuildConfiguration.Defaults.iOS.debug().name
+                Xcode.Project.BuildConfiguration.Defaults.iOS.debug().name
             )
             
             public
             var release = Target.BuildConfiguration(
-                Project.BuildConfiguration.Defaults.iOS.release().name
+                Xcode.Project.BuildConfiguration.Defaults.iOS.release().name
             )
         }
         

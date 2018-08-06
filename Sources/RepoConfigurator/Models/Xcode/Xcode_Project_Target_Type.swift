@@ -1,4 +1,4 @@
-extension Project.Target
+extension Xcode.Project.Target
 {
     public
     enum InternalType: String

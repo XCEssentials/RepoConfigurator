@@ -1,13 +1,14 @@
-extension Project.BuildConfiguration
+extension Xcode.Project.BuildConfiguration
 {
     enum Defaults
     {
         static
         func debug(
             _ profiles: [String] = []
-            ) -> Project.BuildConfiguration
+            ) -> Xcode.Project.BuildConfiguration
         {
-            return Project
+            return Xcode
+                .Project
                 .BuildConfiguration(
                     "Debug",
                     .debug,
@@ -18,9 +19,10 @@ extension Project.BuildConfiguration
         static
         func release(
             _ profiles: [String] = []
-            ) -> Project.BuildConfiguration
+            ) -> Xcode.Project.BuildConfiguration
         {
-            return Project
+            return Xcode
+                .Project
                 .BuildConfiguration(
                     "Release",
                     .release,

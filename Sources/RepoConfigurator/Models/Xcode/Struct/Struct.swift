@@ -13,7 +13,7 @@ extension Struct
     static
     func generateSpec(
         _ format: Spec,
-        for project: Project
+        for project: Xcode.Project
         ) -> IndentedText
     {
         switch format

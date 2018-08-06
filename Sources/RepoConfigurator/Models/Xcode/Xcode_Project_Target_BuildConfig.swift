@@ -1,5 +1,5 @@
 public
-extension Project.Target
+extension Xcode.Project.Target
 {
     public
     struct BuildConfiguration

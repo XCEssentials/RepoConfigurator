@@ -1,5 +1,5 @@
 public
-extension Project
+extension Xcode.Project
 {
     public
     struct Variant
@@ -10,7 +10,7 @@ extension Project
         //---
         
         public
-        init(_ name: String, _ configure: ((inout Project.Variant) -> Void)?)
+        init(_ name: String, _ configure: ((inout Xcode.Project.Variant) -> Void)?)
         {
             self.name = name
             configure?(&self)
@@ -36,7 +36,7 @@ extension Project
 //---
 
 public
-extension Project.Variant
+extension Xcode.Project.Variant
 {
     public
     struct Target
@@ -46,16 +46,16 @@ extension Project.Variant
         class BuildConfigurations
         {
             public
-            var all = Project.Target.BuildConfiguration.Base()
+            var all = Xcode.Project.Target.BuildConfiguration.Base()
             
             public
-            var debug = Project.Target.BuildConfiguration(
-                Project.BuildConfiguration.Defaults.iOS.debug().name
+            var debug = Xcode.Project.Target.BuildConfiguration(
+                Xcode.Project.BuildConfiguration.Defaults.iOS.debug().name
             )
             
             public
-            var release = Project.Target.BuildConfiguration(
-                Project.BuildConfiguration.Defaults.iOS.release().name
+            var release = Xcode.Project.Target.BuildConfiguration(
+                Xcode.Project.BuildConfiguration.Defaults.iOS.release().name
             )
         }
         
@@ -111,10 +111,10 @@ extension Project.Variant
         let configurations = Target.BuildConfigurations()
         
         public
-        var dependencies = Project.Target.Dependencies()
+        var dependencies = Xcode.Project.Target.Dependencies()
         
         public
-        var scripts = Project.Target.Scripts()
+        var scripts = Xcode.Project.Target.Scripts()
         
         public
         var includeCocoapods = false

@@ -1,17 +1,4 @@
 public
-extension Xcode
-{
-    public
-    enum Project
-    {
-        public
-        enum Target {}
-    }
-}
-
-//---
-
-public
 extension Xcode.Project.Target
 {
     public

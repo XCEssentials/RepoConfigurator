@@ -26,17 +26,17 @@
 		9424AB132117552100262B79 /* PathPrefix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9424AB122117552100262B79 /* PathPrefix.swift */; };
 		94C4F9CB211665ED00CFB1DC /* Fastlane.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C4F9CA211665ED00CFB1DC /* Fastlane.swift */; };
 		94C4F9CD2116660900CFB1DC /* Fastlane_Fastfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C4F9CC2116660900CFB1DC /* Fastlane_Fastfile.swift */; };
-		94CB9FC02116535300641D6E /* Project_BuildConfig_Defaults_General.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CB9FBA2116535200641D6E /* Project_BuildConfig_Defaults_General.swift */; };
-		94CB9FC12116535300641D6E /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CB9FBB2116535200641D6E /* Project.swift */; };
-		94CB9FC22116535300641D6E /* Project_Variant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CB9FBC2116535300641D6E /* Project_Variant.swift */; };
-		94CB9FC32116535300641D6E /* Project_BuildConfig_Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CB9FBD2116535300641D6E /* Project_BuildConfig_Defaults.swift */; };
-		94CB9FC42116535300641D6E /* Project_BuildConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CB9FBE2116535300641D6E /* Project_BuildConfig.swift */; };
-		94CB9FC52116535300641D6E /* Project_BuildConfig_Defaults_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CB9FBF2116535300641D6E /* Project_BuildConfig_Defaults_iOS.swift */; };
-		94CB9FCB2116536600641D6E /* Project_Target_Script.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CB9FC62116536500641D6E /* Project_Target_Script.swift */; };
-		94CB9FCC2116536600641D6E /* Project_Target_Dependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CB9FC72116536500641D6E /* Project_Target_Dependencies.swift */; };
-		94CB9FCD2116536600641D6E /* Project_Target_BuildConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CB9FC82116536600641D6E /* Project_Target_BuildConfig.swift */; };
-		94CB9FCE2116536600641D6E /* Project_Target.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CB9FC92116536600641D6E /* Project_Target.swift */; };
-		94CB9FCF2116536600641D6E /* Project_Target_Type.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CB9FCA2116536600641D6E /* Project_Target_Type.swift */; };
+		94CB9FC02116535300641D6E /* Xcode_Project_BuildConfig_Defaults_General.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CB9FBA2116535200641D6E /* Xcode_Project_BuildConfig_Defaults_General.swift */; };
+		94CB9FC12116535300641D6E /* Xcode_Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CB9FBB2116535200641D6E /* Xcode_Project.swift */; };
+		94CB9FC22116535300641D6E /* Xcode_Project_Variant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CB9FBC2116535300641D6E /* Xcode_Project_Variant.swift */; };
+		94CB9FC32116535300641D6E /* Xcode_Project_BuildConfig_Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CB9FBD2116535300641D6E /* Xcode_Project_BuildConfig_Defaults.swift */; };
+		94CB9FC42116535300641D6E /* Xcode_Project_BuildConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CB9FBE2116535300641D6E /* Xcode_Project_BuildConfig.swift */; };
+		94CB9FC52116535300641D6E /* Xcode_Project_BuildConfig_Defaults_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CB9FBF2116535300641D6E /* Xcode_Project_BuildConfig_Defaults_iOS.swift */; };
+		94CB9FCB2116536600641D6E /* Xcode_Project_Target_Script.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CB9FC62116536500641D6E /* Xcode_Project_Target_Script.swift */; };
+		94CB9FCC2116536600641D6E /* Xcode_Project_Target_Dependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CB9FC72116536500641D6E /* Xcode_Project_Target_Dependencies.swift */; };
+		94CB9FCD2116536600641D6E /* Xcode_Project_Target_BuildConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CB9FC82116536600641D6E /* Xcode_Project_Target_BuildConfig.swift */; };
+		94CB9FCE2116536600641D6E /* Xcode_Project_Target.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CB9FC92116536600641D6E /* Xcode_Project_Target.swift */; };
+		94CB9FCF2116536600641D6E /* Xcode_Project_Target_Type.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CB9FCA2116536600641D6E /* Xcode_Project_Target_Type.swift */; };
 		94CB9FD92116583700641D6E /* Struct_Spec_1_2_1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CB9FD42116583700641D6E /* Struct_Spec_1_2_1.swift */; };
 		94CB9FDA2116583700641D6E /* Struct_Spec_1_3_0.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CB9FD52116583700641D6E /* Struct_Spec_1_3_0.swift */; };
 		94CB9FDB2116583700641D6E /* Struct_Spec_2_1_0.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CB9FD62116583700641D6E /* Struct_Spec_2_1_0.swift */; };
@@ -82,17 +82,17 @@
 		9424AB122117552100262B79 /* PathPrefix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathPrefix.swift; sourceTree = "<group>"; };
 		94C4F9CA211665ED00CFB1DC /* Fastlane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fastlane.swift; sourceTree = "<group>"; };
 		94C4F9CC2116660900CFB1DC /* Fastlane_Fastfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fastlane_Fastfile.swift; sourceTree = "<group>"; };
-		94CB9FBA2116535200641D6E /* Project_BuildConfig_Defaults_General.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Project_BuildConfig_Defaults_General.swift; sourceTree = "<group>"; };
-		94CB9FBB2116535200641D6E /* Project.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
-		94CB9FBC2116535300641D6E /* Project_Variant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Project_Variant.swift; sourceTree = "<group>"; };
-		94CB9FBD2116535300641D6E /* Project_BuildConfig_Defaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Project_BuildConfig_Defaults.swift; sourceTree = "<group>"; };
-		94CB9FBE2116535300641D6E /* Project_BuildConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Project_BuildConfig.swift; sourceTree = "<group>"; };
-		94CB9FBF2116535300641D6E /* Project_BuildConfig_Defaults_iOS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Project_BuildConfig_Defaults_iOS.swift; sourceTree = "<group>"; };
-		94CB9FC62116536500641D6E /* Project_Target_Script.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Project_Target_Script.swift; sourceTree = "<group>"; };
-		94CB9FC72116536500641D6E /* Project_Target_Dependencies.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Project_Target_Dependencies.swift; sourceTree = "<group>"; };
-		94CB9FC82116536600641D6E /* Project_Target_BuildConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Project_Target_BuildConfig.swift; sourceTree = "<group>"; };
-		94CB9FC92116536600641D6E /* Project_Target.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Project_Target.swift; sourceTree = "<group>"; };
-		94CB9FCA2116536600641D6E /* Project_Target_Type.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Project_Target_Type.swift; sourceTree = "<group>"; };
+		94CB9FBA2116535200641D6E /* Xcode_Project_BuildConfig_Defaults_General.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Xcode_Project_BuildConfig_Defaults_General.swift; sourceTree = "<group>"; };
+		94CB9FBB2116535200641D6E /* Xcode_Project.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Xcode_Project.swift; sourceTree = "<group>"; };
+		94CB9FBC2116535300641D6E /* Xcode_Project_Variant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Xcode_Project_Variant.swift; sourceTree = "<group>"; };
+		94CB9FBD2116535300641D6E /* Xcode_Project_BuildConfig_Defaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Xcode_Project_BuildConfig_Defaults.swift; sourceTree = "<group>"; };
+		94CB9FBE2116535300641D6E /* Xcode_Project_BuildConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Xcode_Project_BuildConfig.swift; sourceTree = "<group>"; };
+		94CB9FBF2116535300641D6E /* Xcode_Project_BuildConfig_Defaults_iOS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Xcode_Project_BuildConfig_Defaults_iOS.swift; sourceTree = "<group>"; };
+		94CB9FC62116536500641D6E /* Xcode_Project_Target_Script.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Xcode_Project_Target_Script.swift; sourceTree = "<group>"; };
+		94CB9FC72116536500641D6E /* Xcode_Project_Target_Dependencies.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Xcode_Project_Target_Dependencies.swift; sourceTree = "<group>"; };
+		94CB9FC82116536600641D6E /* Xcode_Project_Target_BuildConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Xcode_Project_Target_BuildConfig.swift; sourceTree = "<group>"; };
+		94CB9FC92116536600641D6E /* Xcode_Project_Target.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Xcode_Project_Target.swift; sourceTree = "<group>"; };
+		94CB9FCA2116536600641D6E /* Xcode_Project_Target_Type.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Xcode_Project_Target_Type.swift; sourceTree = "<group>"; };
 		94CB9FD42116583700641D6E /* Struct_Spec_1_2_1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Struct_Spec_1_2_1.swift; sourceTree = "<group>"; };
 		94CB9FD52116583700641D6E /* Struct_Spec_1_3_0.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Struct_Spec_1_3_0.swift; sourceTree = "<group>"; };
 		94CB9FD62116583700641D6E /* Struct_Spec_2_1_0.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Struct_Spec_2_1_0.swift; sourceTree = "<group>"; };
@@ -129,14 +129,14 @@
 		941C0000211617C100326181 /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				941CFFDC2115220600326181 /* RepoConfigurator.h */,
-				941CFFF3211591E900326181 /* TextFile.swift */,
+				9424AB0E211754C100262B79 /* DeploymentTarget.swift */,
+				94DECE532118CBAC0026F148 /* IfFileExistsWritePolicy.swift */,
 				9424AB082117542200262B79 /* Indentation.swift */,
 				94DECE512118C99F0026F148 /* IndentedText.swift */,
-				9424AB0E211754C100262B79 /* DeploymentTarget.swift */,
-				9424AB10211754FE00262B79 /* OSIdentifier.swift */,
 				9424AB0A2117549500262B79 /* KeyValuePair.swift */,
-				94DECE532118CBAC0026F148 /* IfFileExistsWritePolicy.swift */,
+				9424AB10211754FE00262B79 /* OSIdentifier.swift */,
+				941CFFDC2115220600326181 /* RepoConfigurator.h */,
+				941CFFF3211591E900326181 /* TextFile.swift */,
 				94DECE552118CD360026F148 /* Utils.swift */,
 			);
 			path = Core;
@@ -179,8 +179,8 @@
 		941CFFDB2115220600326181 /* RepoConfigurator */ = {
 			isa = PBXGroup;
 			children = (
-				94DECE4C21188AAD0026F148 /* Helpers */,
 				941C0000211617C100326181 /* Core */,
+				94DECE4C21188AAD0026F148 /* Helpers */,
 				941CFFE12115765C00326181 /* Models */,
 			);
 			path = RepoConfigurator;
@@ -191,31 +191,11 @@
 			children = (
 				94C4F9C9211665C500CFB1DC /* Fastlane */,
 				941CFFF92115A77600326181 /* Git */,
-				94CB9FD22116571600641D6E /* Xcode */,
 				941CFFE62115896200326181 /* License */,
-				941CFFE221157C6200326181 /* Project */,
 				941CFFE32115837600326181 /* Repo */,
+				94CB9FD22116571600641D6E /* Xcode */,
 			);
 			path = Models;
-			sourceTree = "<group>";
-		};
-		941CFFE221157C6200326181 /* Project */ = {
-			isa = PBXGroup;
-			children = (
-				94CB9FBB2116535200641D6E /* Project.swift */,
-				94CB9FBE2116535300641D6E /* Project_BuildConfig.swift */,
-				94CB9FBD2116535300641D6E /* Project_BuildConfig_Defaults.swift */,
-				94CB9FBA2116535200641D6E /* Project_BuildConfig_Defaults_General.swift */,
-				94CB9FBF2116535300641D6E /* Project_BuildConfig_Defaults_iOS.swift */,
-				94CB9FC92116536600641D6E /* Project_Target.swift */,
-				94CB9FC82116536600641D6E /* Project_Target_BuildConfig.swift */,
-				94CB9FC72116536500641D6E /* Project_Target_Dependencies.swift */,
-				94CB9FC62116536500641D6E /* Project_Target_Script.swift */,
-				94CB9FCA2116536600641D6E /* Project_Target_Type.swift */,
-				94CB9FBC2116535300641D6E /* Project_Variant.swift */,
-				94CB9FD32116582800641D6E /* Struct */,
-			);
-			path = Project;
 			sourceTree = "<group>";
 		};
 		941CFFE32115837600326181 /* Repo */ = {
@@ -256,8 +236,20 @@
 		94CB9FD22116571600641D6E /* Xcode */ = {
 			isa = PBXGroup;
 			children = (
+				94CB9FD32116582800641D6E /* Struct */,
 				94DECE4F2118C10E0026F148 /* Xcode.swift */,
+				94CB9FBB2116535200641D6E /* Xcode_Project.swift */,
+				94CB9FBE2116535300641D6E /* Xcode_Project_BuildConfig.swift */,
+				94CB9FBD2116535300641D6E /* Xcode_Project_BuildConfig_Defaults.swift */,
+				94CB9FBA2116535200641D6E /* Xcode_Project_BuildConfig_Defaults_General.swift */,
+				94CB9FBF2116535300641D6E /* Xcode_Project_BuildConfig_Defaults_iOS.swift */,
+				94CB9FC92116536600641D6E /* Xcode_Project_Target.swift */,
+				94CB9FC82116536600641D6E /* Xcode_Project_Target_BuildConfig.swift */,
+				94CB9FC72116536500641D6E /* Xcode_Project_Target_Dependencies.swift */,
 				941CFFFE211609BC00326181 /* Xcode_Project_Target_InfoPlist.swift */,
+				94CB9FC62116536500641D6E /* Xcode_Project_Target_Script.swift */,
+				94CB9FCA2116536600641D6E /* Xcode_Project_Target_Type.swift */,
+				94CB9FBC2116535300641D6E /* Xcode_Project_Variant.swift */,
 			);
 			path = Xcode;
 			sourceTree = "<group>";
@@ -279,10 +271,10 @@
 		94DECE4C21188AAD0026F148 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				9424AB122117552100262B79 /* PathPrefix.swift */,
 				9424AB0C211754B200262B79 /* DeviceFamily.swift */,
-				941CFFDD2115220600326181 /* Versions.swift */,
+				9424AB122117552100262B79 /* PathPrefix.swift */,
 				94DECE4D21188B4B0026F148 /* String+TextFilePiece.swift */,
+				941CFFDD2115220600326181 /* Versions.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -395,45 +387,45 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9424AB0F211754C100262B79 /* DeploymentTarget.swift in Sources */,
+				9424AB0D211754B200262B79 /* DeviceFamily.swift in Sources */,
 				94C4F9CB211665ED00CFB1DC /* Fastlane.swift in Sources */,
 				94C4F9CD2116660900CFB1DC /* Fastlane_Fastfile.swift in Sources */,
-				941CFFF4211591E900326181 /* TextFile.swift in Sources */,
 				941CFFFB2115A78C00326181 /* Git.swift in Sources */,
 				941CFFFD2115A7A000326181 /* Git_RepoIgnore.swift in Sources */,
-				94DECE562118CD360026F148 /* Utils.swift in Sources */,
-				941CFFFF211609BC00326181 /* Xcode_Project_Target_InfoPlist.swift in Sources */,
-				94DECE4E21188B4B0026F148 /* String+TextFilePiece.swift in Sources */,
+				94DECE542118CBAC0026F148 /* IfFileExistsWritePolicy.swift in Sources */,
+				9424AB092117542200262B79 /* Indentation.swift in Sources */,
+				94DECE522118C99F0026F148 /* IndentedText.swift in Sources */,
+				9424AB0B2117549500262B79 /* KeyValuePair.swift in Sources */,
 				941CFFEA2115898E00326181 /* License.swift in Sources */,
 				941CFFE82115897100326181 /* License_MIT.swift in Sources */,
-				94CB9FC12116535300641D6E /* Project.swift in Sources */,
-				94CB9FC42116535300641D6E /* Project_BuildConfig.swift in Sources */,
-				9424AB0F211754C100262B79 /* DeploymentTarget.swift in Sources */,
-				94CB9FC32116535300641D6E /* Project_BuildConfig_Defaults.swift in Sources */,
-				94CB9FC02116535300641D6E /* Project_BuildConfig_Defaults_General.swift in Sources */,
+				9424AB11211754FE00262B79 /* OSIdentifier.swift in Sources */,
 				9424AB132117552100262B79 /* PathPrefix.swift in Sources */,
-				9424AB092117542200262B79 /* Indentation.swift in Sources */,
-				94CB9FC52116535300641D6E /* Project_BuildConfig_Defaults_iOS.swift in Sources */,
-				94DECE502118C10E0026F148 /* Xcode.swift in Sources */,
-				94CB9FCE2116536600641D6E /* Project_Target.swift in Sources */,
-				94CB9FCD2116536600641D6E /* Project_Target_BuildConfig.swift in Sources */,
-				94CB9FCC2116536600641D6E /* Project_Target_Dependencies.swift in Sources */,
-				94CB9FCB2116536600641D6E /* Project_Target_Script.swift in Sources */,
-				94CB9FCF2116536600641D6E /* Project_Target_Type.swift in Sources */,
-				94CB9FC22116535300641D6E /* Project_Variant.swift in Sources */,
 				941CFFE52115838600326181 /* Repo.swift in Sources */,
-				941CFFE02115222B00326181 /* Versions.swift in Sources */,
+				94DECE4E21188B4B0026F148 /* String+TextFilePiece.swift in Sources */,
 				94CB9FDF2116585000641D6E /* Struct.swift in Sources */,
 				94CB9FDC2116583700641D6E /* Struct_Spec.swift in Sources */,
 				94CB9FD92116583700641D6E /* Struct_Spec_1_2_1.swift in Sources */,
-				9424AB0D211754B200262B79 /* DeviceFamily.swift in Sources */,
 				94CB9FDA2116583700641D6E /* Struct_Spec_1_3_0.swift in Sources */,
 				94CB9FDD2116583700641D6E /* Struct_Spec_2_0_0.swift in Sources */,
-				9424AB11211754FE00262B79 /* OSIdentifier.swift in Sources */,
-				94DECE522118C99F0026F148 /* IndentedText.swift in Sources */,
-				94DECE542118CBAC0026F148 /* IfFileExistsWritePolicy.swift in Sources */,
 				94CB9FDB2116583700641D6E /* Struct_Spec_2_1_0.swift in Sources */,
 				94CB9FE12116625900641D6E /* Struct_Spec_InternalHelpers.swift in Sources */,
-				9424AB0B2117549500262B79 /* KeyValuePair.swift in Sources */,
+				941CFFF4211591E900326181 /* TextFile.swift in Sources */,
+				94DECE562118CD360026F148 /* Utils.swift in Sources */,
+				941CFFE02115222B00326181 /* Versions.swift in Sources */,
+				94DECE502118C10E0026F148 /* Xcode.swift in Sources */,
+				94CB9FC12116535300641D6E /* Xcode_Project.swift in Sources */,
+				94CB9FC42116535300641D6E /* Xcode_Project_BuildConfig.swift in Sources */,
+				94CB9FC32116535300641D6E /* Xcode_Project_BuildConfig_Defaults.swift in Sources */,
+				94CB9FC02116535300641D6E /* Xcode_Project_BuildConfig_Defaults_General.swift in Sources */,
+				94CB9FC52116535300641D6E /* Xcode_Project_BuildConfig_Defaults_iOS.swift in Sources */,
+				94CB9FCE2116536600641D6E /* Xcode_Project_Target.swift in Sources */,
+				94CB9FCD2116536600641D6E /* Xcode_Project_Target_BuildConfig.swift in Sources */,
+				94CB9FCC2116536600641D6E /* Xcode_Project_Target_Dependencies.swift in Sources */,
+				941CFFFF211609BC00326181 /* Xcode_Project_Target_InfoPlist.swift in Sources */,
+				94CB9FCB2116536600641D6E /* Xcode_Project_Target_Script.swift in Sources */,
+				94CB9FCF2116536600641D6E /* Xcode_Project_Target_Type.swift in Sources */,
+				94CB9FC22116535300641D6E /* Xcode_Project_Variant.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -589,11 +581,7 @@
 				FRAMEWORK_VERSION = A;
 				INFOPLIST_FILE = Info/RepoConfigurator.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.XCEssentials.RepoConfigurator;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -615,11 +603,7 @@
 				FRAMEWORK_VERSION = A;
 				INFOPLIST_FILE = Info/RepoConfigurator.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.XCEssentials.RepoConfigurator;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -635,11 +619,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = UJA88X59XP;
 				INFOPLIST_FILE = Info/RepoConfiguratorTests.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/../Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.XCEssentials.RepoConfiguratorTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -654,11 +634,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = UJA88X59XP;
 				INFOPLIST_FILE = Info/RepoConfiguratorTests.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/../Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.XCEssentials.RepoConfiguratorTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;

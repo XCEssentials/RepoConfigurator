@@ -1,13 +1,14 @@
-extension Project.BuildConfiguration.Defaults
+extension Xcode.Project.BuildConfiguration.Defaults
 {
     enum iOS
     {
         static
         func base(
             _ profiles: [String] = []
-            ) -> Project.BuildConfiguration.Base
+            ) -> Xcode.Project.BuildConfiguration.Base
         {
-            return Project
+            return Xcode
+                .Project
                 .BuildConfiguration
                 .Base(["platform:ios"] + profiles)
         }
@@ -15,9 +16,10 @@ extension Project.BuildConfiguration.Defaults
         static
         func debug(
             _ profiles: [String] = []
-            ) -> Project.BuildConfiguration
+            ) -> Xcode.Project.BuildConfiguration
         {
-            return Project
+            return Xcode
+                .Project
                 .BuildConfiguration
                 .Defaults
                 .debug(["ios:debug"] + profiles)
@@ -26,9 +28,10 @@ extension Project.BuildConfiguration.Defaults
         static
         func release(
             _ profiles: [String] = []
-            ) -> Project.BuildConfiguration
+            ) -> Xcode.Project.BuildConfiguration
         {
-            return Project
+            return Xcode
+                .Project
                 .BuildConfiguration
                 .Defaults
                 .release(["ios:release"] + profiles)
