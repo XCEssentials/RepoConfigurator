@@ -17,14 +17,13 @@
 		941CFFF4211591E900326181 /* TextFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941CFFF3211591E900326181 /* TextFile.swift */; };
 		941CFFFB2115A78C00326181 /* Git.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941CFFFA2115A78C00326181 /* Git.swift */; };
 		941CFFFD2115A7A000326181 /* Git_RepoIgnore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941CFFFC2115A7A000326181 /* Git_RepoIgnore.swift */; };
-		941CFFFF211609BC00326181 /* InfoPlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941CFFFE211609BC00326181 /* InfoPlist.swift */; };
+		941CFFFF211609BC00326181 /* Xcode_Project_Target_InfoPlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941CFFFE211609BC00326181 /* Xcode_Project_Target_InfoPlist.swift */; };
 		9424AB092117542200262B79 /* Indentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9424AB082117542200262B79 /* Indentation.swift */; };
 		9424AB0B2117549500262B79 /* KeyValuePair.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9424AB0A2117549500262B79 /* KeyValuePair.swift */; };
 		9424AB0D211754B200262B79 /* DeviceFamily.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9424AB0C211754B200262B79 /* DeviceFamily.swift */; };
 		9424AB0F211754C100262B79 /* DeploymentTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9424AB0E211754C100262B79 /* DeploymentTarget.swift */; };
 		9424AB11211754FE00262B79 /* OSIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9424AB10211754FE00262B79 /* OSIdentifier.swift */; };
 		9424AB132117552100262B79 /* PathPrefix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9424AB122117552100262B79 /* PathPrefix.swift */; };
-		9481464E21176640009CB999 /* RawTextFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9481464D21176640009CB999 /* RawTextFile.swift */; };
 		94C4F9CB211665ED00CFB1DC /* Fastlane.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C4F9CA211665ED00CFB1DC /* Fastlane.swift */; };
 		94C4F9CD2116660900CFB1DC /* Fastlane_Fastfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C4F9CC2116660900CFB1DC /* Fastlane_Fastfile.swift */; };
 		94CB9FC02116535300641D6E /* Project_BuildConfig_Defaults_General.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CB9FBA2116535200641D6E /* Project_BuildConfig_Defaults_General.swift */; };
@@ -46,6 +45,10 @@
 		94CB9FDF2116585000641D6E /* Struct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CB9FDE2116585000641D6E /* Struct.swift */; };
 		94CB9FE12116625900641D6E /* Struct_Spec_InternalHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CB9FE02116625900641D6E /* Struct_Spec_InternalHelpers.swift */; };
 		94DECE4E21188B4B0026F148 /* String+TextFilePiece.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DECE4D21188B4B0026F148 /* String+TextFilePiece.swift */; };
+		94DECE502118C10E0026F148 /* Xcode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DECE4F2118C10E0026F148 /* Xcode.swift */; };
+		94DECE522118C99F0026F148 /* IndentedText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DECE512118C99F0026F148 /* IndentedText.swift */; };
+		94DECE542118CBAC0026F148 /* IfFileExistsWritePolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DECE532118CBAC0026F148 /* IfFileExistsWritePolicy.swift */; };
+		94DECE562118CD360026F148 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DECE552118CD360026F148 /* Utils.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,14 +73,13 @@
 		941CFFF3211591E900326181 /* TextFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFile.swift; sourceTree = "<group>"; };
 		941CFFFA2115A78C00326181 /* Git.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Git.swift; sourceTree = "<group>"; };
 		941CFFFC2115A7A000326181 /* Git_RepoIgnore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Git_RepoIgnore.swift; sourceTree = "<group>"; };
-		941CFFFE211609BC00326181 /* InfoPlist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoPlist.swift; sourceTree = "<group>"; };
+		941CFFFE211609BC00326181 /* Xcode_Project_Target_InfoPlist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Xcode_Project_Target_InfoPlist.swift; sourceTree = "<group>"; };
 		9424AB082117542200262B79 /* Indentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Indentation.swift; sourceTree = "<group>"; };
 		9424AB0A2117549500262B79 /* KeyValuePair.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyValuePair.swift; sourceTree = "<group>"; };
 		9424AB0C211754B200262B79 /* DeviceFamily.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceFamily.swift; sourceTree = "<group>"; };
 		9424AB0E211754C100262B79 /* DeploymentTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeploymentTarget.swift; sourceTree = "<group>"; };
 		9424AB10211754FE00262B79 /* OSIdentifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSIdentifier.swift; sourceTree = "<group>"; };
 		9424AB122117552100262B79 /* PathPrefix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathPrefix.swift; sourceTree = "<group>"; };
-		9481464D21176640009CB999 /* RawTextFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RawTextFile.swift; sourceTree = "<group>"; };
 		94C4F9CA211665ED00CFB1DC /* Fastlane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fastlane.swift; sourceTree = "<group>"; };
 		94C4F9CC2116660900CFB1DC /* Fastlane_Fastfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fastlane_Fastfile.swift; sourceTree = "<group>"; };
 		94CB9FBA2116535200641D6E /* Project_BuildConfig_Defaults_General.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Project_BuildConfig_Defaults_General.swift; sourceTree = "<group>"; };
@@ -99,6 +101,10 @@
 		94CB9FDE2116585000641D6E /* Struct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Struct.swift; sourceTree = "<group>"; };
 		94CB9FE02116625900641D6E /* Struct_Spec_InternalHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Struct_Spec_InternalHelpers.swift; sourceTree = "<group>"; };
 		94DECE4D21188B4B0026F148 /* String+TextFilePiece.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+TextFilePiece.swift"; sourceTree = "<group>"; };
+		94DECE4F2118C10E0026F148 /* Xcode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Xcode.swift; sourceTree = "<group>"; };
+		94DECE512118C99F0026F148 /* IndentedText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndentedText.swift; sourceTree = "<group>"; };
+		94DECE532118CBAC0026F148 /* IfFileExistsWritePolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IfFileExistsWritePolicy.swift; sourceTree = "<group>"; };
+		94DECE552118CD360026F148 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,10 +132,12 @@
 				941CFFDC2115220600326181 /* RepoConfigurator.h */,
 				941CFFF3211591E900326181 /* TextFile.swift */,
 				9424AB082117542200262B79 /* Indentation.swift */,
-				9481464D21176640009CB999 /* RawTextFile.swift */,
+				94DECE512118C99F0026F148 /* IndentedText.swift */,
 				9424AB0E211754C100262B79 /* DeploymentTarget.swift */,
 				9424AB10211754FE00262B79 /* OSIdentifier.swift */,
 				9424AB0A2117549500262B79 /* KeyValuePair.swift */,
+				94DECE532118CBAC0026F148 /* IfFileExistsWritePolicy.swift */,
+				94DECE552118CD360026F148 /* Utils.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -183,7 +191,7 @@
 			children = (
 				94C4F9C9211665C500CFB1DC /* Fastlane */,
 				941CFFF92115A77600326181 /* Git */,
-				94CB9FD22116571600641D6E /* InfoPlist */,
+				94CB9FD22116571600641D6E /* Xcode */,
 				941CFFE62115896200326181 /* License */,
 				941CFFE221157C6200326181 /* Project */,
 				941CFFE32115837600326181 /* Repo */,
@@ -245,12 +253,13 @@
 			path = Fastlane;
 			sourceTree = "<group>";
 		};
-		94CB9FD22116571600641D6E /* InfoPlist */ = {
+		94CB9FD22116571600641D6E /* Xcode */ = {
 			isa = PBXGroup;
 			children = (
-				941CFFFE211609BC00326181 /* InfoPlist.swift */,
+				94DECE4F2118C10E0026F148 /* Xcode.swift */,
+				941CFFFE211609BC00326181 /* Xcode_Project_Target_InfoPlist.swift */,
 			);
-			path = InfoPlist;
+			path = Xcode;
 			sourceTree = "<group>";
 		};
 		94CB9FD32116582800641D6E /* Struct */ = {
@@ -391,7 +400,8 @@
 				941CFFF4211591E900326181 /* TextFile.swift in Sources */,
 				941CFFFB2115A78C00326181 /* Git.swift in Sources */,
 				941CFFFD2115A7A000326181 /* Git_RepoIgnore.swift in Sources */,
-				941CFFFF211609BC00326181 /* InfoPlist.swift in Sources */,
+				94DECE562118CD360026F148 /* Utils.swift in Sources */,
+				941CFFFF211609BC00326181 /* Xcode_Project_Target_InfoPlist.swift in Sources */,
 				94DECE4E21188B4B0026F148 /* String+TextFilePiece.swift in Sources */,
 				941CFFEA2115898E00326181 /* License.swift in Sources */,
 				941CFFE82115897100326181 /* License_MIT.swift in Sources */,
@@ -403,6 +413,7 @@
 				9424AB132117552100262B79 /* PathPrefix.swift in Sources */,
 				9424AB092117542200262B79 /* Indentation.swift in Sources */,
 				94CB9FC52116535300641D6E /* Project_BuildConfig_Defaults_iOS.swift in Sources */,
+				94DECE502118C10E0026F148 /* Xcode.swift in Sources */,
 				94CB9FCE2116536600641D6E /* Project_Target.swift in Sources */,
 				94CB9FCD2116536600641D6E /* Project_Target_BuildConfig.swift in Sources */,
 				94CB9FCC2116536600641D6E /* Project_Target_Dependencies.swift in Sources */,
@@ -418,9 +429,10 @@
 				94CB9FDA2116583700641D6E /* Struct_Spec_1_3_0.swift in Sources */,
 				94CB9FDD2116583700641D6E /* Struct_Spec_2_0_0.swift in Sources */,
 				9424AB11211754FE00262B79 /* OSIdentifier.swift in Sources */,
+				94DECE522118C99F0026F148 /* IndentedText.swift in Sources */,
+				94DECE542118CBAC0026F148 /* IfFileExistsWritePolicy.swift in Sources */,
 				94CB9FDB2116583700641D6E /* Struct_Spec_2_1_0.swift in Sources */,
 				94CB9FE12116625900641D6E /* Struct_Spec_InternalHelpers.swift in Sources */,
-				9481464E21176640009CB999 /* RawTextFile.swift in Sources */,
 				9424AB0B2117549500262B79 /* KeyValuePair.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

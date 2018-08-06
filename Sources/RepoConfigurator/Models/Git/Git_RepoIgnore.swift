@@ -23,17 +23,12 @@ extension Git
         // MARK: - Instance level members
 
         public
-        let fileContent: IndentedText
+        var fileContent: IndentedText = []
 
         // MARK: - Initializers
 
         public
-        init(
-            fileContent: IndentedText
-            )
-        {
-            self.fileContent = fileContent
-        }
+        init() {}
 
         // MARK: - Aliases
 
@@ -49,7 +44,7 @@ extension Git.RepoIgnore
 {
     public
     static
-    let defaultForApp: Itself = .init(
+    let app = Itself(
         .macOS,
         .cocoa,
         .cocoaPods(ignoreSources: false),
@@ -59,7 +54,7 @@ extension Git.RepoIgnore
 
     public
     static
-    let defaultForFramework: Itself = .init(
+    let framework = Itself(
         .macOS,
         .cocoa,
         .cocoaPods(ignoreSources: true),

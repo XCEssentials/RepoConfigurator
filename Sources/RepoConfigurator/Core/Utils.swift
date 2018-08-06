@@ -1,78 +1,25 @@
-import Foundation
-
-//---
-
-public
-typealias IndentedTextLine = (
-    indentation: Indentation,
-    content: String
-)
-
-//---
-
-public
-typealias IndentedText = [IndentedTextLine]
-
-//---
-
-public
-func <<< (list: inout IndentedText, element: IndentedTextLine)
+// internal
+enum Utils
 {
-    list.append(element)
-}
-
-public
-func <<< (list: inout IndentedText, elements: IndentedText)
-{
-    list.append(contentsOf: elements)
-}
-
-//---
-
-public
-struct RawTextFile
-{
-    public
-    enum IfFileExistsPolicy
-    {
-        case doNotWrite
-        case override
-    }
-
-    //---
-
-    public
-    let fileName: String
-
-    public
-    let targetFolder: URL
-
-    public
-    let content: IndentedText
-
-    //---
-
-    private
-    func render() -> String
-    {
-        return content
-            .map{ "\($0.rendered)\($1)" }
-            .joined(separator: "\n")
-    }
-
+    static
     func writeToFileSystem(
+        _ fileContent: IndentedText,
+        fileName: String,
+        targetFolder: URL,
         trimRepeatingEmptyLines: Bool = true,
-        ifFileExists: IfFileExistsPolicy = .override
+        ifFileExists: IfFileExistsWritePolicy = .override
         ) throws -> Bool
     {
-        var fileContent = render()
+        var buf = fileContent
+            .map{ "\($0.rendered)\($1)" }
+            .joined(separator: "\n")
 
         //---
 
         if
             trimRepeatingEmptyLines
         {
-            fileContent = fileContent
+            buf = buf
                 .recursiveReplacingOccurrences(of: " \n", with: "\n")
                 .recursiveReplacingOccurrences(of: "\n\n\n", with: "\n\n")
                 .trimmingCharacters(in: .whitespacesAndNewlines)
@@ -87,9 +34,9 @@ struct RawTextFile
 
         if
             (ifFileExists == .override) ||
-            !FileManager.default.fileExists(atPath: fullFileName.path)
+                !FileManager.default.fileExists(atPath: fullFileName.path)
         {
-            try fileContent.write(
+            try buf.write(
                 to: fullFileName,
                 atomically: true,
                 encoding: .utf8
