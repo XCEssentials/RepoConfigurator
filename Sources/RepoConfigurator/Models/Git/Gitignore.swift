@@ -1,7 +1,7 @@
 extension Git
 {
     public
-    struct RepoGitignore: FixedNameFile, ConfigurableTextFile
+    struct RepoIgnore: FixedNameFile, ConfigurableTextFile
     {
         // MARK: - Type level members
 
@@ -35,34 +35,43 @@ extension Git
             self.fileContent = fileContent
         }
 
-        // MARK: - Presets
+        // MARK: - Aliases
 
         public
-        static
-        let defaultForApp: RepoGitignore = .init(
-            .macOS,
-            .cocoa,
-            .cocoaPods(ignoreSources: false),
-            .carthage(ignoreSources: false),
-            .fastlane
-        )
-
-        public
-        static
-        let defaultForFramework: RepoGitignore = .init(
-            .macOS,
-            .cocoa,
-            .cocoaPods(ignoreSources: true),
-            .carthage(ignoreSources: true),
-            .fastlane
-        )
+        typealias Itself = RepoIgnore
     }
+}
+
+// MARK: - Presets
+
+public
+extension Git.RepoIgnore
+{
+    public
+    static
+    let defaultForApp: Itself = .init(
+        .macOS,
+        .cocoa,
+        .cocoaPods(ignoreSources: false),
+        .carthage(ignoreSources: false),
+        .fastlane
+    )
+
+    public
+    static
+    let defaultForFramework: Itself = .init(
+        .macOS,
+        .cocoa,
+        .cocoaPods(ignoreSources: true),
+        .carthage(ignoreSources: true),
+        .fastlane
+    )
 }
 
 // MARK: - Content rendering
 
 public
-extension Git.RepoGitignore.Section
+extension Git.RepoIgnore.Section
 {
     func asIndentedText(
         with indentation: Indentation
