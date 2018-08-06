@@ -1,26 +1,16 @@
 public
 extension License
 {
-    struct MIT: FixedNameFile
+    static
+    func MIT(
+        copyrightYear: UInt,
+        copyrightEntity: String
+        ) -> License
     {
-        public
-        static
-        let fileName = "LICENSE"
-
-        //---
-
-        public
-        let copyrightYear: UInt
-
-        public
-        let copyrightEntity: String
-
-        //---
-
-        public
-        func prepareContent() throws -> IndentedText
-        {
-            return """
+        // https://choosealicense.com/licenses/mit/
+        
+        return .init(
+            fileContent: """
                 MIT License
 
                 Copyright (c) \(copyrightYear) \(copyrightEntity)
@@ -44,6 +34,6 @@ extension License
                 SOFTWARE.
                 """
                 .asIndentedText()
-        }
+        )
     }
 }

@@ -1,7 +1,7 @@
 public
 protocol FileModel
 {
-    func prepareContent() throws -> IndentedText
+    var fileContent: IndentedText { get }
 }
 
 //---
@@ -24,7 +24,7 @@ extension ArbitraryNamedFile
         return try RawTextFile(
             fileName: fileName,
             targetFolder: targetFolder,
-            content: prepareContent()
+            content: fileContent
             )
             .writeToFileSystem(
                 trimRepeatingEmptyLines: trimRepeatingEmptyLines,
@@ -54,7 +54,7 @@ extension FixedNameFile
         return try RawTextFile(
             fileName: type(of: self).fileName,
             targetFolder: targetFolder,
-            content: prepareContent()
+            content: fileContent
             )
             .writeToFileSystem(
                 trimRepeatingEmptyLines: trimRepeatingEmptyLines,

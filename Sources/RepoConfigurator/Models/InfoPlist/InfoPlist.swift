@@ -28,7 +28,7 @@ struct InfoPlist: ArbitraryNamedFile
     //---
 
     public
-    func prepareContent() throws -> IndentedText
+    var fileContent: IndentedText
     {
         return """
             <?xml version="1.0" encoding="UTF-8"?>
@@ -111,7 +111,7 @@ struct InfoPlist_macOS: ArbitraryNamedFile
     //---
 
     public
-    func prepareContent() throws -> IndentedText
+    var fileContent: IndentedText
     {
         return """
             <?xml version="1.0" encoding="UTF-8"?>
