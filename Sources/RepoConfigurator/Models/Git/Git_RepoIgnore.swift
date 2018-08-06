@@ -1,7 +1,7 @@
 extension Git
 {
     public
-    struct RepoIgnore: FixedNameFile, ConfigurableTextFile
+    struct RepoIgnore: FixedNameTextFile, ConfigurableTextFile
     {
         // MARK: - Type level members
 

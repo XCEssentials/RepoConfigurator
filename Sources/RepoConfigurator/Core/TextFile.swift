@@ -7,13 +7,13 @@ protocol TextFile
 //---
 
 public
-protocol ArbitraryNamedFile: TextFile
+protocol ArbitraryNamedTextFile: TextFile
 {
     var fileName: String { get }
 }
 
 public
-extension ArbitraryNamedFile
+extension ArbitraryNamedTextFile
 {
     func writeToFileSystem(
         at targetFolder: URL,
@@ -36,14 +36,14 @@ extension ArbitraryNamedFile
 //---
 
 public
-protocol FixedNameFile: TextFile
+protocol FixedNameTextFile: TextFile
 {
     static
     var fileName: String { get }
 }
 
 public
-extension FixedNameFile
+extension FixedNameTextFile
 {
     func writeToFileSystem(
         at targetFolder: URL,

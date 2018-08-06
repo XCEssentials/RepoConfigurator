@@ -1,5 +1,5 @@
 public
-struct InfoPlist: ArbitraryNamedFile
+struct InfoPlist: ArbitraryNamedTextFile
 {
     public
     enum PackageType: String
@@ -76,7 +76,7 @@ struct InfoPlist: ArbitraryNamedFile
 //---
 
 public
-struct InfoPlist_macOS: ArbitraryNamedFile
+struct InfoPlist_macOS: ArbitraryNamedTextFile
 {
     public
     enum PackageType: String

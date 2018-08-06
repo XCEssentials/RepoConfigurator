@@ -1,5 +1,5 @@
 public
-struct Project: FixedNameFile
+struct Project: FixedNameTextFile
 {
     public
     static

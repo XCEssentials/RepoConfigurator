@@ -1,5 +1,5 @@
 public
-struct License: FixedNameFile
+struct License: FixedNameTextFile
 {
     // MARK: - Type level members
 
