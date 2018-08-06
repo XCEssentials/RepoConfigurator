@@ -16,7 +16,7 @@
 		941CFFEA2115898E00326181 /* License.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941CFFE92115898E00326181 /* License.swift */; };
 		941CFFF4211591E900326181 /* TextFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941CFFF3211591E900326181 /* TextFile.swift */; };
 		941CFFFB2115A78C00326181 /* Git.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941CFFFA2115A78C00326181 /* Git.swift */; };
-		941CFFFD2115A7A000326181 /* Gitignore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941CFFFC2115A7A000326181 /* Gitignore.swift */; };
+		941CFFFD2115A7A000326181 /* Git_RepoIgnore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941CFFFC2115A7A000326181 /* Git_RepoIgnore.swift */; };
 		941CFFFF211609BC00326181 /* InfoPlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941CFFFE211609BC00326181 /* InfoPlist.swift */; };
 		9424AB092117542200262B79 /* Indentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9424AB082117542200262B79 /* Indentation.swift */; };
 		9424AB0B2117549500262B79 /* KeyValuePair.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9424AB0A2117549500262B79 /* KeyValuePair.swift */; };
@@ -69,7 +69,7 @@
 		941CFFE92115898E00326181 /* License.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = License.swift; sourceTree = "<group>"; };
 		941CFFF3211591E900326181 /* TextFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFile.swift; sourceTree = "<group>"; };
 		941CFFFA2115A78C00326181 /* Git.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Git.swift; sourceTree = "<group>"; };
-		941CFFFC2115A7A000326181 /* Gitignore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gitignore.swift; sourceTree = "<group>"; };
+		941CFFFC2115A7A000326181 /* Git_RepoIgnore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Git_RepoIgnore.swift; sourceTree = "<group>"; };
 		941CFFFE211609BC00326181 /* InfoPlist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoPlist.swift; sourceTree = "<group>"; };
 		9424AB082117542200262B79 /* Indentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Indentation.swift; sourceTree = "<group>"; };
 		9424AB0A2117549500262B79 /* KeyValuePair.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyValuePair.swift; sourceTree = "<group>"; };
@@ -231,7 +231,7 @@
 			isa = PBXGroup;
 			children = (
 				941CFFFA2115A78C00326181 /* Git.swift */,
-				941CFFFC2115A7A000326181 /* Gitignore.swift */,
+				941CFFFC2115A7A000326181 /* Git_RepoIgnore.swift */,
 			);
 			path = Git;
 			sourceTree = "<group>";
@@ -390,7 +390,7 @@
 				94C4F9CD2116660900CFB1DC /* Fastlane_Fastfile.swift in Sources */,
 				941CFFF4211591E900326181 /* TextFile.swift in Sources */,
 				941CFFFB2115A78C00326181 /* Git.swift in Sources */,
-				941CFFFD2115A7A000326181 /* Gitignore.swift in Sources */,
+				941CFFFD2115A7A000326181 /* Git_RepoIgnore.swift in Sources */,
 				941CFFFF211609BC00326181 /* InfoPlist.swift in Sources */,
 				94DECE4E21188B4B0026F148 /* String+TextFilePiece.swift in Sources */,
 				941CFFEA2115898E00326181 /* License.swift in Sources */,
