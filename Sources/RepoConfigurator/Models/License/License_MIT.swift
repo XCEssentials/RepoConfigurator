@@ -8,7 +8,11 @@ extension License
         ) -> License
     {
         // https://choosealicense.com/licenses/mit/
-        
+
+        var indentation = Indentation()
+
+        //---
+
         return .init(
             fileContent: """
                 MIT License
@@ -33,7 +37,7 @@ extension License
                 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
                 SOFTWARE.
                 """
-                .asIndentedText()
+                .asIndentedText(with: &indentation)
         )
     }
 }

@@ -67,17 +67,8 @@ public
 protocol TextFilePiece
 {
     func asIndentedText(
-        with indentation: Indentation
+        with indentation: inout Indentation
         ) -> IndentedText
-}
-
-public
-extension TextFilePiece
-{
-    func asIndentedText() -> IndentedText
-    {
-        return asIndentedText(with: Indentation())
-    }
 }
 
 // MARK: - CONFIGURABLE Named Text File
@@ -103,8 +94,10 @@ extension ConfigurableTextFile
 
         //---
 
+        var indentation = Indentation()
+
         fileContent = sections
-            .map{ $0.asIndentedText() }
+            .map{ $0.asIndentedText(with: &indentation) }
             .reduce(into: IndentedText()){ $0 += $1 }
     }
 

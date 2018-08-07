@@ -133,26 +133,29 @@ public
 extension Xcode.Project.Target.InfoPlist.Section
 {
     func asIndentedText(
-        with indentation: Indentation
+        with indentation: inout Indentation
         ) -> IndentedText
     {
+        let result: String
+
+        //---
+
         switch self
         {
             case .header:
-                return """
+                result = """
                     <?xml version="1.0" encoding="UTF-8"?>
                     <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
                     <plist version="1.0">
                     <dict>
                     """
-                    .asIndentedText(with: indentation)
 
             case .basic(
                 let packageType,
                 let initialVersionString,
                 let initialBuildNumber
                 ):
-                return """
+                result = """
 
                     <key>CFBundleDevelopmentRegion</key>
                     <string>$(DEVELOPMENT_LANGUAGE)</string>
@@ -172,10 +175,9 @@ extension Xcode.Project.Target.InfoPlist.Section
                     <string>\(initialBuildNumber)</string>
 
                     """
-                    .asIndentedText(with: indentation)
 
             case .iOS:
-                return """
+                result = """
 
                     <key>LSRequiresIPhoneOS</key>
                     <true/>
@@ -191,13 +193,12 @@ extension Xcode.Project.Target.InfoPlist.Section
                     </array>
 
                     """
-                    .asIndentedText(with: indentation)
 
             case .macOS(
                 let copyrightYear,
                 let copyrightEntity
                 ):
-                return """
+                result = """
 
                     <key>CFBundleIconFile</key>
                     <string></string>
@@ -211,24 +212,25 @@ extension Xcode.Project.Target.InfoPlist.Section
                     <string>NSApplication</string>
 
                     """
-                    .asIndentedText(with: indentation)
 
             case .custom(
                 let customSection
                 ):
-                return """
+                result = """
 
                     \(customSection)
 
                     """
-                    .asIndentedText(with: indentation)
 
             case .footer:
-                return """
+                result = """
                     </dict>
                     </plist>
                     """
-                    .asIndentedText(with: indentation)
         }
+
+        //---
+
+        return result.asIndentedText(with: &indentation)
     }
 }

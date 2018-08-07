@@ -53,7 +53,7 @@ extension Struct.Spec_1_3_0
         
         //---
         
-        result <<< "".asIndentedText() // empty line in the EOF
+        result <<< "".asIndentedText(with: &indentation) // empty line in the EOF
         
         //---
         

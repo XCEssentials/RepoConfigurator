@@ -69,13 +69,17 @@ public
 extension Git.RepoIgnore.Section
 {
     func asIndentedText(
-        with indentation: Indentation
+        with indentation: inout Indentation
         ) -> IndentedText
     {
+        let result: String
+
+        //---
+
         switch self
         {
             case .macOS:
-                return """
+                result = """
                     # ==========
                     ### macOS ###
 
@@ -111,10 +115,9 @@ extension Git.RepoIgnore.Section
                     #
                     #
                     """
-                    .asIndentedText(with: indentation)
 
             case .cocoa:
-                return """
+                result = """
                     # ==========
                     ### Cocoa ###
 
@@ -163,10 +166,11 @@ extension Git.RepoIgnore.Section
                     #
                     #
                     """
-                    .asIndentedText(with: indentation)
 
-            case .cocoaPods(let ignoreSources):
-                return """
+            case .cocoaPods(
+                let ignoreSources
+                ):
+                result = """
                     # ==========
                     ### CocoaPods ###
 
@@ -181,10 +185,11 @@ extension Git.RepoIgnore.Section
                     #
                     #
                     """
-                    .asIndentedText(with: indentation)
 
-            case .carthage(let ignoreSources):
-                return """
+            case .carthage(
+                let ignoreSources
+                ):
+                result = """
                     # ==========
                     ### Carthage ###
 
@@ -197,10 +202,9 @@ extension Git.RepoIgnore.Section
                     #
                     #
                     """
-                    .asIndentedText(with: indentation)
 
             case .fastlane:
-                return """
+                result = """
                     # ==========
                     ### Fastlane ###
 
@@ -219,10 +223,11 @@ extension Git.RepoIgnore.Section
                     #
                     #
                     """
-                    .asIndentedText(with: indentation)
 
-            case .custom(let customEntry):
-                return """
+            case .custom(
+                let customEntry
+                ):
+                result = """
                     # ==========
                     ### Custom repo-specific ###
 
@@ -234,7 +239,10 @@ extension Git.RepoIgnore.Section
                     #
                     #
                     """
-                    .asIndentedText(with: indentation)
         }
+
+        //---
+
+        return result.asIndentedText(with: &indentation)
     }
 }
