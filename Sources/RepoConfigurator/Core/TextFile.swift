@@ -14,21 +14,20 @@ protocol ArbitraryNamedTextFile: TextFile {}
 public
 extension ArbitraryNamedTextFile
 {
-    func writeToFileSystem(
-        fileName: String,
-        at targetFolder: URL,
-        trimRepeatingEmptyLines: Bool = true,
-        ifFileExists: IfFileExistsWritePolicy = .override
-        ) throws -> Bool
+    func prepare(
+        name: String,
+        targetFolder: URL,
+        removeSpacesAtEOL: Bool = true,
+        removeRepeatingEmptyLines: Bool = true
+        ) -> RawTextFile<Self>
     {
-        return try Utils
-            .writeToFileSystem(
-                fileContent,
-                fileName: fileName,
-                targetFolder: targetFolder,
-                trimRepeatingEmptyLines: trimRepeatingEmptyLines,
-                ifFileExists: ifFileExists
-            )
+        return RawTextFile(
+            model: self,
+            name: name,
+            targetFolder: targetFolder,
+            shouldRemoveSpacesAtEOL: removeSpacesAtEOL,
+            shouldRemoveRepeatingEmptyLines: removeRepeatingEmptyLines
+        )
     }
 }
 
@@ -44,20 +43,24 @@ protocol FixedNameTextFile: TextFile
 public
 extension FixedNameTextFile
 {
-    func writeToFileSystem(
-        at targetFolder: URL,
-        trimRepeatingEmptyLines: Bool = true,
-        ifFileExists: IfFileExistsWritePolicy = .override
-        ) throws -> Bool
+    var fileName: String
     {
-        return try Utils
-            .writeToFileSystem(
-                fileContent,
-                fileName: type(of: self).fileName,
-                targetFolder: targetFolder,
-                trimRepeatingEmptyLines: trimRepeatingEmptyLines,
-                ifFileExists: ifFileExists
-            )
+        return Self.fileName
+    }
+
+    func prepare(
+        targetFolder: URL,
+        removeSpacesAtEOL: Bool = true,
+        removeRepeatingEmptyLines: Bool = true
+        ) -> RawTextFile<Self>
+    {
+        return RawTextFile(
+            model: self,
+            name: type(of: self).fileName,
+            targetFolder: targetFolder,
+            shouldRemoveSpacesAtEOL: removeSpacesAtEOL,
+            shouldRemoveRepeatingEmptyLines: removeRepeatingEmptyLines
+        )
     }
 }
 

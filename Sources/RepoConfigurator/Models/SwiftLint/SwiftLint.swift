@@ -51,11 +51,6 @@ struct SwiftLint: FixedNameTextFile, ConfigurableTextFile
 
     public
     init() {}
-
-    // MARK: - Aliases
-
-    public
-    typealias Itself = SwiftLint
 }
 
 // MARK: - Presets
@@ -65,7 +60,7 @@ extension SwiftLint
 {
     public
     static
-    let defaultXCE = Itself(
+    let defaultXCE = SwiftLint(
         .defaultHeader,
         .disabledRules(
             setXCEDefaults: true,

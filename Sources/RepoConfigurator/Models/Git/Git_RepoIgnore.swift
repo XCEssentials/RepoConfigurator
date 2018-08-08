@@ -29,11 +29,6 @@ extension Git
 
         public
         init() {}
-
-        // MARK: - Aliases
-
-        public
-        typealias Itself = RepoIgnore
     }
 }
 
@@ -44,7 +39,7 @@ extension Git.RepoIgnore
 {
     public
     static
-    let app = Itself(
+    let app = Git.RepoIgnore(
         .macOS,
         .cocoa,
         .cocoaPods(ignoreSources: false),
@@ -54,7 +49,7 @@ extension Git.RepoIgnore
 
     public
     static
-    let framework = Itself(
+    let framework = Git.RepoIgnore(
         .macOS,
         .cocoa,
         .cocoaPods(ignoreSources: true),
@@ -177,7 +172,7 @@ extension Git.RepoIgnore.Section
                     # NOTE: never ignore the lock file.
                     # See https://guides.cocoapods.org/using/using-cocoapods.html#what-is-podfilelock
 
-                    \((ignoreSources ? "" : "# ")) Pods/
+                    \((ignoreSources ? "" : "# "))Pods/
 
                     ### CocoaPods ###
                     # ==========
@@ -194,7 +189,7 @@ extension Git.RepoIgnore.Section
                     ### Carthage ###
 
                     Carthage/Build
-                    \((ignoreSources ? "" : "# ")) Carthage/Checkouts
+                    \((ignoreSources ? "" : "# "))Carthage/Checkouts
 
                     ### Carthage ###
                     # ==========

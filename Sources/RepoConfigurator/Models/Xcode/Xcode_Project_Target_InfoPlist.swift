@@ -25,9 +25,14 @@ extension Xcode.Project.Target
                 initialBuildNumber: BuildNumber
             )
 
-            case iOS
+            case iOSApp
 
-            case macOS(
+            case macOSApp(
+                copyrightYear: UInt,
+                copyrightEntity: String
+            )
+
+            case macOSFramework(
                 copyrightYear: UInt,
                 copyrightEntity: String
             )
@@ -46,11 +51,6 @@ extension Xcode.Project.Target
 
         public
         init() {}
-
-        // MARK: - Aliases
-
-        public
-        typealias Itself = InfoPlist
     }
 }
 
@@ -60,21 +60,19 @@ public
 extension Xcode.Project.Target.InfoPlist
 {
     static
-    func iOSProduct(
-        packageType: PackageType,
-        initialVersionString: VersionString,
-        initialBuildNumber: BuildNumber,
+    func iOSFramework(
+        initialVersionString: VersionString = Defaults.initialVersionString,
+        initialBuildNumber: BuildNumber = Defaults.initialBuildNumber,
         _ customSections: String...
-        ) -> Itself
+        ) -> Xcode.Project.Target.InfoPlist
     {
         var sections: [Section] = [
             .header,
             .basic(
-                packageType: packageType,
+                packageType: .framework,
                 initialVersionString: initialVersionString,
                 initialBuildNumber: initialBuildNumber
-            ),
-            .iOS
+            )
         ]
 
         sections += customSections.map{
@@ -87,27 +85,56 @@ extension Xcode.Project.Target.InfoPlist
 
         //---
 
-        return Itself(sections: sections)
+        return .init(sections: sections)
     }
 
     static
-    func macOSProduct(
-        packageType: PackageType,
-        initialVersionString: VersionString,
-        initialBuildNumber: BuildNumber,
-        copyrightYear: UInt,
-        copyrightEntity: String,
+    func iOSApp(
+        initialVersionString: VersionString = Defaults.initialVersionString,
+        initialBuildNumber: BuildNumber = Defaults.initialBuildNumber,
         _ customSections: String...
-        ) -> Itself
+        ) -> Xcode.Project.Target.InfoPlist
     {
         var sections: [Section] = [
             .header,
             .basic(
-                packageType: packageType,
+                packageType: .app,
                 initialVersionString: initialVersionString,
                 initialBuildNumber: initialBuildNumber
             ),
-            .macOS(
+            .iOSApp
+        ]
+
+        sections += customSections.map{
+            .custom($0)
+        }
+
+        sections += [
+            .footer
+        ]
+
+        //---
+
+        return .init(sections: sections)
+    }
+
+    static
+    func macOSFramework(
+        initialVersionString: VersionString = Defaults.initialVersionString,
+        initialBuildNumber: BuildNumber = Defaults.initialBuildNumber,
+        copyrightYear: UInt = Defaults.copyrightYear,
+        copyrightEntity: String,
+        _ customSections: String...
+        ) -> Xcode.Project.Target.InfoPlist
+    {
+        var sections: [Section] = [
+            .header,
+            .basic(
+                packageType: .framework,
+                initialVersionString: initialVersionString,
+                initialBuildNumber: initialBuildNumber
+            ),
+            .macOSFramework(
                 copyrightYear: copyrightYear,
                 copyrightEntity: copyrightEntity
             )
@@ -123,8 +150,74 @@ extension Xcode.Project.Target.InfoPlist
 
         //---
 
-        return Itself(sections: sections)
+        return .init(sections: sections)
     }
+
+    static
+    func macOSApp(
+        initialVersionString: VersionString = Defaults.initialVersionString,
+        initialBuildNumber: BuildNumber = Defaults.initialBuildNumber,
+        copyrightYear: UInt = Defaults.copyrightYear,
+        copyrightEntity: String,
+        _ customSections: String...
+        ) -> Xcode.Project.Target.InfoPlist
+    {
+        var sections: [Section] = [
+            .header,
+            .basic(
+                packageType: .app,
+                initialVersionString: initialVersionString,
+                initialBuildNumber: initialBuildNumber
+            ),
+            .macOSApp(
+                copyrightYear: copyrightYear,
+                copyrightEntity: copyrightEntity
+            )
+        ]
+
+        sections += customSections.map{
+            .custom($0)
+        }
+
+        sections += [
+            .footer
+        ]
+
+        //---
+
+        return .init(sections: sections)
+    }
+
+
+    static
+    func unitTests(
+        initialVersionString: VersionString = Defaults.initialVersionString,
+        initialBuildNumber: BuildNumber = Defaults.initialBuildNumber,
+        _ customSections: String...
+        ) -> Xcode.Project.Target.InfoPlist
+    {
+        var sections: [Section] = [
+            .header,
+            .basic(
+                packageType: .tests,
+                initialVersionString: initialVersionString,
+                initialBuildNumber: initialBuildNumber
+            )
+        ]
+
+        sections += customSections.map{
+            .custom($0)
+        }
+
+        sections += [
+            .footer
+        ]
+
+        //---
+
+        return .init(sections: sections)
+    }
+
 }
 
 // MARK: - Content rendering
@@ -176,7 +269,7 @@ extension Xcode.Project.Target.InfoPlist.Section
 
                     """
 
-            case .iOS:
+            case .iOSApp:
                 result = """
 
                     <key>LSRequiresIPhoneOS</key>
@@ -194,7 +287,7 @@ extension Xcode.Project.Target.InfoPlist.Section
 
                     """
 
-            case .macOS(
+            case .macOSApp(
                 let copyrightYear,
                 let copyrightEntity
                 ):
@@ -210,6 +303,19 @@ extension Xcode.Project.Target.InfoPlist.Section
                     <string>MainMenu</string>
                     <key>NSPrincipalClass</key>
                     <string>NSApplication</string>
+
+                    """
+
+            case .macOSFramework(
+                let copyrightYear,
+                let copyrightEntity
+                ):
+                result = """
+
+                    <key>NSHumanReadableCopyright</key>
+                    <string>Copyright © \(copyrightYear) \(copyrightEntity). All rights reserved.</string>
+                    <key>NSPrincipalClass</key>
+                    <string></string>
 
                     """
 

@@ -72,11 +72,6 @@ extension CocoaPods
 
         public
         init() {}
-
-        // MARK: - Aliases
-
-        public
-        typealias Itself = Podspec
     }
 }
 
@@ -88,17 +83,17 @@ extension CocoaPods.Podspec
     public
     static
     func standard(
-        specVar: String = "s",
+        specVar: String = Defaults.specVariable,
         product: Product,
         company: Company,
-        initialVersion: VersionString = "0.1.0",
+        initialVersion: VersionString = Defaults.initialVersionString,
         license: License,
         author: Author,
         swiftVersion: VersionString?,
         deploymentTarget: DeploymentTarget,
-        sourcesPath: String = "Sources",
-        otherEntries: [String]
-        ) -> Itself
+        sourcesPath: String = Defaults.pathToSourcesFolder,
+        otherEntries: [String] = []
+        ) -> CocoaPods.Podspec
     {
         var sections: [Section] = [
 
@@ -126,7 +121,7 @@ extension CocoaPods.Podspec
 
         //---
 
-        return Itself(sections: sections)
+        return .init(sections: sections)
     }
 }
 

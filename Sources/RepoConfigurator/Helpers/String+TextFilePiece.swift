@@ -5,6 +5,10 @@ extension String: TextFilePiece
         with indentation: inout Indentation
         ) -> IndentedText
     {
-        return split(separator: "\n").map{ (indentation, String($0)) }
+        return split(
+            separator: "\n",
+            omittingEmptySubsequences: false // to preserve empty lines!
+            )
+            .map{ (indentation, String($0)) }
     }
 }

@@ -42,7 +42,7 @@ extension Fastlane
 
             case beforeRelease(
                 projectName: String,
-                podspecModuleName: String?
+                cocoaPodsModuleName: String?
             )
 
             case regenerateProject(
@@ -80,11 +80,6 @@ extension Fastlane
 
         public
         init() {}
-
-        // MARK: - Aliases
-
-        public
-        typealias Itself = Fastfile
     }
 }
 
@@ -99,7 +94,7 @@ extension Fastlane.Fastfile
         fastlaneVersion: VersionString,
         projectName: String,
         productName: String,
-        podspecModuleName: String?,
+        cocoaPodsModuleName: String?,
         usesCocoapods: Bool,
         usesSwiftGen: Bool,
         usesSourcery: Bool,
@@ -107,16 +102,16 @@ extension Fastlane.Fastfile
         stagingSchemeName: String,
         stagingExportMethod: ArchiveExportMethod,
         archivesExportPath: String
-        ) -> Itself
+        ) -> Fastlane.Fastfile
     {
-        return Itself(
+        return .init(
             .defaultHeader,
             .fastlaneVersion(
                 fastlaneVersion
             ),
             .beforeRelease(
                 projectName: projectName,
-                podspecModuleName: podspecModuleName
+                cocoaPodsModuleName: cocoaPodsModuleName
             ),
             .regenerateProject(
                 projectName: projectName,
@@ -145,23 +140,23 @@ extension Fastlane.Fastfile
     public
     static
     func framework(
-        fastlaneVersion: VersionString,
+        fastlaneVersion: VersionString = "1.100.0",
         projectName: String,
-        podspecModuleName: String?,
-        usesCocoapods: Bool,
-        usesSwiftGen: Bool,
-        usesSourcery: Bool,
-        usesSwiftLint: SwiftLintLocation
-        ) -> Itself
+        cocoaPodsModuleName: String?,
+        usesCocoapods: Bool = true,
+        usesSwiftGen: Bool = false,
+        usesSourcery: Bool = false,
+        usesSwiftLint: SwiftLintLocation = .global
+        ) -> Fastlane.Fastfile
     {
-        return Itself(
+        return .init(
             .defaultHeader,
             .fastlaneVersion(
                 fastlaneVersion
             ),
             .beforeRelease(
                 projectName: projectName,
-                podspecModuleName: podspecModuleName
+                cocoaPodsModuleName: cocoaPodsModuleName
             ),
             .regenerateProject(
                 projectName: projectName,
@@ -236,7 +231,7 @@ extension Fastlane.Fastfile.Section
 
             case .beforeRelease(
                 let projectName,
-                let podspecModuleName
+                let cocoaPodsModuleName
                 ):
                 result <<< """
 
@@ -307,20 +302,19 @@ extension Fastlane.Fastfile.Section
 
                 indentation++
 
-                if
-                    let podspecModuleName = podspecModuleName
-                {
+                cocoaPodsModuleName.map{
+
                     result <<< """
 
                         # ===
 
                         version_bump_podspec(
-                        path: './\(podspecModuleName).podspec',
+                        path: './\($0).podspec',
                         version_number: newVersionNumber
                         )
 
                         git_commit(
-                        path: './\(podspecModuleName).podspec',
+                        path: './\($0).podspec',
                         message: 'Version Bump to ' + newVersionNumber + ' in Podspec file'
                         )
                         """

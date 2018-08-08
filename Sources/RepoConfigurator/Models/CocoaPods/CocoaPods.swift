@@ -24,3 +24,17 @@ extension OSIdentifier
         }
     }
 }
+
+//---
+
+public
+extension WidelyUsedLicense
+{
+    var cocoaPodsLicenseSummary: CocoaPods.Podspec.License
+    {
+        return (
+            type: licenseType,
+            fileName
+        )
+    }
+}

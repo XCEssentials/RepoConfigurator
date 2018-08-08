@@ -77,11 +77,6 @@ extension CocoaPods
 
         public
         init() {}
-
-        // MARK: - Aliases
-
-        public
-        typealias Itself = Podfile
     }
 }
 
@@ -101,7 +96,7 @@ extension CocoaPods.Podfile
         pods: [String],
         tests: [UnitTestTarget] = [],
         otherGlobalEntries: [String] = []
-        ) -> Itself
+        ) -> CocoaPods.Podfile
     {
         var sections: [Section] = [
 
@@ -126,7 +121,7 @@ extension CocoaPods.Podfile
 
         //---
 
-        return Itself(sections: sections)
+        return .init(sections: sections)
     }
 }
 

@@ -1,20 +1,29 @@
 public
 extension License
 {
-    static
-    func MIT(
-        copyrightYear: UInt,
-        copyrightEntity: String
-        ) -> License
+    public
+    struct MIT: WidelyUsedLicense
     {
-        // https://choosealicense.com/licenses/mit/
+        // MARK: - Instance level members
 
-        var indentation = Indentation()
+        public
+        let fileContent: IndentedText
 
-        //---
+        // MARK: - Initializers
 
-        return .init(
-            fileContent: """
+        public
+        init(
+            copyrightYear: UInt,
+            copyrightEntity: String
+            )
+        {
+            // https://choosealicense.com/licenses/mit/
+
+            var indentation = Indentation()
+
+            //---
+
+            fileContent = """
                 MIT License
 
                 Copyright (c) \(copyrightYear) \(copyrightEntity)
@@ -38,6 +47,6 @@ extension License
                 SOFTWARE.
                 """
                 .asIndentedText(with: &indentation)
-        )
+        }
     }
 }

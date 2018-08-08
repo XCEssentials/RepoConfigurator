@@ -22,3 +22,18 @@ func <<< (list: inout IndentedText, elements: IndentedText)
 {
     list.append(contentsOf: elements)
 }
+
+//---
+
+public
+extension Array
+    where
+    Element == IndentedTextLine
+{
+    var rendered: String
+    {
+        return self
+            .map{ "\($0.rendered)\($1)" }
+            .joined(separator: "\n")
+    }
+}

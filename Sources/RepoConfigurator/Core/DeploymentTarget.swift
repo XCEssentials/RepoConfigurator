@@ -1,9 +1,5 @@
 public
-struct DeploymentTarget
-{
-    public
-    let platform: OSIdentifier
-
-    public
-    let minimumVersion: VersionString
-}
+typealias DeploymentTarget = (
+    platform: OSIdentifier,
+    minimumVersion: VersionString
+)
