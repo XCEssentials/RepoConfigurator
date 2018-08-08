@@ -10,34 +10,32 @@ extension Fastlane
         let fileName = "fastlane/Fastfile"
 
         public
+        enum SwiftLintLocation
+        {
+            case none
+            case global
+            case cocoaPods
+        }
+
+        /**
+         Method used to export the archive.
+         Valid values are: app-store, ad-hoc, package, enterprise, development, developer-id.
+         See more: https://docs.fastlane.tools/actions/gym/#parameters
+         */
+        public
+        enum ArchiveExportMethod: String
+        {
+            case appStore = "app-store"
+            case adHoc = "ad-hoc"
+            case package = "package"
+            case enterprise = "enterprise"
+            case development = "development"
+            case developerId = "developer-id"
+        }
+
+        public
         enum Section: TextFilePiece
         {
-            public
-            enum SwiftLintLocation
-            {
-                case none
-                case global
-                case cocoaPods
-            }
-
-            /**
-             Method used to export the archive.
-             Valid values are: app-store, ad-hoc, package, enterprise, development, developer-id.
-             See more: https://docs.fastlane.tools/actions/gym/#parameters
-             */
-            public
-            enum ArchiveExportMethod: String
-            {
-                case appStore = "app-store"
-                case adHoc = "ad-hoc"
-                case package = "package"
-                case enterprise = "enterprise"
-                case development = "development"
-                case developerId = "developer-id"
-            }
-
-            //---
-
             case defaultHeader
 
             case fastlaneVersion(VersionString)
@@ -61,6 +59,15 @@ extension Fastlane
                 usesSwiftGen: Bool,
                 usesSourcery: Bool,
                 usesSwiftLint: SwiftLintLocation
+            )
+
+            // beta-version builds
+            case archiveStaging(
+                projectName: String,
+                schemeName: String,
+                exportMethod: ArchiveExportMethod,
+                productName: String,
+                archivesExportPath: String
             )
         }
 
@@ -86,7 +93,92 @@ extension Fastlane
 public
 extension Fastlane.Fastfile
 {
-    //
+    public
+    static
+    func app(
+        fastlaneVersion: VersionString,
+        projectName: String,
+        productName: String,
+        podspecModuleName: String?,
+        usesCocoapods: Bool,
+        usesSwiftGen: Bool,
+        usesSourcery: Bool,
+        usesSwiftLint: SwiftLintLocation,
+        stagingSchemeName: String,
+        stagingExportMethod: ArchiveExportMethod,
+        archivesExportPath: String
+        ) -> Itself
+    {
+        return Itself(
+            .defaultHeader,
+            .fastlaneVersion(
+                fastlaneVersion
+            ),
+            .beforeRelease(
+                projectName: projectName,
+                podspecModuleName: podspecModuleName
+            ),
+            .regenerateProject(
+                projectName: projectName,
+                usesCocoapods: usesCocoapods,
+                usesSwiftGen: usesSwiftGen,
+                usesSourcery: usesSourcery,
+                usesSwiftLint: usesSwiftLint
+            ),
+            .setupProjectFromScratch(
+                projectName: projectName,
+                usesCocoapods: usesCocoapods,
+                usesSwiftGen: usesSwiftGen,
+                usesSourcery: usesSourcery,
+                usesSwiftLint: usesSwiftLint
+            ),
+            .archiveStaging(
+                projectName: projectName,
+                schemeName: stagingSchemeName,
+                exportMethod: stagingExportMethod,
+                productName: productName,
+                archivesExportPath: archivesExportPath
+            )
+        )
+    }
+
+    public
+    static
+    func framework(
+        fastlaneVersion: VersionString,
+        projectName: String,
+        podspecModuleName: String?,
+        usesCocoapods: Bool,
+        usesSwiftGen: Bool,
+        usesSourcery: Bool,
+        usesSwiftLint: SwiftLintLocation
+        ) -> Itself
+    {
+        return Itself(
+            .defaultHeader,
+            .fastlaneVersion(
+                fastlaneVersion
+            ),
+            .beforeRelease(
+                projectName: projectName,
+                podspecModuleName: podspecModuleName
+            ),
+            .regenerateProject(
+                projectName: projectName,
+                usesCocoapods: usesCocoapods,
+                usesSwiftGen: usesSwiftGen,
+                usesSourcery: usesSourcery,
+                usesSwiftLint: usesSwiftLint
+            ),
+            .setupProjectFromScratch(
+                projectName: projectName,
+                usesCocoapods: usesCocoapods,
+                usesSwiftGen: usesSwiftGen,
+                usesSourcery: usesSourcery,
+                usesSwiftLint: usesSwiftLint
+            )
+        )
+    }
 }
 
 // MARK: - Content rendering
@@ -414,6 +506,75 @@ extension Fastlane.Fastfile.Section
                 indentation--
 
                 result <<< """
+
+                    end
+                    """
+                    .asIndentedText(with: &indentation)
+
+            case .archiveStaging(
+                let projectName,
+                let schemeName,
+                let exportMethod,
+                let productName,
+                let archivesExportPath
+                ):
+                result <<< """
+
+                    lane :archiveStaging do
+
+                        ensure_git_status_clean
+
+                        # === Set basic parameters
+
+                        buildNumber = get_build_number(xcodeproj: '\(projectName).xcodeproj')
+                        versionNumber = get_version_number(xcodeproj: '\(projectName).xcodeproj')
+
+                        puts 'Attempt to use SCHEME: \(schemeName)'
+
+                        # === Check if target version number is eligible for this line
+
+                        # project must be on version number 'X.Y.Z-beta.*'
+
+                        if (!(versionNumber.include? 'dirty') && (versionNumber.include? 'beta'))
+
+                            # git status is clean at this point
+
+                            # === main part
+
+                            # seems to be allowed to run this lane
+
+                            gym(
+                                scheme: '\(schemeName)',
+                                export_method: '\(exportMethod)',
+                                output_name: '\(productName)_' + versionNumber + '_' + buildNumber + '.ipa',
+                                output_directory: '\(archivesExportPath)'
+                            )
+
+                            # === mark dirty
+
+                            # puts 'NOTE: Mark project version as dirty now.'
+
+                            newVersionNumber = versionNumber + '+dirty'
+                            newBuildNumber = buildNumber
+
+                            increment_version_number(
+                                xcodeproj: '\(projectName).xcodeproj',
+                                version_number: newVersionNumber
+                            )
+
+                            # only set 'dirty' mark in 'versionNumber'!
+
+                            commit_version_bump(
+                                xcodeproj: '\(projectName).xcodeproj',
+                                message: 'Version Bump to ' + newVersionNumber + ' (' + newBuildNumber + ')'
+                            )
+
+                        else
+
+                            puts 'ERROR: This VERSION (' + versionNumber + ') of the app can NOT be archived using this lane.'
+                            puts 'NOTE: this lane is for STAGING (beta) builds ONLY.'
+
+                        end
 
                     end
                     """
