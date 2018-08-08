@@ -545,7 +545,7 @@ extension Fastlane.Fastfile.Section
 
                             gym(
                                 scheme: '\(schemeName)',
-                                export_method: '\(exportMethod)',
+                                export_method: '\(exportMethod.rawValue)',
                                 output_name: '\(productName)_' + versionNumber + '_' + buildNumber + '.ipa',
                                 output_directory: '\(archivesExportPath)'
                             )
