@@ -11,7 +11,6 @@
 		941CFFDE2115221000326181 /* RepoConfiguratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941CFFDA2115220600326181 /* RepoConfiguratorTests.swift */; };
 		941CFFDF2115222100326181 /* RepoConfigurator.h in Headers */ = {isa = PBXBuildFile; fileRef = 941CFFDC2115220600326181 /* RepoConfigurator.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		941CFFE02115222B00326181 /* Versions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941CFFDD2115220600326181 /* Versions.swift */; };
-		941CFFE52115838600326181 /* Repo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941CFFE42115838600326181 /* Repo.swift */; };
 		941CFFE82115897100326181 /* License_MIT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941CFFE72115897100326181 /* License_MIT.swift */; };
 		941CFFEA2115898E00326181 /* License.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941CFFE92115898E00326181 /* License.swift */; };
 		941CFFF4211591E900326181 /* TextFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941CFFF3211591E900326181 /* TextFile.swift */; };
@@ -21,6 +20,7 @@
 		9424572F211AF7E900A05876 /* SwiftLint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9424572E211AF7E900A05876 /* SwiftLint.swift */; };
 		94245732211B025C00A05876 /* CocoaPods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94245731211B025C00A05876 /* CocoaPods.swift */; };
 		94245734211B034400A05876 /* CocoaPods_Podfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94245733211B034400A05876 /* CocoaPods_Podfile.swift */; };
+		94245736211B3EE200A05876 /* CocoaPods_Podspec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94245735211B3EE200A05876 /* CocoaPods_Podspec.swift */; };
 		9424AB092117542200262B79 /* Indentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9424AB082117542200262B79 /* Indentation.swift */; };
 		9424AB0B2117549500262B79 /* KeyValuePair.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9424AB0A2117549500262B79 /* KeyValuePair.swift */; };
 		9424AB0D211754B200262B79 /* DeviceFamily.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9424AB0C211754B200262B79 /* DeviceFamily.swift */; };
@@ -70,7 +70,6 @@
 		941CFFDA2115220600326181 /* RepoConfiguratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepoConfiguratorTests.swift; sourceTree = "<group>"; };
 		941CFFDC2115220600326181 /* RepoConfigurator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RepoConfigurator.h; sourceTree = "<group>"; };
 		941CFFDD2115220600326181 /* Versions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Versions.swift; sourceTree = "<group>"; };
-		941CFFE42115838600326181 /* Repo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repo.swift; sourceTree = "<group>"; };
 		941CFFE72115897100326181 /* License_MIT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = License_MIT.swift; sourceTree = "<group>"; };
 		941CFFE92115898E00326181 /* License.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = License.swift; sourceTree = "<group>"; };
 		941CFFF3211591E900326181 /* TextFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFile.swift; sourceTree = "<group>"; };
@@ -80,6 +79,7 @@
 		9424572E211AF7E900A05876 /* SwiftLint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftLint.swift; sourceTree = "<group>"; };
 		94245731211B025C00A05876 /* CocoaPods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CocoaPods.swift; sourceTree = "<group>"; };
 		94245733211B034400A05876 /* CocoaPods_Podfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CocoaPods_Podfile.swift; sourceTree = "<group>"; };
+		94245735211B3EE200A05876 /* CocoaPods_Podspec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CocoaPods_Podspec.swift; sourceTree = "<group>"; };
 		9424AB082117542200262B79 /* Indentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Indentation.swift; sourceTree = "<group>"; };
 		9424AB0A2117549500262B79 /* KeyValuePair.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyValuePair.swift; sourceTree = "<group>"; };
 		9424AB0C211754B200262B79 /* DeviceFamily.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceFamily.swift; sourceTree = "<group>"; };
@@ -200,18 +200,9 @@
 				94C4F9C9211665C500CFB1DC /* Fastlane */,
 				941CFFF92115A77600326181 /* Git */,
 				941CFFE62115896200326181 /* License */,
-				941CFFE32115837600326181 /* Repo */,
 				94CB9FD22116571600641D6E /* Xcode */,
 			);
 			path = Models;
-			sourceTree = "<group>";
-		};
-		941CFFE32115837600326181 /* Repo */ = {
-			isa = PBXGroup;
-			children = (
-				941CFFE42115838600326181 /* Repo.swift */,
-			);
-			path = Repo;
 			sourceTree = "<group>";
 		};
 		941CFFE62115896200326181 /* License */ = {
@@ -245,6 +236,7 @@
 			children = (
 				94245731211B025C00A05876 /* CocoaPods.swift */,
 				94245733211B034400A05876 /* CocoaPods_Podfile.swift */,
+				94245735211B3EE200A05876 /* CocoaPods_Podspec.swift */,
 			);
 			path = CocoaPods;
 			sourceTree = "<group>";
@@ -426,7 +418,6 @@
 				941CFFE82115897100326181 /* License_MIT.swift in Sources */,
 				9424AB11211754FE00262B79 /* OSIdentifier.swift in Sources */,
 				9424AB132117552100262B79 /* PathPrefix.swift in Sources */,
-				941CFFE52115838600326181 /* Repo.swift in Sources */,
 				94245732211B025C00A05876 /* CocoaPods.swift in Sources */,
 				94DECE4E21188B4B0026F148 /* String+TextFilePiece.swift in Sources */,
 				94CB9FDF2116585000641D6E /* Struct.swift in Sources */,
@@ -445,6 +436,7 @@
 				94CB9FC32116535300641D6E /* Xcode_Project_BuildConfig_Defaults.swift in Sources */,
 				9424572F211AF7E900A05876 /* SwiftLint.swift in Sources */,
 				94CB9FC02116535300641D6E /* Xcode_Project_BuildConfig_Defaults_General.swift in Sources */,
+				94245736211B3EE200A05876 /* CocoaPods_Podspec.swift in Sources */,
 				94CB9FC52116535300641D6E /* Xcode_Project_BuildConfig_Defaults_iOS.swift in Sources */,
 				94CB9FCE2116536600641D6E /* Xcode_Project_Target.swift in Sources */,
 				94CB9FCD2116536600641D6E /* Xcode_Project_Target_BuildConfig.swift in Sources */,
