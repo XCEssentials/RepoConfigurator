@@ -196,10 +196,10 @@
 			isa = PBXGroup;
 			children = (
 				94245730211B024A00A05876 /* CocoaPods */,
-				9424572D211AF7DA00A05876 /* SwiftLint */,
 				94C4F9C9211665C500CFB1DC /* Fastlane */,
 				941CFFF92115A77600326181 /* Git */,
 				941CFFE62115896200326181 /* License */,
+				9424572D211AF7DA00A05876 /* SwiftLint */,
 				94CB9FD22116571600641D6E /* Xcode */,
 			);
 			path = Models;
@@ -404,6 +404,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				94245732211B025C00A05876 /* CocoaPods.swift in Sources */,
+				94245734211B034400A05876 /* CocoaPods_Podfile.swift in Sources */,
+				94245736211B3EE200A05876 /* CocoaPods_Podspec.swift in Sources */,
 				9424AB0F211754C100262B79 /* DeploymentTarget.swift in Sources */,
 				9424AB0D211754B200262B79 /* DeviceFamily.swift in Sources */,
 				94C4F9CB211665ED00CFB1DC /* Fastlane.swift in Sources */,
@@ -418,7 +421,6 @@
 				941CFFE82115897100326181 /* License_MIT.swift in Sources */,
 				9424AB11211754FE00262B79 /* OSIdentifier.swift in Sources */,
 				9424AB132117552100262B79 /* PathPrefix.swift in Sources */,
-				94245732211B025C00A05876 /* CocoaPods.swift in Sources */,
 				94DECE4E21188B4B0026F148 /* String+TextFilePiece.swift in Sources */,
 				94CB9FDF2116585000641D6E /* Struct.swift in Sources */,
 				94CB9FDC2116583700641D6E /* Struct_Spec.swift in Sources */,
@@ -427,6 +429,7 @@
 				94CB9FDD2116583700641D6E /* Struct_Spec_2_0_0.swift in Sources */,
 				94CB9FDB2116583700641D6E /* Struct_Spec_2_1_0.swift in Sources */,
 				94CB9FE12116625900641D6E /* Struct_Spec_InternalHelpers.swift in Sources */,
+				9424572F211AF7E900A05876 /* SwiftLint.swift in Sources */,
 				941CFFF4211591E900326181 /* TextFile.swift in Sources */,
 				94DECE562118CD360026F148 /* Utils.swift in Sources */,
 				941CFFE02115222B00326181 /* Versions.swift in Sources */,
@@ -434,14 +437,11 @@
 				94CB9FC12116535300641D6E /* Xcode_Project.swift in Sources */,
 				94CB9FC42116535300641D6E /* Xcode_Project_BuildConfig.swift in Sources */,
 				94CB9FC32116535300641D6E /* Xcode_Project_BuildConfig_Defaults.swift in Sources */,
-				9424572F211AF7E900A05876 /* SwiftLint.swift in Sources */,
 				94CB9FC02116535300641D6E /* Xcode_Project_BuildConfig_Defaults_General.swift in Sources */,
-				94245736211B3EE200A05876 /* CocoaPods_Podspec.swift in Sources */,
 				94CB9FC52116535300641D6E /* Xcode_Project_BuildConfig_Defaults_iOS.swift in Sources */,
 				94CB9FCE2116536600641D6E /* Xcode_Project_Target.swift in Sources */,
 				94CB9FCD2116536600641D6E /* Xcode_Project_Target_BuildConfig.swift in Sources */,
 				94CB9FCC2116536600641D6E /* Xcode_Project_Target_Dependencies.swift in Sources */,
-				94245734211B034400A05876 /* CocoaPods_Podfile.swift in Sources */,
 				941CFFFF211609BC00326181 /* Xcode_Project_Target_InfoPlist.swift in Sources */,
 				94CB9FCB2116536600641D6E /* Xcode_Project_Target_Script.swift in Sources */,
 				94CB9FCF2116536600641D6E /* Xcode_Project_Target_Type.swift in Sources */,
@@ -601,11 +601,7 @@
 				FRAMEWORK_VERSION = A;
 				INFOPLIST_FILE = Info/RepoConfigurator.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.XCEssentials.RepoConfigurator;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -627,11 +623,7 @@
 				FRAMEWORK_VERSION = A;
 				INFOPLIST_FILE = Info/RepoConfigurator.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.XCEssentials.RepoConfigurator;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -647,11 +639,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = UJA88X59XP;
 				INFOPLIST_FILE = Info/RepoConfiguratorTests.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/../Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.XCEssentials.RepoConfiguratorTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -666,11 +654,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = UJA88X59XP;
 				INFOPLIST_FILE = Info/RepoConfiguratorTests.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/../Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.XCEssentials.RepoConfiguratorTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
