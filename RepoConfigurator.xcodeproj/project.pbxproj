@@ -32,6 +32,7 @@
 		9424AB0F211754C100262B79 /* DeploymentTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9424AB0E211754C100262B79 /* DeploymentTarget.swift */; };
 		9424AB11211754FE00262B79 /* OSIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9424AB10211754FE00262B79 /* OSIdentifier.swift */; };
 		9424AB132117552100262B79 /* PathPrefix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9424AB122117552100262B79 /* PathPrefix.swift */; };
+		9459C779211C5F800041C38B /* YesNoStringLiteralsForXcode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9459C778211C5F800041C38B /* YesNoStringLiteralsForXcode.swift */; };
 		94C4F9CB211665ED00CFB1DC /* Fastlane.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C4F9CA211665ED00CFB1DC /* Fastlane.swift */; };
 		94C4F9CD2116660900CFB1DC /* Fastlane_Fastfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C4F9CC2116660900CFB1DC /* Fastlane_Fastfile.swift */; };
 		94CB9FC02116535300641D6E /* Xcode_Project_BuildConfig_Defaults_General.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CB9FBA2116535200641D6E /* Xcode_Project_BuildConfig_Defaults_General.swift */; };
@@ -94,6 +95,7 @@
 		9424AB0E211754C100262B79 /* DeploymentTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeploymentTarget.swift; sourceTree = "<group>"; };
 		9424AB10211754FE00262B79 /* OSIdentifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSIdentifier.swift; sourceTree = "<group>"; };
 		9424AB122117552100262B79 /* PathPrefix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathPrefix.swift; sourceTree = "<group>"; };
+		9459C778211C5F800041C38B /* YesNoStringLiteralsForXcode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YesNoStringLiteralsForXcode.swift; sourceTree = "<group>"; };
 		94C4F9CA211665ED00CFB1DC /* Fastlane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fastlane.swift; sourceTree = "<group>"; };
 		94C4F9CC2116660900CFB1DC /* Fastlane_Fastfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fastlane_Fastfile.swift; sourceTree = "<group>"; };
 		94CB9FBA2116535200641D6E /* Xcode_Project_BuildConfig_Defaults_General.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Xcode_Project_BuildConfig_Defaults_General.swift; sourceTree = "<group>"; };
@@ -301,6 +303,7 @@
 				9424AB122117552100262B79 /* PathPrefix.swift */,
 				94DECE4D21188B4B0026F148 /* String+TextFilePiece.swift */,
 				941CFFDD2115220600326181 /* Versions.swift */,
+				9459C778211C5F800041C38B /* YesNoStringLiteralsForXcode.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -442,6 +445,7 @@
 				94CB9FE12116625900641D6E /* Struct_Spec_InternalHelpers.swift in Sources */,
 				9424572F211AF7E900A05876 /* SwiftLint.swift in Sources */,
 				941CFFF4211591E900326181 /* TextFile.swift in Sources */,
+				9459C779211C5F800041C38B /* YesNoStringLiteralsForXcode.swift in Sources */,
 				941CFFE02115222B00326181 /* Versions.swift in Sources */,
 				94245738211B805000A05876 /* WidelyUsedLicense.swift in Sources */,
 				94DECE502118C10E0026F148 /* Xcode.swift in Sources */,

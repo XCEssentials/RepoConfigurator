@@ -165,14 +165,14 @@ let project = Xcode
             "SWIFT_VERSION" <<< swiftVersion,
             "VERSIONING_SYSTEM" <<< "apple-generic",
 
-            "CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING" <<< "YES",
-            "CLANG_WARN_COMMA" <<< "YES",
-            "CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS" <<< "YES",
-            "CLANG_WARN_NON_LITERAL_NULL_CONVERSION" <<< "YES",
-            "CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF" <<< "YES",
-            "CLANG_WARN_OBJC_LITERAL_CONVERSION" <<< "YES",
-            "CLANG_WARN_RANGE_LOOP_ANALYSIS" <<< "YES",
-            "CLANG_WARN_STRICT_PROTOTYPES" <<< "YES"
+            "CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING" <<< YES,
+            "CLANG_WARN_COMMA" <<< YES,
+            "CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS" <<< YES,
+            "CLANG_WARN_NON_LITERAL_NULL_CONVERSION" <<< YES,
+            "CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF" <<< YES,
+            "CLANG_WARN_OBJC_LITERAL_CONVERSION" <<< YES,
+            "CLANG_WARN_RANGE_LOOP_ANALYSIS" <<< YES,
+            "CLANG_WARN_STRICT_PROTOTYPES" <<< YES
 
         )
 
@@ -211,8 +211,8 @@ let project = Xcode
                 "CODE_SIGN_IDENTITY" <<< "",
 
                 "PRODUCT_NAME" <<< product.name,
-                "DEFINES_MODULE" <<< "NO",
-                "SKIP_INSTALL" <<< "YES" // TODO: check if we can just use Bool???
+                "DEFINES_MODULE" <<< NO,
+                "SKIP_INSTALL" <<< YES // TODO: check if we can just use Bool???
             )
 
             fwk.configurations.debug.override(
