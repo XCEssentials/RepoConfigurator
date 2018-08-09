@@ -7,21 +7,13 @@ typealias PerTarget<T> = (main: T, tst: T)
 
 //---
 
-let product = (
-    name: "SimpleApp",
-    summary: "A simple app."
-)
+let productName = "SimpleApp"
 
 let company = (
     name: "SomeCoolCompany",
     identifier: "com.SomeCoolCompany",
     prefix: "SCC",
     developmentTeamId: "ABCXYZ123"
-)
-
-let author = (
-    name: "John Appleseed",
-    email: "john@example.com"
 )
 
 let repoFolder = PathPrefix
@@ -33,8 +25,50 @@ let repoFolder = PathPrefix
         "RepoConfigurator/Examples"  // !!!
     )
     .appendingPathComponent(
-        product.name
+        productName
     )
+
+let tstSuffix = Defaults.tstSuffix
+
+let targetName: PerTarget = (
+    productName,
+    productName + tstSuffix
+)
+
+let commonInfoPlistsPath = Defaults
+    .pathToInfoPlistsFolder
+
+let infoPlistsFolder = repoFolder
+    .appendingPathComponent(
+        commonInfoPlistsPath
+    )
+
+let depTarget: DeploymentTarget = (.iOS, "11.0")
+
+let swiftVersion: VersionString = "4.2"
+
+let commonSourcesPath = Defaults.pathToSourcesFolder
+
+let sourcesPath: PerTarget = (
+    commonSourcesPath + "/" + targetName.main,
+    commonSourcesPath + "/" + targetName.tst
+)
+
+let sourcesFolder: PerTarget = (
+    repoFolder
+        .appendingPathComponent(
+            sourcesPath.main
+    ),
+    repoFolder
+        .appendingPathComponent(
+            sourcesPath.tst
+    )
+)
+
+let bundleId: PerTarget = (
+    company.identifier + "." + targetName.main,
+    company.identifier + "." + targetName.tst
+)
 
 //---
 
@@ -50,25 +84,6 @@ let swiftLint = SwiftLint
     .prepare(
         targetFolder: repoFolder
     )
-
-//---
-
-let tstSuffix = Defaults.tstSuffix
-
-let targetName: PerTarget = (
-    product.name,
-    product.name + tstSuffix
-)
-
-let commonInfoPlistsPath = Defaults
-    .pathToInfoPlistsFolder
-
-let infoPlistsFolder = repoFolder
-    .appendingPathComponent(
-        commonInfoPlistsPath
-    )
-
-//---
 
 let info: PerTarget = (
     Xcode
@@ -91,44 +106,6 @@ let info: PerTarget = (
         )
 )
 
-//---
-
-let depTarget: DeploymentTarget = (.iOS, "11.0")
-
-let swiftVersion: VersionString = "4.2"
-
-let commonSourcesPath = Defaults.pathToSourcesFolder
-
-let sourcesPath: PerTarget = (
-    commonSourcesPath + "/" + targetName.main,
-    commonSourcesPath + "/" + targetName.tst
-)
-
-let sourcesFolder: PerTarget = (
-    repoFolder
-        .appendingPathComponent(
-            sourcesPath.main
-        ),
-    repoFolder
-        .appendingPathComponent(
-            sourcesPath.tst
-        )
-)
-
-let bundleId: PerTarget = (
-    company.identifier + "." + targetName.main,
-    company.identifier + "." + targetName.tst
-)
-
-let infoPlistsPath: PerTarget = (
-    commonInfoPlistsPath + "/" + info.main.name,
-    commonInfoPlistsPath + "/" + info.tst.name
-)
-
-let testHostPath = "$(BUILT_PRODUCTS_DIR)/" + product.name + ".app/" + product.name
-
-//---
-
 let dummyFile: PerTarget = (
     Xcode
         .Project
@@ -146,8 +123,22 @@ let dummyFile: PerTarget = (
         )
 )
 
+//---
+
+let infoPlistsPath: PerTarget = (
+    commonInfoPlistsPath + "/" + info.main.name,
+    commonInfoPlistsPath + "/" + info.tst.name
+)
+
+let testHostPath = "$(BUILT_PRODUCTS_DIR)/"
+    + productName
+    + ".app/"
+    + productName
+
+//---
+
 let project = Xcode
-    .Project(product.name, specFormat: .v2_1_0){
+    .Project(productName, specFormat: .v2_1_0){
 
         project in
 
@@ -251,12 +242,10 @@ let project = Xcode
         targetFolder: repoFolder
     )
 
-//---
-
 let podfile = CocoaPods
     .Podfile
     .standard(
-        productName: product.name,
+        productName: productName,
         deploymentTarget: depTarget,
         pods: [
 
@@ -292,7 +281,7 @@ let scheme = (
 let fastfile = Fastlane
     .Fastfile
     .app(
-        productName: product.name,
+        productName: productName,
         usesSwiftGen: false,
         usesSourcery: false,
         usesSwiftLint: .global,
