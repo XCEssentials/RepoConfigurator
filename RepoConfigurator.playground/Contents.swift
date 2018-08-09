@@ -2,32 +2,24 @@ import RepoConfigurator
 
 //---
 
-let product = (
-    name: "RepoConfigurator",
-    summary: "Xcode project repo configuration in Swift."
-)
-
-let company = (
-    name: "XCEssentials",
-    identifier: "com.XCEssentials",
-    prefix: "XCE"
-)
+let productName = "RepoConfigurator"
 
 let repoFolder = PathPrefix
     .iCloudDrive
     .appendingPathComponent(
-        "Dev"
+        "Dev/XCEssentials"
     )
     .appendingPathComponent(
-        company.name
-    )
-    .appendingPathComponent(
-        product.name
+        productName
     )
 
-let author = (
-    name: "Maxim Khatskevich",
-    email: "maxim@khatskevi.ch"
+let authorName = "Maxim Khatskevich"
+
+// let depTarget: DeploymentTarget = (.macOS, "10.13")
+
+let fastlaneFolder = repoFolder
+    .appendingPathComponent(
+        Defaults.pathToFastlaneFolder
 )
 
 //---
@@ -48,22 +40,11 @@ let swiftLint = SwiftLint
 let license = License
     .MIT(
         copyrightYear: 2018,
-        copyrightEntity: author.name
+        copyrightEntity: authorName
     )
     .prepare(
         targetFolder: repoFolder
     )
-
-//---
-
-// let depTarget: DeploymentTarget = (.macOS, "10.13")
-
-let fastlaneFolder = repoFolder
-    .appendingPathComponent(
-        Defaults.pathToFastlaneFolder
-    )
-
-//---
 
 let fastfile = Fastlane
     .Fastfile(
@@ -72,7 +53,7 @@ let fastfile = Fastlane
             Defaults.fastlaneVersion
         ),
         .beforeRelease(
-            projectName: product.name,
+            projectName: productName,
             cocoaPodsModuleName: nil
         )
     )
