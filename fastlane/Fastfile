@@ -34,13 +34,6 @@ lane :beforeRelease do
 
     # ===
 
-    pod_lib_lint(
-        allow_warnings: true,
-        quick: true
-    )
-
-    # ===
-
     versionNumber = get_version_number(xcodeproj: 'RepoConfigurator.xcodeproj')
     puts 'Current VERSION number: ' + versionNumber
 

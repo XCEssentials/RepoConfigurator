@@ -244,6 +244,15 @@ extension Fastlane.Fastfile.Section
                     # ===
 
                     ensure_git_status_clean
+                """
+                .asIndentedText(with: &indentation)
+
+            indentation++
+
+            if
+                cocoaPodsModuleName != nil
+            {
+                result <<< """
 
                     # ===
 
@@ -251,6 +260,12 @@ extension Fastlane.Fastfile.Section
                         allow_warnings: true,
                         quick: true
                     )
+                    """
+                    .asIndentedText(with: &indentation)
+            }
+
+            {
+                result <<< """
 
                     # ===
 
@@ -297,10 +312,9 @@ extension Fastlane.Fastfile.Section
                         xcodeproj: '\(projectName).xcodeproj',
                         message: 'Version Bump to ' + newVersionNumber + ' (' + newBuildNumber + ')'
                     )
-                """
-                .asIndentedText(with: &indentation)
-
-            indentation++
+                    """
+                    .asIndentedText(with: &indentation)
+            }()
 
             cocoaPodsModuleName.map{
 
