@@ -185,6 +185,8 @@ let project = Xcode
 
             fwk.configurations.all.override(
 
+                "SWIFT_VERSION" <<< "$(inherited)",
+
                 "IPHONEOS_DEPLOYMENT_TARGET" <<< depTarget.minimumVersion,
                 "PRODUCT_BUNDLE_IDENTIFIER" <<< bundleId.main,
                 "INFOPLIST_FILE" <<< infoPlistsPath.main,
@@ -219,6 +221,8 @@ let project = Xcode
                 //---
 
                 fwkTests.configurations.all.override(
+
+                    "SWIFT_VERSION" <<< "$(inherited)",
 
                     // very important for unit tests,
                     // prevents the error when unit test do not start at all
@@ -313,19 +317,19 @@ try? license
 
 try? info
     .main
-    .writeToFileSystem(ifFileExists: .doNotWrite) // write OCNE!
+    .writeToFileSystem(ifFileExists: .doNotWrite) // write ONCE!
 
 try? info
     .tst
-    .writeToFileSystem(ifFileExists: .doNotWrite) // write OCNE!
+    .writeToFileSystem(ifFileExists: .doNotWrite) // write ONCE!
 
-try? dummyFile
-    .main
-    .writeToFileSystem(ifFileExists: .doNotWrite) // write OCNE!
-
-try? dummyFile
-    .tst
-    .writeToFileSystem(ifFileExists: .doNotWrite) // write OCNE!
+//try? dummyFile
+//    .main
+//    .writeToFileSystem(ifFileExists: .doNotWrite) // write ONCE!
+//
+//try? dummyFile
+//    .tst
+//    .writeToFileSystem(ifFileExists: .doNotWrite) // write ONCE!
 
 try? project
     .writeToFileSystem()

@@ -7,25 +7,25 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0E4539196A6F0E9DF330D228 /* DummyFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD1ECEB705C8FD572276812 /* DummyFile.swift */; };
-		2238F7712701ECB11AFAD5FC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 478F6BDF1B8626E3054416D7 /* Foundation.framework */; };
-		2321EE415D5CBFD12D8E1183 /* Pods_SimpleFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21F0DF11DD55B5D320D1F18A /* Pods_SimpleFramework.framework */; };
-		3ADB91F1A6E90D71F74CC7BE /* DummyFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = C017AACC2D73A93B31947D82 /* DummyFile.swift */; };
-		D591A6D9E6656774CEF0B09D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 478F6BDF1B8626E3054416D7 /* Foundation.framework */; };
+		049DC7E848EFB1A9A6897DEC /* DummyFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = F64AAAD25B1879F29511A6D6 /* DummyFile.swift */; };
+		0A4FB6B60A325B992106D884 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2055AB635136398B11072E4A /* Foundation.framework */; };
+		4482AB08080989DC457AB906 /* Pods_SimpleFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14EEB9D67FB0A5845B5E4457 /* Pods_SimpleFramework.framework */; };
+		7AF1C54AD63C208BD70B7CFB /* DummyFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 865B03076F327852C4725F3F /* DummyFile.swift */; };
+		AEF1ECEAF174E76209C21B51 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2055AB635136398B11072E4A /* Foundation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		1D276F91918CA7A5B7F5B073 /* PBXContainerItemProxy */ = {
+		B83BA70B1A3A74B9E191FD9A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 56F5F27150A2A1ADAD2358C8 /* Project object */;
+			containerPortal = E9210A7494F5C0723490A523 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = A88CA4EF1A9116344D584C18;
+			remoteGlobalIDString = E1DEFBC16A6A247DB7B0CDA3;
 			remoteInfo = SimpleFramework;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		1A3E9717160E6AB07A5AA1C9 /* Embed Frameworks */ = {
+		14715278E4F96B6AF6E90D4A /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
@@ -35,7 +35,7 @@
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		4F30C7CCEB90B41519BA9600 /* Embed Frameworks */ = {
+		15CCF1F54628310D3EE87EA5 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
@@ -48,130 +48,149 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		1C3482D39F7098B5E4AA60AB /* SimpleFrameworkTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SimpleFrameworkTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		21F0DF11DD55B5D320D1F18A /* Pods_SimpleFramework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SimpleFramework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		3EFF6EFD01545DEE8D1E9558 /* Pods-SimpleFramework.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimpleFramework.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SimpleFramework/Pods-SimpleFramework.debug.xcconfig"; sourceTree = "<group>"; };
-		478F6BDF1B8626E3054416D7 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		5BD1ECEB705C8FD572276812 /* DummyFile.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DummyFile.swift; sourceTree = "<group>"; };
-		9839676290440F5941A9DD41 /* SimpleFramework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SimpleFramework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		C017AACC2D73A93B31947D82 /* DummyFile.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DummyFile.swift; sourceTree = "<group>"; };
-		E7D78F59858A3F415E9B33B0 /* Pods-SimpleFramework.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimpleFramework.release.xcconfig"; path = "Pods/Target Support Files/Pods-SimpleFramework/Pods-SimpleFramework.release.xcconfig"; sourceTree = "<group>"; };
+		14EEB9D67FB0A5845B5E4457 /* Pods_SimpleFramework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SimpleFramework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2055AB635136398B11072E4A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		5E67285BDD5F7FDC1AFED00C /* SimpleFramework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SimpleFramework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6D80AD164E31951403CB4E0D /* Pods-SimpleFramework.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimpleFramework.release.xcconfig"; path = "Pods/Target Support Files/Pods-SimpleFramework/Pods-SimpleFramework.release.xcconfig"; sourceTree = "<group>"; };
+		725C26D0C1B6BBE62BE45CFA /* SimpleFrameworkTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SimpleFrameworkTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		865B03076F327852C4725F3F /* DummyFile.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DummyFile.swift; sourceTree = "<group>"; };
+		C9A92789A85B10D9533D5575 /* Pods-SimpleFramework.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimpleFramework.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SimpleFramework/Pods-SimpleFramework.debug.xcconfig"; sourceTree = "<group>"; };
+		F64AAAD25B1879F29511A6D6 /* DummyFile.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DummyFile.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		B21C7F6879211CB89D869DE4 /* Frameworks */ = {
+		AFD2BF3664E223922E321BFF /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D591A6D9E6656774CEF0B09D /* Foundation.framework in Frameworks */,
-				2321EE415D5CBFD12D8E1183 /* Pods_SimpleFramework.framework in Frameworks */,
+				0A4FB6B60A325B992106D884 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		E064616C17804B1EDE1D1845 /* Frameworks */ = {
+		FC5CD8036EC7889F63B09C57 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2238F7712701ECB11AFAD5FC /* Foundation.framework in Frameworks */,
+				AEF1ECEAF174E76209C21B51 /* Foundation.framework in Frameworks */,
+				4482AB08080989DC457AB906 /* Pods_SimpleFramework.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		02A477F5A81D5D13D5940B95 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				A606E023036969A2357BD9F6 /* $local */,
-				C300B3112D0DCDE972AB8328 /* iOS */,
-				21F0DF11DD55B5D320D1F18A /* Pods_SimpleFramework.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		0FDE55A6087F4B836197E7AB /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				3EFF6EFD01545DEE8D1E9558 /* Pods-SimpleFramework.debug.xcconfig */,
-				E7D78F59858A3F415E9B33B0 /* Pods-SimpleFramework.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
-		24080C12DFE78C9B8BC95A6E /* SimpleFrameworkTests */ = {
-			isa = PBXGroup;
-			children = (
-				C017AACC2D73A93B31947D82 /* DummyFile.swift */,
-			);
-			name = SimpleFrameworkTests;
-			path = SimpleFrameworkTests;
-			sourceTree = "<group>";
-		};
-		9256CD99AAF938FE458C5388 /* SimpleFramework */ = {
-			isa = PBXGroup;
-			children = (
-				5BD1ECEB705C8FD572276812 /* DummyFile.swift */,
-			);
-			name = SimpleFramework;
-			path = SimpleFramework;
-			sourceTree = "<group>";
-		};
-		99232CE18BD071D7520BB20F /* Sources */ = {
-			isa = PBXGroup;
-			children = (
-				9256CD99AAF938FE458C5388 /* SimpleFramework */,
-				24080C12DFE78C9B8BC95A6E /* SimpleFrameworkTests */,
-			);
-			name = Sources;
-			path = Sources;
-			sourceTree = SOURCE_ROOT;
-		};
-		A606E023036969A2357BD9F6 /* $local */ = {
+		069A048C2AC87813C2FE7963 /* $local */ = {
 			isa = PBXGroup;
 			children = (
 			);
 			name = "$local";
 			sourceTree = "<group>";
 		};
-		C300B3112D0DCDE972AB8328 /* iOS */ = {
+		115E4B9FDED03D2AAAF3E4A4 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				478F6BDF1B8626E3054416D7 /* Foundation.framework */,
-			);
-			name = iOS;
-			sourceTree = "<group>";
-		};
-		D0AEF8590A8AEC905A316695 = {
-			isa = PBXGroup;
-			children = (
-				02A477F5A81D5D13D5940B95 /* Frameworks */,
-				0FDE55A6087F4B836197E7AB /* Pods */,
-				F9A30BEAB720FA0DEDBF9309 /* Products */,
-				99232CE18BD071D7520BB20F /* Sources */,
-			);
-			sourceTree = "<group>";
-		};
-		F9A30BEAB720FA0DEDBF9309 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				9839676290440F5941A9DD41 /* SimpleFramework.framework */,
-				1C3482D39F7098B5E4AA60AB /* SimpleFrameworkTests.xctest */,
+				5E67285BDD5F7FDC1AFED00C /* SimpleFramework.framework */,
+				725C26D0C1B6BBE62BE45CFA /* SimpleFrameworkTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		77AC42C4EE28AD53861EB30B /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				FB9DA0003937D997D72B0733 /* SimpleFramework */,
+				D4AFDFBC1EE4F76D70D958DA /* SimpleFrameworkTests */,
+			);
+			name = Sources;
+			path = Sources;
+			sourceTree = SOURCE_ROOT;
+		};
+		A4FF116590BE858D9FA1F5E0 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				069A048C2AC87813C2FE7963 /* $local */,
+				FEC13D61C97AB8942F6243D1 /* iOS */,
+				14EEB9D67FB0A5845B5E4457 /* Pods_SimpleFramework.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		BA23607F10822495D42C268E = {
+			isa = PBXGroup;
+			children = (
+				A4FF116590BE858D9FA1F5E0 /* Frameworks */,
+				D3E35C7530EDAC72B4BF6548 /* Pods */,
+				115E4B9FDED03D2AAAF3E4A4 /* Products */,
+				77AC42C4EE28AD53861EB30B /* Sources */,
+			);
+			sourceTree = "<group>";
+		};
+		D3E35C7530EDAC72B4BF6548 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				C9A92789A85B10D9533D5575 /* Pods-SimpleFramework.debug.xcconfig */,
+				6D80AD164E31951403CB4E0D /* Pods-SimpleFramework.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		D4AFDFBC1EE4F76D70D958DA /* SimpleFrameworkTests */ = {
+			isa = PBXGroup;
+			children = (
+				865B03076F327852C4725F3F /* DummyFile.swift */,
+			);
+			name = SimpleFrameworkTests;
+			path = SimpleFrameworkTests;
+			sourceTree = "<group>";
+		};
+		FB9DA0003937D997D72B0733 /* SimpleFramework */ = {
+			isa = PBXGroup;
+			children = (
+				F64AAAD25B1879F29511A6D6 /* DummyFile.swift */,
+			);
+			name = SimpleFramework;
+			path = SimpleFramework;
+			sourceTree = "<group>";
+		};
+		FEC13D61C97AB8942F6243D1 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				2055AB635136398B11072E4A /* Foundation.framework */,
+			);
+			name = iOS;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		A88CA4EF1A9116344D584C18 /* SimpleFramework */ = {
+		95655554493F6D54D0D6F811 /* SimpleFrameworkTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 829F1781418619286FF871CD /* Build configuration list for PBXNativeTarget "SimpleFramework" */;
+			buildConfigurationList = D8082C625AFB42E5A7E15DDC /* Build configuration list for PBXNativeTarget "SimpleFrameworkTests" */;
 			buildPhases = (
-				5F6C1D7B22DCC7656CA15DF0 /* SwiftLint */,
-				9C06887E5B57F0D999EF9DEC /* [CP] Check Pods Manifest.lock */,
-				327E1553E7071BBE8ED060E9 /* Sources */,
-				B21C7F6879211CB89D869DE4 /* Frameworks */,
-				1A3E9717160E6AB07A5AA1C9 /* Embed Frameworks */,
+				26786A004911D21CD806A624 /* SwiftLint */,
+				29008AC024B398A6ECBBB3A2 /* Sources */,
+				AFD2BF3664E223922E321BFF /* Frameworks */,
+				14715278E4F96B6AF6E90D4A /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				EEE3563CFD045E1B657FEDE3 /* PBXTargetDependency */,
+			);
+			name = SimpleFrameworkTests;
+			productName = SimpleFrameworkTests;
+			productReference = 725C26D0C1B6BBE62BE45CFA /* SimpleFrameworkTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		E1DEFBC16A6A247DB7B0CDA3 /* SimpleFramework */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0C8B9941609B8BC6A50F91A7 /* Build configuration list for PBXNativeTarget "SimpleFramework" */;
+			buildPhases = (
+				44334DBD8E2229C322BEEA1F /* SwiftLint */,
+				E57B2C70F377A77CE2B0F3C7 /* [CP] Check Pods Manifest.lock */,
+				5CD7752EE4A1154635167A51 /* Sources */,
+				FC5CD8036EC7889F63B09C57 /* Frameworks */,
+				15CCF1F54628310D3EE87EA5 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -179,58 +198,39 @@
 			);
 			name = SimpleFramework;
 			productName = SimpleFramework;
-			productReference = 9839676290440F5941A9DD41 /* SimpleFramework.framework */;
+			productReference = 5E67285BDD5F7FDC1AFED00C /* SimpleFramework.framework */;
 			productType = "com.apple.product-type.framework";
-		};
-		F2AD8EECDD66A415462CAC6F /* SimpleFrameworkTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 2DDDF0A6D4E581A5C66809A0 /* Build configuration list for PBXNativeTarget "SimpleFrameworkTests" */;
-			buildPhases = (
-				BFD6CF9F4DA8F60D965BE3B2 /* SwiftLint */,
-				CEB3F48C08427B5DBAF034A3 /* Sources */,
-				E064616C17804B1EDE1D1845 /* Frameworks */,
-				4F30C7CCEB90B41519BA9600 /* Embed Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				E99C5EA500D1B97E0648426C /* PBXTargetDependency */,
-			);
-			name = SimpleFrameworkTests;
-			productName = SimpleFrameworkTests;
-			productReference = 1C3482D39F7098B5E4AA60AB /* SimpleFrameworkTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		56F5F27150A2A1ADAD2358C8 /* Project object */ = {
+		E9210A7494F5C0723490A523 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0830;
 				LastUpgradeCheck = 0700;
 				Struct.Version = 2.1.0;
 			};
-			buildConfigurationList = 19736D07CC9BD0AEC3E3574D /* Build configuration list for PBXProject "SimpleFramework" */;
+			buildConfigurationList = 5EB0AE69930EDC5A677B34F2 /* Build configuration list for PBXProject "SimpleFramework" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 			);
-			mainGroup = D0AEF8590A8AEC905A316695;
-			productRefGroup = F9A30BEAB720FA0DEDBF9309 /* Products */;
+			mainGroup = BA23607F10822495D42C268E;
+			productRefGroup = 115E4B9FDED03D2AAAF3E4A4 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				A88CA4EF1A9116344D584C18 /* SimpleFramework */,
-				F2AD8EECDD66A415462CAC6F /* SimpleFrameworkTests */,
+				E1DEFBC16A6A247DB7B0CDA3 /* SimpleFramework */,
+				95655554493F6D54D0D6F811 /* SimpleFrameworkTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		5F6C1D7B22DCC7656CA15DF0 /* SwiftLint */ = {
+		26786A004911D21CD806A624 /* SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -245,7 +245,22 @@
 			shellScript = "if which swiftlint >/dev/null; then\n            swiftlint\n        else\n            echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\n        fi";
 			showEnvVarsInLog = 1;
 		};
-		9C06887E5B57F0D999EF9DEC /* [CP] Check Pods Manifest.lock */ = {
+		44334DBD8E2229C322BEEA1F /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\n            swiftlint\n        else\n            echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\n        fi";
+			showEnvVarsInLog = 1;
+		};
+		E57B2C70F377A77CE2B0F3C7 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -263,76 +278,102 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		BFD6CF9F4DA8F60D965BE3B2 /* SwiftLint */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = SwiftLint;
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "if which swiftlint >/dev/null; then\n            swiftlint\n        else\n            echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\n        fi";
-			showEnvVarsInLog = 1;
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		327E1553E7071BBE8ED060E9 /* Sources */ = {
+		29008AC024B398A6ECBBB3A2 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0E4539196A6F0E9DF330D228 /* DummyFile.swift in Sources */,
+				7AF1C54AD63C208BD70B7CFB /* DummyFile.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		CEB3F48C08427B5DBAF034A3 /* Sources */ = {
+		5CD7752EE4A1154635167A51 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3ADB91F1A6E90D71F74CC7BE /* DummyFile.swift in Sources */,
+				049DC7E848EFB1A9A6897DEC /* DummyFile.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		E99C5EA500D1B97E0648426C /* PBXTargetDependency */ = {
+		EEE3563CFD045E1B657FEDE3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = SimpleFramework;
-			target = A88CA4EF1A9116344D584C18 /* SimpleFramework */;
-			targetProxy = 1D276F91918CA7A5B7F5B073 /* PBXContainerItemProxy */;
+			target = E1DEFBC16A6A247DB7B0CDA3 /* SimpleFramework */;
+			targetProxy = B83BA70B1A3A74B9E191FD9A /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		073CC95FAC2F3DC13EA88885 /* Release */ = {
+		05C950C7B1B4BBA1F64AB0BB /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E7D78F59858A3F415E9B33B0 /* Pods-SimpleFramework.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CURRENT_PROJECT_VERSION = 0;
-				DEFINES_MODULE = NO;
-				ENABLE_TESTABILITY = YES;
-				INFOPLIST_FILE = Info/SimpleFramework.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(BUILT_PRODUCTS_DIR)",
+				);
+				INFOPLIST_FILE = Info/SimpleFrameworkTests.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.SomeCoolCompany.SimpleFramework;
-				PRODUCT_NAME = SimpleFramework;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.SomeCoolCompany.SimpleFrameworkTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
+				SWIFT_VERSION = "$(inherited)";
 			};
 			name = Release;
 		};
-		08005C8D162C6EAB8DCB8580 /* Debug */ = {
+		1EDF09C6AE8684C7B1EABEBD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 4.2;
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Release;
+		};
+		3F835C375EB06E1EDF27D3F9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
@@ -348,32 +389,13 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.SomeCoolCompany.SimpleFrameworkTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = "$(inherited)";
 			};
 			name = Debug;
 		};
-		1E85D9121F3B4AC51DAF7420 /* Release */ = {
+		A2B48DD4B440121D4976928B /* Debug */ = {
 			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(BUILT_PRODUCTS_DIR)",
-				);
-				INFOPLIST_FILE = Info/SimpleFrameworkTests.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.SomeCoolCompany.SimpleFrameworkTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				SWIFT_VERSION = 3.0;
-			};
-			name = Release;
-		};
-		627E9ABB6C5DD5E3E81884B8 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3EFF6EFD01545DEE8D1E9558 /* Pods-SimpleFramework.debug.xcconfig */;
+			baseConfigurationReference = C9A92789A85B10D9533D5575 /* Pods-SimpleFramework.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CURRENT_PROJECT_VERSION = 0;
@@ -388,14 +410,14 @@
 				PRODUCT_NAME = SimpleFramework;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = "$(inherited)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Debug;
 		};
-		8287E0B01D63D96BEBEB6DCC /* Debug */ = {
+		A6250606E385F372A99F5B6C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -447,82 +469,60 @@
 			};
 			name = Debug;
 		};
-		F5CF5CFDF49057BB4E6093CB /* Release */ = {
+		B3A0AE76942342017AED9E9B /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6D80AD164E31951403CB4E0D /* Pods-SimpleFramework.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_SUSPICIOUS_MOVES = YES;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "-";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				ENABLE_NS_ASSERTIONS = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CURRENT_PROJECT_VERSION = 0;
+				DEFINES_MODULE = NO;
+				ENABLE_TESTABILITY = YES;
+				INFOPLIST_FILE = Info/SimpleFramework.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 4.2;
-				VALIDATE_PRODUCT = YES;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.SomeCoolCompany.SimpleFramework;
+				PRODUCT_NAME = SimpleFramework;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = "$(inherited)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		19736D07CC9BD0AEC3E3574D /* Build configuration list for PBXProject "SimpleFramework" */ = {
+		0C8B9941609B8BC6A50F91A7 /* Build configuration list for PBXNativeTarget "SimpleFramework" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				8287E0B01D63D96BEBEB6DCC /* Debug */,
-				F5CF5CFDF49057BB4E6093CB /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
-		};
-		2DDDF0A6D4E581A5C66809A0 /* Build configuration list for PBXNativeTarget "SimpleFrameworkTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				08005C8D162C6EAB8DCB8580 /* Debug */,
-				1E85D9121F3B4AC51DAF7420 /* Release */,
+				A2B48DD4B440121D4976928B /* Debug */,
+				B3A0AE76942342017AED9E9B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		829F1781418619286FF871CD /* Build configuration list for PBXNativeTarget "SimpleFramework" */ = {
+		5EB0AE69930EDC5A677B34F2 /* Build configuration list for PBXProject "SimpleFramework" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				627E9ABB6C5DD5E3E81884B8 /* Debug */,
-				073CC95FAC2F3DC13EA88885 /* Release */,
+				A6250606E385F372A99F5B6C /* Debug */,
+				1EDF09C6AE8684C7B1EABEBD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		D8082C625AFB42E5A7E15DDC /* Build configuration list for PBXNativeTarget "SimpleFrameworkTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3F835C375EB06E1EDF27D3F9 /* Debug */,
+				05C950C7B1B4BBA1F64AB0BB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = 56F5F27150A2A1ADAD2358C8 /* Project object */;
+	rootObject = E9210A7494F5C0723490A523 /* Project object */;
 }

@@ -22,6 +22,7 @@ targets:
         - "Sources/SimpleFramework"
         configurations:
             Debug:
+                SWIFT_VERSION: "$(inherited)"
                 IPHONEOS_DEPLOYMENT_TARGET: "9.0"
                 PRODUCT_BUNDLE_IDENTIFIER: "com.SomeCoolCompany.SimpleFramework"
                 INFOPLIST_FILE: "Info/SimpleFramework.plist"
@@ -32,6 +33,7 @@ targets:
                 SKIP_INSTALL: "YES"
                 MTL_ENABLE_DEBUG_INFO: "true"
             Release:
+                SWIFT_VERSION: "$(inherited)"
                 IPHONEOS_DEPLOYMENT_TARGET: "9.0"
                 PRODUCT_BUNDLE_IDENTIFIER: "com.SomeCoolCompany.SimpleFramework"
                 INFOPLIST_FILE: "Info/SimpleFramework.plist"
@@ -49,6 +51,7 @@ targets:
         - "Sources/SimpleFrameworkTests"
         configurations:
             Debug:
+                SWIFT_VERSION: "$(inherited)"
                 LD_RUNPATH_SEARCH_PATHS: "$(inherited) @executable_path/Frameworks @loader_path/Frameworks"
                 IPHONEOS_DEPLOYMENT_TARGET: "9.0"
                 PRODUCT_BUNDLE_IDENTIFIER: "com.SomeCoolCompany.SimpleFrameworkTests"
@@ -56,6 +59,7 @@ targets:
                 FRAMEWORK_SEARCH_PATHS: "$(inherited) $(BUILT_PRODUCTS_DIR)"
                 MTL_ENABLE_DEBUG_INFO: "true"
             Release:
+                SWIFT_VERSION: "$(inherited)"
                 LD_RUNPATH_SEARCH_PATHS: "$(inherited) @executable_path/Frameworks @loader_path/Frameworks"
                 IPHONEOS_DEPLOYMENT_TARGET: "9.0"
                 PRODUCT_BUNDLE_IDENTIFIER: "com.SomeCoolCompany.SimpleFrameworkTests"
