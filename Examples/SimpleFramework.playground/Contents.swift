@@ -163,7 +163,17 @@ let project = Xcode
 
             "IPHONEOS_DEPLOYMENT_TARGET" <<< depTarget.minimumVersion,
             "SWIFT_VERSION" <<< swiftVersion,
-            "VERSIONING_SYSTEM" <<< "apple-generic"
+            "VERSIONING_SYSTEM" <<< "apple-generic",
+
+            "CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING" <<< "YES",
+            "CLANG_WARN_COMMA" <<< "YES",
+            "CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS" <<< "YES",
+            "CLANG_WARN_NON_LITERAL_NULL_CONVERSION" <<< "YES",
+            "CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF" <<< "YES",
+            "CLANG_WARN_OBJC_LITERAL_CONVERSION" <<< "YES",
+            "CLANG_WARN_RANGE_LOOP_ANALYSIS" <<< "YES",
+            "CLANG_WARN_STRICT_PROTOTYPES" <<< "YES"
+
         )
 
         project.configurations.debug.override(
@@ -190,15 +200,6 @@ let project = Xcode
                 "IPHONEOS_DEPLOYMENT_TARGET" <<< depTarget.minimumVersion,
                 "PRODUCT_BUNDLE_IDENTIFIER" <<< bundleId.main,
                 "INFOPLIST_FILE" <<< infoPlistsPath.main,
-
-                "CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING" <<< "YES",
-                "CLANG_WARN_COMMA" <<< "YES",
-                "CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS" <<< "YES",
-                "CLANG_WARN_NON_LITERAL_NULL_CONVERSION" <<< "YES",
-                "CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF" <<< "YES",
-                "CLANG_WARN_OBJC_LITERAL_CONVERSION" <<< "YES",
-                "CLANG_WARN_RANGE_LOOP_ANALYSIS" <<< "YES",
-                "CLANG_WARN_STRICT_PROTOTYPES" <<< "YES",
 
                 //--- iOS related:
 
@@ -234,15 +235,6 @@ let project = Xcode
                 fwkTests.configurations.all.override(
 
                     "SWIFT_VERSION" <<< "$(inherited)",
-
-                    "CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING" <<< "YES",
-                    "CLANG_WARN_COMMA" <<< "YES",
-                    "CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS" <<< "YES",
-                    "CLANG_WARN_NON_LITERAL_NULL_CONVERSION" <<< "YES",
-                    "CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF" <<< "YES",
-                    "CLANG_WARN_OBJC_LITERAL_CONVERSION" <<< "YES",
-                    "CLANG_WARN_RANGE_LOOP_ANALYSIS" <<< "YES",
-                    "CLANG_WARN_STRICT_PROTOTYPES" <<< "YES",
 
                     // very important for unit tests,
                     // prevents the error when unit test do not start at all
