@@ -278,7 +278,9 @@ let podfile = CocoaPods
 //---
 
 let fastlaneFolder = repoFolder
-    .appendingPathComponent(Defaults.pathToFastlaneFolder)
+    .appendingPathComponent(
+        Defaults.pathToFastlaneFolder
+    )
 
 let scheme = (
     staging: targetName.main,

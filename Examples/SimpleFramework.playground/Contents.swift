@@ -303,7 +303,9 @@ let podspec = CocoaPods
 //---
 
 let fastlaneFolder = repoFolder
-    .appendingPathComponent(Defaults.pathToFastlaneFolder)
+    .appendingPathComponent(
+        Defaults.pathToFastlaneFolder
+    )
 
 //---
 
