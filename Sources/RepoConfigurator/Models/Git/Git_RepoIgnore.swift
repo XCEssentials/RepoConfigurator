@@ -17,6 +17,7 @@ extension Git
             case cocoaPods(ignoreSources: Bool)
             case carthage(ignoreSources: Bool)
             case fastlane
+            case archivesExportPath(String) // for apps only
             case custom(String)
         }
 
@@ -39,13 +40,19 @@ extension Git.RepoIgnore
 {
     public
     static
-    let app = Git.RepoIgnore(
-        .macOS,
-        .cocoa,
-        .cocoaPods(ignoreSources: false),
-        .carthage(ignoreSources: false),
-        .fastlane
-    )
+    func app(
+        archivesExportPath: String = Defaults.archivesExportPath
+        ) -> Git.RepoIgnore
+    {
+        return .init(
+            .macOS,
+            .cocoa,
+            .cocoaPods(ignoreSources: false),
+            .carthage(ignoreSources: false),
+            .fastlane,
+            .archivesExportPath(archivesExportPath)
+        )
+    }
 
     public
     static
@@ -75,6 +82,7 @@ extension Git.RepoIgnore.Section
         {
             case .macOS:
                 result = """
+
                     # ==========
                     ### macOS ###
 
@@ -113,6 +121,7 @@ extension Git.RepoIgnore.Section
 
             case .cocoa:
                 result = """
+
                     # ==========
                     ### Cocoa ###
 
@@ -166,6 +175,7 @@ extension Git.RepoIgnore.Section
                 let ignoreSources
                 ):
                 result = """
+
                     # ==========
                     ### CocoaPods ###
 
@@ -185,6 +195,7 @@ extension Git.RepoIgnore.Section
                 let ignoreSources
                 ):
                 result = """
+
                     # ==========
                     ### Carthage ###
 
@@ -200,6 +211,7 @@ extension Git.RepoIgnore.Section
 
             case .fastlane:
                 result = """
+
                     # ==========
                     ### Fastlane ###
 
@@ -219,10 +231,28 @@ extension Git.RepoIgnore.Section
                     #
                     """
 
+            case .archivesExportPath(
+                let archivesExportPath
+                ):
+                result = """
+
+                    # ==========
+                    ### Archives Export Path (for apps only) ###
+
+                    \(archivesExportPath)
+
+                    ### Archives Export Path (for apps only) ###
+                    # ==========
+                    #
+                    #
+                    #
+                    """
+
             case .custom(
                 let customEntry
                 ):
                 result = """
+
                     # ==========
                     ### Custom repo-specific ###
 

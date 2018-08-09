@@ -7,18 +7,19 @@ typealias PerTarget<T> = (main: T, tst: T)
 
 //---
 
-let product: CocoaPods.Podspec.Product = (
-    name: "SimpleFramework",
-    summary: "A simple framework."
+let product = (
+    name: "SimpleApp",
+    summary: "A simple app."
 )
 
-let company: CocoaPods.Podspec.Company = (
+let company = (
     name: "SomeCoolCompany",
     identifier: "com.SomeCoolCompany",
-    prefix: "SCC"
+    prefix: "SCC",
+    developmentTeamId: "ABCXYZ123"
 )
 
-let author: CocoaPods.Podspec.Author = (
+let author = (
     name: "John Appleseed",
     email: "john@example.com"
 )
@@ -39,22 +40,13 @@ let repoFolder = PathPrefix
 
 let gitignore = Git
     .RepoIgnore
-    .framework
+    .app()
     .prepare(
         targetFolder: repoFolder
     )
 
 let swiftLint = SwiftLint
     .defaultXCE
-    .prepare(
-        targetFolder: repoFolder
-    )
-
-let license = License
-    .MIT(
-        copyrightYear: 2018,
-        copyrightEntity: "\(company.name) Inc."
-    )
     .prepare(
         targetFolder: repoFolder
     )
@@ -83,7 +75,7 @@ let info: PerTarget = (
         .Project
         .Target
         .InfoPlist
-        .iOSFramework()
+        .iOSApp()
         .prepare(
             name: targetName.main + ".plist",
             targetFolder: infoPlistsFolder
@@ -101,7 +93,7 @@ let info: PerTarget = (
 
 //---
 
-let depTarget: DeploymentTarget = (.iOS, "9.0")
+let depTarget: DeploymentTarget = (.iOS, "11.0")
 
 let swiftVersion: VersionString = "4.2"
 
@@ -133,6 +125,8 @@ let infoPlistsPath: PerTarget = (
     commonInfoPlistsPath + "/" + info.tst.name
 )
 
+let testHostPath = "$(BUILT_PRODUCTS_DIR)/" + product.name + ".app/" + product.name
+
 //---
 
 let dummyFile: PerTarget = (
@@ -161,10 +155,12 @@ let project = Xcode
 
         project.configurations.all.override(
 
+            "DEVELOPMENT_TEAM" <<< company.developmentTeamId,
+
             "IPHONEOS_DEPLOYMENT_TARGET" <<< depTarget.minimumVersion,
             "SWIFT_VERSION" <<< swiftVersion,
             "VERSIONING_SYSTEM" <<< "apple-generic",
-
+            
             "CURRENT_PROJECT_VERSION" <<< "0", // just a default non-empty value
 
             "CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING" <<< YES,
@@ -175,6 +171,7 @@ let project = Xcode
             "CLANG_WARN_OBJC_LITERAL_CONVERSION" <<< YES,
             "CLANG_WARN_RANGE_LOOP_ANALYSIS" <<< YES,
             "CLANG_WARN_STRICT_PROTOTYPES" <<< YES
+
         )
 
         project.configurations.debug.override(
@@ -184,17 +181,17 @@ let project = Xcode
 
         //---
 
-        project.target(targetName.main, .iOS, .framework) {
+        project.target(targetName.main, .iOS, .app) {
 
-            fwk in
-
-            //---
-
-            fwk.include(sourcesPath.main)
+            app in
 
             //---
 
-            fwk.configurations.all.override(
+            app.include(sourcesPath.main)
+
+            //---
+
+            app.configurations.all.override(
 
                 "SWIFT_VERSION" <<< "$(inherited)",
 
@@ -205,36 +202,30 @@ let project = Xcode
                 //--- iOS related:
 
                 "SDKROOT" <<< "iphoneos",
-                "TARGETED_DEVICE_FAMILY" <<< DeviceFamily.iOS.universal,
-
-                //--- Framework related:
-
-                "CODE_SIGN_IDENTITY" <<< "",
-
-                "PRODUCT_NAME" <<< product.name,
-                "DEFINES_MODULE" <<< NO,
-                "SKIP_INSTALL" <<< YES
+                "TARGETED_DEVICE_FAMILY" <<< DeviceFamily.iOS.phone
             )
 
-            fwk.configurations.debug.override(
+            app.configurations.debug.override(
 
                 "MTL_ENABLE_DEBUG_INFO" <<< YES
             )
 
             //---
 
-            fwk.unitTests(targetName.tst) {
+            app.unitTests(targetName.tst) {
 
-                fwkTests in
-
-                //---
-
-                fwkTests.include(sourcesPath.tst)
+                appTests in
 
                 //---
 
-                fwkTests.configurations.all.override(
+                appTests.include(sourcesPath.tst)
 
+                //---
+
+                appTests.configurations.all.override(
+
+                    "TEST_HOST" <<< testHostPath,
+                    
                     "SWIFT_VERSION" <<< "$(inherited)",
 
                     // very important for unit tests,
@@ -249,7 +240,7 @@ let project = Xcode
                     "FRAMEWORK_SEARCH_PATHS" <<< "$(inherited) $(BUILT_PRODUCTS_DIR)"
                 )
 
-                fwkTests.configurations.debug.override(
+                appTests.configurations.debug.override(
 
                     "MTL_ENABLE_DEBUG_INFO" <<< YES
                 )
@@ -262,33 +253,17 @@ let project = Xcode
 
 //---
 
-let cocoaPodsModuleName = company.prefix + product.name
-
-//---
-
 let podfile = CocoaPods
     .Podfile
     .standard(
         productName: product.name,
         deploymentTarget: depTarget,
-        pods: [Defaults.podsFromSpec]
-    )
-    .prepare(
-        targetFolder: repoFolder
-    )
+        pods: [
 
-let podspec = CocoaPods
-    .Podspec
-    .standard(
-        product: product,
-        company: company,
-        license: license.model.cocoaPodsLicenseSummary,
-        author: author,
-        swiftVersion: swiftVersion,
-        deploymentTarget: depTarget
+            // add pods here!
+        ]
     )
     .prepare(
-        name: cocoaPodsModuleName + ".podspec",
         targetFolder: repoFolder
     )
 
@@ -305,13 +280,22 @@ let podspec = CocoaPods
 let fastlaneFolder = repoFolder
     .appendingPathComponent(Defaults.pathToFastlaneFolder)
 
+let scheme = (
+    staging: targetName.main,
+    nothing: 0
+)
+
 //---
 
 let fastfile = Fastlane
     .Fastfile
-    .framework(
-        projectName: project.model.name,
-        cocoaPodsModuleName: cocoaPodsModuleName
+    .app(
+        productName: product.name,
+        usesSwiftGen: false,
+        usesSourcery: false,
+        usesSwiftLint: .global,
+        stagingSchemeName: scheme.staging,
+        stagingExportMethod: .adHoc
     )
     .prepare(
         targetFolder: fastlaneFolder
@@ -325,9 +309,6 @@ try? gitignore
 try? swiftLint
     .writeToFileSystem()
 
-try? license
-    .writeToFileSystem()
-
 try? info
     .main
     .writeToFileSystem(ifFileExists: .doNotWrite) // write ONCE!
@@ -336,21 +317,18 @@ try? info
     .tst
     .writeToFileSystem(ifFileExists: .doNotWrite) // write ONCE!
 
-//try? dummyFile
-//    .main
-//    .writeToFileSystem(ifFileExists: .doNotWrite) // write ONCE!
-//
-//try? dummyFile
-//    .tst
-//    .writeToFileSystem(ifFileExists: .doNotWrite) // write ONCE!
+try? dummyFile
+    .main
+    .writeToFileSystem(ifFileExists: .doNotWrite) // write ONCE!
+
+try? dummyFile
+    .tst
+    .writeToFileSystem(ifFileExists: .doNotWrite) // write ONCE!
 
 try? project
     .writeToFileSystem()
 
 try? podfile
-    .writeToFileSystem()
-
-try? podspec
     .writeToFileSystem()
 
 //try? gemfile

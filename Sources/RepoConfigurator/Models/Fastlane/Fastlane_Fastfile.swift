@@ -87,17 +87,16 @@ extension Fastlane.Fastfile
     public
     static
     func app(
-        fastlaneVersion: VersionString,
-        projectName: String,
+        fastlaneVersion: VersionString = Defaults.fastlaneVersion,
         productName: String,
-        cocoaPodsModuleName: String?,
-        usesCocoapods: Bool,
+        projectName: String? = nil,
+        usesCocoapods: Bool = true,
         usesSwiftGen: Bool,
         usesSourcery: Bool,
         usesSwiftLint: SwiftLintLocation,
         stagingSchemeName: String,
         stagingExportMethod: ArchiveExportMethod,
-        archivesExportPath: String
+        archivesExportPath: String = Defaults.archivesExportPath
         ) -> Fastlane.Fastfile
     {
         return .init(
@@ -106,25 +105,25 @@ extension Fastlane.Fastfile
                 fastlaneVersion
             ),
             .beforeRelease(
-                projectName: projectName,
-                cocoaPodsModuleName: cocoaPodsModuleName
+                projectName: projectName ?? productName,
+                cocoaPodsModuleName: nil
             ),
             .regenerateProject(
-                projectName: projectName,
+                projectName: projectName ?? productName,
                 usesCocoapods: usesCocoapods,
                 usesSwiftGen: usesSwiftGen,
                 usesSourcery: usesSourcery,
                 usesSwiftLint: usesSwiftLint
             ),
             .setupProjectFromScratch(
-                projectName: projectName,
+                projectName: projectName ?? productName,
                 usesCocoapods: usesCocoapods,
                 usesSwiftGen: usesSwiftGen,
                 usesSourcery: usesSourcery,
                 usesSwiftLint: usesSwiftLint
             ),
             .archiveStaging(
-                projectName: projectName,
+                projectName: projectName ?? productName,
                 schemeName: stagingSchemeName,
                 exportMethod: stagingExportMethod,
                 productName: productName,
@@ -136,7 +135,7 @@ extension Fastlane.Fastfile
     public
     static
     func framework(
-        fastlaneVersion: VersionString = "1.100.0",
+        fastlaneVersion: VersionString = Defaults.fastlaneVersion,
         projectName: String,
         cocoaPodsModuleName: String?,
         usesCocoapods: Bool = true,

@@ -23,15 +23,15 @@ enum Defaults
 
     public
     static
-    let specVariable: String = "s"
+    let specVariable = "s"
 
     public
     static
-    let pathToInfoPlistsFolder: String = "Info"
+    let pathToInfoPlistsFolder = "Info"
 
     public
     static
-    let pathToSourcesFolder: String = "Sources"
+    let pathToSourcesFolder = "Sources"
 
     public
     static
@@ -39,9 +39,17 @@ enum Defaults
 
     public
     static
-    let podsFromSpec: String = "podspec"
+    let podsFromSpec = "podspec"
 
     public
     static
-    let pathToFastlaneFolder: String = "fastlane" // in LOWER case!
+    let pathToFastlaneFolder = "fastlane" // in LOWER case!
+
+    public
+    static
+    let fastlaneVersion: VersionString = "2.100.0"
+
+    public
+    static
+    let archivesExportPath = ".archives"
 }
