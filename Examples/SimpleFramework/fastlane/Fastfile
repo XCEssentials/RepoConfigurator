@@ -99,7 +99,7 @@ lane :beforeRelease do
 
 end
 
-lane :resetProject do
+lane :regenerateProject do
 
     # === Remember current version and build numbers
 
@@ -161,7 +161,7 @@ lane :resetProject do
 
 end
 
-lane :setupProject do
+lane :setupProjectFromScratch do
 
     # === Generate project from scratch
 

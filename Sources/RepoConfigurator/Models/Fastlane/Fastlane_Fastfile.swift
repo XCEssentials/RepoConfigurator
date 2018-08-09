@@ -334,7 +334,7 @@ extension Fastlane.Fastfile.Section
                 ):
                 result <<<  """
 
-                    lane :resetProject do
+                    lane :regenerateProject do
 
                         # === Remember current version and build numbers
 
@@ -427,7 +427,7 @@ extension Fastlane.Fastfile.Section
                 ):
                 result <<<  """
 
-                    lane :setupProject do
+                    lane :setupProjectFromScratch do
 
                         # === Generate project from scratch
 
