@@ -75,6 +75,28 @@ struct RawTextFile<T: TextFile>
         ifFileExists: IfFileExistsWritePolicy = .override
         ) throws -> Bool
     {
+        // lets makre sure folders up to this file exists
+
+        let pathToFolder = fullFileName
+            .deletingLastPathComponent()
+            .path
+
+        if
+            !FileManager
+                .default
+                .fileExists(atPath: pathToFolder)
+        {
+            try FileManager
+                .default
+                .createDirectory(
+                    atPath: pathToFolder,
+                    withIntermediateDirectories: true,
+                    attributes: nil
+                )
+        }
+
+        //---
+
         if
             (ifFileExists == .override) ||
             !FileManager.default.fileExists(atPath: fullFileName.path)

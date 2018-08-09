@@ -244,8 +244,22 @@ extension Struct.Spec_1_2_1
         //---
         
         // https://github.com/lyptt/struct/wiki/Spec-format:-v1.2#platform
-        
-        result <<< (indentation, Struct.Spec.key("platform") + Struct.Spec.value(t.platform.rawValue))
+
+        let platformId: String
+
+        switch t.platform
+        {
+            case .iOS:
+                platformId = "ios"
+
+            case .macOS:
+                platformId = "mac"
+
+            default:
+                platformId = "<UNSUPPORTED>"
+        }
+
+        result <<< (indentation, Struct.Spec.key("platform") + " " + platformId)
         
         //---
         

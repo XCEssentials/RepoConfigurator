@@ -40,4 +40,8 @@ enum Defaults
     public
     static
     let podsFromSpec: String = "podspec"
+
+    public
+    static
+    let pathToFastlaneFolder: String = "fastlane" // in LOWER case!
 }

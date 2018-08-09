@@ -43,6 +43,21 @@ protocol FixedNameTextFile: TextFile
 public
 extension FixedNameTextFile
 {
+    static
+    var fileName: String
+    {
+        // by default return intrinsic file name type based on type name
+
+        return String
+            .init(describing: self)
+            .components(
+                separatedBy: .whitespacesAndNewlines
+            )
+            .first
+            ??
+        ""
+    }
+
     var fileName: String
     {
         return Self.fileName

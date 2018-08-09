@@ -6,10 +6,6 @@ extension Fastlane
         // MARK: - Type level members
 
         public
-        static
-        let fileName = "fastlane/Fastfile"
-
-        public
         enum SwiftLintLocation
         {
             case none
@@ -309,13 +305,13 @@ extension Fastlane.Fastfile.Section
                         # ===
 
                         version_bump_podspec(
-                        path: './\($0).podspec',
-                        version_number: newVersionNumber
+                            path: './\($0).podspec',
+                            version_number: newVersionNumber
                         )
 
                         git_commit(
-                        path: './\($0).podspec',
-                        message: 'Version Bump to ' + newVersionNumber + ' in Podspec file'
+                            path: './\($0).podspec',
+                            message: 'Version Bump to ' + newVersionNumber + ' in Podspec file'
                         )
                         """
                         .asIndentedText(with: &indentation)
@@ -710,13 +706,4 @@ extension Fastlane.Fastfile.Section
             project.save()
             """
     }
-}
-
-fileprivate
-func nothingUnless(
-    _ condition: Bool,
-    _ ifConditionSatisfied: String
-    ) -> String
-{
-    return (condition ? ifConditionSatisfied : "")
 }

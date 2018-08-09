@@ -16,7 +16,7 @@ extension WidelyUsedLicense
         // by default return intrinsic license type based on type name
 
         return String
-            .init(describing: type(of: self).self)
+            .init(describing: self)
             .components(
                 separatedBy: .whitespacesAndNewlines
             )

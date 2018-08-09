@@ -85,7 +85,7 @@ let info: PerTarget = (
         .InfoPlist
         .iOSFramework()
         .prepare(
-            name: targetName.main,
+            name: targetName.main + ".plist",
             targetFolder: infoPlistsFolder
         ),
     Xcode
@@ -94,14 +94,14 @@ let info: PerTarget = (
         .InfoPlist
         .unitTests()
         .prepare(
-            name: targetName.tst,
+            name: targetName.tst + ".plist",
             targetFolder: infoPlistsFolder
         )
 )
 
 //---
 
-let depTarget: DeploymentTarget = (.iOS, "8.0")
+let depTarget: DeploymentTarget = (.iOS, "9.0")
 
 let swiftVersion: VersionString = "4.2"
 
@@ -110,6 +110,17 @@ let commonSourcesPath = Defaults.pathToSourcesFolder
 let sourcesPath: PerTarget = (
     commonSourcesPath + "/" + targetName.main,
     commonSourcesPath + "/" + targetName.tst
+)
+
+let sourcesFolder: PerTarget = (
+    repoFolder
+        .appendingPathComponent(
+            sourcesPath.main
+        ),
+    repoFolder
+        .appendingPathComponent(
+            sourcesPath.tst
+        )
 )
 
 let bundleId: PerTarget = (
@@ -123,6 +134,23 @@ let infoPlistsPath: PerTarget = (
 )
 
 //---
+
+let dummyFile: PerTarget = (
+    Xcode
+        .Project
+        .Target
+        .DummyFile()
+        .prepare(
+            targetFolder: sourcesFolder.main
+        ),
+    Xcode
+        .Project
+        .Target
+        .DummyFile()
+        .prepare(
+            targetFolder: sourcesFolder.tst
+        )
+)
 
 let project = Xcode
     .Project(product.name, specFormat: .v2_1_0){
@@ -247,6 +275,21 @@ let podspec = CocoaPods
         targetFolder: repoFolder
     )
 
+// https://docs.fastlane.tools/getting-started/ios/setup/#use-a-gemfile
+//let gemfile = Fastlane
+//    .Gemfile
+//    .fastlaneSupportOnly()
+//    .prepare(
+//        targetFolder: repoFolder
+//    )
+
+//---
+
+let fastlaneFolder = repoFolder
+    .appendingPathComponent(Defaults.pathToFastlaneFolder)
+
+//---
+
 let fastfile = Fastlane
     .Fastfile
     .framework(
@@ -254,36 +297,47 @@ let fastfile = Fastlane
         cocoaPodsModuleName: cocoaPodsModuleName
     )
     .prepare(
-        targetFolder: repoFolder // 'fileName' contains 'fastlane' dir!
+        targetFolder: fastlaneFolder
     )
 
 // MARK: - Actually write repo configuration files
 
-try! gitignore
+try? gitignore
     .writeToFileSystem()
 
-try! swiftLint
+try? swiftLint
     .writeToFileSystem()
 
-try! license
+try? license
     .writeToFileSystem()
 
-try! info
+try? info
     .main
     .writeToFileSystem(ifFileExists: .doNotWrite) // write OCNE!
 
-try! info
+try? info
     .tst
     .writeToFileSystem(ifFileExists: .doNotWrite) // write OCNE!
 
-try! project
+try? dummyFile
+    .main
+    .writeToFileSystem(ifFileExists: .doNotWrite) // write OCNE!
+
+try? dummyFile
+    .tst
+    .writeToFileSystem(ifFileExists: .doNotWrite) // write OCNE!
+
+try? project
     .writeToFileSystem()
 
-try! podfile
+try? podfile
     .writeToFileSystem()
 
-try! podspec
+try? podspec
     .writeToFileSystem()
 
-try! fastfile
+//try? gemfile
+//    .writeToFileSystem()
+
+try? fastfile
     .writeToFileSystem()

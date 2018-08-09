@@ -68,7 +68,7 @@ extension Struct.Spec_1_3_0
         _ set: Xcode.Project.BuildConfigurations
         ) -> IndentedText
     {
-        // https://github.com/lyptt/struct/wiki/Spec-format:-v1.2#configurations
+        // https://github.com/lyptt/struct/wiki/Spec-format:-v1.3#configurations
         
         //---
         
@@ -105,7 +105,7 @@ extension Struct.Spec_1_3_0
         _ c: Xcode.Project.BuildConfiguration
         ) -> IndentedText
     {
-        // https://github.com/lyptt/struct/wiki/Spec-format:-v1.2#configurations
+        // https://github.com/lyptt/struct/wiki/Spec-format:-v1.3#configurations
         
         //---
         
@@ -128,7 +128,7 @@ extension Struct.Spec_1_3_0
         if
             let externalConfig = c.externalConfig
         {
-            // https://github.com/lyptt/struct/wiki/Spec-format:-v1.2#xcconfig-references
+            // https://github.com/lyptt/struct/wiki/Spec-format:-v1.3#xcconfig-references
             
             // NOTE: when using xcconfig files,
             // any overrides or profiles will be ignored.
@@ -141,7 +141,7 @@ extension Struct.Spec_1_3_0
             
             //---
             
-            // https://github.com/lyptt/struct/wiki/Spec-format:-v1.2#profiles
+            // https://github.com/lyptt/struct/wiki/Spec-format:-v1.3#profiles
             
             result <<< (indentation, Struct.Spec.key("profiles"))
             
@@ -152,7 +152,7 @@ extension Struct.Spec_1_3_0
             
             //---
             
-            // https://github.com/lyptt/struct/wiki/Spec-format:-v1.2#overrides
+            // https://github.com/lyptt/struct/wiki/Spec-format:-v1.3#overrides
             
             result <<< (indentation, Struct.Spec.key("overrides"))
             indentation++
@@ -182,7 +182,7 @@ extension Struct.Spec_1_3_0
         _ targets: [Xcode.Project.Target]
         ) -> IndentedText
     {
-        // https://github.com/lyptt/struct/wiki/Spec-format:-v1.2#targets
+        // https://github.com/lyptt/struct/wiki/Spec-format:-v1.3#targets
         
         //---
         
@@ -227,7 +227,7 @@ extension Struct.Spec_1_3_0
         _ t: Xcode.Project.Target
         ) -> IndentedText
     {
-        // https://github.com/lyptt/struct/wiki/Spec-format:-v1.2#targets
+        // https://github.com/lyptt/struct/wiki/Spec-format:-v1.3#targets
         
         //---
         
@@ -243,13 +243,27 @@ extension Struct.Spec_1_3_0
         
         //---
         
-        // https://github.com/lyptt/struct/wiki/Spec-format:-v1.2#platform
-        
-        result <<< (indentation, Struct.Spec.key("platform") + Struct.Spec.value(t.platform.rawValue))
+        // https://github.com/lyptt/struct/wiki/Spec-format:-v1.3#platform
+
+        let platformId: String
+
+        switch t.platform
+        {
+            case .iOS:
+                platformId = "ios"
+
+            case .macOS:
+                platformId = "mac"
+
+            default:
+                platformId = "<UNSUPPORTED>"
+        }
+
+        result <<< (indentation, Struct.Spec.key("platform") + " " + platformId)
         
         //---
         
-        // https://github.com/lyptt/struct/wiki/Spec-format:-v1.2#type
+        // https://github.com/lyptt/struct/wiki/Spec-format:-v1.3#type
         
         result <<< (indentation, Struct.Spec.key("type") + Struct.Spec.value(t.type.rawValue))
         
@@ -259,7 +273,7 @@ extension Struct.Spec_1_3_0
         
         //---
         
-        // https://github.com/lyptt/struct/wiki/Spec-format:-v1.2#sources
+        // https://github.com/lyptt/struct/wiki/Spec-format:-v1.3#sources
         
         if
             !t.includes.isEmpty
@@ -274,7 +288,7 @@ extension Struct.Spec_1_3_0
         
         //---
         
-        // https://github.com/lyptt/struct/wiki/Spec-format:-v1.2#excludes
+        // https://github.com/lyptt/struct/wiki/Spec-format:-v1.3#excludes
         
         if
             !t.excludes.isEmpty
@@ -311,7 +325,7 @@ extension Struct.Spec_1_3_0
         
         //---
         
-        // https://github.com/lyptt/struct/wiki/Spec-format:-v1.2#i18n-resources
+        // https://github.com/lyptt/struct/wiki/Spec-format:-v1.3#i18n-resources
         
         if
             !t.i18nResources.isEmpty
@@ -334,7 +348,7 @@ extension Struct.Spec_1_3_0
         
         //---
         
-        // https://github.com/lyptt/struct/wiki/Spec-format:-v1.2#cocoapods
+        // https://github.com/lyptt/struct/wiki/Spec-format:-v1.3#cocoapods
         
         if
             t.includeCocoapods
@@ -361,7 +375,7 @@ extension Struct.Spec_1_3_0
         _ deps: Xcode.Project.Target.Dependencies
         ) -> IndentedText
     {
-        // https://github.com/lyptt/struct/wiki/Spec-format:-v1.2#references
+        // https://github.com/lyptt/struct/wiki/Spec-format:-v1.3#references
         
         //---
         
@@ -398,7 +412,7 @@ extension Struct.Spec_1_3_0
         fromSDK: [String]
         ) -> IndentedText
     {
-        // https://github.com/lyptt/struct/wiki/Spec-format:-v1.2#references
+        // https://github.com/lyptt/struct/wiki/Spec-format:-v1.3#references
         
         //---
         
@@ -424,7 +438,7 @@ extension Struct.Spec_1_3_0
         targets: [String]
         ) -> IndentedText
     {
-        // https://github.com/lyptt/struct/wiki/Spec-format:-v1.2#references
+        // https://github.com/lyptt/struct/wiki/Spec-format:-v1.3#references
         
         //---
         
@@ -450,7 +464,7 @@ extension Struct.Spec_1_3_0
         binaries: [Xcode.Project.Target.BinaryDependency]
         ) -> IndentedText
     {
-        // https://github.com/lyptt/struct/wiki/Spec-format:-v1.2#references
+        // https://github.com/lyptt/struct/wiki/Spec-format:-v1.3#references
         
         //---
         
@@ -477,7 +491,7 @@ extension Struct.Spec_1_3_0
         projects: [Xcode.Project.Target.ProjectDependencies]
         ) -> IndentedText
     {
-        // https://github.com/lyptt/struct/wiki/Spec-format:-v1.2#references
+        // https://github.com/lyptt/struct/wiki/Spec-format:-v1.3#references
         
         //---
         
@@ -564,7 +578,7 @@ extension Struct.Spec_1_3_0
         
         //---
         
-        // https://github.com/lyptt/struct/wiki/Spec-format:-v1.2#overrides
+        // https://github.com/lyptt/struct/wiki/Spec-format:-v1.3#overrides
         
         for o in b.overrides + c.overrides
         {
@@ -588,7 +602,7 @@ extension Struct.Spec_1_3_0
         scripts: Xcode.Project.Target.Scripts
         ) -> IndentedText
     {
-        // https://github.com/lyptt/struct/wiki/Spec-format:-v1.2#scripts
+        // https://github.com/lyptt/struct/wiki/Spec-format:-v1.3#scripts
         
         //---
         
@@ -645,7 +659,7 @@ extension Struct.Spec_1_3_0
         regulars: [String]
         ) -> IndentedText
     {
-        // https://github.com/lyptt/struct/wiki/Spec-format:-v1.2#scripts
+        // https://github.com/lyptt/struct/wiki/Spec-format:-v1.3#scripts
         
         //---
         
@@ -671,7 +685,7 @@ extension Struct.Spec_1_3_0
         beforeBuild: [String]
         ) -> IndentedText
     {
-        // https://github.com/lyptt/struct/wiki/Spec-format:-v1.2#scripts
+        // https://github.com/lyptt/struct/wiki/Spec-format:-v1.3#scripts
         
         //---
         
@@ -699,7 +713,7 @@ extension Struct.Spec_1_3_0
         afterBuild: [String]
         ) -> IndentedText
     {
-        // https://github.com/lyptt/struct/wiki/Spec-format:-v1.2#scripts
+        // https://github.com/lyptt/struct/wiki/Spec-format:-v1.3#scripts
         
         //---
         

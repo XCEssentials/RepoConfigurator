@@ -119,6 +119,8 @@ extension CocoaPods.Podspec
 
         sections += otherEntries.map{ .custom($0) }
 
+        sections += [.footer]
+
         //---
 
         return .init(sections: sections)

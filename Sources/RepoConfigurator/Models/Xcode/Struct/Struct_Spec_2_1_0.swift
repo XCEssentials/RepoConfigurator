@@ -479,9 +479,26 @@ extension Struct.Spec_2_1_0
         //---
         
         // https://github.com/lyptt/struct/wiki/Spec-format:-v2.0#platform
-        
-        result <<< (indentation, Struct.Spec.key("platform") + Struct.Spec.value(t.platform.rawValue))
-        
+
+        let platformId: String
+
+        switch t.platform
+        {
+            case .iOS:
+                platformId = "ios"
+
+            case .watchOS:
+                platformId = "watch"
+
+            case .tvOS:
+                platformId = "tv"
+
+            case .macOS:
+                platformId = "mac"
+        }
+
+        result <<< (indentation, Struct.Spec.key("platform") + " " + platformId)
+
         //---
         
         // https://github.com/lyptt/struct/wiki/Spec-format:-v2.0#type

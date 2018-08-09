@@ -4,12 +4,12 @@
    <Group
       location = "group:Examples"
       name = "Examples">
+      <FileRef
+         location = "group:/Users/maxim/Library/Mobile Documents/com~apple~CloudDocs/Dev/XCEssentials/RepoConfigurator/Examples/SimpleFramework.playground">
+      </FileRef>
       <Group
          location = "group:SimpleFramework"
          name = "SimpleFramework">
-         <FileRef
-            location = "group:SimpleFramework_Cfg.playground">
-         </FileRef>
       </Group>
    </Group>
    <FileRef
