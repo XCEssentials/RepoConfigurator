@@ -45,7 +45,7 @@ let gitignore = Git
     )
 
 let swiftLint = SwiftLint
-    .defaultXCE
+    .defaultXCE()
     .prepare(
         targetFolder: repoFolder
     )

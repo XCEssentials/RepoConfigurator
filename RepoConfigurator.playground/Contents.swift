@@ -32,7 +32,11 @@ let gitignore = Git
     )
 
 let swiftLint = SwiftLint
-    .defaultXCE
+    .defaultXCE(
+    customExclude: [
+        "Templates"
+        ]
+    )
     .prepare(
         targetFolder: repoFolder
     )

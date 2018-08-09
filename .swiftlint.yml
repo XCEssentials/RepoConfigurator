@@ -19,6 +19,7 @@ excluded:
     - Resources
     - Carthage
     - Pods
+    - Templates
 
 # rules options:
 

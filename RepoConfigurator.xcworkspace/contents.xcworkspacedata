@@ -2,7 +2,10 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:RepoConfigurator.playground">
+      location = "group:RepoConfigurator.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Pods/Pods.xcodeproj">
    </FileRef>
    <Group
       location = "group:Examples"
@@ -15,9 +18,6 @@
       </FileRef>
    </Group>
    <FileRef
-      location = "group:RepoConfigurator.xcodeproj">
-   </FileRef>
-   <FileRef
-      location = "group:Pods/Pods.xcodeproj">
+      location = "group:RepoConfigurator.playground">
    </FileRef>
 </Workspace>

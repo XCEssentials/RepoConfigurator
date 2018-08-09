@@ -60,22 +60,31 @@ extension SwiftLint
 {
     public
     static
-    let defaultXCE = SwiftLint(
-        .defaultHeader,
-        .disabledRules(
-            setXCEDefaults: true,
-            otherDisabledRules: []
-        ),
-        .excluded(
-            excludeResources: true,
-            excludeDependencies: true,
-            customExclude: []
-        ),
-        .rulesOptions(
-            setXCEDefaults: true,
-            otherRulesOptions: []
+    func defaultXCE(
+        otherDisabledRules: [String] = [],
+        excludeResources: Bool = true,
+        excludeDependencies: Bool = true,
+        customExclude: [String] = [],
+        otherRulesOptions: [RuleOption] = []
+        ) -> SwiftLint
+    {
+        return .init(
+            .defaultHeader,
+            .disabledRules(
+                setXCEDefaults: true,
+                otherDisabledRules: otherDisabledRules
+            ),
+            .excluded(
+                excludeResources: excludeResources,
+                excludeDependencies: excludeDependencies,
+                customExclude: customExclude
+            ),
+            .rulesOptions(
+                setXCEDefaults: true,
+                otherRulesOptions: otherRulesOptions
+            )
         )
-    )
+    }
 }
 
 // MARK: - Content rendering
