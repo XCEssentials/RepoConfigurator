@@ -48,7 +48,7 @@ let swiftLint = SwiftLint
 let license = License
     .MIT(
         copyrightYear: 2018,
-        copyrightEntity: "\(company.name) Inc."
+        copyrightEntity: author.name
     )
     .prepare(
         targetFolder: repoFolder
@@ -65,20 +65,31 @@ let fastlaneFolder = repoFolder
 
 //---
 
-//let fastfile = Fastlane
-//    .Fastfile
-//    .madeOf(
-//        .defaultHeader,
-//        .fastlaneVersion(
-//            Defaults.fastlaneVersion
-//        ),
-//        .beforeRelease(
-//            projectName: product.name,
-//            cocoaPodsModuleName: nil
-//        )
-//    )
-//    .prepare(
-//        targetFolder: fastlaneFolder
-//    )
+let fastfile = Fastlane
+    .Fastfile(
+        .defaultHeader,
+        .fastlaneVersion(
+            Defaults.fastlaneVersion
+        ),
+        .beforeRelease(
+            projectName: product.name,
+            cocoaPodsModuleName: nil
+        )
+    )
+    .prepare(
+        targetFolder: fastlaneFolder
+    )
 
-//
+// MARK: - Actually write repo configuration files
+
+try? gitignore
+    .writeToFileSystem()
+
+try? swiftLint
+    .writeToFileSystem()
+
+try? license
+    .writeToFileSystem()
+
+try? fastfile
+    .writeToFileSystem()

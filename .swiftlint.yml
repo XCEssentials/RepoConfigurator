@@ -1,23 +1,23 @@
+
 # see more at https://github.com/realm/SwiftLint
 
 # ===
 
 disabled_rules:
 
-  - opening_brace
-  - nesting
-  - function_body_length
-  - file_length
+    - opening_brace
+    - nesting
+    - function_body_length
+    - file_length
 
 # paths to ignore during linting. Takes precedence over `included`.
 excluded:
 
-  - Resources
+    - Resources
+    - Carthage
+    - Pods
 
-  - Carthage
-  - Pods
-
-# rules options
+# rules options:
 
 line_length:
     ignores_comments: true
