@@ -15,7 +15,7 @@ let repoFolder = PathPrefix
 
 let authorName = "Maxim Khatskevich"
 
-// let depTarget: DeploymentTarget = (.macOS, "10.13")
+let depTarget: DeploymentTarget = (.macOS, "10.13")
 
 let fastlaneFolder = repoFolder
     .appendingPathComponent(
@@ -61,6 +61,19 @@ let fastfile = Fastlane
         targetFolder: fastlaneFolder
     )
 
+let podfile = CocoaPods
+    .Podfile
+    .standard(
+        productName: productName,
+        deploymentTarget: depTarget,
+        pods: [
+            "pod 'SwiftLint'"
+        ]
+    )
+    .prepare(
+        targetFolder: repoFolder
+    )
+
 // MARK: - Actually write repo configuration files
 
 try? gitignore
@@ -73,4 +86,7 @@ try? license
     .writeToFileSystem()
 
 try? fastfile
+    .writeToFileSystem()
+
+try? podfile
     .writeToFileSystem()

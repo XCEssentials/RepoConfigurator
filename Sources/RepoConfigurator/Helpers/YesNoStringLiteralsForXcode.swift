@@ -2,4 +2,4 @@ public
 let YES = "YES"
 
 public
-let NO = "NO"
+let NO = "NO" //swiftlint:disable:this identifier_name

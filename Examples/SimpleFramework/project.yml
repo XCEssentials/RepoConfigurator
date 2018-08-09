@@ -7,6 +7,7 @@ configurations:
             IPHONEOS_DEPLOYMENT_TARGET: "9.0"
             SWIFT_VERSION: "4.2"
             VERSIONING_SYSTEM: "apple-generic"
+            CURRENT_PROJECT_VERSION: "0"
             CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING: "YES"
             CLANG_WARN_COMMA: "YES"
             CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS: "YES"
@@ -22,6 +23,7 @@ configurations:
             IPHONEOS_DEPLOYMENT_TARGET: "9.0"
             SWIFT_VERSION: "4.2"
             VERSIONING_SYSTEM: "apple-generic"
+            CURRENT_PROJECT_VERSION: "0"
             CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING: "YES"
             CLANG_WARN_COMMA: "YES"
             CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS: "YES"
@@ -48,7 +50,7 @@ targets:
                 PRODUCT_NAME: "SimpleFramework"
                 DEFINES_MODULE: "NO"
                 SKIP_INSTALL: "YES"
-                MTL_ENABLE_DEBUG_INFO: "true"
+                MTL_ENABLE_DEBUG_INFO: "YES"
             Release:
                 SWIFT_VERSION: "$(inherited)"
                 IPHONEOS_DEPLOYMENT_TARGET: "9.0"
@@ -75,7 +77,7 @@ targets:
                 PRODUCT_BUNDLE_IDENTIFIER: "com.SomeCoolCompany.SimpleFrameworkTests"
                 INFOPLIST_FILE: "Info/SimpleFrameworkTests.plist"
                 FRAMEWORK_SEARCH_PATHS: "$(inherited) $(BUILT_PRODUCTS_DIR)"
-                MTL_ENABLE_DEBUG_INFO: "true"
+                MTL_ENABLE_DEBUG_INFO: "YES"
             Release:
                 SWIFT_VERSION: "$(inherited)"
                 LD_RUNPATH_SEARCH_PATHS: "$(inherited) @executable_path/Frameworks @loader_path/Frameworks"

@@ -59,7 +59,7 @@ extension Xcode.Project
         //---
         
         public
-        var externalConfig: String? = nil // *.xcconfig file
+        var externalConfig: String? // *.xcconfig file
         
         //---
         

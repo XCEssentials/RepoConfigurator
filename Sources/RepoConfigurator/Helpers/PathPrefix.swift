@@ -17,7 +17,7 @@ enum PathPrefix
 
     public
     static
-    let iCloudDrive = try! FileManager
+    let iCloudDrive = try! FileManager //swiftlint:disable:this force_try
         .default
         .url(for: .libraryDirectory,
              in: .userDomainMask,

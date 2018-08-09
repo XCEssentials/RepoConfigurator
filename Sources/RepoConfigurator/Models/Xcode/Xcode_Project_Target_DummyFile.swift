@@ -13,7 +13,10 @@ extension Xcode.Project.Target
         // MARK: - Instance level members
 
         public
-        let fileContent: IndentedText = []
+        let fileContent: IndentedText = [
+            (Indentation(), "// dummy file"),
+            (Indentation(), "")
+        ]
 
         // MARK: - Initializers
 

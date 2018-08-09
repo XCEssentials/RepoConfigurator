@@ -5,6 +5,7 @@ extension Struct
     enum Spec: String
     {
         case
+            //swiftlint:disable identifier_name
             v1_2_1 = "1.2.1",
             v1_3_0 = "1.3.0",
             v2_0_0 = "2.0.0",

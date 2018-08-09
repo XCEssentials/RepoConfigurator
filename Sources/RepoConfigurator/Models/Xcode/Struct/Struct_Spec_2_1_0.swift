@@ -1,3 +1,5 @@
+//swiftlint:disable identifier_name
+
 // internal
 extension Struct
 {
@@ -455,7 +457,8 @@ extension Struct.Spec_2_1_0
     }
     
     //---
-    
+
+    //swiftlint:disable:next cyclomatic_complexity
     static
     func process(
         _ indentation: inout Indentation,
@@ -484,17 +487,17 @@ extension Struct.Spec_2_1_0
 
         switch t.platform
         {
-            case .iOS:
-                platformId = "ios"
+        case .iOS:
+            platformId = "ios"
 
-            case .watchOS:
-                platformId = "watch"
+        case .watchOS:
+            platformId = "watch"
 
-            case .tvOS:
-                platformId = "tv"
+        case .tvOS:
+            platformId = "tv"
 
-            case .macOS:
-                platformId = "mac"
+        case .macOS:
+            platformId = "mac"
         }
 
         result <<< (indentation, Struct.Spec.key("platform") + " " + platformId)

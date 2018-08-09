@@ -63,28 +63,28 @@ extension Fastlane.Gemfile.Section
 
         switch self
         {
-            case .defaultHeader:
-                result <<< """
-                    source "https://rubygems.org"
+        case .defaultHeader:
+            result <<< """
+                source "https://rubygems.org"
 
-                    """
-                    .asIndentedText(with: &indentation)
+                """
+                .asIndentedText(with: &indentation)
 
-            case .fastlane:
-                result <<< """
+        case .fastlane:
+            result <<< """
 
-                    gem "fastlane"
-                    """
-                    .asIndentedText(with: &indentation)
+                gem "fastlane"
+                """
+                .asIndentedText(with: &indentation)
 
-            case .custom(
-                let customEntry
-                ):
-                result <<< """
+        case .custom(
+            let customEntry
+            ):
+            result <<< """
 
-                    \(customEntry)
-                    """
-                    .asIndentedText(with: &indentation)
+                \(customEntry)
+                """
+                .asIndentedText(with: &indentation)
         }
 
         //---

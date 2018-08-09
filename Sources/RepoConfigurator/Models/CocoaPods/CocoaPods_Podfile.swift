@@ -142,100 +142,100 @@ extension CocoaPods.Podfile.Section
 
         switch self
         {
-            case .header(
-                let workspaceName
-                ):
+        case .header(
+            let workspaceName
+            ):
+            result <<< """
+                workspace '\(workspaceName)'
+                """
+                .asIndentedText(with: &indentation)
+
+        case .target(
+            let targetName,
+            let projectName,
+            let deploymentTarget,
+            let usesSwift,
+            let pods,
+            let tests
+            ):
+            result <<< """
+
+                target '\(targetName)' do
+
+                    project '\(projectName)'
+                    platform :\(deploymentTarget.platform.cocoaPodsId), '\(deploymentTarget.minimumVersion)'
+
+                    # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
+                    \(usesSwift ? "" : "# ")use_frameworks!
+
+                """
+                .asIndentedText(with: &indentation)
+
+            indentation++
+
+            pods.forEach{
+
                 result <<< """
-                    workspace '\(workspaceName)'
+                    \($0)
                     """
-                    .asIndentedText(with: &indentation)
+                        .asIndentedText(with: &indentation)
+            }
 
-            case .target(
-                let targetName,
-                let projectName,
-                let deploymentTarget,
-                let usesSwift,
-                let pods,
-                let tests
-                ):
+            tests.forEach{
+
                 result <<< """
 
-                    target '\(targetName)' do
-
-                        project '\(projectName)'
-                        platform :\(deploymentTarget.platform.cocoaPodsId), '\(deploymentTarget.minimumVersion)'
-
-                        # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
-                        \(usesSwift ? "" : "# ")use_frameworks!
+                    target '\($0.name)' do
 
                     """
                     .asIndentedText(with: &indentation)
 
                 indentation++
 
-                pods.forEach{
+                $0.inherit.map{
+
+                    result <<< """
+                        inherit! \($0.rawValue)
+
+                        """
+                        .asIndentedText(with: &indentation)
+                }
+
+                $0.pods.forEach{
 
                     result <<< """
                         \($0)
                         """
-                            .asIndentedText(with: &indentation)
+                        .asIndentedText(with: &indentation)
                 }
-
-                tests.forEach{
-
-                    result <<< """
-
-                        target '\($0.name)' do
-
-                        """
-                        .asIndentedText(with: &indentation)
-
-                    indentation++
-
-                    $0.inherit.map{
-
-                        result <<< """
-                            inherit! \($0.rawValue)
-
-                            """
-                            .asIndentedText(with: &indentation)
-                    }
-
-                    $0.pods.forEach{
-
-                        result <<< """
-                            \($0)
-                            """
-                            .asIndentedText(with: &indentation)
-                    }
-
-                    indentation--
-
-                    result <<< """
-
-                        end
-                        """
-                        .asIndentedText(with: &indentation)
-
-                } // tests.forEach
 
                 indentation--
 
-                // end target
                 result <<< """
 
                     end
                     """
                     .asIndentedText(with: &indentation)
 
-            case .custom(
-                let customEntry
-                ):
-                result <<< """
+            } // tests.forEach
 
-                    \(customEntry)
-                    """
-                    .asIndentedText(with: &indentation)
+            indentation--
+
+            // end target
+            result <<< """
+
+                end
+                """
+                .asIndentedText(with: &indentation)
+
+        case .custom(
+            let customEntry
+            ):
+            result <<< """
+
+                \(customEntry)
+                """
+                .asIndentedText(with: &indentation)
         }
 
         //---

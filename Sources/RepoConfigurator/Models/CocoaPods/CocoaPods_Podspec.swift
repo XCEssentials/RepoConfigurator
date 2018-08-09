@@ -144,83 +144,88 @@ extension CocoaPods.Podspec.Section
 
         switch self
         {
-            case .header(
-                let specVar
-                ):
-                result <<< """
-                    Pod::Spec.new do |\(specVar)|
+        case .header(
+            let specVar
+            ):
+            result <<< """
+                Pod::Spec.new do |\(specVar)|
 
-                    """
-                    .asIndentedText(with: &indentation)
+                """
+                .asIndentedText(with: &indentation)
 
-                indentation++
+            indentation++
 
-            case .generalInfo(
-                let specVar,
-                let product,
-                let company,
-                let initialVersion,
-                let license,
-                let author,
-                let swiftVersion
-                ):
-                result <<< """
-                    \(specVar).name          = '\(company.prefix)\(product.name)'
-                    \(specVar).summary       = '\(product.summary)'
-                    \(specVar).version       = '\(initialVersion)'
-                    \(specVar).homepage      = 'https://\(company.name).github.io/\(product.name)'
+        case .generalInfo(
+            let specVar,
+            let product,
+            let company,
+            let initialVersion,
+            let license,
+            let author,
+            let swiftVersion
+            ):
+            //swiftlint:disable line_length
+            result <<< """
+                \(specVar).name          = '\(company.prefix)\(product.name)'
+                \(specVar).summary       = '\(product.summary)'
+                \(specVar).version       = '\(initialVersion)'
+                \(specVar).homepage      = 'https://\(company.name).github.io/\(product.name)'
 
-                    \(specVar).source        = { :git => 'https://github.com/\(company.name)/\(product.name).git', :tag => \(specVar).version }
+                \(specVar).source        = { :git => 'https://github.com/\(company.name)/\(product.name).git', :tag => \(specVar).version }
 
-                    \(specVar).requires_arc  = true
+                \(specVar).requires_arc  = true
 
-                    \(specVar).license       = { :type => '\(license.type)', :file => '\(license.fileName)' }
-                    \(specVar).author        = { '\(author.name)' => '\(author.email)' }
-                    """
-                    .asIndentedText(with: &indentation)
+                \(specVar).license       = { :type => '\(license.type)', :file => '\(license.fileName)' }
+                \(specVar).author        = { '\(author.name)' => '\(author.email)' }
+                """
+                .asIndentedText(with: &indentation)
 
-                swiftVersion.map{
+            //swiftlint:enable line_length
 
-                    // NOTE: same indentation!
+            swiftVersion.map{
 
-                    result <<< """
-
-                        \(specVar).swift_version = '\($0)'
-                        """
-                        .asIndentedText(with: &indentation)
-                }
-
-            case .basicPod(
-                let specVar,
-                let deploymentTarget,
-                let sourcesPath,
-                let usesSwift
-                ):
-                result <<< """
-
-                    \(specVar).\(deploymentTarget.platform.cocoaPodsId).deployment_target = '\(deploymentTarget.minimumVersion)'
-
-                    \(specVar).source_files = '\(sourcesPath)/**/*.\(usesSwift ? "swift" : "{h,m}")'
-                    """
-                    .asIndentedText(with: &indentation)
-
-            case .custom(
-                let customEntry
-                ):
-                result <<< """
-
-                    \(customEntry)
-                    """
-                    .asIndentedText(with: &indentation)
-
-            case .footer:
-                indentation--
+                // NOTE: same indentation!
 
                 result <<< """
 
-                    end
+                    \(specVar).swift_version = '\($0)'
                     """
                     .asIndentedText(with: &indentation)
+            }
+
+        case .basicPod(
+            let specVar,
+            let deploymentTarget,
+            let sourcesPath,
+            let usesSwift
+            ):
+            //swiftlint:disable line_length
+            result <<< """
+
+                \(specVar).\(deploymentTarget.platform.cocoaPodsId).deployment_target = '\(deploymentTarget.minimumVersion)'
+
+                \(specVar).source_files = '\(sourcesPath)/**/*.\(usesSwift ? "swift" : "{h,m}")'
+                """
+                .asIndentedText(with: &indentation)
+            //swiftlint:enable line_length
+
+        case .custom(
+            let customEntry
+            ):
+            result <<< """
+
+                \(customEntry)
+                """
+                .asIndentedText(with: &indentation)
+
+        case .footer:
+            indentation--
+
+            result <<< """
+
+                end
+                """
+                .asIndentedText(with: &indentation)
         }
 
         //---

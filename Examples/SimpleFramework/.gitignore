@@ -1,3 +1,4 @@
+
 # ==========
 ### macOS ###
 
@@ -32,6 +33,7 @@ Temporary Items
 #
 #
 #
+
 # ==========
 ### Cocoa ###
 
@@ -79,6 +81,7 @@ playground.xcworkspace
 #
 #
 #
+
 # ==========
 ### CocoaPods ###
 
@@ -92,6 +95,7 @@ Pods/
 #
 #
 #
+
 # ==========
 ### Carthage ###
 
@@ -103,6 +107,7 @@ Carthage/Checkouts
 #
 #
 #
+
 # ==========
 ### Fastlane ###
 

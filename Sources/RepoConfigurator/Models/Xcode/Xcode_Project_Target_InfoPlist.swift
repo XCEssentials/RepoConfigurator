@@ -188,7 +188,6 @@ extension Xcode.Project.Target.InfoPlist
         return .init(sections: sections)
     }
 
-
     static
     func unitTests(
         initialVersionString: VersionString = Defaults.initialVersionString,
@@ -235,104 +234,104 @@ extension Xcode.Project.Target.InfoPlist.Section
 
         switch self
         {
-            case .header:
-                result = """
-                    <?xml version="1.0" encoding="UTF-8"?>
-                    <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-                    <plist version="1.0">
-                    <dict>
-                    """
+        case .header:
+            result = """
+                <?xml version="1.0" encoding="UTF-8"?>
+                <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+                <plist version="1.0">
+                <dict>
+                """
 
-            case .basic(
-                let packageType,
-                let initialVersionString,
-                let initialBuildNumber
-                ):
-                result = """
+        case .basic(
+            let packageType,
+            let initialVersionString,
+            let initialBuildNumber
+            ):
+            result = """
 
-                    <key>CFBundleDevelopmentRegion</key>
-                    <string>$(DEVELOPMENT_LANGUAGE)</string>
-                    <key>CFBundleExecutable</key>
-                    <string>$(EXECUTABLE_NAME)</string>
-                    <key>CFBundleIdentifier</key>
-                    <string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
-                    <key>CFBundleInfoDictionaryVersion</key>
-                    <string>6.0</string>
-                    <key>CFBundleName</key>
-                    <string>$(PRODUCT_NAME)</string>
-                    <key>CFBundlePackageType</key>
-                    <string>\(packageType.rawValue)</string>
-                    <key>CFBundleShortVersionString</key>
-                    <string>\(initialVersionString)</string>
-                    <key>CFBundleVersion</key>
-                    <string>\(initialBuildNumber)</string>
+                <key>CFBundleDevelopmentRegion</key>
+                <string>$(DEVELOPMENT_LANGUAGE)</string>
+                <key>CFBundleExecutable</key>
+                <string>$(EXECUTABLE_NAME)</string>
+                <key>CFBundleIdentifier</key>
+                <string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+                <key>CFBundleInfoDictionaryVersion</key>
+                <string>6.0</string>
+                <key>CFBundleName</key>
+                <string>$(PRODUCT_NAME)</string>
+                <key>CFBundlePackageType</key>
+                <string>\(packageType.rawValue)</string>
+                <key>CFBundleShortVersionString</key>
+                <string>\(initialVersionString)</string>
+                <key>CFBundleVersion</key>
+                <string>\(initialBuildNumber)</string>
 
-                    """
+                """
 
-            case .iOSApp:
-                result = """
+        case .iOSApp:
+            result = """
 
-                    <key>LSRequiresIPhoneOS</key>
-                    <true/>
-                    <key>UILaunchStoryboardName</key>
-                    <string>LaunchScreen</string>
-                    <key>UIRequiredDeviceCapabilities</key>
-                    <array>
-                    <string>armv7</string>
-                    </array>
-                    <key>UISupportedInterfaceOrientations</key>
-                    <array>
-                    <string>UIInterfaceOrientationPortrait</string>
-                    </array>
+                <key>LSRequiresIPhoneOS</key>
+                <true/>
+                <key>UILaunchStoryboardName</key>
+                <string>LaunchScreen</string>
+                <key>UIRequiredDeviceCapabilities</key>
+                <array>
+                <string>armv7</string>
+                </array>
+                <key>UISupportedInterfaceOrientations</key>
+                <array>
+                <string>UIInterfaceOrientationPortrait</string>
+                </array>
 
-                    """
+                """
 
-            case .macOSApp(
-                let copyrightYear,
-                let copyrightEntity
-                ):
-                result = """
+        case .macOSApp(
+            let copyrightYear,
+            let copyrightEntity
+            ):
+            result = """
 
-                    <key>CFBundleIconFile</key>
-                    <string></string>
-                    <key>LSMinimumSystemVersion</key>
-                    <string>$(MACOSX_DEPLOYMENT_TARGET)</string>
-                    <key>NSHumanReadableCopyright</key>
-                    <string>Copyright © \(copyrightYear) \(copyrightEntity). All rights reserved.</string>
-                    <key>NSMainNibFile</key>
-                    <string>MainMenu</string>
-                    <key>NSPrincipalClass</key>
-                    <string>NSApplication</string>
+                <key>CFBundleIconFile</key>
+                <string></string>
+                <key>LSMinimumSystemVersion</key>
+                <string>$(MACOSX_DEPLOYMENT_TARGET)</string>
+                <key>NSHumanReadableCopyright</key>
+                <string>Copyright © \(copyrightYear) \(copyrightEntity). All rights reserved.</string>
+                <key>NSMainNibFile</key>
+                <string>MainMenu</string>
+                <key>NSPrincipalClass</key>
+                <string>NSApplication</string>
 
-                    """
+                """
 
-            case .macOSFramework(
-                let copyrightYear,
-                let copyrightEntity
-                ):
-                result = """
+        case .macOSFramework(
+            let copyrightYear,
+            let copyrightEntity
+            ):
+            result = """
 
-                    <key>NSHumanReadableCopyright</key>
-                    <string>Copyright © \(copyrightYear) \(copyrightEntity). All rights reserved.</string>
-                    <key>NSPrincipalClass</key>
-                    <string></string>
+                <key>NSHumanReadableCopyright</key>
+                <string>Copyright © \(copyrightYear) \(copyrightEntity). All rights reserved.</string>
+                <key>NSPrincipalClass</key>
+                <string></string>
 
-                    """
+                """
 
-            case .custom(
-                let customSection
-                ):
-                result = """
+        case .custom(
+            let customSection
+            ):
+            result = """
 
-                    \(customSection)
+                \(customSection)
 
-                    """
+                """
 
-            case .footer:
-                result = """
-                    </dict>
-                    </plist>
-                    """
+        case .footer:
+            result = """
+                </dict>
+                </plist>
+                """
         }
 
         //---

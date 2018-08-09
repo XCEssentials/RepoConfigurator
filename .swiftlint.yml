@@ -5,6 +5,9 @@
 
 disabled_rules:
 
+    - function_parameter_count
+    - trailing_newline
+    - closure_parameter_position
     - opening_brace
     - nesting
     - function_body_length

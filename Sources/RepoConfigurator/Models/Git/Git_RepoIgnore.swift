@@ -80,190 +80,190 @@ extension Git.RepoIgnore.Section
 
         switch self
         {
-            case .macOS:
-                result = """
+        case .macOS:
+            result = """
 
-                    # ==========
-                    ### macOS ###
+                # ==========
+                ### macOS ###
 
-                    *.DS_Store
-                    .AppleDouble
-                    .LSOverride
+                *.DS_Store
+                .AppleDouble
+                .LSOverride
 
-                    # Icon must end with two \r
-                    Icon
+                # Icon must end with two \r
+                Icon
 
-                    # Thumbnails
-                    ._*
+                # Thumbnails
+                ._*
 
-                    # Files that might appear in the root of a volume
-                    .DocumentRevisions-V100
-                    .fseventsd
-                    .Spotlight-V100
-                    .TemporaryItems
-                    .Trashes
-                    .VolumeIcon.icns
-                    .com.apple.timemachine.donotpresent
+                # Files that might appear in the root of a volume
+                .DocumentRevisions-V100
+                .fseventsd
+                .Spotlight-V100
+                .TemporaryItems
+                .Trashes
+                .VolumeIcon.icns
+                .com.apple.timemachine.donotpresent
 
-                    # Directories potentially created on remote AFP share
-                    .AppleDB
-                    .AppleDesktop
-                    Network Trash Folder
-                    Temporary Items
-                    .apdisk
+                # Directories potentially created on remote AFP share
+                .AppleDB
+                .AppleDesktop
+                Network Trash Folder
+                Temporary Items
+                .apdisk
 
-                    ### macOS ###
-                    # ==========
-                    #
-                    #
-                    #
-                    """
+                ### macOS ###
+                # ==========
+                #
+                #
+                #
+                """
 
-            case .cocoa:
-                result = """
+        case .cocoa:
+            result = """
 
-                    # ==========
-                    ### Cocoa ###
+                # ==========
+                ### Cocoa ###
 
-                    # Xcode
+                # Xcode
 
-                    ## Build generated
-                    build/
-                    DerivedData/
+                ## Build generated
+                build/
+                DerivedData/
 
-                    ## Various settings
-                    *.pbxuser
-                    !default.pbxuser
-                    *.mode1v3
-                    !default.mode1v3
-                    *.mode2v3
-                    !default.mode2v3
-                    *.perspectivev3
-                    !default.perspectivev3
-                    xcuserdata/
+                ## Various settings
+                *.pbxuser
+                !default.pbxuser
+                *.mode1v3
+                !default.mode1v3
+                *.mode2v3
+                !default.mode2v3
+                *.perspectivev3
+                !default.perspectivev3
+                xcuserdata/
 
-                    ## Other
-                    *.moved-aside
-                    *.xccheckout
-                    *.xcscmblueprint
+                ## Other
+                *.moved-aside
+                *.xccheckout
+                *.xcscmblueprint
 
-                    ## Obj-C/Swift specific
-                    *.hmap
-                    *.ipa
-                    *.dSYM.zip
-                    *.dSYM
+                ## Obj-C/Swift specific
+                *.hmap
+                *.ipa
+                *.dSYM.zip
+                *.dSYM
 
-                    ## Playgrounds
-                    timeline.xctimeline
-                    playground.xcworkspace
+                ## Playgrounds
+                timeline.xctimeline
+                playground.xcworkspace
 
-                    # Swift Package Manager
-                    #
-                    # Add this line if you want to avoid checking in source code from Swift Package Manager dependencies.
-                    # Packages/
-                    # Package.pins
-                    .build/
+                # Swift Package Manager
+                #
+                # Add this line if you want to avoid checking in source code from Swift Package Manager dependencies.
+                # Packages/
+                # Package.pins
+                .build/
 
-                    ### Cocoa ###
-                    # ==========
-                    #
-                    #
-                    #
-                    """
+                ### Cocoa ###
+                # ==========
+                #
+                #
+                #
+                """
 
-            case .cocoaPods(
-                let ignoreSources
-                ):
-                result = """
+        case .cocoaPods(
+            let ignoreSources
+            ):
+            result = """
 
-                    # ==========
-                    ### CocoaPods ###
+                # ==========
+                ### CocoaPods ###
 
-                    # NOTE: never ignore the lock file.
-                    # See https://guides.cocoapods.org/using/using-cocoapods.html#what-is-podfilelock
+                # NOTE: never ignore the lock file.
+                # See https://guides.cocoapods.org/using/using-cocoapods.html#what-is-podfilelock
 
-                    \((ignoreSources ? "" : "# "))Pods/
+                \((ignoreSources ? "" : "# "))Pods/
 
-                    ### CocoaPods ###
-                    # ==========
-                    #
-                    #
-                    #
-                    """
+                ### CocoaPods ###
+                # ==========
+                #
+                #
+                #
+                """
 
-            case .carthage(
-                let ignoreSources
-                ):
-                result = """
+        case .carthage(
+            let ignoreSources
+            ):
+            result = """
 
-                    # ==========
-                    ### Carthage ###
+                # ==========
+                ### Carthage ###
 
-                    Carthage/Build
-                    \((ignoreSources ? "" : "# "))Carthage/Checkouts
+                Carthage/Build
+                \((ignoreSources ? "" : "# "))Carthage/Checkouts
 
-                    ### Carthage ###
-                    # ==========
-                    #
-                    #
-                    #
-                    """
+                ### Carthage ###
+                # ==========
+                #
+                #
+                #
+                """
 
-            case .fastlane:
-                result = """
+        case .fastlane:
+            result = """
 
-                    # ==========
-                    ### Fastlane ###
+                # ==========
+                ### Fastlane ###
 
-                    # For more information about the recommended setup visit:
-                    # https://docs.fastlane.tools/best-practices/source-control/#source-control
+                # For more information about the recommended setup visit:
+                # https://docs.fastlane.tools/best-practices/source-control/#source-control
 
-                    fastlane/README.md
-                    fastlane/report.xml
-                    fastlane/Preview.html
-                    fastlane/screenshots
-                    fastlane/test_output
+                fastlane/README.md
+                fastlane/report.xml
+                fastlane/Preview.html
+                fastlane/screenshots
+                fastlane/test_output
 
-                    ### Fastlane ###
-                    # ==========
-                    #
-                    #
-                    #
-                    """
+                ### Fastlane ###
+                # ==========
+                #
+                #
+                #
+                """
 
-            case .archivesExportPath(
-                let archivesExportPath
-                ):
-                result = """
+        case .archivesExportPath(
+            let archivesExportPath
+            ):
+            result = """
 
-                    # ==========
-                    ### Archives Export Path (for apps only) ###
+                # ==========
+                ### Archives Export Path (for apps only) ###
 
-                    \(archivesExportPath)
+                \(archivesExportPath)
 
-                    ### Archives Export Path (for apps only) ###
-                    # ==========
-                    #
-                    #
-                    #
-                    """
+                ### Archives Export Path (for apps only) ###
+                # ==========
+                #
+                #
+                #
+                """
 
-            case .custom(
-                let customEntry
-                ):
-                result = """
+        case .custom(
+            let customEntry
+            ):
+            result = """
 
-                    # ==========
-                    ### Custom repo-specific ###
+                # ==========
+                ### Custom repo-specific ###
 
-                    \(customEntry)
+                \(customEntry)
 
-                    ### Custom repo-specific ###
-                    # ==========
-                    #
-                    #
-                    #
-                    """
+                ### Custom repo-specific ###
+                # ==========
+                #
+                #
+                #
+                """
         }
 
         //---

@@ -2,7 +2,7 @@ public
 enum DeviceFamily
 {
     public
-    enum iOS
+    enum iOS //swiftlint:disable:this type_name
     {
         public
         static

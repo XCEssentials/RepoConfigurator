@@ -1,3 +1,5 @@
+//swiftlint:disable identifier_name
+
 // internal
 extension Struct
 {
@@ -249,14 +251,14 @@ extension Struct.Spec_1_2_1
 
         switch t.platform
         {
-            case .iOS:
-                platformId = "ios"
+        case .iOS:
+            platformId = "ios"
 
-            case .macOS:
-                platformId = "mac"
+        case .macOS:
+            platformId = "mac"
 
-            default:
-                platformId = "<UNSUPPORTED>"
+        default:
+            platformId = "<UNSUPPORTED>"
         }
 
         result <<< (indentation, Struct.Spec.key("platform") + " " + platformId)

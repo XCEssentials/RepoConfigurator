@@ -176,6 +176,7 @@ extension Fastlane.Fastfile
 public
 extension Fastlane.Fastfile.Section
 {
+    //swiftlint:disable:next cyclomatic_complexity
     func asIndentedText(
         with indentation: inout Indentation
         ) -> IndentedText
@@ -188,33 +189,36 @@ extension Fastlane.Fastfile.Section
 
         switch self
         {
-            case .defaultHeader:
-                result <<< """
+        case .defaultHeader:
+            //swiftlint:disable line_length
+            result <<< """
 
-                    # Customise this file, documentation can be found here:
-                    # https://github.com/KrauseFx/fastlane/tree/master/docs
-                    # All available actions: https://github.com/KrauseFx/fastlane/blob/master/docs/Actions.md
-                    # can also be listed using the `fastlane actions` command
+                # Customise this file, documentation can be found here:
+                # https://github.com/KrauseFx/fastlane/tree/master/docs
+                # All available actions: https://github.com/KrauseFx/fastlane/blob/master/docs/Actions.md
+                # can also be listed using the `fastlane actions` command
 
-                    # Change the syntax highlighting to Ruby
-                    # All lines starting with a # are ignored when running `fastlane`
+                # Change the syntax highlighting to Ruby
+                # All lines starting with a # are ignored when running `fastlane`
 
-                    # More information about multiple platforms in fastlane: https://github.com/KrauseFx/fastlane/blob/master/docs/Platforms.md
-                    # All available actions: https://github.com/KrauseFx/fastlane/blob/master/docs/Actions.md
+                # More information about multiple platforms in fastlane: https://github.com/KrauseFx/fastlane/blob/master/docs/Platforms.md
+                # All available actions: https://github.com/KrauseFx/fastlane/blob/master/docs/Actions.md
 
-                    # By default, fastlane will send which actions are used
-                    # No personal data is shared, more information on https://github.com/fastlane/enhancer
-                    # Uncomment the following line to opt out
-                    # opt_out_usage
+                # By default, fastlane will send which actions are used
+                # No personal data is shared, more information on https://github.com/fastlane/enhancer
+                # Uncomment the following line to opt out
+                # opt_out_usage
 
-                    # If you want to automatically update fastlane if a new version is available:
-                    # update_fastlane
-                    """
-                    .asIndentedText(with: &indentation)
+                # If you want to automatically update fastlane if a new version is available:
+                # update_fastlane
+                """
+                .asIndentedText(with: &indentation)
 
-            case .fastlaneVersion(
-                let version
-                ):
+            //swiftlint:enable line_length
+
+        case .fastlaneVersion(
+            let version
+            ): {
                 result <<< """
 
                     # This is the minimum version number required.
@@ -223,351 +227,355 @@ extension Fastlane.Fastfile.Section
 
                     """
                     .asIndentedText(with: &indentation)
+            }()
 
-            case .beforeRelease(
-                let projectName,
-                let cocoaPodsModuleName
-                ):
+        case .beforeRelease(
+            let projectName,
+            let cocoaPodsModuleName
+            ):
+            result <<< """
+
+                lane :beforeRelease do
+
+                    ensure_git_branch(
+                        branch: 'release/*'
+                    )
+
+                    # ===
+
+                    ensure_git_status_clean
+
+                    # ===
+
+                    pod_lib_lint(
+                        allow_warnings: true,
+                        quick: true
+                    )
+
+                    # ===
+
+                    versionNumber = get_version_number(xcodeproj: '\(projectName).xcodeproj')
+                    puts 'Current VERSION number: ' + versionNumber
+
+                    # === Infer new version number
+
+                    defaultNewVersion = git_branch.split('/').last
+
+                    # === Define new version number
+
+                    useInferredNEWVersionNumber = prompt(
+                        text: 'Proceed with inferred NEW version number (' + defaultNewVersion + ')?',
+                        boolean: true
+                    )
+
+                    if useInferredNEWVersionNumber
+
+                        newVersionNumber = defaultNewVersion
+
+                    else
+
+                        newVersionNumber = prompt(text: 'New VERSION number:')
+
+                    end
+
+                    # === Apply NEW version number and increment build number
+
+                    increment_version_number(
+                        xcodeproj: '\(projectName).xcodeproj',
+                        version_number: newVersionNumber
+                    )
+
+                    increment_build_number(
+                        xcodeproj: '\(projectName).xcodeproj'
+                    )
+
+                    # ===
+
+                    newBuildNumber = get_build_number(xcodeproj: '\(projectName).xcodeproj')
+
+                    commit_version_bump( # it will fail if more than version bump
+                        xcodeproj: '\(projectName).xcodeproj',
+                        message: 'Version Bump to ' + newVersionNumber + ' (' + newBuildNumber + ')'
+                    )
+                """
+                .asIndentedText(with: &indentation)
+
+            indentation++
+
+            cocoaPodsModuleName.map{
+
                 result <<< """
 
-                    lane :beforeRelease do
+                    # ===
 
-                        ensure_git_branch(
-                            branch: 'release/*'
+                    version_bump_podspec(
+                        path: './\($0).podspec',
+                        version_number: newVersionNumber
+                    )
+
+                    git_commit(
+                        path: './\($0).podspec',
+                        message: 'Version Bump to ' + newVersionNumber + ' in Podspec file'
+                    )
+                    """
+                    .asIndentedText(with: &indentation)
+            }
+
+            indentation--
+
+            result <<< """
+
+                end
+                """
+                .asIndentedText(with: &indentation)
+
+        case .regenerateProject(
+            let projectName,
+            let usesCocoapods,
+            let usesSwiftGen,
+            let usesSourcery,
+            let usesSwiftLint
+            ):
+            result <<<  """
+
+                lane :regenerateProject do
+
+                    # === Remember current version and build numbers
+
+                    versionNumber = get_version_number(xcodeproj: '\(projectName).xcodeproj')
+                    buildNumber = get_build_number(xcodeproj: '\(projectName).xcodeproj')
+
+                    # === Remove completely current project file/package
+
+                    sh 'cd ./.. && rm -r ./\(projectName).xcodeproj'
+
+                    # === Regenerate project
+
+                    # default initial location for any command
+                    # is inside 'Fastlane' folder
+
+                    sh 'cd ./.. && struct generate \(usesCocoapods ? "" : "#")&& pod install'
+
+                    # === Set proper current version and build numbers
+
+                    increment_version_number(
+                        xcodeproj: '\(projectName).xcodeproj',
+                        version_number: versionNumber
+                    )
+
+                    increment_build_number(
+                        xcodeproj: '\(projectName).xcodeproj',
+                        build_number: buildNumber
+                    )
+
+                    # === Sort all project entries
+
+                    sh 'cd ./.. && xcodeproj sort "\(projectName).xcodeproj"'
+
+                    # === Add custom 'Run Script Phase' entries
+                """
+                .asIndentedText(with: &indentation)
+
+            indentation++
+
+            if
+                usesSwiftGen
+            {
+                result <<< swiftGenBuildPhase(
+                    projectFileName: projectName
+                    )
+                    .asIndentedText(with: &indentation)
+            }
+
+            if
+                usesSourcery
+            {
+                result <<< sourceryBuildPhase(
+                    projectFileName: projectName
+                    )
+                    .asIndentedText(with: &indentation)
+            }
+
+            if
+                usesSwiftLint == .global
+            {
+                result <<< swiftLintGlobalBuildPhase(
+                    projectFileName: projectName
+                    )
+                    .asIndentedText(with: &indentation)
+            }
+
+            if
+                usesSwiftLint == .cocoaPods
+            {
+                result <<< swiftLintCocoaPodsBuildPhase(
+                    projectFileName: projectName
+                    )
+                    .asIndentedText(with: &indentation)
+            }
+
+            indentation--
+
+            result <<< """
+
+                end
+                """
+                .asIndentedText(with: &indentation)
+
+        case .setupProjectFromScratch(
+            let projectName,
+            let usesCocoapods,
+            let usesSwiftGen,
+            let usesSourcery,
+            let usesSwiftLint
+            ):
+            result <<<  """
+
+                lane :setupProjectFromScratch do
+
+                    # === Generate project from scratch
+
+                    # default initial location for any command
+                    # is inside 'Fastlane' folder
+
+                    sh 'cd ./.. && struct generate \(usesCocoapods ? "" : "#")&& pod update'
+
+                    # === Set proper build number
+
+                    # NOTE: proper version number is stored in the Info file
+
+                    newBuildNumber = prompt(text: 'Desired BUILD number:')
+
+                    increment_build_number(
+                        xcodeproj: '\(projectName).xcodeproj',
+                        build_number: newBuildNumber
+                    )
+
+                    # === Sort all project entries
+
+                    sh 'cd ./.. && xcodeproj sort "\(projectName).xcodeproj"'
+
+                    # === Add custom 'Run Script Phase' entries
+                """
+                .asIndentedText(with: &indentation)
+
+            indentation++
+
+            if
+                usesSwiftGen
+            {
+                result <<< swiftGenBuildPhase(
+                    projectFileName: projectName
+                    )
+                    .asIndentedText(with: &indentation)
+            }
+
+            if
+                usesSourcery
+            {
+                result <<< sourceryBuildPhase(
+                    projectFileName: projectName
+                    )
+                    .asIndentedText(with: &indentation)
+            }
+
+            if
+                usesSwiftLint == .global
+            {
+                result <<< swiftLintGlobalBuildPhase(
+                    projectFileName: projectName
+                    )
+                    .asIndentedText(with: &indentation)
+            }
+
+            if
+                usesSwiftLint == .cocoaPods
+            {
+                result <<< swiftLintCocoaPodsBuildPhase(
+                    projectFileName: projectName
+                    )
+                    .asIndentedText(with: &indentation)
+            }
+
+            indentation--
+
+            result <<< """
+
+                end
+                """
+                .asIndentedText(with: &indentation)
+
+        case .archiveStaging(
+            let projectName,
+            let schemeName,
+            let exportMethod,
+            let productName,
+            let archivesExportPath
+            ):
+            //swiftlint:disable line_length
+            result <<< """
+
+                lane :archiveStaging do
+
+                    ensure_git_status_clean
+
+                    # === Set basic parameters
+
+                    buildNumber = get_build_number(xcodeproj: '\(projectName).xcodeproj')
+                    versionNumber = get_version_number(xcodeproj: '\(projectName).xcodeproj')
+
+                    puts 'Attempt to use SCHEME: \(schemeName)'
+
+                    # === Check if target version number is eligible for this line
+
+                    # project must be on version number 'X.Y.Z-beta.*'
+
+                    if (!(versionNumber.include? 'dirty') && (versionNumber.include? 'beta'))
+
+                        # git status is clean at this point
+
+                        # === main part
+
+                        # seems to be allowed to run this lane
+
+                        gym(
+                            scheme: '\(schemeName)',
+                            export_method: '\(exportMethod.rawValue)',
+                            output_name: '\(productName)_' + versionNumber + '_' + buildNumber + '.ipa',
+                            output_directory: '\(archivesExportPath)'
                         )
 
-                        # ===
+                        # === mark dirty
 
-                        ensure_git_status_clean
+                        # puts 'NOTE: Mark project version as dirty now.'
 
-                        # ===
-
-                        pod_lib_lint(
-                            allow_warnings: true,
-                            quick: true
-                        )
-
-                        # ===
-
-                        versionNumber = get_version_number(xcodeproj: '\(projectName).xcodeproj')
-                        puts 'Current VERSION number: ' + versionNumber
-
-                        # === Infer new version number
-
-                        defaultNewVersion = git_branch.split('/').last
-
-                        # === Define new version number
-
-                        useInferredNEWVersionNumber = prompt(
-                            text: 'Proceed with inferred NEW version number (' + defaultNewVersion + ')?',
-                            boolean: true
-                        )
-
-                        if useInferredNEWVersionNumber
-
-                            newVersionNumber = defaultNewVersion
-
-                        else
-
-                            newVersionNumber = prompt(text: 'New VERSION number:')
-
-                        end
-
-                        # === Apply NEW version number and increment build number
+                        newVersionNumber = versionNumber + '+dirty'
+                        newBuildNumber = buildNumber
 
                         increment_version_number(
                             xcodeproj: '\(projectName).xcodeproj',
                             version_number: newVersionNumber
                         )
 
-                        increment_build_number(
-                            xcodeproj: '\(projectName).xcodeproj'
-                        )
+                        # only set 'dirty' mark in 'versionNumber'!
 
-                        # ===
-
-                        newBuildNumber = get_build_number(xcodeproj: '\(projectName).xcodeproj')
-
-                        commit_version_bump( # it will fail if more than version bump
+                        commit_version_bump(
                             xcodeproj: '\(projectName).xcodeproj',
                             message: 'Version Bump to ' + newVersionNumber + ' (' + newBuildNumber + ')'
                         )
-                    """
-                    .asIndentedText(with: &indentation)
 
-                indentation++
+                    else
 
-                cocoaPodsModuleName.map{
-
-                    result <<< """
-
-                        # ===
-
-                        version_bump_podspec(
-                            path: './\($0).podspec',
-                            version_number: newVersionNumber
-                        )
-
-                        git_commit(
-                            path: './\($0).podspec',
-                            message: 'Version Bump to ' + newVersionNumber + ' in Podspec file'
-                        )
-                        """
-                        .asIndentedText(with: &indentation)
-                }
-
-                indentation--
-
-                result <<< """
+                        puts 'ERROR: This VERSION (' + versionNumber + ') of the app can NOT be archived using this lane.'
+                        puts 'NOTE: this lane is for STAGING (beta) builds ONLY.'
 
                     end
-                    """
-                    .asIndentedText(with: &indentation)
 
-            case .regenerateProject(
-                let projectName,
-                let usesCocoapods,
-                let usesSwiftGen,
-                let usesSourcery,
-                let usesSwiftLint
-                ):
-                result <<<  """
+                end
+                """
+                .asIndentedText(with: &indentation)
 
-                    lane :regenerateProject do
-
-                        # === Remember current version and build numbers
-
-                        versionNumber = get_version_number(xcodeproj: '\(projectName).xcodeproj')
-                        buildNumber = get_build_number(xcodeproj: '\(projectName).xcodeproj')
-
-                        # === Remove completely current project file/package
-
-                        sh 'cd ./.. && rm -r ./\(projectName).xcodeproj'
-
-                        # === Regenerate project
-
-                        # default initial location for any command
-                        # is inside 'Fastlane' folder
-
-                        sh 'cd ./.. && struct generate \(usesCocoapods ? "" : "#")&& pod install'
-
-                        # === Set proper current version and build numbers
-
-                        increment_version_number(
-                            xcodeproj: '\(projectName).xcodeproj',
-                            version_number: versionNumber
-                        )
-
-                        increment_build_number(
-                            xcodeproj: '\(projectName).xcodeproj',
-                            build_number: buildNumber
-                        )
-
-                        # === Sort all project entries
-
-                        sh 'cd ./.. && xcodeproj sort "\(projectName).xcodeproj"'
-
-                        # === Add custom 'Run Script Phase' entries
-                    """
-                    .asIndentedText(with: &indentation)
-
-                indentation++
-
-                if
-                    usesSwiftGen
-                {
-                    result <<< swiftGenBuildPhase(
-                        projectFileName: projectName
-                        )
-                        .asIndentedText(with: &indentation)
-                }
-
-                if
-                    usesSourcery
-                {
-                    result <<< sourceryBuildPhase(
-                        projectFileName: projectName
-                        )
-                        .asIndentedText(with: &indentation)
-                }
-
-                if
-                    usesSwiftLint == .global
-                {
-                    result <<< swiftLintGlobalBuildPhase(
-                        projectFileName: projectName
-                        )
-                        .asIndentedText(with: &indentation)
-                }
-
-                if
-                    usesSwiftLint == .cocoaPods
-                {
-                    result <<< swiftLintCocoaPodsBuildPhase(
-                        projectFileName: projectName
-                        )
-                        .asIndentedText(with: &indentation)
-                }
-
-                indentation--
-
-                result <<< """
-
-                    end
-                    """
-                    .asIndentedText(with: &indentation)
-
-            case .setupProjectFromScratch(
-                let projectName,
-                let usesCocoapods,
-                let usesSwiftGen,
-                let usesSourcery,
-                let usesSwiftLint
-                ):
-                result <<<  """
-
-                    lane :setupProjectFromScratch do
-
-                        # === Generate project from scratch
-
-                        # default initial location for any command
-                        # is inside 'Fastlane' folder
-
-                        sh 'cd ./.. && struct generate \(usesCocoapods ? "" : "#")&& pod update'
-
-                        # === Set proper build number
-
-                        # NOTE: proper version number is stored in the Info file
-
-                        newBuildNumber = prompt(text: 'Desired BUILD number:')
-
-                        increment_build_number(
-                            xcodeproj: '\(projectName).xcodeproj',
-                            build_number: newBuildNumber
-                        )
-
-                        # === Sort all project entries
-
-                        sh 'cd ./.. && xcodeproj sort "\(projectName).xcodeproj"'
-
-                        # === Add custom 'Run Script Phase' entries
-                    """
-                    .asIndentedText(with: &indentation)
-
-                indentation++
-
-                if
-                    usesSwiftGen
-                {
-                    result <<< swiftGenBuildPhase(
-                        projectFileName: projectName
-                        )
-                        .asIndentedText(with: &indentation)
-                }
-
-                if
-                    usesSourcery
-                {
-                    result <<< sourceryBuildPhase(
-                        projectFileName: projectName
-                        )
-                        .asIndentedText(with: &indentation)
-                }
-
-                if
-                    usesSwiftLint == .global
-                {
-                    result <<< swiftLintGlobalBuildPhase(
-                        projectFileName: projectName
-                        )
-                        .asIndentedText(with: &indentation)
-                }
-
-                if
-                    usesSwiftLint == .cocoaPods
-                {
-                    result <<< swiftLintCocoaPodsBuildPhase(
-                        projectFileName: projectName
-                        )
-                        .asIndentedText(with: &indentation)
-                }
-
-                indentation--
-
-                result <<< """
-
-                    end
-                    """
-                    .asIndentedText(with: &indentation)
-
-            case .archiveStaging(
-                let projectName,
-                let schemeName,
-                let exportMethod,
-                let productName,
-                let archivesExportPath
-                ):
-                result <<< """
-
-                    lane :archiveStaging do
-
-                        ensure_git_status_clean
-
-                        # === Set basic parameters
-
-                        buildNumber = get_build_number(xcodeproj: '\(projectName).xcodeproj')
-                        versionNumber = get_version_number(xcodeproj: '\(projectName).xcodeproj')
-
-                        puts 'Attempt to use SCHEME: \(schemeName)'
-
-                        # === Check if target version number is eligible for this line
-
-                        # project must be on version number 'X.Y.Z-beta.*'
-
-                        if (!(versionNumber.include? 'dirty') && (versionNumber.include? 'beta'))
-
-                            # git status is clean at this point
-
-                            # === main part
-
-                            # seems to be allowed to run this lane
-
-                            gym(
-                                scheme: '\(schemeName)',
-                                export_method: '\(exportMethod.rawValue)',
-                                output_name: '\(productName)_' + versionNumber + '_' + buildNumber + '.ipa',
-                                output_directory: '\(archivesExportPath)'
-                            )
-
-                            # === mark dirty
-
-                            # puts 'NOTE: Mark project version as dirty now.'
-
-                            newVersionNumber = versionNumber + '+dirty'
-                            newBuildNumber = buildNumber
-
-                            increment_version_number(
-                                xcodeproj: '\(projectName).xcodeproj',
-                                version_number: newVersionNumber
-                            )
-
-                            # only set 'dirty' mark in 'versionNumber'!
-
-                            commit_version_bump(
-                                xcodeproj: '\(projectName).xcodeproj',
-                                message: 'Version Bump to ' + newVersionNumber + ' (' + newBuildNumber + ')'
-                            )
-
-                        else
-
-                            puts 'ERROR: This VERSION (' + versionNumber + ') of the app can NOT be archived using this lane.'
-                            puts 'NOTE: this lane is for STAGING (beta) builds ONLY.'
-
-                        end
-
-                    end
-                    """
-                    .asIndentedText(with: &indentation)
+            //swiftlint:enable line_length
         }
 
         //---

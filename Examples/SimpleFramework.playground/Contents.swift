@@ -338,13 +338,13 @@ try? info
     .tst
     .writeToFileSystem(ifFileExists: .doNotWrite) // write ONCE!
 
-//try? dummyFile
-//    .main
-//    .writeToFileSystem(ifFileExists: .doNotWrite) // write ONCE!
-//
-//try? dummyFile
-//    .tst
-//    .writeToFileSystem(ifFileExists: .doNotWrite) // write ONCE!
+try? dummyFile
+    .main
+    .writeToFileSystem(ifFileExists: .doNotWrite) // write ONCE!
+
+try? dummyFile
+    .tst
+    .writeToFileSystem(ifFileExists: .doNotWrite) // write ONCE!
 
 try? project
     .writeToFileSystem()

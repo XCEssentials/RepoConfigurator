@@ -1,6 +1,6 @@
 extension Xcode.Project.BuildConfiguration.Defaults
 {
-    enum iOS
+    enum iOS //swiftlint:disable:this type_name
     {
         static
         func base(

@@ -1,3 +1,5 @@
+//swiftlint:disable identifier_name
+
 // internal
 extension Struct.Spec
 {
