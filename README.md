@@ -46,7 +46,7 @@ Note, that we added the `--no-build` option, because we don't need the `RepoConf
 
 ### Step 3 — connect framework with config
 
-After fetching dependencies with `Carthage`, navigate to `Carthage/Checkouts` folder inside your root repo folder, then go to `RepoConfigurator` folder and find its project file (`RepoConfigurator.xcodeproj`). Grab that project file and drag&drop it to the workspace.
+After fetching dependencies with `Carthage`, navigate to `Carthage/Checkouts` folder inside your root repo folder, then go to `RepoConfigurator` folder and find its project file (`RepoConfigurator.xcodeproj`). Grab that project file and drag&drop it to the workspace with repo config.
 
 
 
