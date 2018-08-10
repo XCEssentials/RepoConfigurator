@@ -1,5 +1,5 @@
-[![GitHub license](https://img.shields.io/github/license/XCEssentials/ValidatableValue.svg)](https://github.com/XCEssentials/ValidatableValue/blob/master/LICENSE)
-[![GitHub tag](https://img.shields.io/github/tag/XCEssentials/ValidatableValue.svg)](https://github.com/XCEssentials/ValidatableValue)
+[![GitHub license](https://img.shields.io/github/license/XCEssentials/RepoConfigurator.svg)](https://github.com/XCEssentials/RepoConfigurator/blob/master/LICENSE)
+[![GitHub tag](https://img.shields.io/github/tag/XCEssentials/RepoConfigurator.svg)](https://github.com/XCEssentials/RepoConfigurator/tags)
 [![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-brightgreen.svg)](https://github.com/Carthage/Carthage)
 [![Requires Xcode](https://img.shields.io/badge/requires-Xcode-lightgray.svg)](https://developer.apple.com/xcode/)
 [![Written in Swift](https://img.shields.io/badge/Swift-4-orange.svg)](https://developer.apple.com/swift/)
