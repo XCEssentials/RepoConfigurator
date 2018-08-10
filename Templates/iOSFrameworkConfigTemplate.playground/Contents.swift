@@ -322,6 +322,13 @@
 //        targetFolder: fastlaneFolder
 //    )
 //
+//let gitHubPagesConfig = GitHub
+//    .Pages
+//    .openSourceFramework()
+//    .prepare(
+//        targetFolder: repoFolder
+//    )
+//
 //// MARK: - Actually write repo configuration files
 //
 //try? gitignore
@@ -362,4 +369,7 @@
 ////    .writeToFileSystem()
 //
 //try? fastfile
+//    .writeToFileSystem()
+//
+//try? gitHubPagesConfig
 //    .writeToFileSystem()
