@@ -25,23 +25,22 @@
  */
 
 public
-extension Fastlane
+extension GitHub
 {
     public
-    struct Gemfile: FixedNameTextFile, ConfigurableTextFile
+    struct Pages: FixedNameTextFile, ConfigurableTextFile
     {
         // MARK: - Type level members
 
         public
+        static
+        let fileName: String = "_config.yml"
+
+        public
         enum Section: TextFilePiece
         {
-            case defaultHeader
-
-            case fastlane
-
-            case custom(
-                String
-            )
+            case theme(String)
+            case custom(String)
         }
 
         // MARK: - Instance level members
@@ -59,62 +58,64 @@ extension Fastlane
 // MARK: - Presets
 
 public
-extension Fastlane.Gemfile
+extension GitHub.Pages
 {
-    /**
-     https://docs.fastlane.tools/getting-started/ios/setup/#use-a-gemfile
-     */
     static
-    func fastlaneSupportOnly() -> Fastlane.Gemfile
+    func openSourceFramework(
+        themeName: String = "jekyll-theme-cayman",
+        otherEntries: String...
+        ) -> GitHub.Pages
     {
-        return .init(
-            .defaultHeader,
-            .fastlane
-        )
+        var sections: [Section] = [
+
+            .theme(
+                themeName
+            )
+        ]
+
+        sections += otherEntries
+            .map{ .custom($0) }
+
+        //---
+
+        return .init(sections: sections)
     }
 }
 
 // MARK: - Content rendering
 
 public
-extension Fastlane.Gemfile.Section
+extension GitHub.Pages.Section
 {
     func asIndentedText(
         with indentation: inout Indentation
         ) -> IndentedText
     {
-        var result: IndentedText = []
+        let result: String
 
         //---
 
         switch self
         {
-        case .defaultHeader:
-            result <<< """
-                source "https://rubygems.org"
+        case .theme(
+            let themeName
+            ):
+            result = """
 
+                theme: \(themeName)
                 """
-                .asIndentedText(with: &indentation)
-
-        case .fastlane:
-            result <<< """
-
-                gem "fastlane"
-                """
-                .asIndentedText(with: &indentation)
 
         case .custom(
             let customEntry
             ):
-            result <<< """
+            result = """
 
                 \(customEntry)
                 """
-                .asIndentedText(with: &indentation)
         }
 
         //---
 
-        return result
+        return result.asIndentedText(with: &indentation)
     }
 }
