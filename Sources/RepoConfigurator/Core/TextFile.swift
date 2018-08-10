@@ -1,3 +1,7 @@
+import Foundation
+
+//---
+
 // MARK: - Text File
 
 public
