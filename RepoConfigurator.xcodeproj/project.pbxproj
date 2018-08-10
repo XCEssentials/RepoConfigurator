@@ -33,6 +33,8 @@
 		9424AB11211754FE00262B79 /* OSIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9424AB10211754FE00262B79 /* OSIdentifier.swift */; };
 		9424AB132117552100262B79 /* PathPrefix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9424AB122117552100262B79 /* PathPrefix.swift */; };
 		9459C779211C5F800041C38B /* YesNoStringLiteralsForXcode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9459C778211C5F800041C38B /* YesNoStringLiteralsForXcode.swift */; };
+		946CFA0A211DE6DF00E756CD /* GitHub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946CFA09211DE6DF00E756CD /* GitHub.swift */; };
+		946CFA0C211DE70300E756CD /* GitHub_Pages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946CFA0B211DE70300E756CD /* GitHub_Pages.swift */; };
 		94C4F9CB211665ED00CFB1DC /* Fastlane.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C4F9CA211665ED00CFB1DC /* Fastlane.swift */; };
 		94C4F9CD2116660900CFB1DC /* Fastlane_Fastfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C4F9CC2116660900CFB1DC /* Fastlane_Fastfile.swift */; };
 		94CB9FC02116535300641D6E /* Xcode_Project_BuildConfig_Defaults_General.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CB9FBA2116535200641D6E /* Xcode_Project_BuildConfig_Defaults_General.swift */; };
@@ -98,6 +100,8 @@
 		9424AB10211754FE00262B79 /* OSIdentifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSIdentifier.swift; sourceTree = "<group>"; };
 		9424AB122117552100262B79 /* PathPrefix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathPrefix.swift; sourceTree = "<group>"; };
 		9459C778211C5F800041C38B /* YesNoStringLiteralsForXcode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YesNoStringLiteralsForXcode.swift; sourceTree = "<group>"; };
+		946CFA09211DE6DF00E756CD /* GitHub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHub.swift; sourceTree = "<group>"; };
+		946CFA0B211DE70300E756CD /* GitHub_Pages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHub_Pages.swift; sourceTree = "<group>"; };
 		94C4F9CA211665ED00CFB1DC /* Fastlane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fastlane.swift; sourceTree = "<group>"; };
 		94C4F9CC2116660900CFB1DC /* Fastlane_Fastfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fastlane_Fastfile.swift; sourceTree = "<group>"; };
 		94CB9FBA2116535200641D6E /* Xcode_Project_BuildConfig_Defaults_General.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Xcode_Project_BuildConfig_Defaults_General.swift; sourceTree = "<group>"; };
@@ -207,6 +211,7 @@
 		941CFFE12115765C00326181 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				946CFA08211DE6CD00E756CD /* GitHub */,
 				94245730211B024A00A05876 /* CocoaPods */,
 				94C4F9C9211665C500CFB1DC /* Fastlane */,
 				941CFFF92115A77600326181 /* Git */,
@@ -252,6 +257,15 @@
 				94245735211B3EE200A05876 /* CocoaPods_Podspec.swift */,
 			);
 			path = CocoaPods;
+			sourceTree = "<group>";
+		};
+		946CFA08211DE6CD00E756CD /* GitHub */ = {
+			isa = PBXGroup;
+			children = (
+				946CFA09211DE6DF00E756CD /* GitHub.swift */,
+				946CFA0B211DE70300E756CD /* GitHub_Pages.swift */,
+			);
+			path = GitHub;
 			sourceTree = "<group>";
 		};
 		94C4F9C9211665C500CFB1DC /* Fastlane */ = {
@@ -472,6 +486,7 @@
 				9424AB0B2117549500262B79 /* KeyValuePair.swift in Sources */,
 				941CFFEA2115898E00326181 /* License.swift in Sources */,
 				941CFFE82115897100326181 /* License_MIT.swift in Sources */,
+				946CFA0A211DE6DF00E756CD /* GitHub.swift in Sources */,
 				9424AB11211754FE00262B79 /* OSIdentifier.swift in Sources */,
 				9424AB132117552100262B79 /* PathPrefix.swift in Sources */,
 				9424573A211B8FE400A05876 /* RawTextFile.swift in Sources */,
@@ -486,6 +501,7 @@
 				9424572F211AF7E900A05876 /* SwiftLint.swift in Sources */,
 				941CFFF4211591E900326181 /* TextFile.swift in Sources */,
 				9459C779211C5F800041C38B /* YesNoStringLiteralsForXcode.swift in Sources */,
+				946CFA0C211DE70300E756CD /* GitHub_Pages.swift in Sources */,
 				941CFFE02115222B00326181 /* Versions.swift in Sources */,
 				94245738211B805000A05876 /* WidelyUsedLicense.swift in Sources */,
 				94DECE502118C10E0026F148 /* Xcode.swift in Sources */,

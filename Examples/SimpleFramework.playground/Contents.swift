@@ -307,6 +307,13 @@ let fastlaneFolder = repoFolder
         Defaults.pathToFastlaneFolder
     )
 
+let gitHubPagesConfig = GitHub
+    .Pages
+    .openSourceFramework()
+    .prepare(
+        targetFolder: repoFolder
+    )
+
 //---
 
 let fastfile = Fastlane
@@ -359,4 +366,7 @@ try? podspec
 //    .writeToFileSystem()
 
 try? fastfile
+    .writeToFileSystem()
+
+try? gitHubPagesConfig
     .writeToFileSystem()

@@ -65,6 +65,13 @@ let fastfile = Fastlane
         targetFolder: fastlaneFolder
     )
 
+let gitHubPagesConfig = GitHub
+    .Pages
+    .openSourceFramework()
+    .prepare(
+        targetFolder: repoFolder
+    )
+
 // MARK: - Actually write repo configuration files
 
 try? gitignore
@@ -77,4 +84,7 @@ try? license
     .writeToFileSystem()
 
 try? fastfile
+    .writeToFileSystem()
+
+try? gitHubPagesConfig
     .writeToFileSystem()
