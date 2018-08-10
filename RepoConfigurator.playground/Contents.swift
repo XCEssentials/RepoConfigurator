@@ -65,19 +65,6 @@ let fastfile = Fastlane
         targetFolder: fastlaneFolder
     )
 
-let podfile = CocoaPods
-    .Podfile
-    .standard(
-        productName: productName,
-        deploymentTarget: depTarget,
-        pods: [
-            "pod 'SwiftLint'"
-        ]
-    )
-    .prepare(
-        targetFolder: repoFolder
-    )
-
 // MARK: - Actually write repo configuration files
 
 try? gitignore
@@ -90,7 +77,4 @@ try? license
     .writeToFileSystem()
 
 try? fastfile
-    .writeToFileSystem()
-
-try? podfile
     .writeToFileSystem()

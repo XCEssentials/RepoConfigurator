@@ -4,9 +4,6 @@
    <FileRef
       location = "group:RepoConfigurator.xcodeproj">
    </FileRef>
-   <FileRef
-      location = "group:Pods/Pods.xcodeproj">
-   </FileRef>
    <Group
       location = "group:Examples"
       name = "Examples">
