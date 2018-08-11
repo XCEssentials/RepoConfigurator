@@ -135,19 +135,21 @@ let infoPlistsPath: PerTarget = (
 
 //---
 
-let dummyFile: PerTarget = (
+let emptyFile: PerTarget = (
     Xcode
         .Project
         .Target
-        .DummyFile()
+        .EmptyFile()
         .prepare(
+            name: targetName.main + ".swift",
             targetFolder: sourcesFolder.main
         ),
     Xcode
         .Project
         .Target
-        .DummyFile()
+        .EmptyFile()
         .prepare(
+            name: targetName.tst + ".swift",
             targetFolder: sourcesFolder.tst
         )
 )
@@ -345,11 +347,11 @@ try? info
     .tst
     .writeToFileSystem(ifFileExists: .doNotWrite) // write ONCE!
 
-try? dummyFile
+try? emptyFile
     .main
     .writeToFileSystem(ifFileExists: .doNotWrite) // write ONCE!
 
-try? dummyFile
+try? emptyFile
     .tst
     .writeToFileSystem(ifFileExists: .doNotWrite) // write ONCE!
 
