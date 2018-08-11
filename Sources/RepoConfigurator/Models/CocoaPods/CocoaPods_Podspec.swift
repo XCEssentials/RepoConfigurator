@@ -108,7 +108,7 @@ extension CocoaPods.Podspec
 {
     public
     static
-    func standard(
+    func singlePlatform(
         specVar: String = Defaults.specVariable,
         product: Product,
         company: Company,

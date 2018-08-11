@@ -280,7 +280,7 @@
 //
 //let podspec = CocoaPods
 //    .Podspec
-//    .standard(
+//    .singlePlatform(
 //        product: product,
 //        company: company,
 //        license: license.model.cocoaPodsLicenseSummary,
