@@ -117,7 +117,7 @@ extension CocoaPods.Podspec
         author: Author,
         swiftVersion: VersionString?,
         deploymentTarget: DeploymentTarget,
-        sourcesPath: String = Defaults.pathToSourcesFolder,
+        sourcesPath: String? = nil,
         otherEntries: [String] = []
         ) -> CocoaPods.Podspec
     {
@@ -138,7 +138,7 @@ extension CocoaPods.Podspec
             .basicPod(
                 specVar: specVar,
                 deploymentTarget: deploymentTarget,
-                sourcesPath: sourcesPath,
+                sourcesPath: sourcesPath ?? "\(Defaults.pathToSourcesFolder)/\(product.name)",
                 usesSwift: (swiftVersion != nil)
             )
         ]
