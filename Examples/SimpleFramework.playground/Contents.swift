@@ -211,7 +211,7 @@ let project = Xcode
 
                 "CODE_SIGN_IDENTITY" <<< "",
 
-                "PRODUCT_NAME" <<< product.name,
+                "PRODUCT_NAME" <<< "\(company.prefix)$(TARGET_NAME:c99extidentifier)",
                 "DEFINES_MODULE" <<< NO,
                 "SKIP_INSTALL" <<< YES
             )
