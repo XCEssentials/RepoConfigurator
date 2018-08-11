@@ -46,12 +46,7 @@ extension GitHub
         // MARK: - Instance level members
 
         public
-        var fileContent: IndentedText = []
-
-        // MARK: - Initializers
-
-        public
-        init() {}
+        var fileContent: [IndentedTextGetter] = []
     }
 }
 
@@ -66,19 +61,14 @@ extension GitHub.Pages
         otherEntries: String...
         ) -> GitHub.Pages
     {
-        var sections: [Section] = [
-
-            .theme(
-                themeName
+        return self
+            .init()
+            .extend(
+                .theme(themeName)
             )
-        ]
-
-        sections += otherEntries
-            .map{ .custom($0) }
-
-        //---
-
-        return .init(sections: sections)
+            .extend(
+                with: otherEntries.map{ .custom($0) }
+            )
     }
 }
 

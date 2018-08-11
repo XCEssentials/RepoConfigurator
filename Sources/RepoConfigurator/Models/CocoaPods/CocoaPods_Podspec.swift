@@ -92,12 +92,7 @@ extension CocoaPods
         // MARK: - Instance level members
 
         public
-        var fileContent: IndentedText = []
-
-        // MARK: - Initializers
-
-        public
-        init() {}
+        var fileContent: [IndentedTextGetter] = []
     }
 }
 
@@ -121,35 +116,34 @@ extension CocoaPods.Podspec
         otherEntries: [String] = []
         ) -> CocoaPods.Podspec
     {
-        var sections: [Section] = [
-
-            .header(
-                specVar: specVar
-            ),
-            .generalInfo(
-                specVar: specVar,
-                product: product,
-                company: company,
-                initialVersion: initialVersion,
-                license: license,
-                author: author,
-                swiftVersion: swiftVersion
-            ),
-            .basicPod(
-                specVar: specVar,
-                deploymentTarget: deploymentTarget,
-                sourcesPath: sourcesPath ?? "\(Defaults.pathToSourcesFolder)/\(product.name)",
-                usesSwift: (swiftVersion != nil)
+        return self
+            .init()
+            .extend(
+                .header(
+                    specVar: specVar
+                ),
+                .generalInfo(
+                    specVar: specVar,
+                    product: product,
+                    company: company,
+                    initialVersion: initialVersion,
+                    license: license,
+                    author: author,
+                    swiftVersion: swiftVersion
+                ),
+                .basicPod(
+                    specVar: specVar,
+                    deploymentTarget: deploymentTarget,
+                    sourcesPath: sourcesPath ?? "\(Defaults.pathToSourcesFolder)/\(product.name)",
+                    usesSwift: (swiftVersion != nil)
+                )
             )
-        ]
-
-        sections += otherEntries.map{ .custom($0) }
-
-        sections += [.footer]
-
-        //---
-
-        return .init(sections: sections)
+            .extend(
+                with: otherEntries.map{ .custom($0) }
+            )
+            .extend(
+                .footer
+            )
     }
 }
 

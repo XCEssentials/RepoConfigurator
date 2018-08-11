@@ -33,7 +33,7 @@ extension License
         // MARK: - Instance level members
 
         public
-        let fileContent: IndentedText
+        let fileContent: [IndentedTextGetter]
 
         // MARK: - Initializers
 
@@ -45,11 +45,8 @@ extension License
         {
             // https://choosealicense.com/licenses/mit/
 
-            var indentation = Indentation()
-
-            //---
-
-            fileContent = """
+            fileContent = [
+                """
                 MIT License
 
                 Copyright (c) \(copyrightYear) \(copyrightEntity)
@@ -72,7 +69,8 @@ extension License
                 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
                 SOFTWARE.
                 """
-                .asIndentedText(with: &indentation)
+                .asIndentedText
+            ]
         }
     }
 }

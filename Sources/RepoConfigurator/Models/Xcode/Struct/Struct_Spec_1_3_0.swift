@@ -38,54 +38,60 @@ extension Struct
 extension Struct.Spec_1_3_0
 {
     static
-    func generate(for p: Xcode.Project) -> IndentedText
+    func generate(for p: Xcode.Project) -> IndentedTextGetter
     {
-        var result: IndentedText = []
-        var indentation = Indentation()
-        
-        //---
-        
-        result <<< (indentation, "# https://github.com/lyptt/struct/wiki/Spec-format:-v1.3")
-        
-        //---
-        
-        // https://github.com/workshop/struct/wiki/Spec-format:-v1.3#version-number
-        
-        result <<< (indentation, Struct.Spec.key("version") + " \(Struct.Spec.v1_3_0.rawValue)")
-        
-        //---
-        
-        result <<< process(&indentation, p.configurations)
-        
-        //---
-        
-        result <<< process(&indentation, p.targets)
-        
-        //---
-        
-        result <<< (indentation, Struct.Spec.key("variants"))
-        
-        indentation++
-        
-        result <<< (indentation, Struct.Spec.key("$base"))
-        
-        indentation++
-        
-        result <<< (indentation, Struct.Spec.key("abstract") + " true")
-        
-        indentation--
-        
-        result <<< (indentation, Struct.Spec.key(p.name))
-        
-        indentation--
-        
-        //---
-        
-        result <<< "".asIndentedText(with: &indentation) // empty line in the EOF
-        
-        //---
-        
-        return result
+        return {
+
+            indentation in
+
+            //---
+
+            var result: IndentedText = []
+
+            //---
+
+            result <<< (indentation, "# https://github.com/lyptt/struct/wiki/Spec-format:-v1.3")
+
+            //---
+
+            // https://github.com/workshop/struct/wiki/Spec-format:-v1.3#version-number
+
+            result <<< (indentation, Struct.Spec.key("version") + " \(Struct.Spec.v1_3_0.rawValue)")
+
+            //---
+
+            result <<< process(&indentation, p.configurations)
+
+            //---
+
+            result <<< process(&indentation, p.targets)
+
+            //---
+
+            result <<< (indentation, Struct.Spec.key("variants"))
+
+            indentation++
+
+            result <<< (indentation, Struct.Spec.key("$base"))
+
+            indentation++
+
+            result <<< (indentation, Struct.Spec.key("abstract") + " true")
+
+            indentation--
+
+            result <<< (indentation, Struct.Spec.key(p.name))
+
+            indentation--
+
+            //---
+
+            result <<< "".asIndentedText(with: &indentation) // empty line in the EOF
+
+            //---
+
+            return result
+        }
     }
     
     //---

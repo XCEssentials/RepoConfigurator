@@ -47,12 +47,7 @@ extension Fastlane
         // MARK: - Instance level members
 
         public
-        var fileContent: IndentedText = []
-
-        // MARK: - Initializers
-
-        public
-        init() {}
+        var fileContent: [IndentedTextGetter] = []
     }
 }
 
@@ -67,10 +62,12 @@ extension Fastlane.Gemfile
     static
     func fastlaneSupportOnly() -> Fastlane.Gemfile
     {
-        return .init(
-            .defaultHeader,
-            .fastlane
-        )
+        return self
+            .init()
+            .extend(
+                .defaultHeader,
+                .fastlane
+            )
     }
 }
 

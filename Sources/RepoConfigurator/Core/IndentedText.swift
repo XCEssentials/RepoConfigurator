@@ -38,6 +38,11 @@ typealias IndentedText = [IndentedTextLine]
 //---
 
 public
+typealias IndentedTextGetter = (inout Indentation) -> IndentedText
+
+//---
+
+public
 func <<< (list: inout IndentedText, element: IndentedTextLine)
 {
     list.append(element)
@@ -54,11 +59,15 @@ func <<< (list: inout IndentedText, elements: IndentedText)
 public
 extension Array
     where
-    Element == IndentedTextLine
+    Element == IndentedTextGetter
 {
     var rendered: String
     {
+        var indentation = Indentation()
+
         return self
+            .map{ $0(&indentation) }
+            .reduce(into: IndentedText()){ $0 += $1 }
             .map{ "\($0.rendered)\($1)" }
             .joined(separator: "\n")
     }

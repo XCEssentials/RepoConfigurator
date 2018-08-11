@@ -33,7 +33,7 @@ import Foundation
 public
 protocol TextFile
 {
-    var fileContent: IndentedText { get }
+    var fileContent: [IndentedTextGetter] { get }
 }
 
 // MARK: - ARBITRARY Named Text File
@@ -126,57 +126,31 @@ protocol ConfigurableTextFile: TextFile
 {
     associatedtype Section: TextFilePiece
 
-    init()
-
-    var fileContent: IndentedText { get set }
+    var fileContent: [IndentedTextGetter] { get set }
 }
 
 public
 extension ConfigurableTextFile
 {
-    init(
-        sections: [Self.Section]
-        )
+    func extend(
+        with otherSections: [Self.Section]
+        ) -> Self
     {
-        self.init()
+        var result = self
 
         //---
 
-        var indentation = Indentation()
-
-        fileContent = sections
-            .map{ $0.asIndentedText(with: &indentation) }
-            .reduce(into: IndentedText()){ $0 += $1 }
-    }
-
-    init(
-        _ sections: Section...
-        )
-    {
-        self.init(sections: sections)
-    }
-
-    init(
-        basedOn preset: Self,
-        _ otherSections: Section...
-        )
-    {
-        self.init(
-            basedOn: preset,
-            otherSections: otherSections
-        )
-    }
-
-    init(
-        basedOn preset: Self,
-        otherSections: [Section]
-        )
-    {
-        self.init()
+        result.fileContent += otherSections.map{ $0.asIndentedText }
 
         //---
 
-        fileContent = preset.fileContent +
-            Self(sections: otherSections).fileContent
+        return result
+    }
+
+    func extend(
+        _ otherSections: Self.Section...
+        ) -> Self
+    {
+        return self.extend(with: otherSections)
     }
 }

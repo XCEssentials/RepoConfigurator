@@ -50,12 +50,7 @@ extension Git
         // MARK: - Instance level members
 
         public
-        var fileContent: IndentedText = []
-
-        // MARK: - Initializers
-
-        public
-        init() {}
+        var fileContent: [IndentedTextGetter] = []
     }
 }
 
@@ -70,25 +65,30 @@ extension Git.RepoIgnore
         archivesExportPath: String = Defaults.archivesExportPath
         ) -> Git.RepoIgnore
     {
-        return .init(
-            .macOS,
-            .cocoa,
-            .cocoaPods(ignoreSources: false),
-            .carthage(ignoreSources: false),
-            .fastlane,
-            .archivesExportPath(archivesExportPath)
-        )
+        return self
+            .init()
+            .extend(
+                .macOS,
+                .cocoa,
+                .cocoaPods(ignoreSources: false),
+                .carthage(ignoreSources: false),
+                .fastlane,
+                .archivesExportPath(archivesExportPath)
+            )
     }
 
     public
     static
-    let framework = Git.RepoIgnore(
-        .macOS,
-        .cocoa,
-        .cocoaPods(ignoreSources: true),
-        .carthage(ignoreSources: true),
-        .fastlane
-    )
+    let framework = Git
+        .RepoIgnore
+        .init()
+        .extend(
+            .macOS,
+            .cocoa,
+            .cocoaPods(ignoreSources: true),
+            .carthage(ignoreSources: true),
+            .fastlane
+        )
 }
 
 // MARK: - Content rendering

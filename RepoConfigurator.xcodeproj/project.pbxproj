@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		94116DA9211BB9C0001EF7F9 /* Fastlane_Gemfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94116DA8211BB9C0001EF7F9 /* Fastlane_Gemfile.swift */; };
-		94116DAB211BBF4D001EF7F9 /* Xcode_Project_Target_DummyFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94116DAA211BBF4D001EF7F9 /* Xcode_Project_Target_DummyFile.swift */; };
+		94116DAB211BBF4D001EF7F9 /* Xcode_Project_Target_EmptyFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94116DAA211BBF4D001EF7F9 /* Xcode_Project_Target_EmptyFile.swift */; };
 		941CFFC8211520D700326181 /* XCERepoConfigurator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 941CFFBE211520D700326181 /* XCERepoConfigurator.framework */; };
 		941CFFDE2115221000326181 /* RepoConfiguratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941CFFDA2115220600326181 /* RepoConfiguratorTests.swift */; };
 		941CFFDF2115222100326181 /* RepoConfigurator.h in Headers */ = {isa = PBXBuildFile; fileRef = 941CFFDC2115220600326181 /* RepoConfigurator.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -74,7 +74,7 @@
 		4E1F4DEB6F7DBC42C29FF945 /* Pods_RepoConfigurator.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RepoConfigurator.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		76B9FB11AB02F2F3BBF7372E /* Pods-RepoConfigurator.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RepoConfigurator.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RepoConfigurator/Pods-RepoConfigurator.debug.xcconfig"; sourceTree = "<group>"; };
 		94116DA8211BB9C0001EF7F9 /* Fastlane_Gemfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fastlane_Gemfile.swift; sourceTree = "<group>"; };
-		94116DAA211BBF4D001EF7F9 /* Xcode_Project_Target_DummyFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Xcode_Project_Target_DummyFile.swift; sourceTree = "<group>"; };
+		94116DAA211BBF4D001EF7F9 /* Xcode_Project_Target_EmptyFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Xcode_Project_Target_EmptyFile.swift; sourceTree = "<group>"; };
 		941CFFBE211520D700326181 /* XCERepoConfigurator.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = XCERepoConfigurator.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		941CFFC7211520D700326181 /* RepoConfiguratorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RepoConfiguratorTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		941CFFDA2115220600326181 /* RepoConfiguratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepoConfiguratorTests.swift; sourceTree = "<group>"; };
@@ -291,7 +291,7 @@
 				94CB9FC92116536600641D6E /* Xcode_Project_Target.swift */,
 				94CB9FC82116536600641D6E /* Xcode_Project_Target_BuildConfig.swift */,
 				94CB9FC72116536500641D6E /* Xcode_Project_Target_Dependencies.swift */,
-				94116DAA211BBF4D001EF7F9 /* Xcode_Project_Target_DummyFile.swift */,
+				94116DAA211BBF4D001EF7F9 /* Xcode_Project_Target_EmptyFile.swift */,
 				941CFFFE211609BC00326181 /* Xcode_Project_Target_InfoPlist.swift */,
 				94CB9FC62116536500641D6E /* Xcode_Project_Target_Script.swift */,
 				94CB9FCA2116536600641D6E /* Xcode_Project_Target_Type.swift */,
@@ -513,7 +513,7 @@
 				94CB9FCE2116536600641D6E /* Xcode_Project_Target.swift in Sources */,
 				94CB9FCD2116536600641D6E /* Xcode_Project_Target_BuildConfig.swift in Sources */,
 				94CB9FCC2116536600641D6E /* Xcode_Project_Target_Dependencies.swift in Sources */,
-				94116DAB211BBF4D001EF7F9 /* Xcode_Project_Target_DummyFile.swift in Sources */,
+				94116DAB211BBF4D001EF7F9 /* Xcode_Project_Target_EmptyFile.swift in Sources */,
 				941CFFFF211609BC00326181 /* Xcode_Project_Target_InfoPlist.swift in Sources */,
 				94CB9FCB2116536600641D6E /* Xcode_Project_Target_Script.swift in Sources */,
 				94CB9FCF2116536600641D6E /* Xcode_Project_Target_Type.swift in Sources */,

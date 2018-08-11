@@ -71,12 +71,7 @@ struct SwiftLint: FixedNameTextFile, ConfigurableTextFile
     // MARK: - Instance level members
 
     public
-    var fileContent: IndentedText = []
-
-    // MARK: - Initializers
-
-    public
-    init() {}
+    var fileContent: [IndentedTextGetter] = []
 }
 
 // MARK: - Presets
@@ -94,22 +89,24 @@ extension SwiftLint
         otherRulesOptions: [RuleOption] = []
         ) -> SwiftLint
     {
-        return .init(
-            .defaultHeader,
-            .disabledRules(
-                setXCEDefaults: true,
-                otherDisabledRules: otherDisabledRules
-            ),
-            .excluded(
-                excludeResources: excludeResources,
-                excludeDependencies: excludeDependencies,
-                customExclude: customExclude
-            ),
-            .rulesOptions(
-                setXCEDefaults: true,
-                otherRulesOptions: otherRulesOptions
+        return self
+            .init()
+            .extend(
+                .defaultHeader,
+                .disabledRules(
+                    setXCEDefaults: true,
+                    otherDisabledRules: otherDisabledRules
+                ),
+                .excluded(
+                    excludeResources: excludeResources,
+                    excludeDependencies: excludeDependencies,
+                    customExclude: customExclude
+                ),
+                .rulesOptions(
+                    setXCEDefaults: true,
+                    otherRulesOptions: otherRulesOptions
+                )
             )
-        )
     }
 }
 

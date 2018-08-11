@@ -96,12 +96,7 @@ extension Fastlane
         // MARK: - Instance level members
 
         public
-        var fileContent: IndentedText = []
-
-        // MARK: - Initializers
-
-        public
-        init() {}
+        var fileContent: [IndentedTextGetter] = []
     }
 }
 
@@ -125,37 +120,39 @@ extension Fastlane.Fastfile
         archivesExportPath: String = Defaults.archivesExportPath
         ) -> Fastlane.Fastfile
     {
-        return .init(
-            .defaultHeader,
-            .fastlaneVersion(
-                fastlaneVersion
-            ),
-            .beforeRelease(
-                projectName: projectName ?? productName,
-                cocoaPodsModuleName: nil
-            ),
-            .regenerateProject(
-                projectName: projectName ?? productName,
-                usesCocoapods: usesCocoapods,
-                usesSwiftGen: usesSwiftGen,
-                usesSourcery: usesSourcery,
-                usesSwiftLint: usesSwiftLint
-            ),
-            .setupProjectFromScratch(
-                projectName: projectName ?? productName,
-                usesCocoapods: usesCocoapods,
-                usesSwiftGen: usesSwiftGen,
-                usesSourcery: usesSourcery,
-                usesSwiftLint: usesSwiftLint
-            ),
-            .archiveStaging(
-                projectName: projectName ?? productName,
-                schemeName: stagingSchemeName,
-                exportMethod: stagingExportMethod,
-                productName: productName,
-                archivesExportPath: archivesExportPath
+        return self
+            .init()
+            .extend(
+                .defaultHeader,
+                .fastlaneVersion(
+                    fastlaneVersion
+                ),
+                .beforeRelease(
+                    projectName: projectName ?? productName,
+                    cocoaPodsModuleName: nil
+                ),
+                .regenerateProject(
+                    projectName: projectName ?? productName,
+                    usesCocoapods: usesCocoapods,
+                    usesSwiftGen: usesSwiftGen,
+                    usesSourcery: usesSourcery,
+                    usesSwiftLint: usesSwiftLint
+                ),
+                .setupProjectFromScratch(
+                    projectName: projectName ?? productName,
+                    usesCocoapods: usesCocoapods,
+                    usesSwiftGen: usesSwiftGen,
+                    usesSourcery: usesSourcery,
+                    usesSwiftLint: usesSwiftLint
+                ),
+                .archiveStaging(
+                    projectName: projectName ?? productName,
+                    schemeName: stagingSchemeName,
+                    exportMethod: stagingExportMethod,
+                    productName: productName,
+                    archivesExportPath: archivesExportPath
+                )
             )
-        )
     }
 
     public
@@ -170,30 +167,32 @@ extension Fastlane.Fastfile
         usesSwiftLint: SwiftLintLocation = .global
         ) -> Fastlane.Fastfile
     {
-        return .init(
-            .defaultHeader,
-            .fastlaneVersion(
-                fastlaneVersion
-            ),
-            .beforeRelease(
-                projectName: projectName,
-                cocoaPodsModuleName: cocoaPodsModuleName
-            ),
-            .regenerateProject(
-                projectName: projectName,
-                usesCocoapods: usesCocoapods,
-                usesSwiftGen: usesSwiftGen,
-                usesSourcery: usesSourcery,
-                usesSwiftLint: usesSwiftLint
-            ),
-            .setupProjectFromScratch(
-                projectName: projectName,
-                usesCocoapods: usesCocoapods,
-                usesSwiftGen: usesSwiftGen,
-                usesSourcery: usesSourcery,
-                usesSwiftLint: usesSwiftLint
+        return self
+            .init()
+            .extend(
+                .defaultHeader,
+                .fastlaneVersion(
+                    fastlaneVersion
+                ),
+                .beforeRelease(
+                    projectName: projectName,
+                    cocoaPodsModuleName: cocoaPodsModuleName
+                ),
+                .regenerateProject(
+                    projectName: projectName,
+                    usesCocoapods: usesCocoapods,
+                    usesSwiftGen: usesSwiftGen,
+                    usesSourcery: usesSourcery,
+                    usesSwiftLint: usesSwiftLint
+                ),
+                .setupProjectFromScratch(
+                    projectName: projectName,
+                    usesCocoapods: usesCocoapods,
+                    usesSwiftGen: usesSwiftGen,
+                    usesSourcery: usesSourcery,
+                    usesSwiftLint: usesSwiftLint
+                )
             )
-        )
     }
 }
 

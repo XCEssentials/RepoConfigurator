@@ -71,12 +71,7 @@ extension Xcode.Project.Target
         // MARK: - Instance level members
 
         public
-        var fileContent: IndentedText = []
-
-        // MARK: - Initializers
-
-        public
-        init() {}
+        var fileContent: [IndentedTextGetter] = []
     }
 }
 
@@ -92,26 +87,22 @@ extension Xcode.Project.Target.InfoPlist
         _ customSections: String...
         ) -> Xcode.Project.Target.InfoPlist
     {
-        var sections: [Section] = [
-            .header,
-            .basic(
-                packageType: .framework,
-                initialVersionString: initialVersionString,
-                initialBuildNumber: initialBuildNumber
+        return self
+            .init()
+            .extend(
+                .header,
+                .basic(
+                    packageType: .framework,
+                    initialVersionString: initialVersionString,
+                    initialBuildNumber: initialBuildNumber
+                )
             )
-        ]
-
-        sections += customSections.map{
-            .custom($0)
-        }
-
-        sections += [
-            .footer
-        ]
-
-        //---
-
-        return .init(sections: sections)
+            .extend(
+                with: customSections.map{ .custom($0) }
+            )
+            .extend(
+                .footer
+            )
     }
 
     static
@@ -121,27 +112,23 @@ extension Xcode.Project.Target.InfoPlist
         _ customSections: String...
         ) -> Xcode.Project.Target.InfoPlist
     {
-        var sections: [Section] = [
-            .header,
-            .basic(
-                packageType: .app,
-                initialVersionString: initialVersionString,
-                initialBuildNumber: initialBuildNumber
-            ),
-            .iOSApp
-        ]
-
-        sections += customSections.map{
-            .custom($0)
-        }
-
-        sections += [
-            .footer
-        ]
-
-        //---
-
-        return .init(sections: sections)
+        return self
+            .init()
+            .extend(
+                .header,
+                .basic(
+                    packageType: .app,
+                    initialVersionString: initialVersionString,
+                    initialBuildNumber: initialBuildNumber
+                ),
+                .iOSApp
+            )
+            .extend(
+                with: customSections.map{ .custom($0) }
+            )
+            .extend(
+                .footer
+            )
     }
 
     static
@@ -153,30 +140,26 @@ extension Xcode.Project.Target.InfoPlist
         _ customSections: String...
         ) -> Xcode.Project.Target.InfoPlist
     {
-        var sections: [Section] = [
-            .header,
-            .basic(
-                packageType: .framework,
-                initialVersionString: initialVersionString,
-                initialBuildNumber: initialBuildNumber
-            ),
-            .macOSFramework(
-                copyrightYear: copyrightYear,
-                copyrightEntity: copyrightEntity
+        return self
+            .init()
+            .extend(
+                .header,
+                .basic(
+                    packageType: .framework,
+                    initialVersionString: initialVersionString,
+                    initialBuildNumber: initialBuildNumber
+                ),
+                .macOSFramework(
+                    copyrightYear: copyrightYear,
+                    copyrightEntity: copyrightEntity
+                )
             )
-        ]
-
-        sections += customSections.map{
-            .custom($0)
-        }
-
-        sections += [
-            .footer
-        ]
-
-        //---
-
-        return .init(sections: sections)
+            .extend(
+                with: customSections.map{ .custom($0) }
+            )
+            .extend(
+                .footer
+            )
     }
 
     static
@@ -188,30 +171,26 @@ extension Xcode.Project.Target.InfoPlist
         _ customSections: String...
         ) -> Xcode.Project.Target.InfoPlist
     {
-        var sections: [Section] = [
-            .header,
-            .basic(
-                packageType: .app,
-                initialVersionString: initialVersionString,
-                initialBuildNumber: initialBuildNumber
-            ),
-            .macOSApp(
-                copyrightYear: copyrightYear,
-                copyrightEntity: copyrightEntity
+        return self
+            .init()
+            .extend(
+                .header,
+                .basic(
+                    packageType: .app,
+                    initialVersionString: initialVersionString,
+                    initialBuildNumber: initialBuildNumber
+                ),
+                .macOSApp(
+                    copyrightYear: copyrightYear,
+                    copyrightEntity: copyrightEntity
+                )
             )
-        ]
-
-        sections += customSections.map{
-            .custom($0)
-        }
-
-        sections += [
-            .footer
-        ]
-
-        //---
-
-        return .init(sections: sections)
+            .extend(
+                with: customSections.map{ .custom($0) }
+            )
+            .extend(
+                .footer
+            )
     }
 
     static
@@ -221,26 +200,22 @@ extension Xcode.Project.Target.InfoPlist
         _ customSections: String...
         ) -> Xcode.Project.Target.InfoPlist
     {
-        var sections: [Section] = [
-            .header,
-            .basic(
-                packageType: .tests,
-                initialVersionString: initialVersionString,
-                initialBuildNumber: initialBuildNumber
+        return self
+            .init()
+            .extend(
+                .header,
+                .basic(
+                    packageType: .tests,
+                    initialVersionString: initialVersionString,
+                    initialBuildNumber: initialBuildNumber
+                )
             )
-        ]
-
-        sections += customSections.map{
-            .custom($0)
-        }
-
-        sections += [
-            .footer
-        ]
-
-        //---
-
-        return .init(sections: sections)
+            .extend(
+                with: customSections.map{ .custom($0) }
+            )
+            .extend(
+                .footer
+            )
     }
 
 }

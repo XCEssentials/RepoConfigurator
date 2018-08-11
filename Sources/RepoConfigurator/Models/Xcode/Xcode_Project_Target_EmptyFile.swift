@@ -28,20 +28,17 @@ public
 extension Xcode.Project.Target
 {
     public
-    struct DummyFile: FixedNameTextFile
+    struct EmptyFile: ArbitraryNamedTextFile
     {
-        // MARK: - Type level members
-
-        public
-        static
-        let fileName: String = "DummyFile.swift"
-
         // MARK: - Instance level members
 
         public
-        let fileContent: IndentedText = [
-            (Indentation(), "// dummy file"),
-            (Indentation(), "")
+        let fileContent: [IndentedTextGetter] = [
+            """
+            // empty file
+
+            """
+            .asIndentedText
         ]
 
         // MARK: - Initializers

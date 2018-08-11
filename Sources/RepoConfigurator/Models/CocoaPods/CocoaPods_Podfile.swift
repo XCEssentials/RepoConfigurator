@@ -97,12 +97,7 @@ extension CocoaPods
         // MARK: - Instance level members
 
         public
-        var fileContent: IndentedText = []
-
-        // MARK: - Initializers
-
-        public
-        init() {}
+        var fileContent: [IndentedTextGetter] = []
     }
 }
 
@@ -124,30 +119,25 @@ extension CocoaPods.Podfile
         otherGlobalEntries: [String] = []
         ) -> CocoaPods.Podfile
     {
-        var sections: [Section] = [
+        return self
+            .init()
+            .extend(
+                .header(
+                    workspaceName: productName
+                ),
 
-            .header(
-                workspaceName: productName
-            ),
-
-            .target(
-                targetName: targetName ?? productName,
-                projectName: projectName ?? productName,
-                deploymentTarget: deploymentTarget,
-                usesSwift: usesSwift,
-                pods: pods,
-                tests: tests
+                .target(
+                    targetName: targetName ?? productName,
+                    projectName: projectName ?? productName,
+                    deploymentTarget: deploymentTarget,
+                    usesSwift: usesSwift,
+                    pods: pods,
+                    tests: tests
+                )
             )
-        ]
-
-        otherGlobalEntries.forEach{
-
-            sections += [.custom($0)]
-        }
-
-        //---
-
-        return .init(sections: sections)
+            .extend(
+                with: otherGlobalEntries.map{ .custom($0) }
+            )
     }
 }
 
