@@ -47,7 +47,7 @@ extension Fastlane
 
                 """
 
-            fileContent <<< basicFastlane.mapIf(true, or: ""){ """
+            fileContent <<< basicFastlane.mapIf(true){ """
 
                 gem "fastlane"
                 """

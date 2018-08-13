@@ -43,6 +43,7 @@ extension GitHub
 
         // MARK: - Initializers
 
+        public
         init(
             themeName: String = "jekyll-theme-cayman",
             otherEntries: String...

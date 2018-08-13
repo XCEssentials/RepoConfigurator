@@ -34,8 +34,7 @@ extension Array
         var indentation = Indentation()
 
         return self
-            .map{ $0(&indentation) }
-            .reduce(into: IndentedText()){ $0 += $1 }
+            .asIndentedText(with: &indentation)
             .map{ "\($0.rendered)\($1)" }
             .joined(separator: "\n")
     }

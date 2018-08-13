@@ -35,14 +35,4 @@ extension Bool
     {
         return (self == condition ? body() : nil)
     }
-
-    public
-    func mapIf<U>(
-        _ condition: Bool,
-        or defaultValue: U,
-        body: () -> U
-        ) -> U
-    {
-        return (self == condition ? body() : defaultValue)
-    }
 }
