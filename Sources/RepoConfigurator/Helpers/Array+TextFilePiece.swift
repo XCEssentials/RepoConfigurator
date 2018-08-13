@@ -24,41 +24,17 @@
 
  */
 
-public
-protocol WidelyUsedLicense: FixedNameTextFile
+extension Array: TextFilePiece
+    where
+    Element: TextFilePiece
 {
-    static
-    var licenseType: String { get }
-}
-
-//---
-
-public
-extension WidelyUsedLicense
-{
-    static
-    var licenseType: String
+    public
+    func asIndentedText(
+        with indentation: inout Indentation
+        ) -> IndentedText
     {
-        // by default return intrinsic license type based on type name
-
-        return String
-            .init(describing: self)
-            .components(
-                separatedBy: .whitespacesAndNewlines
-            )
-            .first
-            ??
-            ""
-    }
-
-    var licenseType: String
-    {
-        return Self.licenseType
-    }
-
-    static
-    var fileName: String
-    {
-        return "LICENSE"
+        return self
+            .map{ $0.asIndentedText(with: &indentation) }
+            .reduce(into: IndentedText()){ $0 += $1 }
     }
 }

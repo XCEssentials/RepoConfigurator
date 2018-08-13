@@ -26,7 +26,15 @@
 
 import Foundation
 
-//---
+// MARK: - Text File Piece
+
+public
+protocol TextFilePiece
+{
+    func asIndentedText(
+        with indentation: inout Indentation
+        ) -> IndentedText
+}
 
 // MARK: - Text File
 
@@ -106,51 +114,5 @@ extension FixedNameTextFile
             shouldRemoveSpacesAtEOL: removeSpacesAtEOL,
             shouldRemoveRepeatingEmptyLines: removeRepeatingEmptyLines
         )
-    }
-}
-
-// MARK: - Text File Piece
-
-public
-protocol TextFilePiece
-{
-    func asIndentedText(
-        with indentation: inout Indentation
-        ) -> IndentedText
-}
-
-// MARK: - CONFIGURABLE Named Text File
-
-public
-protocol ConfigurableTextFile: TextFile
-{
-    associatedtype Section: TextFilePiece
-
-    var fileContent: [IndentedTextGetter] { get set }
-}
-
-public
-extension ConfigurableTextFile
-{
-    func extend(
-        with otherSections: [Self.Section]
-        ) -> Self
-    {
-        var result = self
-
-        //---
-
-        result.fileContent += otherSections.map{ $0.asIndentedText }
-
-        //---
-
-        return result
-    }
-
-    func extend(
-        _ otherSections: Self.Section...
-        ) -> Self
-    {
-        return self.extend(with: otherSections)
     }
 }

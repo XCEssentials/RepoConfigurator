@@ -24,26 +24,14 @@
 
  */
 
-public
-extension Xcode.Project.Target
+//internal
+extension Optional
 {
-    public
-    struct EmptyFile: ArbitraryNamedTextFile
+    func unwrap<U>(
+        or defaultValue: U,
+        body: (Wrapped) throws -> U
+        ) rethrows -> U
     {
-        // MARK: - Instance level members
-
-        public
-        let fileContent: [IndentedTextGetter] = [
-            """
-            // empty file
-
-            """
-            .asIndentedText
-        ]
-
-        // MARK: - Initializers
-
-        public
-        init() {}
+        return try map(body) ?? defaultValue
     }
 }

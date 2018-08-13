@@ -42,7 +42,7 @@ extension Xcode
         public
         var fileContent: [IndentedTextGetter]
         {
-            return [Struct.generateSpec(specFormat, for: self) ]
+            return [Struct.generateSpec(specFormat, for: self)]
         }
 
         //---

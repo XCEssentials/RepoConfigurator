@@ -25,82 +25,31 @@
  */
 
 public
-struct Indentation
+struct CustomTextFile: ArbitraryNamedTextFile
 {
-    public
-    let singleLevel: String
+    // MARK: - Instance level members
 
     public private(set)
-    var currentLevel = 0
+    var fileContent: [IndentedTextGetter] = []
 
-    //---
+    // MARK: - Initializers
 
     public
     init(
-        singleLevel: String = .init(repeating: " ", count: 4),
-        currentLevel: Int = 0
+        _ customEntries: String...
         )
     {
-        self.singleLevel = singleLevel
-        self.currentLevel = currentLevel
+        if
+            customEntries.isEmpty
+        {
+            fileContent <<< """
+                // empty file
+
+                """
+        }
+        else
+        {
+            fileContent <<< customEntries
+        }
     }
-
-    public
-    var rendered: String
-    {
-        return String(repeating: singleLevel, count: currentLevel)
-    }
-
-    public
-    mutating
-    func increaseLevel()
-    {
-        currentLevel += 1
-    }
-
-    public
-    mutating
-    func decreaseLevel()
-    {
-        currentLevel -= (currentLevel > 0 ? 1 : 0)
-    }
-}
-
-//---
-
-postfix operator ++
-
-public
-postfix func ++ (indentation: inout Indentation)
-{
-    indentation.increaseLevel()
-}
-
-//---
-
-postfix operator --
-
-public
-postfix func -- (indentation: inout Indentation)
-{
-    indentation.decreaseLevel()
-}
-
-//---
-
-public
-func indent(
-    with indentation: inout Indentation,
-    body: () -> Void
-    )
-{
-    indentation++
-
-    //---
-
-    body()
-
-    //---
-
-    indentation--
 }

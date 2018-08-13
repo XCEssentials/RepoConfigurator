@@ -43,32 +43,64 @@ typealias IndentedTextGetter = (inout Indentation) -> IndentedText
 //---
 
 public
-func <<< (list: inout IndentedText, element: IndentedTextLine)
+func <<< (
+    list: inout IndentedText,
+    element: IndentedTextLine
+    )
 {
-    list.append(element)
+    list += [element]
 }
 
 public
-func <<< (list: inout IndentedText, elements: IndentedText)
+func <<< (
+    list: inout IndentedText,
+    elements: IndentedText
+    )
 {
-    list.append(contentsOf: elements)
+    list += elements
 }
 
-//---
+public
+func <<< (
+    list: inout IndentedText,
+    elements: [IndentedText]
+    )
+{
+    list += elements.flatMap{ $0 }
+}
 
 public
-extension Array
-    where
-    Element == IndentedTextGetter
+func <<< (
+    list: inout [IndentedTextGetter],
+    element: @escaping IndentedTextGetter
+    )
 {
-    var rendered: String
-    {
-        var indentation = Indentation()
+    list += [element]
+}
 
-        return self
-            .map{ $0(&indentation) }
-            .reduce(into: IndentedText()){ $0 += $1 }
-            .map{ "\($0.rendered)\($1)" }
-            .joined(separator: "\n")
-    }
+public
+func <<< (
+    list: inout [IndentedTextGetter],
+    anotherList: [IndentedTextGetter]
+    )
+{
+    list += anotherList
+}
+
+public
+func <<< (
+    list: inout [IndentedTextGetter],
+    element: TextFilePiece
+    )
+{
+    list += [element.asIndentedText]
+}
+
+public
+func <<< (
+    list: inout [IndentedTextGetter],
+    anotherList: [TextFilePiece]
+    )
+{
+    list += anotherList.map{ $0.asIndentedText }
 }

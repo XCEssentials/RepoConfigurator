@@ -28,10 +28,8 @@ public
 extension CocoaPods
 {
     public
-    struct Podspec: ArbitraryNamedTextFile, ConfigurableTextFile
+    enum Podspec
     {
-        // MARK: - Type level members
-
         public
         typealias Product = (
             name: String,
@@ -57,195 +55,120 @@ extension CocoaPods
             email: String
         )
 
-        public
-        enum Section: TextFilePiece
+        // internal
+        struct Settings
         {
-            case header(
-                specVar: String
-            )
-
-            case generalInfo(
-                specVar: String,
-                product: Product,
-                company: Company,
-                initialVersion: VersionString,
-                license: License,
-                author: Author,
-                swiftVersion: VersionString?
-            )
-
-            // single platform, single subspec
-            case basicPod(
-                specVar: String,
-                deploymentTarget: DeploymentTarget,
-                sourcesPath: String,
-                usesSwift: Bool // ObjC if NO
-            )
-
-            case custom(
-                String
-            )
-
-            case footer
+            let specVar: String
+            let product: Product
+            let company: Company
+            let initialVersion: VersionString
+            let license: License
+            let authors: [Author]
+            let cocoapodsVersion: VersionString? // for ex. '>= 0.36'
+            let swiftVersion: VersionString?
+            let otherSettings: TextFilePiece
         }
 
-        // MARK: - Instance level members
-
-        public
-        var fileContent: [IndentedTextGetter] = []
-    }
-}
-
-// MARK: - Presets
-
-public
-extension CocoaPods.Podspec
-{
-    public
-    static
-    func singlePlatform(
-        specVar: String = Defaults.specVariable,
-        product: Product,
-        company: Company,
-        initialVersion: VersionString = Defaults.initialVersionString,
-        license: License,
-        author: Author,
-        swiftVersion: VersionString?,
-        deploymentTarget: DeploymentTarget,
-        sourcesPath: String? = nil,
-        otherEntries: [String] = []
-        ) -> CocoaPods.Podspec
-    {
-        return self
-            .init()
-            .extend(
-                .header(
-                    specVar: specVar
-                ),
-                .generalInfo(
-                    specVar: specVar,
-                    product: product,
-                    company: company,
-                    initialVersion: initialVersion,
-                    license: license,
-                    author: author,
-                    swiftVersion: swiftVersion
-                ),
-                .basicPod(
-                    specVar: specVar,
-                    deploymentTarget: deploymentTarget,
-                    sourcesPath: sourcesPath ?? "\(Defaults.pathToSourcesFolder)/\(product.name)",
-                    usesSwift: (swiftVersion != nil)
-                )
-            )
-            .extend(
-                with: otherEntries.map{ .custom($0) }
-            )
-            .extend(
-                .footer
-            )
+        // internal
+        struct PerPlatformSettings
+        {
+            let specVar: String
+            let deploymentTarget: DeploymentTarget?
+            let settigns: [String]
+        }
     }
 }
 
 // MARK: - Content rendering
 
-public
-extension CocoaPods.Podspec.Section
+//internal
+extension CocoaPods.Podspec.Settings: TextFilePiece
 {
     func asIndentedText(
         with indentation: inout Indentation
         ) -> IndentedText
     {
-        // NOTE: depends on 'Xcodeproj' CL tool
-
         var result: IndentedText = []
+
+        let s = specVar // swiftlint:disable:this identifier_name
 
         //---
 
-        switch self
-        {
-        case .header(
-            let specVar
-            ):
-            result <<< """
-                Pod::Spec.new do |\(specVar)|
+        //swiftlint:disable line_length
 
-                """
-                .asIndentedText(with: &indentation)
+        result <<< """
+            Pod::Spec.new do |\(s)|
 
-            indentation++
+                \(s).name          = '\(company.prefix)\(product.name)'
+                \(s).summary       = '\(product.summary)'
+                \(s).version       = '\(initialVersion)'
+                \(s).homepage      = 'https://\(company.name).github.io/\(product.name)'
 
-        case .generalInfo(
-            let specVar,
-            let product,
-            let company,
-            let initialVersion,
-            let license,
-            let author,
-            let swiftVersion
-            ):
-            //swiftlint:disable line_length
-            result <<< """
-                \(specVar).name          = '\(company.prefix)\(product.name)'
-                \(specVar).summary       = '\(product.summary)'
-                \(specVar).version       = '\(initialVersion)'
-                \(specVar).homepage      = 'https://\(company.name).github.io/\(product.name)'
+                \(s).source        = { :git => 'https://github.com/\(company.name)/\(product.name).git', :tag => \(s).version }
 
-                \(specVar).source        = { :git => 'https://github.com/\(company.name)/\(product.name).git', :tag => \(specVar).version }
+                \(s).requires_arc  = true
 
-                \(specVar).requires_arc  = true
+                \(s).license       = { :type => '\(license.type)', :file => '\(license.fileName)' }
 
-                \(specVar).license       = { :type => '\(license.type)', :file => '\(license.fileName)' }
-                \(specVar).author        = { '\(author.name)' => '\(author.email)' }
-                """
-                .asIndentedText(with: &indentation)
+                \(s).authors = {
+                \(authors.map{ "'\($0.name)' => '\($0.email)'" }.asMultiLine)
+                }
 
-            //swiftlint:enable line_length
+                \(swiftVersion.map{ "\(s).swift_version = '\($0)'" } ?? "")
 
-            swiftVersion.map{
+                \(cocoapodsVersion.map{ "\(s).cocoapods_version = '>= \($0)'" } ?? "")
+            """
+            .asIndentedText(with: &indentation)
 
-                // NOTE: same indentation!
+        //swiftlint:enable line_length
 
-                result <<< """
+        indentation++
 
-                    \(specVar).swift_version = '\($0)'
-                    """
-                    .asIndentedText(with: &indentation)
-            }
+        result <<< otherSettings
+            .asIndentedText(with: &indentation)
 
-        case .basicPod(
-            let specVar,
-            let deploymentTarget,
-            let sourcesPath,
-            let usesSwift
-            ):
-            //swiftlint:disable line_length
-            result <<< """
+        indentation--
 
-                \(specVar).\(deploymentTarget.platform.cocoaPodsId).deployment_target = '\(deploymentTarget.minimumVersion)'
+        // end spec
+        result <<< """
 
-                \(specVar).source_files = '\(sourcesPath)/**/*.\(usesSwift ? "swift" : "{h,m}")'
-                """
-                .asIndentedText(with: &indentation)
-            //swiftlint:enable line_length
+            end
+            """
+            .asIndentedText(with: &indentation)
 
-        case .custom(
-            let customEntry
-            ):
-            result <<< """
+        //---
 
-                \(customEntry)
-                """
-                .asIndentedText(with: &indentation)
+        return result
+    }
+}
 
-        case .footer:
-            indentation--
+//internal
+extension CocoaPods.Podspec.PerPlatformSettings: TextFilePiece
+{
+    func asIndentedText(
+        with indentation: inout Indentation
+        ) -> IndentedText
+    {
+        var result: IndentedText = []
 
-            result <<< """
+        let s = specVar // swiftlint:disable:this identifier_name
 
-                end
-                """
-                .asIndentedText(with: &indentation)
+        //---
+
+        let prefix = "\(s).\(deploymentTarget.map{ "\($0.platform.cocoaPodsId)." } ?? "")"
+
+        result <<< """
+
+            # === \(deploymentTarget.map{ "\($0.platform.rawValue)" } ?? "All platforms")
+
+            \(deploymentTarget.map{ "\(prefix)deployment_target = '\($0.minimumVersion)'" } ?? "")
+
+            """
+            .asIndentedText(with: &indentation)
+
+        result <<< settigns.map{
+
+            "\(prefix)\($0)".asIndentedText(with: &indentation)
         }
 
         //---

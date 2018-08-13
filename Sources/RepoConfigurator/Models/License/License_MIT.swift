@@ -24,6 +24,10 @@
 
  */
 
+import Foundation
+
+//---
+
 public
 extension License
 {
@@ -32,21 +36,20 @@ extension License
     {
         // MARK: - Instance level members
 
-        public
-        let fileContent: [IndentedTextGetter]
+        public private(set)
+        var fileContent: [IndentedTextGetter] = []
 
         // MARK: - Initializers
 
         public
         init(
-            copyrightYear: UInt,
+            copyrightYear: UInt = UInt(Calendar.current.component(.year, from: Date())),
             copyrightEntity: String
             )
         {
             // https://choosealicense.com/licenses/mit/
 
-            fileContent = [
-                """
+            fileContent <<< """
                 MIT License
 
                 Copyright (c) \(copyrightYear) \(copyrightEntity)
@@ -69,8 +72,6 @@ extension License
                 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
                 SOFTWARE.
                 """
-                .asIndentedText
-            ]
         }
     }
 }

@@ -25,82 +25,24 @@
  */
 
 public
-struct Indentation
+extension Bool
 {
     public
-    let singleLevel: String
-
-    public private(set)
-    var currentLevel = 0
-
-    //---
-
-    public
-    init(
-        singleLevel: String = .init(repeating: " ", count: 4),
-        currentLevel: Int = 0
-        )
+    func mapIf<U>(
+        _ condition: Bool,
+        body: () -> U
+        ) -> U?
     {
-        self.singleLevel = singleLevel
-        self.currentLevel = currentLevel
+        return (self == condition ? body() : nil)
     }
 
     public
-    var rendered: String
+    func mapIf<U>(
+        _ condition: Bool,
+        or defaultValue: U,
+        body: () -> U
+        ) -> U
     {
-        return String(repeating: singleLevel, count: currentLevel)
+        return (self == condition ? body() : defaultValue)
     }
-
-    public
-    mutating
-    func increaseLevel()
-    {
-        currentLevel += 1
-    }
-
-    public
-    mutating
-    func decreaseLevel()
-    {
-        currentLevel -= (currentLevel > 0 ? 1 : 0)
-    }
-}
-
-//---
-
-postfix operator ++
-
-public
-postfix func ++ (indentation: inout Indentation)
-{
-    indentation.increaseLevel()
-}
-
-//---
-
-postfix operator --
-
-public
-postfix func -- (indentation: inout Indentation)
-{
-    indentation.decreaseLevel()
-}
-
-//---
-
-public
-func indent(
-    with indentation: inout Indentation,
-    body: () -> Void
-    )
-{
-    indentation++
-
-    //---
-
-    body()
-
-    //---
-
-    indentation--
 }

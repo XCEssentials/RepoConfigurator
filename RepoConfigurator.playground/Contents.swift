@@ -66,8 +66,7 @@ let fastfile = Fastlane
     )
 
 let gitHubPagesConfig = GitHub
-    .Pages
-    .openSourceFramework()
+    .PagesConfig()
     .prepare(
         targetFolder: repoFolder
     )

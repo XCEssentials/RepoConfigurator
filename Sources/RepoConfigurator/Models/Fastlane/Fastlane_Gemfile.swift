@@ -28,90 +28,36 @@ public
 extension Fastlane
 {
     public
-    struct Gemfile: FixedNameTextFile, ConfigurableTextFile
+    struct Gemfile: FixedNameTextFile
     {
-        // MARK: - Type level members
-
-        public
-        enum Section: TextFilePiece
-        {
-            case defaultHeader
-
-            case fastlane
-
-            case custom(
-                String
-            )
-        }
-
         // MARK: - Instance level members
 
-        public
+        public private(set)
         var fileContent: [IndentedTextGetter] = []
-    }
-}
 
-// MARK: - Presets
+        // MARK: - Initializers
 
-public
-extension Fastlane.Gemfile
-{
-    /**
-     https://docs.fastlane.tools/getting-started/ios/setup/#use-a-gemfile
-     */
-    static
-    func fastlaneSupportOnly() -> Fastlane.Gemfile
-    {
-        return self
-            .init()
-            .extend(
-                .defaultHeader,
-                .fastlane
+        init(
+            basicFastlane: Bool = true,
+            _ otherEntries: String...
             )
-    }
-}
-
-// MARK: - Content rendering
-
-public
-extension Fastlane.Gemfile.Section
-{
-    func asIndentedText(
-        with indentation: inout Indentation
-        ) -> IndentedText
-    {
-        var result: IndentedText = []
-
-        //---
-
-        switch self
         {
-        case .defaultHeader:
-            result <<< """
+            fileContent <<< """
                 source "https://rubygems.org"
 
                 """
-                .asIndentedText(with: &indentation)
 
-        case .fastlane:
-            result <<< """
+            fileContent <<< basicFastlane.mapIf(true, or: ""){ """
 
                 gem "fastlane"
                 """
-                .asIndentedText(with: &indentation)
+            }
 
-        case .custom(
-            let customEntry
-            ):
-            result <<< """
+            fileContent <<< otherEntries.map{ """
 
-                \(customEntry)
+                \($0)
                 """
-                .asIndentedText(with: &indentation)
+            }
         }
-
-        //---
-
-        return result
     }
 }
