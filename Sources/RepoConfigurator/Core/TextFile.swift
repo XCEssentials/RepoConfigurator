@@ -26,14 +26,22 @@
 
 import Foundation
 
-//---
+// MARK: - Text File Piece
+
+public
+protocol TextFilePiece
+{
+    func asIndentedText(
+        with indentation: inout Indentation
+        ) -> IndentedText
+}
 
 // MARK: - Text File
 
 public
 protocol TextFile
 {
-    var fileContent: IndentedText { get }
+    var fileContent: [IndentedTextGetter] { get }
 }
 
 // MARK: - ARBITRARY Named Text File
@@ -106,77 +114,5 @@ extension FixedNameTextFile
             shouldRemoveSpacesAtEOL: removeSpacesAtEOL,
             shouldRemoveRepeatingEmptyLines: removeRepeatingEmptyLines
         )
-    }
-}
-
-// MARK: - Text File Piece
-
-public
-protocol TextFilePiece
-{
-    func asIndentedText(
-        with indentation: inout Indentation
-        ) -> IndentedText
-}
-
-// MARK: - CONFIGURABLE Named Text File
-
-public
-protocol ConfigurableTextFile: TextFile
-{
-    associatedtype Section: TextFilePiece
-
-    init()
-
-    var fileContent: IndentedText { get set }
-}
-
-public
-extension ConfigurableTextFile
-{
-    init(
-        sections: [Self.Section]
-        )
-    {
-        self.init()
-
-        //---
-
-        var indentation = Indentation()
-
-        fileContent = sections
-            .map{ $0.asIndentedText(with: &indentation) }
-            .reduce(into: IndentedText()){ $0 += $1 }
-    }
-
-    init(
-        _ sections: Section...
-        )
-    {
-        self.init(sections: sections)
-    }
-
-    init(
-        basedOn preset: Self,
-        _ otherSections: Section...
-        )
-    {
-        self.init(
-            basedOn: preset,
-            otherSections: otherSections
-        )
-    }
-
-    init(
-        basedOn preset: Self,
-        otherSections: [Section]
-        )
-    {
-        self.init()
-
-        //---
-
-        fileContent = preset.fileContent +
-            Self(sections: otherSections).fileContent
     }
 }

@@ -73,9 +73,25 @@ enum Defaults
 
     public
     static
-    let fastlaneVersion: VersionString = "2.100.0"
+    let minimumFastlaneVersion: VersionString = "2.100.0"
+
+    public
+    static
+    let stagingExportMethod: Fastlane.Fastfile.Section.ArchiveExportMethod = .adHoc
 
     public
     static
     let archivesExportPath = ".archives"
+
+    public
+    static
+    let cocoapodsVersion: VersionString = "0.36"
+
+    public
+    static
+    let swiftVersion: VersionString = "4.2"
+
+    public
+    static
+    let releaseGitBranchesRegEx: String = "(release/*|hotfix/*)" // Git-Flow
 }

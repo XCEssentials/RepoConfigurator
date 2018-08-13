@@ -1,4 +1,3 @@
-
 # Customise this file, documentation can be found here:
 # https://github.com/KrauseFx/fastlane/tree/master/docs
 # All available actions: https://github.com/KrauseFx/fastlane/blob/master/docs/Actions.md
@@ -25,16 +24,17 @@ fastlane_version '2.100.0'
 lane :beforeRelease do
 
     ensure_git_branch(
-        branch: 'release/*'
+        branch: '(release/*|hotfix/*)'
     )
-
-    # ===
 
     ensure_git_status_clean
 
     # ===
 
-    versionNumber = get_version_number(xcodeproj: 'RepoConfigurator.xcodeproj')
+    versionNumber = get_version_number(
+        xcodeproj: 'RepoConfigurator.xcodeproj'
+    )
+
     puts 'Current VERSION number: ' + versionNumber
 
     # === Infer new version number
@@ -54,7 +54,9 @@ lane :beforeRelease do
 
     else
 
-        newVersionNumber = prompt(text: 'New VERSION number:')
+        newVersionNumber = prompt(
+            text: 'New VERSION number:'
+        )
 
     end
 
@@ -71,11 +73,13 @@ lane :beforeRelease do
 
     # ===
 
-    newBuildNumber = get_build_number(xcodeproj: 'RepoConfigurator.xcodeproj')
+    newBuildNumber = get_build_number(
+        xcodeproj: 'RepoConfigurator.xcodeproj'
+    )
 
     commit_version_bump( # it will fail if more than version bump
         xcodeproj: 'RepoConfigurator.xcodeproj',
         message: 'Version Bump to ' + newVersionNumber + ' (' + newBuildNumber + ')'
     )
 
-end
+end # lane :beforeRelease

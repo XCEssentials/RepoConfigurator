@@ -25,16 +25,15 @@
  */
 
 public
-extension GitHub
+extension CocoaPods.Podspec
 {
     public
-    struct PagesConfig: FixedNameTextFile
+    struct Standard: ArbitraryNamedTextFile
     {
         // MARK: - Type level members
 
         public
-        static
-        let fileName: String = "_config.yml"
+        typealias Parent = CocoaPods.Podspec
 
         // MARK: - Instance level members
 
@@ -45,19 +44,38 @@ extension GitHub
 
         public
         init(
-            themeName: String = "jekyll-theme-cayman",
-            otherEntries: String...
+            specVar: String = Defaults.specVariable,
+            product: Product,
+            company: Company,
+            initialVersion: VersionString = Defaults.initialVersionString,
+            license: License,
+            authors: [Author],
+            cocoapodsVersion: VersionString? = Defaults.cocoapodsVersion,
+            swiftVersion: VersionString? = Defaults.swiftVersion,
+            otherSettings: [(
+                deploymentTarget: DeploymentTarget?,
+                settigns: [String]
+            )]
             )
         {
-            fileContent <<< """
-                theme: \(themeName)
-                """
+            fileContent <<<  Parent.Settings(
+                specVar: specVar,
+                product: product,
+                company: company,
+                initialVersion: initialVersion,
+                license: license,
+                authors: authors,
+                cocoapodsVersion: cocoapodsVersion,
+                swiftVersion: swiftVersion,
+                otherSettings: otherSettings.map{
 
-            fileContent <<< otherEntries.map{ """
-
-                \($0)
-                """
-            }
+                    Parent.PerPlatformSettings(
+                        specVar: specVar,
+                        deploymentTarget: $0.deploymentTarget,
+                        settigns: $0.settigns
+                    )
+                }
+            )
         }
     }
 }

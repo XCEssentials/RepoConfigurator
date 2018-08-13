@@ -25,10 +25,10 @@
  */
 
 public
-extension Xcode.Project.Target
+extension Xcode.Target
 {
     public
-    struct InfoPlist: ArbitraryNamedTextFile, ConfigurableTextFile
+    struct InfoPlist: ArbitraryNamedTextFile
     {
         // MARK: - Type level members
 
@@ -40,8 +40,8 @@ extension Xcode.Project.Target
             case tests = "BNDL"
         }
 
-        public
-        enum Section: TextFilePiece
+        //internal
+        enum ContentSection
         {
             case header
 
@@ -71,28 +71,58 @@ extension Xcode.Project.Target
         // MARK: - Instance level members
 
         public
-        var fileContent: IndentedText = []
-
-        // MARK: - Initializers
-
-        public
-        init() {}
+        let fileContent: [IndentedTextGetter]
     }
 }
 
 // MARK: - Presets
 
 public
-extension Xcode.Project.Target.InfoPlist
+extension Xcode.Target.InfoPlist
 {
+    static
+    func custom(
+        entries: String...
+        ) -> Xcode.Target.InfoPlist
+    {
+        var sections: [ContentSection] = []
+
+        //---
+
+        sections += [
+            .header
+        ]
+
+        sections += entries.map{
+
+            .custom($0)
+        }
+
+        sections += [
+
+            .footer
+        ]
+
+        //---
+
+        return .init(
+            fileContent: sections.map{ $0.asIndentedText }
+        )
+    }
+
     static
     func iOSFramework(
         initialVersionString: VersionString = Defaults.initialVersionString,
         initialBuildNumber: BuildNumber = Defaults.initialBuildNumber,
-        _ customSections: String...
-        ) -> Xcode.Project.Target.InfoPlist
+        _ customEntries: String...
+        ) -> Xcode.Target.InfoPlist
     {
-        var sections: [Section] = [
+        var sections: [ContentSection] = []
+
+        //---
+
+        sections += [
+
             .header,
             .basic(
                 packageType: .framework,
@@ -101,7 +131,8 @@ extension Xcode.Project.Target.InfoPlist
             )
         ]
 
-        sections += customSections.map{
+        sections += customEntries.map{
+
             .custom($0)
         }
 
@@ -111,17 +142,24 @@ extension Xcode.Project.Target.InfoPlist
 
         //---
 
-        return .init(sections: sections)
+        return .init(
+            fileContent: sections.map{ $0.asIndentedText }
+        )
     }
 
     static
     func iOSApp(
         initialVersionString: VersionString = Defaults.initialVersionString,
         initialBuildNumber: BuildNumber = Defaults.initialBuildNumber,
-        _ customSections: String...
-        ) -> Xcode.Project.Target.InfoPlist
+        _ customEntries: String...
+        ) -> Xcode.Target.InfoPlist
     {
-        var sections: [Section] = [
+        var sections: [ContentSection] = []
+
+        //---
+
+        sections += [
+
             .header,
             .basic(
                 packageType: .app,
@@ -131,7 +169,8 @@ extension Xcode.Project.Target.InfoPlist
             .iOSApp
         ]
 
-        sections += customSections.map{
+        sections += customEntries.map{
+
             .custom($0)
         }
 
@@ -141,7 +180,9 @@ extension Xcode.Project.Target.InfoPlist
 
         //---
 
-        return .init(sections: sections)
+        return .init(
+            fileContent: sections.map{ $0.asIndentedText }
+        )
     }
 
     static
@@ -150,10 +191,15 @@ extension Xcode.Project.Target.InfoPlist
         initialBuildNumber: BuildNumber = Defaults.initialBuildNumber,
         copyrightYear: UInt = Defaults.copyrightYear,
         copyrightEntity: String,
-        _ customSections: String...
-        ) -> Xcode.Project.Target.InfoPlist
+        _ customEntries: String...
+        ) -> Xcode.Target.InfoPlist
     {
-        var sections: [Section] = [
+        var sections: [ContentSection] = []
+
+        //---
+
+        sections += [
+
             .header,
             .basic(
                 packageType: .framework,
@@ -166,7 +212,8 @@ extension Xcode.Project.Target.InfoPlist
             )
         ]
 
-        sections += customSections.map{
+        sections += customEntries.map{
+
             .custom($0)
         }
 
@@ -176,7 +223,9 @@ extension Xcode.Project.Target.InfoPlist
 
         //---
 
-        return .init(sections: sections)
+        return .init(
+            fileContent: sections.map{ $0.asIndentedText }
+        )
     }
 
     static
@@ -185,10 +234,15 @@ extension Xcode.Project.Target.InfoPlist
         initialBuildNumber: BuildNumber = Defaults.initialBuildNumber,
         copyrightYear: UInt = Defaults.copyrightYear,
         copyrightEntity: String,
-        _ customSections: String...
-        ) -> Xcode.Project.Target.InfoPlist
+        _ customEntries: String...
+        ) -> Xcode.Target.InfoPlist
     {
-        var sections: [Section] = [
+        var sections: [ContentSection] = []
+
+        //---
+
+        sections += [
+
             .header,
             .basic(
                 packageType: .app,
@@ -201,7 +255,8 @@ extension Xcode.Project.Target.InfoPlist
             )
         ]
 
-        sections += customSections.map{
+        sections += customEntries.map{
+
             .custom($0)
         }
 
@@ -211,17 +266,24 @@ extension Xcode.Project.Target.InfoPlist
 
         //---
 
-        return .init(sections: sections)
+        return .init(
+            fileContent: sections.map{ $0.asIndentedText }
+        )
     }
 
     static
     func unitTests(
         initialVersionString: VersionString = Defaults.initialVersionString,
         initialBuildNumber: BuildNumber = Defaults.initialBuildNumber,
-        _ customSections: String...
-        ) -> Xcode.Project.Target.InfoPlist
+        _ customEntries: String...
+        ) -> Xcode.Target.InfoPlist
     {
-        var sections: [Section] = [
+        var sections: [ContentSection] = []
+
+        //---
+
+        sections += [
+
             .header,
             .basic(
                 packageType: .tests,
@@ -230,7 +292,8 @@ extension Xcode.Project.Target.InfoPlist
             )
         ]
 
-        sections += customSections.map{
+        sections += customEntries.map{
+
             .custom($0)
         }
 
@@ -240,15 +303,15 @@ extension Xcode.Project.Target.InfoPlist
 
         //---
 
-        return .init(sections: sections)
+        return .init(
+            fileContent: sections.map{ $0.asIndentedText }
+        )
     }
-
 }
 
 // MARK: - Content rendering
 
-public
-extension Xcode.Project.Target.InfoPlist.Section
+extension Xcode.Target.InfoPlist.ContentSection: TextFilePiece
 {
     func asIndentedText(
         with indentation: inout Indentation

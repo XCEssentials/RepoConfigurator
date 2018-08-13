@@ -25,43 +25,17 @@
  */
 
 public
-extension Xcode.Project.Target
+extension Array
+    where
+    Element == IndentedTextGetter
 {
-    public
-    struct Scripts
+    var rendered: String
     {
-        public private(set)
-        var regulars: [String] = []
-        
-        public
-        mutating
-        func regular(_ paths: String...)
-        {
-            regulars.append(contentsOf: paths)
-        }
-        
-        //---
-        
-        public private(set)
-        var beforeBuilds: [String] = []
-        
-        public
-        mutating
-        func beforeBuild(_ paths: String...)
-        {
-            beforeBuilds.append(contentsOf: paths)
-        }
-        
-        //---
-        
-        public private(set)
-        var afterBuilds: [String] = []
-        
-        public
-        mutating
-        func afterBuild(_ paths: String...)
-        {
-            afterBuilds.append(contentsOf: paths)
-        }
+        var indentation = Indentation()
+
+        return self
+            .asIndentedText(with: &indentation)
+            .map{ "\($0.rendered)\($1)" }
+            .joined(separator: "\n")
     }
 }
