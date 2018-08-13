@@ -3,6 +3,7 @@ import XCERepoConfigurator
 //---
 
 let productName = "RepoConfigurator"
+let projectName = productName
 
 let repoFolder = PathPrefix
     .iCloudDrive
@@ -26,15 +27,15 @@ let fastlaneFolder = repoFolder
 
 let gitignore = Git
     .RepoIgnore
-    .framework
+    .framework()
     .prepare(
         targetFolder: repoFolder
     )
 
 let swiftLint = SwiftLint
-    .defaultXCE(
-    customExclude: [
-        "Templates"
+    .init(
+        exclude: [
+            "Templates"
         ]
     )
     .prepare(
@@ -51,15 +52,15 @@ let license = License
     )
 
 let fastfile = Fastlane
-    .Fastfile(
-        .defaultHeader,
-        .fastlaneVersion(
-            Defaults.fastlaneVersion
-        ),
-        .beforeRelease(
-            projectName: productName,
-            cocoaPodsModuleName: nil
-        )
+    .Fastfile
+    .custom(
+        predefinedSections: [
+            .defaultHeader(),
+            .beforeRelease(
+                projectName: projectName,
+                cocoaPodsModuleName: nil
+            )
+        ]
     )
     .prepare(
         targetFolder: fastlaneFolder

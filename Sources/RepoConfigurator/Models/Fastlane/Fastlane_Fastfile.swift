@@ -368,7 +368,9 @@ extension Fastlane.Fastfile.Section
 
                 # ===
 
-                newBuildNumber = get_build_number(xcodeproj: '\(projectName).xcodeproj')
+                newBuildNumber = get_build_number(
+                    xcodeproj: '\(projectName).xcodeproj'
+                )
 
                 commit_version_bump( # it will fail if more than version bump
                     xcodeproj: '\(projectName).xcodeproj',
@@ -472,8 +474,6 @@ extension Fastlane.Fastfile.Section
                     # is inside 'Fastlane' folder
 
                     sh 'cd ./.. && xcodeproj sort "\(projectName).xcodeproj"'
-
-                    # === Add custom 'Run Script Phase' entries
                 """
                 .asIndentedText(with: &indentation)
 
@@ -575,8 +575,6 @@ extension Fastlane.Fastfile.Section
                     # is inside 'Fastlane' folder
 
                     sh 'cd ./.. && xcodeproj sort "\(projectName).xcodeproj"'
-
-                    # === Add custom 'Run Script Phase' entries
                 """
                 .asIndentedText(with: &indentation)
 
@@ -728,7 +726,7 @@ extension Fastlane.Fastfile.Section
 
         return """
 
-            # === BUILD PHASE script '\(scriptName)'
+            # === Add BUILD PHASE script '\(scriptName)'
 
             # remember, we are in ./fastlane/ folder now...
             fullProjFilePath = Dir.pwd + '/../\(projectName).xcodeproj'
@@ -768,7 +766,7 @@ extension Fastlane.Fastfile.Section
 
         return """
 
-            # === BUILD PHASE script '\(scriptName)'
+            # === Add BUILD PHASE script '\(scriptName)'
 
             # remember, we are in ./fastlane/ folder now...
             fullProjFilePath = Dir.pwd + '/../\(projectName).xcodeproj'
@@ -809,7 +807,7 @@ extension Fastlane.Fastfile.Section
 
         return """
 
-            # === BUILD PHASE script '\(scriptName)'
+            # === Add BUILD PHASE script '\(scriptName)'
 
             # remember, we are in ./fastlane/ folder now...
             fullProjFilePath = Dir.pwd + '/../\(projectName).xcodeproj'
@@ -853,7 +851,7 @@ extension Fastlane.Fastfile.Section
 
         return """
 
-            # === BUILD PHASE script '\(scriptName)'
+            # === Add BUILD PHASE script '\(scriptName)'
 
             # remember, we are in ./fastlane/ folder now...
             fullProjFilePath = Dir.pwd + '/../\(projectName).xcodeproj'
