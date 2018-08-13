@@ -25,17 +25,31 @@
  */
 
 public
-typealias IndentedTextLine = (
-    indentation: Indentation,
-    content: String
-)
+struct CustomTextFile: ArbitraryNamedTextFile
+{
+    // MARK: - Instance level members
 
-//---
+    public private(set)
+    var fileContent: [IndentedTextGetter] = []
 
-public
-typealias IndentedText = [IndentedTextLine]
+    // MARK: - Initializers
 
-//---
+    public
+    init(
+        _ customEntries: String...
+        )
+    {
+        if
+            customEntries.isEmpty
+        {
+            fileContent <<< """
+                // empty file
 
-public
-typealias IndentedTextGetter = (inout Indentation) -> IndentedText
+                """
+        }
+        else
+        {
+            fileContent <<< customEntries
+        }
+    }
+}

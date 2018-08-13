@@ -25,7 +25,7 @@
  */
 
 public
-extension Xcode.Project.Target
+extension Xcode.Target
 {
     public
     typealias BinaryDependency = (

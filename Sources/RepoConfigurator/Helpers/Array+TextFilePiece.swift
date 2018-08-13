@@ -24,18 +24,34 @@
 
  */
 
-public
-typealias IndentedTextLine = (
-    indentation: Indentation,
-    content: String
-)
+extension Array: TextFilePiece
+    where
+    Element: TextFilePiece
+{
+    public
+    func asIndentedText(
+        with indentation: inout Indentation
+        ) -> IndentedText
+    {
+        return self
+            .map{ $0.asIndentedText(with: &indentation) }
+            .reduce(into: IndentedText()){ $0 += $1 }
+    }
+}
 
 //---
 
-public
-typealias IndentedText = [IndentedTextLine]
-
-//---
-
-public
-typealias IndentedTextGetter = (inout Indentation) -> IndentedText
+extension Array
+    where
+    Element == IndentedTextGetter
+{
+    public
+    func asIndentedText(
+        with indentation: inout Indentation
+        ) -> IndentedText
+    {
+        return self
+            .map{ $0(&indentation) }
+            .reduce(into: IndentedText()){ $0 += $1 }
+    }
+}

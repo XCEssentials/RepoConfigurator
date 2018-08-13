@@ -85,3 +85,22 @@ postfix func -- (indentation: inout Indentation)
 {
     indentation.decreaseLevel()
 }
+
+//---
+
+public
+func indent(
+    with indentation: inout Indentation,
+    body: () -> Void
+    )
+{
+    indentation++
+
+    //---
+
+    body()
+
+    //---
+
+    indentation--
+}

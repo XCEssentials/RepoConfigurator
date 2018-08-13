@@ -25,28 +25,64 @@
  */
 
 public
-extension Xcode.Project.Target
+extension Xcode.Target
 {
     public
-    struct DummyFile: FixedNameTextFile
+    struct BuildConfiguration
     {
-        // MARK: - Type level members
-
         public
-        static
-        let fileName: String = "DummyFile.swift"
-
-        // MARK: - Instance level members
-
+        struct Base
+        {
+            // internal
+            init(
+                _ overrides: [KeyValuePair] = []
+                )
+            {
+                self.overrides = overrides
+            }
+            
+            //---
+            
+            public private(set)
+            var overrides: [KeyValuePair] = []
+            
+            public
+            mutating
+            func override(
+                _ pairs: KeyValuePair...
+                )
+            {
+                overrides.append(contentsOf: pairs)
+            }
+        }
+        
+        //---
+        
         public
-        let fileContent: IndentedText = [
-            (Indentation(), "// dummy file"),
-            (Indentation(), "")
-        ]
-
-        // MARK: - Initializers
-
+        let name: String
+        
+        //---
+        
+        public private(set)
+        var overrides: [KeyValuePair] = []
+        
         public
-        init() {}
+        mutating
+        func override(
+            _ pairs: KeyValuePair...
+            )
+        {
+            overrides.append(contentsOf: pairs)
+        }
+        
+        //---
+        
+        // internal
+        init(
+            _ name: String
+            )
+        {
+            self.name = name
+        }
     }
 }

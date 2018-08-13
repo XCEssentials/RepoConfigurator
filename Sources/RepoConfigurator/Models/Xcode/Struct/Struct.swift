@@ -40,7 +40,7 @@ extension Struct
     func generateSpec(
         _ format: Spec,
         for project: Xcode.Project
-        ) -> IndentedText
+        ) -> IndentedTextGetter
     {
         switch format
         {

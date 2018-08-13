@@ -10,12 +10,19 @@ Pod::Spec.new do |s|
     s.requires_arc  = true
 
     s.license       = { :type => 'MIT', :file => 'LICENSE' }
-    s.author        = { 'John Appleseed' => 'john@example.com' }
+
+    s.authors = {
+        'John Appleseed' => 'john@example.com'
+    }
 
     s.swift_version = '4.2'
 
+    s.cocoapods_version = '>= 0.36'
+
+    # === iOS
+
     s.ios.deployment_target = '9.0'
 
-    s.source_files = 'Sources/**/*.swift'
+    s.ios.source_files = 'Sources/SimpleFramework/**/*.swift'
 
 end

@@ -25,17 +25,11 @@
  */
 
 public
-typealias IndentedTextLine = (
-    indentation: Indentation,
-    content: String
-)
-
-//---
-
-public
-typealias IndentedText = [IndentedTextLine]
-
-//---
-
-public
-typealias IndentedTextGetter = (inout Indentation) -> IndentedText
+extension CocoaPods.Podspec
+{
+    public
+    struct WithSubSpecs
+    {
+        // TODO: implement later!
+    }
+}

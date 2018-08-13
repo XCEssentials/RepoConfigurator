@@ -1,4 +1,3 @@
-
 # Customise this file, documentation can be found here:
 # https://github.com/KrauseFx/fastlane/tree/master/docs
 # All available actions: https://github.com/KrauseFx/fastlane/blob/master/docs/Actions.md
@@ -25,16 +24,17 @@ fastlane_version '2.100.0'
 lane :beforeRelease do
 
     ensure_git_branch(
-        branch: 'release/*'
+        branch: '(release/*|hotfix/*)'
     )
-
-    # ===
 
     ensure_git_status_clean
 
     # ===
 
-    versionNumber = get_version_number(xcodeproj: 'SimpleApp.xcodeproj')
+    versionNumber = get_version_number(
+        xcodeproj: 'SimpleApp.xcodeproj'
+    )
+
     puts 'Current VERSION number: ' + versionNumber
 
     # === Infer new version number
@@ -54,7 +54,9 @@ lane :beforeRelease do
 
     else
 
-        newVersionNumber = prompt(text: 'New VERSION number:')
+        newVersionNumber = prompt(
+            text: 'New VERSION number:'
+        )
 
     end
 
@@ -71,23 +73,33 @@ lane :beforeRelease do
 
     # ===
 
-    newBuildNumber = get_build_number(xcodeproj: 'SimpleApp.xcodeproj')
+    newBuildNumber = get_build_number(
+        xcodeproj: 'SimpleApp.xcodeproj'
+    )
 
     commit_version_bump( # it will fail if more than version bump
         xcodeproj: 'SimpleApp.xcodeproj',
         message: 'Version Bump to ' + newVersionNumber + ' (' + newBuildNumber + ')'
     )
 
-end
+end # lane :beforeRelease
 
-lane :regenerateProject do
+lane :REgenerateProject do
 
     # === Remember current version and build numbers
 
-    versionNumber = get_version_number(xcodeproj: 'SimpleApp.xcodeproj')
-    buildNumber = get_build_number(xcodeproj: 'SimpleApp.xcodeproj')
+    versionNumber = get_version_number(
+        xcodeproj: 'SimpleApp.xcodeproj'
+    )
+
+    buildNumber = get_build_number(
+        xcodeproj: 'SimpleApp.xcodeproj'
+    )
 
     # === Remove completely current project file/package
+
+    # default initial location for any command
+    # is inside 'Fastlane' folder
 
     sh 'cd ./.. && rm -r ./SimpleApp.xcodeproj'
 
@@ -112,37 +124,41 @@ lane :regenerateProject do
 
     # === Sort all project entries
 
+    # default initial location for any command
+    # is inside 'Fastlane' folder
+
     sh 'cd ./.. && xcodeproj sort "SimpleApp.xcodeproj"'
 
-    # === Add custom 'Run Script Phase' entries
-
-    # === lets add SwiftLint build phase script to each target of given project
+    # === Add BUILD PHASE script 'SwiftLintGlobal'
 
     # remember, we are in ./fastlane/ folder now...
     fullProjFilePath = Dir.pwd + '/../SimpleApp.xcodeproj'
 
     project = Xcodeproj::Project.open(fullProjFilePath)
 
-    project.targets.each { |target|
+    project
+        .targets
+        .select{ |t| ['SimpleApp'].include?(t.name) }
+        .each{ |t|
 
-        swiftLintPhase = target.new_shell_script_build_phase("SwiftLint")
-        swiftLintPhase.shell_script = 'if which swiftlint >/dev/null; then
-            swiftlint
-        else
-            echo "warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint"
-        fi'
-        # swiftLintPhase.run_only_for_deployment_postprocessing = '1'
+            thePhase = t.new_shell_script_build_phase('SwiftLintGlobal')
+            thePhase.shell_script = 'if which swiftlint >/dev/null; then
+                swiftlint
+            else
+                echo "warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint"
+            fi'
+            # thePhase.run_only_for_deployment_postprocessing = '1'
 
-        target.build_phases.delete(swiftLintPhase)
-        target.build_phases.unshift(swiftLintPhase)
+            t.build_phases.delete(thePhase)
+            t.build_phases.unshift(thePhase)
 
-    }
+        }
 
     project.save()
 
-end
+end # lane :REgenerateProject
 
-lane :setupProjectFromScratch do
+lane :generateProject do
 
     # === Generate project from scratch
 
@@ -153,9 +169,11 @@ lane :setupProjectFromScratch do
 
     # === Set proper build number
 
-    # NOTE: proper version number is stored in the Info file
+    # NOTE: proper version number is stored in the Info files
 
-    newBuildNumber = prompt(text: 'Desired BUILD number:')
+    newBuildNumber = prompt(
+        text: 'Desired BUILD number:'
+    )
 
     increment_build_number(
         xcodeproj: 'SimpleApp.xcodeproj',
@@ -164,44 +182,53 @@ lane :setupProjectFromScratch do
 
     # === Sort all project entries
 
+    # default initial location for any command
+    # is inside 'Fastlane' folder
+
     sh 'cd ./.. && xcodeproj sort "SimpleApp.xcodeproj"'
 
-    # === Add custom 'Run Script Phase' entries
-
-    # === lets add SwiftLint build phase script to each target of given project
+    # === Add BUILD PHASE script 'SwiftLintGlobal'
 
     # remember, we are in ./fastlane/ folder now...
     fullProjFilePath = Dir.pwd + '/../SimpleApp.xcodeproj'
 
     project = Xcodeproj::Project.open(fullProjFilePath)
 
-    project.targets.each { |target|
+    project
+        .targets
+        .select{ |t| ['SimpleApp'].include?(t.name) }
+        .each{ |t|
 
-        swiftLintPhase = target.new_shell_script_build_phase("SwiftLint")
-        swiftLintPhase.shell_script = 'if which swiftlint >/dev/null; then
-            swiftlint
-        else
-            echo "warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint"
-        fi'
-        # swiftLintPhase.run_only_for_deployment_postprocessing = '1'
+            thePhase = t.new_shell_script_build_phase('SwiftLintGlobal')
+            thePhase.shell_script = 'if which swiftlint >/dev/null; then
+                swiftlint
+            else
+                echo "warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint"
+            fi'
+            # thePhase.run_only_for_deployment_postprocessing = '1'
 
-        target.build_phases.delete(swiftLintPhase)
-        target.build_phases.unshift(swiftLintPhase)
+            t.build_phases.delete(thePhase)
+            t.build_phases.unshift(thePhase)
 
-    }
+        }
 
     project.save()
 
-end
+end # lane :generateProject
 
-lane :archiveStaging do
+lane :archiveBeta do
 
     ensure_git_status_clean
 
     # === Set basic parameters
 
-    buildNumber = get_build_number(xcodeproj: 'SimpleApp.xcodeproj')
-    versionNumber = get_version_number(xcodeproj: 'SimpleApp.xcodeproj')
+    buildNumber = get_build_number(
+        xcodeproj: 'SimpleApp.xcodeproj'
+    )
+
+    versionNumber = get_version_number(
+        xcodeproj: 'SimpleApp.xcodeproj'
+    )
 
     puts 'Attempt to use SCHEME: SimpleApp'
 
@@ -246,8 +273,8 @@ lane :archiveStaging do
     else
 
         puts 'ERROR: This VERSION (' + versionNumber + ') of the app can NOT be archived using this lane.'
-        puts 'NOTE: this lane is for STAGING (beta) builds ONLY.'
+        puts 'NOTE: this lane is for beta (STAGING) builds ONLY.'
 
     end
 
-end
+end # lane :archiveBeta

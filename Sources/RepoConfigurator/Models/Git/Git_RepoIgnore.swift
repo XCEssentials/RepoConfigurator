@@ -27,7 +27,7 @@
 extension Git
 {
     public
-    struct RepoIgnore: FixedNameTextFile, ConfigurableTextFile
+    struct RepoIgnore: FixedNameTextFile
     {
         // MARK: - Type level members
 
@@ -35,8 +35,7 @@ extension Git
         static
         let fileName = ".gitignore"
 
-        public
-        enum Section: TextFilePiece
+        enum Section
         {
             case macOS
             case cocoa
@@ -50,12 +49,7 @@ extension Git
         // MARK: - Instance level members
 
         public
-        var fileContent: IndentedText = []
-
-        // MARK: - Initializers
-
-        public
-        init() {}
+        let fileContent: [IndentedTextGetter]
     }
 }
 
@@ -67,34 +61,57 @@ extension Git.RepoIgnore
     public
     static
     func app(
-        archivesExportPath: String = Defaults.archivesExportPath
+        ignoreDependenciesSources: Bool = false,
+        archivesExportPath: String = Defaults.archivesExportPath,
+        _ otherEntries: String...
         ) -> Git.RepoIgnore
     {
-        return .init(
+        let sections: [Section] = [
+
             .macOS,
             .cocoa,
-            .cocoaPods(ignoreSources: false),
-            .carthage(ignoreSources: false),
+            .cocoaPods(ignoreSources: ignoreDependenciesSources),
+            .carthage(ignoreSources: ignoreDependenciesSources),
             .fastlane,
             .archivesExportPath(archivesExportPath)
+        ]
+
+        //---
+
+        return .init(
+            fileContent: sections.map{ $0.asIndentedText }
+                + otherEntries.map{ $0.asIndentedText }
         )
     }
 
     public
     static
-    let framework = Git.RepoIgnore(
-        .macOS,
-        .cocoa,
-        .cocoaPods(ignoreSources: true),
-        .carthage(ignoreSources: true),
-        .fastlane
-    )
+    func framework(
+        ignoreDependenciesSources: Bool = true,
+        _ otherEntries: String...
+        ) -> Git.RepoIgnore
+    {
+        let sections: [Section] = [
+
+            .macOS,
+            .cocoa,
+            .cocoaPods(ignoreSources: ignoreDependenciesSources),
+            .carthage(ignoreSources: ignoreDependenciesSources),
+            .fastlane
+        ]
+
+        //---
+
+        return .init(
+            fileContent: sections.map{ $0.asIndentedText }
+                + otherEntries.map{ $0.asIndentedText }
+        )
+    }
 }
 
 // MARK: - Content rendering
 
-public
-extension Git.RepoIgnore.Section
+extension Git.RepoIgnore.Section: TextFilePiece
 {
     func asIndentedText(
         with indentation: inout Indentation
