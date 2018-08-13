@@ -25,43 +25,64 @@
  */
 
 public
-extension Xcode.Project.Target
+extension Xcode.Target
 {
     public
-    struct Scripts
+    struct BuildConfiguration
     {
-        public private(set)
-        var regulars: [String] = []
-        
         public
-        mutating
-        func regular(_ paths: String...)
+        struct Base
         {
-            regulars.append(contentsOf: paths)
+            // internal
+            init(
+                _ overrides: [KeyValuePair] = []
+                )
+            {
+                self.overrides = overrides
+            }
+            
+            //---
+            
+            public private(set)
+            var overrides: [KeyValuePair] = []
+            
+            public
+            mutating
+            func override(
+                _ pairs: KeyValuePair...
+                )
+            {
+                overrides.append(contentsOf: pairs)
+            }
         }
         
         //---
         
-        public private(set)
-        var beforeBuilds: [String] = []
-        
         public
-        mutating
-        func beforeBuild(_ paths: String...)
-        {
-            beforeBuilds.append(contentsOf: paths)
-        }
+        let name: String
         
         //---
         
         public private(set)
-        var afterBuilds: [String] = []
+        var overrides: [KeyValuePair] = []
         
         public
         mutating
-        func afterBuild(_ paths: String...)
+        func override(
+            _ pairs: KeyValuePair...
+            )
         {
-            afterBuilds.append(contentsOf: paths)
+            overrides.append(contentsOf: pairs)
+        }
+        
+        //---
+        
+        // internal
+        init(
+            _ name: String
+            )
+        {
+            self.name = name
         }
     }
 }

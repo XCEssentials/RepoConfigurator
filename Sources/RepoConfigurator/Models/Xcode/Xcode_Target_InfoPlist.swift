@@ -25,7 +25,7 @@
  */
 
 public
-extension Xcode.Project.Target
+extension Xcode.Target
 {
     public
     struct InfoPlist: ArbitraryNamedTextFile
@@ -78,12 +78,12 @@ extension Xcode.Project.Target
 // MARK: - Presets
 
 public
-extension Xcode.Project.Target.InfoPlist
+extension Xcode.Target.InfoPlist
 {
     static
     func custom(
         entries: String...
-        ) -> Xcode.Project.Target.InfoPlist
+        ) -> Xcode.Target.InfoPlist
     {
         var sections: [ContentSection] = []
 
@@ -115,7 +115,7 @@ extension Xcode.Project.Target.InfoPlist
         initialVersionString: VersionString = Defaults.initialVersionString,
         initialBuildNumber: BuildNumber = Defaults.initialBuildNumber,
         _ customEntries: String...
-        ) -> Xcode.Project.Target.InfoPlist
+        ) -> Xcode.Target.InfoPlist
     {
         var sections: [ContentSection] = []
 
@@ -152,7 +152,7 @@ extension Xcode.Project.Target.InfoPlist
         initialVersionString: VersionString = Defaults.initialVersionString,
         initialBuildNumber: BuildNumber = Defaults.initialBuildNumber,
         _ customEntries: String...
-        ) -> Xcode.Project.Target.InfoPlist
+        ) -> Xcode.Target.InfoPlist
     {
         var sections: [ContentSection] = []
 
@@ -192,7 +192,7 @@ extension Xcode.Project.Target.InfoPlist
         copyrightYear: UInt = Defaults.copyrightYear,
         copyrightEntity: String,
         _ customEntries: String...
-        ) -> Xcode.Project.Target.InfoPlist
+        ) -> Xcode.Target.InfoPlist
     {
         var sections: [ContentSection] = []
 
@@ -235,7 +235,7 @@ extension Xcode.Project.Target.InfoPlist
         copyrightYear: UInt = Defaults.copyrightYear,
         copyrightEntity: String,
         _ customEntries: String...
-        ) -> Xcode.Project.Target.InfoPlist
+        ) -> Xcode.Target.InfoPlist
     {
         var sections: [ContentSection] = []
 
@@ -276,7 +276,7 @@ extension Xcode.Project.Target.InfoPlist
         initialVersionString: VersionString = Defaults.initialVersionString,
         initialBuildNumber: BuildNumber = Defaults.initialBuildNumber,
         _ customEntries: String...
-        ) -> Xcode.Project.Target.InfoPlist
+        ) -> Xcode.Target.InfoPlist
     {
         var sections: [ContentSection] = []
 
@@ -311,7 +311,7 @@ extension Xcode.Project.Target.InfoPlist
 
 // MARK: - Content rendering
 
-extension Xcode.Project.Target.InfoPlist.ContentSection: TextFilePiece
+extension Xcode.Target.InfoPlist.ContentSection: TextFilePiece
 {
     func asIndentedText(
         with indentation: inout Indentation

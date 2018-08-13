@@ -27,7 +27,7 @@
 //swiftlint:disable identifier_name
 
 public
-extension Xcode.Project
+extension Xcode
 {
     public
     struct Target

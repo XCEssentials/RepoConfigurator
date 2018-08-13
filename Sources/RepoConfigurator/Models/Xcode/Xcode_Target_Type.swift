@@ -24,7 +24,7 @@
 
  */
 
-extension Xcode.Project.Target
+extension Xcode.Target
 {
     public
     enum InternalType: String

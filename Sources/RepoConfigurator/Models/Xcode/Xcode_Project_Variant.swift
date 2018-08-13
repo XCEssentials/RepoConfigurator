@@ -72,15 +72,15 @@ extension Xcode.Project.Variant
         class BuildConfigurations
         {
             public
-            var all = Xcode.Project.Target.BuildConfiguration.Base()
+            var all = Xcode.Target.BuildConfiguration.Base()
             
             public
-            var debug = Xcode.Project.Target.BuildConfiguration(
+            var debug = Xcode.Target.BuildConfiguration(
                 Xcode.Project.BuildConfiguration.Defaults.iOS.debug().name
             )
             
             public
-            var release = Xcode.Project.Target.BuildConfiguration(
+            var release = Xcode.Target.BuildConfiguration(
                 Xcode.Project.BuildConfiguration.Defaults.iOS.release().name
             )
         }
@@ -137,10 +137,10 @@ extension Xcode.Project.Variant
         let configurations = Target.BuildConfigurations()
         
         public
-        var dependencies = Xcode.Project.Target.Dependencies()
+        var dependencies = Xcode.Target.Dependencies()
         
         public
-        var scripts = Xcode.Project.Target.Scripts()
+        var scripts = Xcode.Target.Scripts()
         
         public
         var includeCocoapods = false
