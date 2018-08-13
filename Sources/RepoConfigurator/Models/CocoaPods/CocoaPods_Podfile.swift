@@ -70,7 +70,7 @@ extension CocoaPods
                 projectName: String? = nil,
                 deploymentTarget: DeploymentTarget,
                 usesSwift: Bool = true, // adds 'use_frameworks!'
-                includePodsFromPodspec: Bool,
+                includePodsFromPodspec: Bool = false,
                 pods: [String],
                 tests: UnitTestTarget...
                 )
@@ -131,6 +131,7 @@ extension CocoaPods
 
         // MARK: - Initializers
 
+        public
         init(
             workspaceName: String,
             targets: [Target],
@@ -145,9 +146,10 @@ extension CocoaPods
             ]
         }
 
+        public
         init(
             workspaceName: String,
-            targets: Target...
+            targets: [Target]
             )
         {
             self.init(
@@ -192,7 +194,7 @@ extension CocoaPods.Podfile.Target: TextFilePiece
             includePodsFromPodspec
         {
             result <<< """
-                podspec
+                \(Defaults.podsFromSpec)
 
                 """
                 .asIndentedText(with: &indentation)

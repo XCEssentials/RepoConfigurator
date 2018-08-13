@@ -39,13 +39,13 @@ let repoFolder = PathPrefix
 
 let gitignore = Git
     .RepoIgnore
-    .framework
+    .framework()
     .prepare(
         targetFolder: repoFolder
     )
 
 let swiftLint = SwiftLint
-    .defaultXCE()
+    .init()
     .prepare(
         targetFolder: repoFolder
     )
@@ -80,7 +80,6 @@ let infoPlistsFolder = repoFolder
 
 let info: PerTarget = (
     Xcode
-        .Project
         .Target
         .InfoPlist
         .iOSFramework()
@@ -89,7 +88,6 @@ let info: PerTarget = (
             targetFolder: infoPlistsFolder
         ),
     Xcode
-        .Project
         .Target
         .InfoPlist
         .unitTests()
@@ -136,18 +134,14 @@ let infoPlistsPath: PerTarget = (
 //---
 
 let emptyFile: PerTarget = (
-    Xcode
-        .Project
-        .Target
-        .EmptyFile()
+    CustomTextFile
+        .init()
         .prepare(
             name: targetName.main + ".swift",
             targetFolder: sourcesFolder.main
         ),
-    Xcode
-        .Project
-        .Target
-        .EmptyFile()
+    CustomTextFile
+        .init()
         .prepare(
             name: targetName.tst + ".swift",
             targetFolder: sourcesFolder.tst
@@ -269,11 +263,19 @@ let cocoaPodsModuleName = company.prefix + product.name
 //---
 
 let podfile = CocoaPods
-    .Podfile
-    .standard(
-        productName: product.name,
-        deploymentTarget: depTarget,
-        pods: [Defaults.podsFromSpec]
+    .Podfile(
+        workspaceName: product.name,
+        targets: [
+            .init(
+                targetName: targetName.main,
+                deploymentTarget: depTarget,
+                includePodsFromPodspec: true,
+                pods: [
+
+                    // add pods here...
+                ]
+            )
+        ]
     )
     .prepare(
         targetFolder: repoFolder
@@ -281,13 +283,22 @@ let podfile = CocoaPods
 
 let podspec = CocoaPods
     .Podspec
-    .singlePlatform(
+    .Standard(
         product: product,
         company: company,
         license: license.model.cocoaPodsLicenseSummary,
-        author: author,
+        authors: [author],
         swiftVersion: swiftVersion,
-        deploymentTarget: depTarget
+        otherSettings: [
+            (
+                deploymentTarget: depTarget,
+                settigns: [
+
+                    // put settings related specifically to this platform...
+                    "source_files = '\(sourcesPath.main)/**/*.swift'"
+                ]
+            )
+        ]
     )
     .prepare(
         name: cocoaPodsModuleName + ".podspec",
@@ -310,8 +321,7 @@ let fastlaneFolder = repoFolder
     )
 
 let gitHubPagesConfig = GitHub
-    .Pages
-    .openSourceFramework()
+    .PagesConfig()
     .prepare(
         targetFolder: repoFolder
     )
@@ -321,7 +331,7 @@ let gitHubPagesConfig = GitHub
 let fastfile = Fastlane
     .Fastfile
     .framework(
-        projectName: project.model.name,
+        productName: product.name,
         cocoaPodsModuleName: cocoaPodsModuleName
     )
     .prepare(

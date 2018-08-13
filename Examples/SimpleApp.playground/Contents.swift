@@ -80,14 +80,13 @@ let gitignore = Git
     )
 
 let swiftLint = SwiftLint
-    .defaultXCE()
+    .init()
     .prepare(
         targetFolder: repoFolder
     )
 
 let info: PerTarget = (
     Xcode
-        .Project
         .Target
         .InfoPlist
         .iOSApp()
@@ -96,7 +95,6 @@ let info: PerTarget = (
             targetFolder: infoPlistsFolder
         ),
     Xcode
-        .Project
         .Target
         .InfoPlist
         .unitTests()
@@ -107,18 +105,14 @@ let info: PerTarget = (
 )
 
 let emptyFile: PerTarget = (
-    Xcode
-        .Project
-        .Target
-        .EmptyFile()
+    CustomTextFile
+        .init()
         .prepare(
             name: targetName.main + ".swift",
             targetFolder: sourcesFolder.main
         ),
-    Xcode
-        .Project
-        .Target
-        .EmptyFile()
+    CustomTextFile
+        .init()
         .prepare(
             name: targetName.tst + ".swift",
             targetFolder: sourcesFolder.tst
@@ -245,13 +239,17 @@ let project = Xcode
     )
 
 let podfile = CocoaPods
-    .Podfile
-    .standard(
-        productName: productName,
-        deploymentTarget: depTarget,
-        pods: [
+    .Podfile(
+        workspaceName: productName,
+        targets: [
+            .init(
+                targetName: targetName.main,
+                deploymentTarget: depTarget,
+                pods: [
 
-            // add pods here!
+                    // add pods here...
+                ]
+            )
         ]
     )
     .prepare(
@@ -273,22 +271,14 @@ let fastlaneFolder = repoFolder
         Defaults.pathToFastlaneFolder
     )
 
-let scheme = (
-    staging: targetName.main,
-    nothing: 0
-)
+let schemeStaging = targetName.main
 
 //---
 
 let fastfile = Fastlane
     .Fastfile
     .app(
-        productName: productName,
-        usesSwiftGen: false,
-        usesSourcery: false,
-        usesSwiftLint: .global,
-        stagingSchemeName: scheme.staging,
-        stagingExportMethod: .adHoc
+        productName: productName
     )
     .prepare(
         targetFolder: fastlaneFolder

@@ -111,7 +111,17 @@ extension CocoaPods.Podspec.Settings: TextFilePiece
                 \(s).license       = { :type => '\(license.type)', :file => '\(license.fileName)' }
 
                 \(s).authors = {
-                \(authors.map{ "'\($0.name)' => '\($0.email)'" }.asMultiLine)
+            """
+            .asIndentedText(with: &indentation)
+
+        //swiftlint:enable line_length
+
+        result <<< """
+                    \(authors.map{ "'\($0.name)' => '\($0.email)'" }.asMultiLine)
+            """
+            .asIndentedText(with: &indentation)
+
+        result <<< """
                 }
 
                 \(swiftVersion.map{ "\(s).swift_version = '\($0)'" } ?? "")
@@ -119,8 +129,6 @@ extension CocoaPods.Podspec.Settings: TextFilePiece
                 \(cocoapodsVersion.map{ "\(s).cocoapods_version = '>= \($0)'" } ?? "")
             """
             .asIndentedText(with: &indentation)
-
-        //swiftlint:enable line_length
 
         indentation++
 

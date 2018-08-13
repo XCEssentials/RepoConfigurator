@@ -719,6 +719,15 @@ extension Fastlane.Fastfile.Section
         targetNames: [String]
         ) -> IndentedText
     {
+        guard
+            !targetNames.isEmpty
+        else
+        {
+            return []
+        }
+
+        //---
+
         let scriptName = "SwiftGen"
         let targetNames = targetNames.map{ "'\($0)'" }.joined(separator: ", ")
 
@@ -759,6 +768,15 @@ extension Fastlane.Fastfile.Section
         targetNames: [String]
         ) -> IndentedText
     {
+        guard
+            !targetNames.isEmpty
+            else
+        {
+            return []
+        }
+
+        //---
+
         let scriptName = "Sourcery"
         let targetNames = targetNames.map{ "'\($0)'" }.joined(separator: ", ")
 
@@ -800,6 +818,15 @@ extension Fastlane.Fastfile.Section
         targetNames: [String]
         ) -> IndentedText
     {
+        guard
+            !targetNames.isEmpty
+            else
+        {
+            return []
+        }
+
+        //---
+
         let scriptName = "SwiftLintGlobal"
         let targetNames = targetNames.map{ "'\($0)'" }.joined(separator: ", ")
 
@@ -844,6 +871,15 @@ extension Fastlane.Fastfile.Section
         targetNames: [String]
         ) -> IndentedText
     {
+        guard
+            !targetNames.isEmpty
+            else
+        {
+            return []
+        }
+
+        //---
+
         let scriptName = "SwiftLintPods"
         let targetNames = targetNames.map{ "'\($0)'" }.joined(separator: ", ")
 

@@ -42,6 +42,7 @@ extension CocoaPods.Podspec
 
         // MARK: - Initializers
 
+        public
         init(
             specVar: String = Defaults.specVariable,
             product: Product,
