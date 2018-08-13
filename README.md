@@ -4,6 +4,8 @@
 [![Requires Xcode](https://img.shields.io/badge/requires-Xcode-lightgray.svg)](https://developer.apple.com/xcode/)
 [![Written in Swift](https://img.shields.io/badge/Swift-4-orange.svg)](https://developer.apple.com/swift/)
 
+
+
 # RepoConfigurator
 
 Generate repo config files using Swift and Xcode playgrounds.
@@ -28,7 +30,7 @@ The goal is to create an Xcode playground file that will hold all the settings f
 
 ### Step 1 — prepare the config
 
-Create an Xcode workspace. Then create a blank Xcode playground — it is going to be our config script — and add it to the workspace (you can also use one of the templates from `Templates` folder inside the repo). After that, any framework project added to this workspace (and built for 'My Mac' device) will be available for import inside the playground. We will use it to our advantage to make the `RepoConfigurator` framework available inside our config playground.
+Create an Xcode workspace. Then create a blank Xcode playground — it is going to be our config script — and add it to the workspace (you can also use one of the example configs from `Examples` folder inside the repo). After that, any framework project added to this workspace (and built for 'My Mac' device) will be available for import inside the playground. We will use it to our advantage to make the `RepoConfigurator` framework available inside our config playground.
 
 
 
