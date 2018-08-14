@@ -81,16 +81,18 @@ let infoPlistsFolder = repoFolder
 let info: PerTarget = (
     Xcode
         .Target
-        .InfoPlist
-        .iOSFramework()
+        .InfoPlist(
+            for: .framework
+        )
         .prepare(
             name: targetName.main + ".plist",
             targetFolder: infoPlistsFolder
         ),
     Xcode
         .Target
-        .InfoPlist
-        .unitTests()
+        .InfoPlist(
+            for: .tests
+        )
         .prepare(
             name: targetName.tst + ".plist",
             targetFolder: infoPlistsFolder
