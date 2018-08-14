@@ -88,16 +88,19 @@ let swiftLint = SwiftLint
 let info: PerTarget = (
     Xcode
         .Target
-        .InfoPlist
-        .iOSApp()
+        .InfoPlist(
+            for: .app,
+            preset: .iOS
+        )
         .prepare(
             name: targetName.main + ".plist",
             targetFolder: infoPlistsFolder
         ),
     Xcode
         .Target
-        .InfoPlist
-        .unitTests()
+        .InfoPlist(
+            for: .tests
+        )
         .prepare(
             name: targetName.tst + ".plist",
             targetFolder: infoPlistsFolder

@@ -41,37 +41,64 @@ extension Xcode.Target
         }
 
         //internal
-        enum ContentSection
+        struct Section
         {
-            case header
-
-            case basic(
-                packageType: PackageType,
-                initialVersionString: VersionString,
-                initialBuildNumber: BuildNumber
-            )
-
-            case iOSApp
-
-            case macOSApp(
-                copyrightYear: UInt,
-                copyrightEntity: String
-            )
-
-            case macOSFramework(
-                copyrightYear: UInt,
-                copyrightEntity: String
-            )
-
-            case custom(String)
-
-            case footer
+            let content: String
         }
 
         // MARK: - Instance level members
 
+        public private(set)
+        var fileContent: [IndentedTextGetter] = []
+
+        // MARK: - Initializers
+
         public
-        let fileContent: [IndentedTextGetter]
+        init(
+            for packageType: PackageType,
+            initialVersionString: VersionString = Defaults.initialVersionString,
+            initialBuildNumber: BuildNumber = Defaults.initialBuildNumber,
+            preset: Preset? = nil,
+            _ otherEntries: String...
+            )
+        {
+            fileContent <<< Section.header()
+
+            fileContent <<< Section.basic(
+                packageType: packageType,
+                initialVersionString: initialVersionString,
+                initialBuildNumber: initialBuildNumber
+            )
+
+            //---
+
+            switch preset
+            {
+            case .some(.iOS) where packageType == .app:
+                fileContent <<< Section.iOSApp()
+
+            case .some(.macOS(let year, let entity)) where packageType == .app:
+                fileContent <<< Section.macOSApp(
+                    copyrightYear: year,
+                    copyrightEntity: entity
+                )
+
+            case .some(.macOS(let year, let entity)) where packageType == .framework:
+                fileContent <<< Section.macOSFramework(
+                    copyrightYear: year,
+                    copyrightEntity: entity
+                )
+
+            default:
+                break
+            }
+
+            fileContent <<< otherEntries
+
+            //---
+
+            fileContent <<< Section.footer()
+        }
     }
 }
 
@@ -80,263 +107,68 @@ extension Xcode.Target
 public
 extension Xcode.Target.InfoPlist
 {
-    static
-    func custom(
-        entries: String...
-        ) -> Xcode.Target.InfoPlist
+    public
+    enum Preset
     {
-        var sections: [ContentSection] = []
-
-        //---
-
-        sections += [
-            .header
-        ]
-
-        sections += entries.map{
-
-            .custom($0)
-        }
-
-        sections += [
-
-            .footer
-        ]
-
-        //---
-
-        return .init(
-            fileContent: sections.map{ $0.asIndentedText }
+        case iOS
+        case macOS(
+            copyrightYear: UInt,
+            copyrightEntity: String
         )
-    }
-
-    static
-    func iOSFramework(
-        initialVersionString: VersionString = Defaults.initialVersionString,
-        initialBuildNumber: BuildNumber = Defaults.initialBuildNumber,
-        _ customEntries: String...
-        ) -> Xcode.Target.InfoPlist
-    {
-        var sections: [ContentSection] = []
 
         //---
 
-        sections += [
-
-            .header,
-            .basic(
-                packageType: .framework,
-                initialVersionString: initialVersionString,
-                initialBuildNumber: initialBuildNumber
-            )
-        ]
-
-        sections += customEntries.map{
-
-            .custom($0)
-        }
-
-        sections += [
-            .footer
-        ]
-
-        //---
-
-        return .init(
-            fileContent: sections.map{ $0.asIndentedText }
-        )
-    }
-
-    static
-    func iOSApp(
-        initialVersionString: VersionString = Defaults.initialVersionString,
-        initialBuildNumber: BuildNumber = Defaults.initialBuildNumber,
-        _ customEntries: String...
-        ) -> Xcode.Target.InfoPlist
-    {
-        var sections: [ContentSection] = []
-
-        //---
-
-        sections += [
-
-            .header,
-            .basic(
-                packageType: .app,
-                initialVersionString: initialVersionString,
-                initialBuildNumber: initialBuildNumber
-            ),
-            .iOSApp
-        ]
-
-        sections += customEntries.map{
-
-            .custom($0)
-        }
-
-        sections += [
-            .footer
-        ]
-
-        //---
-
-        return .init(
-            fileContent: sections.map{ $0.asIndentedText }
-        )
-    }
-
-    static
-    func macOSFramework(
-        initialVersionString: VersionString = Defaults.initialVersionString,
-        initialBuildNumber: BuildNumber = Defaults.initialBuildNumber,
-        copyrightYear: UInt = Defaults.copyrightYear,
-        copyrightEntity: String,
-        _ customEntries: String...
-        ) -> Xcode.Target.InfoPlist
-    {
-        var sections: [ContentSection] = []
-
-        //---
-
-        sections += [
-
-            .header,
-            .basic(
-                packageType: .framework,
-                initialVersionString: initialVersionString,
-                initialBuildNumber: initialBuildNumber
-            ),
-            .macOSFramework(
-                copyrightYear: copyrightYear,
+        static
+        func macOSWithCurrentYear(
+            copyrightEntity: String
+            ) -> Preset
+        {
+            return .macOS(
+                copyrightYear: Defaults.copyrightYear,
                 copyrightEntity: copyrightEntity
             )
-        ]
-
-        sections += customEntries.map{
-
-            .custom($0)
         }
-
-        sections += [
-            .footer
-        ]
-
-        //---
-
-        return .init(
-            fileContent: sections.map{ $0.asIndentedText }
-        )
-    }
-
-    static
-    func macOSApp(
-        initialVersionString: VersionString = Defaults.initialVersionString,
-        initialBuildNumber: BuildNumber = Defaults.initialBuildNumber,
-        copyrightYear: UInt = Defaults.copyrightYear,
-        copyrightEntity: String,
-        _ customEntries: String...
-        ) -> Xcode.Target.InfoPlist
-    {
-        var sections: [ContentSection] = []
-
-        //---
-
-        sections += [
-
-            .header,
-            .basic(
-                packageType: .app,
-                initialVersionString: initialVersionString,
-                initialBuildNumber: initialBuildNumber
-            ),
-            .macOSApp(
-                copyrightYear: copyrightYear,
-                copyrightEntity: copyrightEntity
-            )
-        ]
-
-        sections += customEntries.map{
-
-            .custom($0)
-        }
-
-        sections += [
-            .footer
-        ]
-
-        //---
-
-        return .init(
-            fileContent: sections.map{ $0.asIndentedText }
-        )
-    }
-
-    static
-    func unitTests(
-        initialVersionString: VersionString = Defaults.initialVersionString,
-        initialBuildNumber: BuildNumber = Defaults.initialBuildNumber,
-        _ customEntries: String...
-        ) -> Xcode.Target.InfoPlist
-    {
-        var sections: [ContentSection] = []
-
-        //---
-
-        sections += [
-
-            .header,
-            .basic(
-                packageType: .tests,
-                initialVersionString: initialVersionString,
-                initialBuildNumber: initialBuildNumber
-            )
-        ]
-
-        sections += customEntries.map{
-
-            .custom($0)
-        }
-
-        sections += [
-            .footer
-        ]
-
-        //---
-
-        return .init(
-            fileContent: sections.map{ $0.asIndentedText }
-        )
     }
 }
 
 // MARK: - Content rendering
 
-extension Xcode.Target.InfoPlist.ContentSection: TextFilePiece
+extension Xcode.Target.InfoPlist.Section: TextFilePiece
 {
     func asIndentedText(
         with indentation: inout Indentation
         ) -> IndentedText
     {
-        let result: String
+        return content.asIndentedText(with: &indentation)
+    }
+}
 
-        //---
-
-        switch self
-        {
-        case .header:
-            result = """
+extension Xcode.Target.InfoPlist.Section
+{
+    static
+    func header(
+        ) -> Xcode.Target.InfoPlist.Section
+    {
+        return .init(
+            content: """
                 <?xml version="1.0" encoding="UTF-8"?>
                 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
                 <plist version="1.0">
                 <dict>
-                """
 
-        case .basic(
-            let packageType,
-            let initialVersionString,
-            let initialBuildNumber
-            ):
-            result = """
+                """
+        )
+    }
+
+    static
+    func basic(
+        packageType: Xcode.Target.InfoPlist.PackageType,
+        initialVersionString: VersionString = Defaults.initialVersionString,
+        initialBuildNumber: BuildNumber = Defaults.initialBuildNumber
+        ) -> Xcode.Target.InfoPlist.Section
+    {
+        return .init(
+            content: """
 
                 <key>CFBundleDevelopmentRegion</key>
                 <string>$(DEVELOPMENT_LANGUAGE)</string>
@@ -354,11 +186,16 @@ extension Xcode.Target.InfoPlist.ContentSection: TextFilePiece
                 <string>\(initialVersionString)</string>
                 <key>CFBundleVersion</key>
                 <string>\(initialBuildNumber)</string>
-
                 """
+        )
+    }
 
-        case .iOSApp:
-            result = """
+    static
+    func iOSApp(
+        ) -> Xcode.Target.InfoPlist.Section
+    {
+        return .init(
+            content: """
 
                 <key>LSRequiresIPhoneOS</key>
                 <true/>
@@ -372,14 +209,18 @@ extension Xcode.Target.InfoPlist.ContentSection: TextFilePiece
                 <array>
                 <string>UIInterfaceOrientationPortrait</string>
                 </array>
-
                 """
+        )
+    }
 
-        case .macOSApp(
-            let copyrightYear,
-            let copyrightEntity
-            ):
-            result = """
+    static
+    func macOSApp(
+        copyrightYear: UInt = Defaults.copyrightYear,
+        copyrightEntity: String
+        ) -> Xcode.Target.InfoPlist.Section
+    {
+        return .init(
+            content: """
 
                 <key>CFBundleIconFile</key>
                 <string></string>
@@ -391,40 +232,50 @@ extension Xcode.Target.InfoPlist.ContentSection: TextFilePiece
                 <string>MainMenu</string>
                 <key>NSPrincipalClass</key>
                 <string>NSApplication</string>
-
                 """
+        )
+    }
 
-        case .macOSFramework(
-            let copyrightYear,
-            let copyrightEntity
-            ):
-            result = """
+    static
+    func macOSFramework(
+        copyrightYear: UInt = Defaults.copyrightYear,
+        copyrightEntity: String
+        ) -> Xcode.Target.InfoPlist.Section
+    {
+        return .init(
+            content: """
 
                 <key>NSHumanReadableCopyright</key>
                 <string>Copyright © \(copyrightYear) \(copyrightEntity). All rights reserved.</string>
                 <key>NSPrincipalClass</key>
                 <string></string>
-
                 """
+        )
+    }
 
-        case .custom(
-            let customSection
-            ):
-            result = """
+    static
+    func custom(
+        _ customEntry: String
+        ) -> Xcode.Target.InfoPlist.Section
+    {
+        return .init(
+            content: """
 
-                \(customSection)
-
+                \(customEntry)
                 """
+        )
+    }
 
-        case .footer:
-            result = """
+    static
+    func footer(
+        ) -> Xcode.Target.InfoPlist.Section
+    {
+        return .init(
+            content: """
+
                 </dict>
                 </plist>
                 """
-        }
-
-        //---
-
-        return result.asIndentedText(with: &indentation)
+        )
     }
 }
