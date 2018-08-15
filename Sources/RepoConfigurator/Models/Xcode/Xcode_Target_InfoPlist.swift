@@ -58,7 +58,7 @@ extension Xcode.Target
             for packageType: PackageType,
             initialVersionString: VersionString = Defaults.initialVersionString,
             initialBuildNumber: BuildNumber = Defaults.initialBuildNumber,
-            preset: Preset? = nil,
+            preset: Preset?,
             _ otherEntries: String...
             )
         {
