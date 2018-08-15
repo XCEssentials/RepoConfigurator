@@ -30,20 +30,10 @@ extension Xcode.Project.BuildConfiguration
     public
     struct Base
     {
+        // MARK: - Instance level members
+
         public
         let profiles: [String]
-
-        //---
-
-        // internal
-        init(
-            _ profiles: [String] = []
-            )
-        {
-            self.profiles = profiles
-        }
-
-        //---
 
         public private(set)
         var settings: [String: Any] = [:]
@@ -55,6 +45,16 @@ extension Xcode.Project.BuildConfiguration
             )
         {
             settings.override(with: pairs)
+        }
+
+        // MARK: - Initializers
+
+        // internal
+        init(
+            _ profiles: [String] = []
+            )
+        {
+            self.profiles = profiles
         }
     }
 }

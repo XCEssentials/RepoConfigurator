@@ -191,7 +191,7 @@ extension Struct.Spec_1_3_0
             result <<< (indentation, Struct.Spec.key("overrides"))
             indentation++
             
-            for o in b.settings.overriding(with: c.overrides)
+            for o in b.settings.overriding(with: c.settings)
             {
                 result <<< (indentation, Struct.Spec.key(o.key) + Struct.Spec.value(o.value))
             }
@@ -615,7 +615,7 @@ extension Struct.Spec_1_3_0
         
         // https://github.com/lyptt/struct/wiki/Spec-format:-v1.3#overrides
         
-        for o in b.settings.overriding(with: c.overrides)
+        for o in b.settings.overriding(with: c.settings)
         {
             result <<< (indentation, Struct.Spec.key(o.key) + Struct.Spec.value(o.value))
         }

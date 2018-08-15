@@ -29,10 +29,10 @@ extension Xcode.Project.Variant.Target
 {
     public
     final
-    class BuildConfigurations
+    class BuildSettings
     {
         public
-        var all = Xcode.Target.BuildConfiguration.Base()
+        var base = Xcode.Target.BuildConfiguration.Base()
 
         public
         var debug = Xcode.Target.BuildConfiguration(

@@ -57,7 +57,7 @@ extension Xcode.Project
         //---
         
         public private(set)
-        var overrides: [String: Any] = [:]
+        var settings: [String: Any] = [:]
         
         public
         mutating
@@ -65,7 +65,7 @@ extension Xcode.Project
             _ pairs: KeyValuePair...
             )
         {
-            overrides.override(with: pairs)
+            settings.override(with: pairs)
         }
         
         //---

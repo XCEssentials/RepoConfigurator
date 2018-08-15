@@ -255,7 +255,7 @@ extension Struct.Spec_2_1_0
         
         //---
         
-        result <<< process(&indentation, t.configurations)
+        result <<< process(&indentation, t.settings)
         
         //---
         
@@ -287,7 +287,7 @@ extension Struct.Spec_2_1_0
     static
     func process(
         _ indentation: inout Indentation,
-        _ set: Xcode.Project.Variant.Target.BuildConfigurations
+        _ set: Xcode.Project.Variant.Target.BuildSettings
         ) -> IndentedText
     {
         // https://github.com/lyptt/struct/issues/77#issuecomment-287573381
@@ -299,9 +299,9 @@ extension Struct.Spec_2_1_0
         //---
         
         if
-            !set.all.settings.isEmpty ||
-            !set.debug.overrides.isEmpty ||
-            !set.release.overrides.isEmpty
+            !set.base.settings.isEmpty ||
+            !set.debug.settings.isEmpty ||
+            !set.release.settings.isEmpty
         {
             result <<< (indentation, Struct.Spec.key("configurations"))
             
@@ -312,17 +312,17 @@ extension Struct.Spec_2_1_0
             //---
             
             if
-                !set.all.settings.isEmpty ||
-                !set.debug.overrides.isEmpty
+                !set.base.settings.isEmpty ||
+                !set.debug.settings.isEmpty
             {
-                result <<< process(&indentation, set.all, set.debug)
+                result <<< process(&indentation, set.base, set.debug)
             }
             
             if
-                !set.all.settings.isEmpty ||
-                !set.release.overrides.isEmpty
+                !set.base.settings.isEmpty ||
+                !set.release.settings.isEmpty
             {
-                result <<< process(&indentation, set.all, set.release)
+                result <<< process(&indentation, set.base, set.release)
             }
             
             //---
@@ -426,7 +426,7 @@ extension Struct.Spec_2_1_0
             result <<< (indentation, Struct.Spec.key("overrides"))
             indentation++
             
-            for o in b.settings.overriding(with: c.overrides)
+            for o in b.settings.overriding(with: c.settings)
             {
                 result <<< (indentation, Struct.Spec.key(o.key) + Struct.Spec.value(o.value))
             }
@@ -853,7 +853,7 @@ extension Struct.Spec_2_1_0
         
         // https://github.com/lyptt/struct/wiki/Spec-format:-v1.2#overrides
         
-        for o in b.settings.overriding(with: c.overrides)
+        for o in b.settings.overriding(with: c.settings)
         {
             result <<< (indentation, Struct.Spec.key(o.key) + Struct.Spec.value(o.value))
         }
