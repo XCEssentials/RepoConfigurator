@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		94116DA9211BB9C0001EF7F9 /* Fastlane_Gemfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94116DA8211BB9C0001EF7F9 /* Fastlane_Gemfile.swift */; };
+		94116DA9211BB9C0001EF7F9 /* Bundler_Gemfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94116DA8211BB9C0001EF7F9 /* Bundler_Gemfile.swift */; };
 		941CFFC8211520D700326181 /* XCERepoConfigurator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 941CFFBE211520D700326181 /* XCERepoConfigurator.framework */; };
 		941CFFDE2115221000326181 /* RepoConfiguratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941CFFDA2115220600326181 /* RepoConfiguratorTests.swift */; };
 		941CFFDF2115222100326181 /* RepoConfigurator.h in Headers */ = {isa = PBXBuildFile; fileRef = 941CFFDC2115220600326181 /* RepoConfigurator.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -64,6 +64,7 @@
 		94DECE4E21188B4B0026F148 /* String+TextFilePiece.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DECE4D21188B4B0026F148 /* String+TextFilePiece.swift */; };
 		94DECE502118C10E0026F148 /* Xcode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DECE4F2118C10E0026F148 /* Xcode.swift */; };
 		94DECE522118C99F0026F148 /* IndentedText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DECE512118C99F0026F148 /* IndentedText.swift */; };
+		94E322C121242AF800343B0B /* Bundler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E322C021242AF800343B0B /* Bundler.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,7 +79,7 @@
 
 /* Begin PBXFileReference section */
 		4E1F4DEB6F7DBC42C29FF945 /* Pods_RepoConfigurator.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RepoConfigurator.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		94116DA8211BB9C0001EF7F9 /* Fastlane_Gemfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fastlane_Gemfile.swift; sourceTree = "<group>"; };
+		94116DA8211BB9C0001EF7F9 /* Bundler_Gemfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bundler_Gemfile.swift; sourceTree = "<group>"; };
 		941CFFBE211520D700326181 /* XCERepoConfigurator.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = XCERepoConfigurator.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		941CFFC7211520D700326181 /* RepoConfiguratorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RepoConfiguratorTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		941CFFDA2115220600326181 /* RepoConfiguratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepoConfiguratorTests.swift; sourceTree = "<group>"; };
@@ -136,6 +137,7 @@
 		94DECE4D21188B4B0026F148 /* String+TextFilePiece.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+TextFilePiece.swift"; sourceTree = "<group>"; };
 		94DECE4F2118C10E0026F148 /* Xcode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Xcode.swift; sourceTree = "<group>"; };
 		94DECE512118C99F0026F148 /* IndentedText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndentedText.swift; sourceTree = "<group>"; };
+		94E322C021242AF800343B0B /* Bundler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bundler.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -164,11 +166,11 @@
 				9424AB082117542200262B79 /* Indentation.swift */,
 				94DECE512118C99F0026F148 /* IndentedText.swift */,
 				9424AB0A2117549500262B79 /* KeyValuePair.swift */,
+				94511D882122020800AB4CD0 /* Operators.swift */,
 				9424AB10211754FE00262B79 /* OSIdentifier.swift */,
 				94245739211B8FE400A05876 /* RawTextFile.swift */,
 				941CFFDC2115220600326181 /* RepoConfigurator.h */,
 				941CFFF3211591E900326181 /* TextFile.swift */,
-				94511D882122020800AB4CD0 /* Operators.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -176,17 +178,17 @@
 		941CFFB4211520D700326181 = {
 			isa = PBXGroup;
 			children = (
+				A270F6B0C53210622D202770 /* Frameworks */,
 				941CFFBF211520D700326181 /* Products */,
 				941CFFD82115220600326181 /* Sources */,
-				A270F6B0C53210622D202770 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
 		941CFFBF211520D700326181 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				941CFFBE211520D700326181 /* XCERepoConfigurator.framework */,
 				941CFFC7211520D700326181 /* RepoConfiguratorTests.xctest */,
+				941CFFBE211520D700326181 /* XCERepoConfigurator.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -221,11 +223,12 @@
 		941CFFE12115765C00326181 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				94511D852121D21400AB4CD0 /* CustomTextFile */,
-				946CFA08211DE6CD00E756CD /* GitHub */,
+				94E322BF21242ADF00343B0B /* Bundler */,
 				94245730211B024A00A05876 /* CocoaPods */,
+				94511D852121D21400AB4CD0 /* CustomTextFile */,
 				94C4F9C9211665C500CFB1DC /* Fastlane */,
 				941CFFF92115A77600326181 /* Git */,
+				946CFA08211DE6CD00E756CD /* GitHub */,
 				941CFFE62115896200326181 /* License */,
 				9424572D211AF7DA00A05876 /* SwiftLint */,
 				94CB9FD22116571600641D6E /* Xcode */,
@@ -293,7 +296,6 @@
 			children = (
 				94C4F9CA211665ED00CFB1DC /* Fastlane.swift */,
 				94C4F9CC2116660900CFB1DC /* Fastlane_Fastfile.swift */,
-				94116DA8211BB9C0001EF7F9 /* Fastlane_Gemfile.swift */,
 			);
 			path = Fastlane;
 			sourceTree = "<group>";
@@ -308,13 +310,13 @@
 				94CB9FBD2116535300641D6E /* Xcode_Project_BuildConfig_Defaults.swift */,
 				94CB9FBA2116535200641D6E /* Xcode_Project_BuildConfig_Defaults_General.swift */,
 				94CB9FBF2116535300641D6E /* Xcode_Project_BuildConfig_Defaults_iOS.swift */,
+				94CB9FBC2116535300641D6E /* Xcode_Project_Variant.swift */,
 				94CB9FC92116536600641D6E /* Xcode_Target.swift */,
 				94CB9FC82116536600641D6E /* Xcode_Target_BuildConfig.swift */,
 				94CB9FC72116536500641D6E /* Xcode_Target_Dependencies.swift */,
 				941CFFFE211609BC00326181 /* Xcode_Target_InfoPlist.swift */,
 				94CB9FC62116536500641D6E /* Xcode_Target_Script.swift */,
 				94CB9FCA2116536600641D6E /* Xcode_Target_Type.swift */,
-				94CB9FBC2116535300641D6E /* Xcode_Project_Variant.swift */,
 			);
 			path = Xcode;
 			sourceTree = "<group>";
@@ -336,18 +338,27 @@
 		94DECE4C21188AAD0026F148 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				946CFA15211F7FB500E756CD /* Array+IndentedTextGetter.swift */,
+				946CFA1D2120AC7D00E756CD /* Array+String.swift */,
+				946CFA17211F816B00E756CD /* Array+TextFilePiece.swift */,
+				948EB31F2120F500000D91D0 /* Bool+Helper.swift */,
 				9424573B211B9EE500A05876 /* Defaults.swift */,
 				9424AB0C211754B200262B79 /* DeviceFamily.swift */,
 				9424AB122117552100262B79 /* PathPrefix.swift */,
 				94DECE4D21188B4B0026F148 /* String+TextFilePiece.swift */,
-				946CFA15211F7FB500E756CD /* Array+IndentedTextGetter.swift */,
-				946CFA17211F816B00E756CD /* Array+TextFilePiece.swift */,
-				946CFA1D2120AC7D00E756CD /* Array+String.swift */,
 				941CFFDD2115220600326181 /* Versions.swift */,
 				9459C778211C5F800041C38B /* YesNoStringLiteralsForXcode.swift */,
-				948EB31F2120F500000D91D0 /* Bool+Helper.swift */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		94E322BF21242ADF00343B0B /* Bundler */ = {
+			isa = PBXGroup;
+			children = (
+				94E322C021242AF800343B0B /* Bundler.swift */,
+				94116DA8211BB9C0001EF7F9 /* Bundler_Gemfile.swift */,
+			);
+			path = Bundler;
 			sourceTree = "<group>";
 		};
 		A270F6B0C53210622D202770 /* Frameworks */ = {
@@ -484,33 +495,37 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				946CFA16211F7FB500E756CD /* Array+IndentedTextGetter.swift in Sources */,
+				946CFA1E2120AC7D00E756CD /* Array+String.swift in Sources */,
+				946CFA18211F816B00E756CD /* Array+TextFilePiece.swift in Sources */,
+				948EB3202120F500000D91D0 /* Bool+Helper.swift in Sources */,
+				94E322C121242AF800343B0B /* Bundler.swift in Sources */,
+				94116DA9211BB9C0001EF7F9 /* Bundler_Gemfile.swift in Sources */,
 				94245732211B025C00A05876 /* CocoaPods.swift in Sources */,
 				94245734211B034400A05876 /* CocoaPods_Podfile.swift in Sources */,
 				94245736211B3EE200A05876 /* CocoaPods_Podspec.swift in Sources */,
+				946CFA1C2120559B00E756CD /* CocoaPods_Podspec_Standard.swift in Sources */,
+				946CFA202120C90100E756CD /* CocoaPods_Podspec_WithSubSpecs.swift in Sources */,
+				94511D872121D21400AB4CD0 /* CustomTextFile.swift in Sources */,
 				9424573C211B9EE500A05876 /* Defaults.swift in Sources */,
 				9424AB0F211754C100262B79 /* DeploymentTarget.swift in Sources */,
 				9424AB0D211754B200262B79 /* DeviceFamily.swift in Sources */,
 				94C4F9CB211665ED00CFB1DC /* Fastlane.swift in Sources */,
-				94511D872121D21400AB4CD0 /* CustomTextFile.swift in Sources */,
 				94C4F9CD2116660900CFB1DC /* Fastlane_Fastfile.swift in Sources */,
-				94511D892122020800AB4CD0 /* Operators.swift in Sources */,
-				94116DA9211BB9C0001EF7F9 /* Fastlane_Gemfile.swift in Sources */,
 				941CFFFB2115A78C00326181 /* Git.swift in Sources */,
 				941CFFFD2115A7A000326181 /* Git_RepoIgnore.swift in Sources */,
+				946CFA0A211DE6DF00E756CD /* GitHub.swift in Sources */,
+				946CFA0C211DE70300E756CD /* GitHub_Pages.swift in Sources */,
 				9424AB092117542200262B79 /* Indentation.swift in Sources */,
 				94DECE522118C99F0026F148 /* IndentedText.swift in Sources */,
-				946CFA1E2120AC7D00E756CD /* Array+String.swift in Sources */,
 				9424AB0B2117549500262B79 /* KeyValuePair.swift in Sources */,
 				941CFFEA2115898E00326181 /* License.swift in Sources */,
-				946CFA18211F816B00E756CD /* Array+TextFilePiece.swift in Sources */,
 				941CFFE82115897100326181 /* License_MIT.swift in Sources */,
-				946CFA0A211DE6DF00E756CD /* GitHub.swift in Sources */,
-				948EB3202120F500000D91D0 /* Bool+Helper.swift in Sources */,
+				94511D892122020800AB4CD0 /* Operators.swift in Sources */,
 				9424AB11211754FE00262B79 /* OSIdentifier.swift in Sources */,
 				9424AB132117552100262B79 /* PathPrefix.swift in Sources */,
 				9424573A211B8FE400A05876 /* RawTextFile.swift in Sources */,
 				94DECE4E21188B4B0026F148 /* String+TextFilePiece.swift in Sources */,
-				946CFA1C2120559B00E756CD /* CocoaPods_Podspec_Standard.swift in Sources */,
 				94CB9FDF2116585000641D6E /* Struct.swift in Sources */,
 				94CB9FDC2116583700641D6E /* Struct_Spec.swift in Sources */,
 				94CB9FD92116583700641D6E /* Struct_Spec_1_2_1.swift in Sources */,
@@ -520,8 +535,6 @@
 				94CB9FE12116625900641D6E /* Struct_Spec_InternalHelpers.swift in Sources */,
 				9424572F211AF7E900A05876 /* SwiftLint.swift in Sources */,
 				941CFFF4211591E900326181 /* TextFile.swift in Sources */,
-				9459C779211C5F800041C38B /* YesNoStringLiteralsForXcode.swift in Sources */,
-				946CFA0C211DE70300E756CD /* GitHub_Pages.swift in Sources */,
 				941CFFE02115222B00326181 /* Versions.swift in Sources */,
 				94DECE502118C10E0026F148 /* Xcode.swift in Sources */,
 				94CB9FC12116535300641D6E /* Xcode_Project.swift in Sources */,
@@ -529,15 +542,14 @@
 				94CB9FC32116535300641D6E /* Xcode_Project_BuildConfig_Defaults.swift in Sources */,
 				94CB9FC02116535300641D6E /* Xcode_Project_BuildConfig_Defaults_General.swift in Sources */,
 				94CB9FC52116535300641D6E /* Xcode_Project_BuildConfig_Defaults_iOS.swift in Sources */,
+				94CB9FC22116535300641D6E /* Xcode_Project_Variant.swift in Sources */,
 				94CB9FCE2116536600641D6E /* Xcode_Target.swift in Sources */,
 				94CB9FCD2116536600641D6E /* Xcode_Target_BuildConfig.swift in Sources */,
 				94CB9FCC2116536600641D6E /* Xcode_Target_Dependencies.swift in Sources */,
-				946CFA16211F7FB500E756CD /* Array+IndentedTextGetter.swift in Sources */,
 				941CFFFF211609BC00326181 /* Xcode_Target_InfoPlist.swift in Sources */,
 				94CB9FCB2116536600641D6E /* Xcode_Target_Script.swift in Sources */,
 				94CB9FCF2116536600641D6E /* Xcode_Target_Type.swift in Sources */,
-				946CFA202120C90100E756CD /* CocoaPods_Podspec_WithSubSpecs.swift in Sources */,
-				94CB9FC22116535300641D6E /* Xcode_Project_Variant.swift in Sources */,
+				9459C779211C5F800041C38B /* YesNoStringLiteralsForXcode.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
