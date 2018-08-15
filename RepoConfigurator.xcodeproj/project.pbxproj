@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		940F10112124A26F00554520 /* Dictionary+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940F10102124A26F00554520 /* Dictionary+Helpers.swift */; };
+		940F10132124B7F800554520 /* Xcode_Project_BuildConfiguration_Base.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940F10122124B7F800554520 /* Xcode_Project_BuildConfiguration_Base.swift */; };
+		940F10152124B87500554520 /* Xcode_Target_BuildConfiguration_Base.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940F10142124B87500554520 /* Xcode_Target_BuildConfiguration_Base.swift */; };
+		940F10172124BA2100554520 /* Xcode_Target_BuildConfigurations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940F10162124BA2100554520 /* Xcode_Target_BuildConfigurations.swift */; };
+		940F10192124BAA200554520 /* Xcode_Project_BuildConfigurations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940F10182124BAA200554520 /* Xcode_Project_BuildConfigurations.swift */; };
+		940F101B2124BB6F00554520 /* Xcode_Project_Variant_Target_BuildConfigurations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940F101A2124BB6F00554520 /* Xcode_Project_Variant_Target_BuildConfigurations.swift */; };
+		940F101D2124BB9B00554520 /* Xcode_Project_Variant_Target.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940F101C2124BB9B00554520 /* Xcode_Project_Variant_Target.swift */; };
 		94116DA9211BB9C0001EF7F9 /* Bundler_Gemfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94116DA8211BB9C0001EF7F9 /* Bundler_Gemfile.swift */; };
 		941CFFC8211520D700326181 /* XCERepoConfigurator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 941CFFBE211520D700326181 /* XCERepoConfigurator.framework */; };
 		941CFFDE2115221000326181 /* RepoConfiguratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941CFFDA2115220600326181 /* RepoConfiguratorTests.swift */; };
@@ -43,15 +50,15 @@
 		948EB3202120F500000D91D0 /* Bool+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948EB31F2120F500000D91D0 /* Bool+Helper.swift */; };
 		94C4F9CB211665ED00CFB1DC /* Fastlane.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C4F9CA211665ED00CFB1DC /* Fastlane.swift */; };
 		94C4F9CD2116660900CFB1DC /* Fastlane_Fastfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C4F9CC2116660900CFB1DC /* Fastlane_Fastfile.swift */; };
-		94CB9FC02116535300641D6E /* Xcode_Project_BuildConfig_Defaults_General.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CB9FBA2116535200641D6E /* Xcode_Project_BuildConfig_Defaults_General.swift */; };
+		94CB9FC02116535300641D6E /* Xcode_Project_BuildConfiguration_Defaults_General.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CB9FBA2116535200641D6E /* Xcode_Project_BuildConfiguration_Defaults_General.swift */; };
 		94CB9FC12116535300641D6E /* Xcode_Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CB9FBB2116535200641D6E /* Xcode_Project.swift */; };
 		94CB9FC22116535300641D6E /* Xcode_Project_Variant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CB9FBC2116535300641D6E /* Xcode_Project_Variant.swift */; };
-		94CB9FC32116535300641D6E /* Xcode_Project_BuildConfig_Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CB9FBD2116535300641D6E /* Xcode_Project_BuildConfig_Defaults.swift */; };
-		94CB9FC42116535300641D6E /* Xcode_Project_BuildConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CB9FBE2116535300641D6E /* Xcode_Project_BuildConfig.swift */; };
-		94CB9FC52116535300641D6E /* Xcode_Project_BuildConfig_Defaults_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CB9FBF2116535300641D6E /* Xcode_Project_BuildConfig_Defaults_iOS.swift */; };
+		94CB9FC32116535300641D6E /* Xcode_Project_BuildConfiguration_Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CB9FBD2116535300641D6E /* Xcode_Project_BuildConfiguration_Defaults.swift */; };
+		94CB9FC42116535300641D6E /* Xcode_Project_BuildConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CB9FBE2116535300641D6E /* Xcode_Project_BuildConfiguration.swift */; };
+		94CB9FC52116535300641D6E /* Xcode_Project_BuildConfiguration_Defaults_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CB9FBF2116535300641D6E /* Xcode_Project_BuildConfiguration_Defaults_iOS.swift */; };
 		94CB9FCB2116536600641D6E /* Xcode_Target_Script.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CB9FC62116536500641D6E /* Xcode_Target_Script.swift */; };
 		94CB9FCC2116536600641D6E /* Xcode_Target_Dependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CB9FC72116536500641D6E /* Xcode_Target_Dependencies.swift */; };
-		94CB9FCD2116536600641D6E /* Xcode_Target_BuildConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CB9FC82116536600641D6E /* Xcode_Target_BuildConfig.swift */; };
+		94CB9FCD2116536600641D6E /* Xcode_Target_BuildConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CB9FC82116536600641D6E /* Xcode_Target_BuildConfiguration.swift */; };
 		94CB9FCE2116536600641D6E /* Xcode_Target.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CB9FC92116536600641D6E /* Xcode_Target.swift */; };
 		94CB9FCF2116536600641D6E /* Xcode_Target_Type.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CB9FCA2116536600641D6E /* Xcode_Target_Type.swift */; };
 		94CB9FD92116583700641D6E /* Struct_Spec_1_2_1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CB9FD42116583700641D6E /* Struct_Spec_1_2_1.swift */; };
@@ -79,6 +86,13 @@
 
 /* Begin PBXFileReference section */
 		4E1F4DEB6F7DBC42C29FF945 /* Pods_RepoConfigurator.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RepoConfigurator.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		940F10102124A26F00554520 /* Dictionary+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+Helpers.swift"; sourceTree = "<group>"; };
+		940F10122124B7F800554520 /* Xcode_Project_BuildConfiguration_Base.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Xcode_Project_BuildConfiguration_Base.swift; sourceTree = "<group>"; };
+		940F10142124B87500554520 /* Xcode_Target_BuildConfiguration_Base.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Xcode_Target_BuildConfiguration_Base.swift; sourceTree = "<group>"; };
+		940F10162124BA2100554520 /* Xcode_Target_BuildConfigurations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Xcode_Target_BuildConfigurations.swift; sourceTree = "<group>"; };
+		940F10182124BAA200554520 /* Xcode_Project_BuildConfigurations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Xcode_Project_BuildConfigurations.swift; sourceTree = "<group>"; };
+		940F101A2124BB6F00554520 /* Xcode_Project_Variant_Target_BuildConfigurations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Xcode_Project_Variant_Target_BuildConfigurations.swift; sourceTree = "<group>"; };
+		940F101C2124BB9B00554520 /* Xcode_Project_Variant_Target.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Xcode_Project_Variant_Target.swift; path = Struct/Xcode_Project_Variant_Target.swift; sourceTree = "<group>"; };
 		94116DA8211BB9C0001EF7F9 /* Bundler_Gemfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bundler_Gemfile.swift; sourceTree = "<group>"; };
 		941CFFBE211520D700326181 /* XCERepoConfigurator.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = XCERepoConfigurator.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		941CFFC7211520D700326181 /* RepoConfiguratorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RepoConfiguratorTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -116,15 +130,15 @@
 		948EB31F2120F500000D91D0 /* Bool+Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bool+Helper.swift"; sourceTree = "<group>"; };
 		94C4F9CA211665ED00CFB1DC /* Fastlane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fastlane.swift; sourceTree = "<group>"; };
 		94C4F9CC2116660900CFB1DC /* Fastlane_Fastfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fastlane_Fastfile.swift; sourceTree = "<group>"; };
-		94CB9FBA2116535200641D6E /* Xcode_Project_BuildConfig_Defaults_General.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Xcode_Project_BuildConfig_Defaults_General.swift; sourceTree = "<group>"; };
+		94CB9FBA2116535200641D6E /* Xcode_Project_BuildConfiguration_Defaults_General.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Xcode_Project_BuildConfiguration_Defaults_General.swift; sourceTree = "<group>"; };
 		94CB9FBB2116535200641D6E /* Xcode_Project.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Xcode_Project.swift; sourceTree = "<group>"; };
 		94CB9FBC2116535300641D6E /* Xcode_Project_Variant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Xcode_Project_Variant.swift; sourceTree = "<group>"; };
-		94CB9FBD2116535300641D6E /* Xcode_Project_BuildConfig_Defaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Xcode_Project_BuildConfig_Defaults.swift; sourceTree = "<group>"; };
-		94CB9FBE2116535300641D6E /* Xcode_Project_BuildConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Xcode_Project_BuildConfig.swift; sourceTree = "<group>"; };
-		94CB9FBF2116535300641D6E /* Xcode_Project_BuildConfig_Defaults_iOS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Xcode_Project_BuildConfig_Defaults_iOS.swift; sourceTree = "<group>"; };
+		94CB9FBD2116535300641D6E /* Xcode_Project_BuildConfiguration_Defaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Xcode_Project_BuildConfiguration_Defaults.swift; sourceTree = "<group>"; };
+		94CB9FBE2116535300641D6E /* Xcode_Project_BuildConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Xcode_Project_BuildConfiguration.swift; sourceTree = "<group>"; };
+		94CB9FBF2116535300641D6E /* Xcode_Project_BuildConfiguration_Defaults_iOS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Xcode_Project_BuildConfiguration_Defaults_iOS.swift; sourceTree = "<group>"; };
 		94CB9FC62116536500641D6E /* Xcode_Target_Script.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Xcode_Target_Script.swift; sourceTree = "<group>"; };
 		94CB9FC72116536500641D6E /* Xcode_Target_Dependencies.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Xcode_Target_Dependencies.swift; sourceTree = "<group>"; };
-		94CB9FC82116536600641D6E /* Xcode_Target_BuildConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Xcode_Target_BuildConfig.swift; sourceTree = "<group>"; };
+		94CB9FC82116536600641D6E /* Xcode_Target_BuildConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Xcode_Target_BuildConfiguration.swift; sourceTree = "<group>"; };
 		94CB9FC92116536600641D6E /* Xcode_Target.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Xcode_Target.swift; sourceTree = "<group>"; };
 		94CB9FCA2116536600641D6E /* Xcode_Target_Type.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Xcode_Target_Type.swift; sourceTree = "<group>"; };
 		94CB9FD42116583700641D6E /* Struct_Spec_1_2_1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Struct_Spec_1_2_1.swift; sourceTree = "<group>"; };
@@ -306,13 +320,19 @@
 				94CB9FD32116582800641D6E /* Struct */,
 				94DECE4F2118C10E0026F148 /* Xcode.swift */,
 				94CB9FBB2116535200641D6E /* Xcode_Project.swift */,
-				94CB9FBE2116535300641D6E /* Xcode_Project_BuildConfig.swift */,
-				94CB9FBD2116535300641D6E /* Xcode_Project_BuildConfig_Defaults.swift */,
-				94CB9FBA2116535200641D6E /* Xcode_Project_BuildConfig_Defaults_General.swift */,
-				94CB9FBF2116535300641D6E /* Xcode_Project_BuildConfig_Defaults_iOS.swift */,
+				94CB9FBE2116535300641D6E /* Xcode_Project_BuildConfiguration.swift */,
+				940F10122124B7F800554520 /* Xcode_Project_BuildConfiguration_Base.swift */,
+				94CB9FBD2116535300641D6E /* Xcode_Project_BuildConfiguration_Defaults.swift */,
+				94CB9FBA2116535200641D6E /* Xcode_Project_BuildConfiguration_Defaults_General.swift */,
+				94CB9FBF2116535300641D6E /* Xcode_Project_BuildConfiguration_Defaults_iOS.swift */,
+				940F10182124BAA200554520 /* Xcode_Project_BuildConfigurations.swift */,
 				94CB9FBC2116535300641D6E /* Xcode_Project_Variant.swift */,
+				940F101C2124BB9B00554520 /* Xcode_Project_Variant_Target.swift */,
+				940F101A2124BB6F00554520 /* Xcode_Project_Variant_Target_BuildConfigurations.swift */,
 				94CB9FC92116536600641D6E /* Xcode_Target.swift */,
-				94CB9FC82116536600641D6E /* Xcode_Target_BuildConfig.swift */,
+				94CB9FC82116536600641D6E /* Xcode_Target_BuildConfiguration.swift */,
+				940F10142124B87500554520 /* Xcode_Target_BuildConfiguration_Base.swift */,
+				940F10162124BA2100554520 /* Xcode_Target_BuildConfigurations.swift */,
 				94CB9FC72116536500641D6E /* Xcode_Target_Dependencies.swift */,
 				941CFFFE211609BC00326181 /* Xcode_Target_InfoPlist.swift */,
 				94CB9FC62116536500641D6E /* Xcode_Target_Script.swift */,
@@ -344,6 +364,7 @@
 				948EB31F2120F500000D91D0 /* Bool+Helper.swift */,
 				9424573B211B9EE500A05876 /* Defaults.swift */,
 				9424AB0C211754B200262B79 /* DeviceFamily.swift */,
+				940F10102124A26F00554520 /* Dictionary+Helpers.swift */,
 				9424AB122117552100262B79 /* PathPrefix.swift */,
 				94DECE4D21188B4B0026F148 /* String+TextFilePiece.swift */,
 				941CFFDD2115220600326181 /* Versions.swift */,
@@ -510,6 +531,7 @@
 				9424573C211B9EE500A05876 /* Defaults.swift in Sources */,
 				9424AB0F211754C100262B79 /* DeploymentTarget.swift in Sources */,
 				9424AB0D211754B200262B79 /* DeviceFamily.swift in Sources */,
+				940F10112124A26F00554520 /* Dictionary+Helpers.swift in Sources */,
 				94C4F9CB211665ED00CFB1DC /* Fastlane.swift in Sources */,
 				94C4F9CD2116660900CFB1DC /* Fastlane_Fastfile.swift in Sources */,
 				941CFFFB2115A78C00326181 /* Git.swift in Sources */,
@@ -538,13 +560,19 @@
 				941CFFE02115222B00326181 /* Versions.swift in Sources */,
 				94DECE502118C10E0026F148 /* Xcode.swift in Sources */,
 				94CB9FC12116535300641D6E /* Xcode_Project.swift in Sources */,
-				94CB9FC42116535300641D6E /* Xcode_Project_BuildConfig.swift in Sources */,
-				94CB9FC32116535300641D6E /* Xcode_Project_BuildConfig_Defaults.swift in Sources */,
-				94CB9FC02116535300641D6E /* Xcode_Project_BuildConfig_Defaults_General.swift in Sources */,
-				94CB9FC52116535300641D6E /* Xcode_Project_BuildConfig_Defaults_iOS.swift in Sources */,
+				94CB9FC42116535300641D6E /* Xcode_Project_BuildConfiguration.swift in Sources */,
+				940F10132124B7F800554520 /* Xcode_Project_BuildConfiguration_Base.swift in Sources */,
+				94CB9FC32116535300641D6E /* Xcode_Project_BuildConfiguration_Defaults.swift in Sources */,
+				94CB9FC02116535300641D6E /* Xcode_Project_BuildConfiguration_Defaults_General.swift in Sources */,
+				94CB9FC52116535300641D6E /* Xcode_Project_BuildConfiguration_Defaults_iOS.swift in Sources */,
+				940F10192124BAA200554520 /* Xcode_Project_BuildConfigurations.swift in Sources */,
 				94CB9FC22116535300641D6E /* Xcode_Project_Variant.swift in Sources */,
+				940F101D2124BB9B00554520 /* Xcode_Project_Variant_Target.swift in Sources */,
+				940F101B2124BB6F00554520 /* Xcode_Project_Variant_Target_BuildConfigurations.swift in Sources */,
 				94CB9FCE2116536600641D6E /* Xcode_Target.swift in Sources */,
-				94CB9FCD2116536600641D6E /* Xcode_Target_BuildConfig.swift in Sources */,
+				94CB9FCD2116536600641D6E /* Xcode_Target_BuildConfiguration.swift in Sources */,
+				940F10152124B87500554520 /* Xcode_Target_BuildConfiguration_Base.swift in Sources */,
+				940F10172124BA2100554520 /* Xcode_Target_BuildConfigurations.swift in Sources */,
 				94CB9FCC2116536600641D6E /* Xcode_Target_Dependencies.swift in Sources */,
 				941CFFFF211609BC00326181 /* Xcode_Target_InfoPlist.swift in Sources */,
 				94CB9FCB2116536600641D6E /* Xcode_Target_Script.swift in Sources */,

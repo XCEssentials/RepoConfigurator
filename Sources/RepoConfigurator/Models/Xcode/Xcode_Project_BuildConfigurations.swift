@@ -25,64 +25,19 @@
  */
 
 public
-extension Xcode.Target
+extension Xcode.Project
 {
     public
-    struct BuildConfiguration
+    final
+    class BuildConfigurations
     {
         public
-        struct Base
-        {
-            // internal
-            init(
-                _ overrides: [KeyValuePair] = []
-                )
-            {
-                self.overrides = overrides
-            }
-            
-            //---
-            
-            public private(set)
-            var overrides: [KeyValuePair] = []
-            
-            public
-            mutating
-            func override(
-                _ pairs: KeyValuePair...
-                )
-            {
-                overrides.append(contentsOf: pairs)
-            }
-        }
-        
-        //---
-        
+        var all = Xcode.Project.BuildConfiguration.Base()
+
         public
-        let name: String
-        
-        //---
-        
-        public private(set)
-        var overrides: [KeyValuePair] = []
-        
+        var debug = Xcode.Project.BuildConfiguration.Defaults.General.debug()
+
         public
-        mutating
-        func override(
-            _ pairs: KeyValuePair...
-            )
-        {
-            overrides.append(contentsOf: pairs)
-        }
-        
-        //---
-        
-        // internal
-        init(
-            _ name: String
-            )
-        {
-            self.name = name
-        }
+        var release = Xcode.Project.BuildConfiguration.Defaults.General.release()
     }
 }

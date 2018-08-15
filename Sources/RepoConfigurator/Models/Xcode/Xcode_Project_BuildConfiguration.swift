@@ -31,39 +31,6 @@ extension Xcode.Project
     struct BuildConfiguration
     {
         public
-        struct Base
-        {
-            public
-            let profiles: [String]
-            
-            //---
-            
-            // internal
-            init(
-                _ profiles: [String] = []
-                )
-            {
-                self.profiles = profiles
-            }
-            
-            //---
-            
-            public private(set)
-            var overrides: [KeyValuePair] = []
-            
-            public
-            mutating
-            func override(
-                _ pairs: KeyValuePair...
-                )
-            {
-                overrides.append(contentsOf: pairs)
-            }
-        }
-        
-        //---
-        
-        public
         enum InternalType: String
         {
             case
@@ -90,7 +57,7 @@ extension Xcode.Project
         //---
         
         public private(set)
-        var overrides: [KeyValuePair] = []
+        var overrides: [String: Any] = [:]
         
         public
         mutating
@@ -98,7 +65,7 @@ extension Xcode.Project
             _ pairs: KeyValuePair...
             )
         {
-            overrides.append(contentsOf: pairs)
+            overrides.override(with: pairs)
         }
         
         //---

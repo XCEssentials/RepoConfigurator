@@ -25,36 +25,41 @@
  */
 
 public
-extension Xcode.Project
+extension Dictionary
 {
-    public
-    struct Variant
+    mutating
+    func override(
+        with overrides: [Key: Value]
+        )
     {
-        public
-        let name: String
-        
-        //---
-        
-        public
-        init(_ name: String, _ configure: ((inout Xcode.Project.Variant) -> Void)?)
-        {
-            self.name = name
-            configure?(&self)
-        }
-        
-        //---
-        
-        public private(set)
-        var targets: [Target] = []
-        
-        public
-        mutating
-        func target(
-            _ name: String,
-            _ configureTarget: (inout Target) -> Void
-            )
-        {
-            targets.append(Target(name, configureTarget))
-        }
+        self.merge(overrides, uniquingKeysWith: { _, new in new })
+    }
+
+    mutating
+    func override<S>(
+        with overrides: S
+        )
+        where
+        S: Sequence,
+        S.Element == (Key, Value)
+    {
+        self.merge(overrides, uniquingKeysWith: { _, new in new })
+    }
+
+    func overriding(
+        with overrides: [Key: Value]
+        ) -> [Key: Value]
+    {
+        return self.merging(overrides, uniquingKeysWith: { _, new in new })
+    }
+
+    func overriding<S>(
+        with overrides: S
+        ) -> [Key: Value]
+        where
+        S: Sequence,
+        S.Element == (Key, Value)
+    {
+        return self.merging(overrides, uniquingKeysWith: { _, new in new })
     }
 }

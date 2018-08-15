@@ -299,7 +299,7 @@ extension Struct.Spec_2_1_0
         //---
         
         if
-            !set.all.overrides.isEmpty ||
+            !set.all.settings.isEmpty ||
             !set.debug.overrides.isEmpty ||
             !set.release.overrides.isEmpty
         {
@@ -312,14 +312,14 @@ extension Struct.Spec_2_1_0
             //---
             
             if
-                !set.all.overrides.isEmpty ||
+                !set.all.settings.isEmpty ||
                 !set.debug.overrides.isEmpty
             {
                 result <<< process(&indentation, set.all, set.debug)
             }
             
             if
-                !set.all.overrides.isEmpty ||
+                !set.all.settings.isEmpty ||
                 !set.release.overrides.isEmpty
             {
                 result <<< process(&indentation, set.all, set.release)
@@ -426,7 +426,7 @@ extension Struct.Spec_2_1_0
             result <<< (indentation, Struct.Spec.key("overrides"))
             indentation++
             
-            for o in b.overrides + c.overrides
+            for o in b.settings.overriding(with: c.overrides)
             {
                 result <<< (indentation, Struct.Spec.key(o.key) + Struct.Spec.value(o.value))
             }
@@ -853,7 +853,7 @@ extension Struct.Spec_2_1_0
         
         // https://github.com/lyptt/struct/wiki/Spec-format:-v1.2#overrides
         
-        for o in b.overrides + c.overrides
+        for o in b.settings.overriding(with: c.overrides)
         {
             result <<< (indentation, Struct.Spec.key(o.key) + Struct.Spec.value(o.value))
         }

@@ -24,89 +24,75 @@
 
  */
 
-//swiftlint:disable identifier_name
-
 public
-extension Xcode
+extension Xcode.Project.Variant
 {
     public
     struct Target
     {
         public
         let name: String
-        
-        public
-        let platform: OSIdentifier
-        
-        public
-        let type: InternalType
-        
+
         //---
-        
+
         public private(set)
         var includes: [String] = []
-        
+
         public
         mutating
-        func include(
-            _ paths: String...
-            )
+        func include(_ paths: String...)
         {
             includes.append(contentsOf: paths)
         }
-        
+
         //---
-        
+
         public private(set)
         var excludes: [String] = []
-        
+
         public
         mutating
-        func exclude(
-            _ patterns: String...
-            )
+        func exclude(_ patterns: String...)
         {
             excludes.append(contentsOf: patterns)
         }
-        
+
         //---
-        
+
         public
         var sourceOptions: [String: String] = [:]
-        
+
         //---
-        
+
         public private(set)
         var i18nResources: [String] = []
-        
+
         public
         mutating
-        func i18nResource(
-            _ paths: String...
-            )
+        func i18nResource(_ paths: String...)
         {
             i18nResources.append(contentsOf: paths)
         }
-        
+
         //---
-        
+
         public
         let configurations = Target.BuildConfigurations()
-        
+
         public
-        var dependencies = Dependencies()
-        
+        var dependencies = Xcode.Target.Dependencies()
+
         public
-        var scripts = Scripts()
-        
+        var scripts = Xcode.Target.Scripts()
+
         public
         var includeCocoapods = false
-        
+
         //---
-        
+
         public private(set)
         var tests: [Target] = []
-        
+
         public
         mutating
         func unitTests(
@@ -114,28 +100,9 @@ extension Xcode
             _ configureTarget: (inout Target) -> Void
             )
         {
-            var ut = Target(self.platform, name, .unitTest, configureTarget)
-            
-            //---
-            
-            ut.dependencies.otherTarget(self.name)
-            
-            if
-                type == .app
-            {
-                ut.configurations.all.override(
-                    
-                    // https://github.com/workshop/struct/blob/master/examples/iOS_Application/project.yml#L115
-                    "TEST_HOST"
-                        <<< "$(BUILT_PRODUCTS_DIR)/\(self.name).app/\(self.name)"
-                )
-            }
-            
-            //---
-            
-            tests.append(ut)
+            tests.append(Target(name, configureTarget))
         }
-        
+
         public
         mutating
         func uiTests(
@@ -143,31 +110,27 @@ extension Xcode
             _ configureTarget: (inout Target) -> Void
             )
         {
-            var uit = Target(self.platform, name, .uiTest, configureTarget)
-            
+            var uit = Target(name, configureTarget)
+
             uit.dependencies.otherTarget(self.name)
-            
+
             //---
-            
+
             tests.append(uit)
         }
-        
+
         //---
-        
+
         // internal
         init(
-            _ platform: OSIdentifier,
             _ name: String,
-            _ type: InternalType,
             _ configureTarget: (inout Target) -> Void
             )
         {
             self.name = name
-            self.platform = platform
-            self.type = type
-            
+
             //---
-            
+
             configureTarget(&self)
         }
     }

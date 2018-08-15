@@ -25,74 +25,36 @@
  */
 
 public
-extension Xcode
+extension Xcode.Project.BuildConfiguration
 {
     public
-    struct Project: FixedNameTextFile
+    struct Base
     {
         public
-        static
-        let fileName: String = "project.yml" // Struct SPEC!
-
-        public
-        let specFormat: Struct.Spec
+        let profiles: [String]
 
         //---
 
-        public
-        var fileContent: [IndentedTextGetter]
-        {
-            return [Struct.generateSpec(specFormat, for: self)]
-        }
-
-        //---
-
-        public
-        let name: String
-
-        //---
-
-        public
-        let configurations = BuildConfigurations()
-
-        public private(set)
-        var targets: [Target] = []
-
-        //---
-
-        public
+        // internal
         init(
-            _ name: String,
-            specFormat: Struct.Spec,
-            configureProject: (inout Xcode.Project) -> Void
+            _ profiles: [String] = []
             )
         {
-            self.name = name
-            self.specFormat = specFormat
-
-            //---
-
-            configureProject(&self)
+            self.profiles = profiles
         }
 
         //---
+
+        public private(set)
+        var settings: [String: Any] = [:]
 
         public
         mutating
-        func target(
-            _ name: String,
-            _ platform: OSIdentifier,
-            _ type: Target.InternalType,
-            _ configureTarget: (inout Target) -> Void
+        func override(
+            _ pairs: KeyValuePair...
             )
         {
-            targets
-                .append(Target(platform, name, type, configureTarget))
+            settings.override(with: pairs)
         }
-
-        //---
-
-        public
-        var variants: [Xcode.Project.Variant] = []
     }
 }

@@ -25,36 +25,21 @@
  */
 
 public
-extension Xcode.Project
+extension Xcode.Target.BuildConfiguration
 {
     public
-    struct Variant
+    struct Base
     {
-        public
-        let name: String
-        
-        //---
-        
-        public
-        init(_ name: String, _ configure: ((inout Xcode.Project.Variant) -> Void)?)
-        {
-            self.name = name
-            configure?(&self)
-        }
-        
-        //---
-        
         public private(set)
-        var targets: [Target] = []
-        
+        var settings: [String: Any] = [:]
+
         public
         mutating
-        func target(
-            _ name: String,
-            _ configureTarget: (inout Target) -> Void
+        func override(
+            _ pairs: KeyValuePair...
             )
         {
-            targets.append(Target(name, configureTarget))
+            settings.override(with: pairs)
         }
     }
 }

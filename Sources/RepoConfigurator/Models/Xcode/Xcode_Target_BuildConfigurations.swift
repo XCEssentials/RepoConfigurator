@@ -25,36 +25,23 @@
  */
 
 public
-extension Xcode.Project
+extension Xcode.Target
 {
     public
-    struct Variant
+    final
+    class BuildConfigurations
     {
         public
-        let name: String
-        
-        //---
-        
+        var all = Xcode.Target.BuildConfiguration.Base()
+
         public
-        init(_ name: String, _ configure: ((inout Xcode.Project.Variant) -> Void)?)
-        {
-            self.name = name
-            configure?(&self)
-        }
-        
-        //---
-        
-        public private(set)
-        var targets: [Target] = []
-        
+        var debug = Xcode.Target.BuildConfiguration(
+            Xcode.Project.BuildConfiguration.Defaults.iOS.debug().name
+        )
+
         public
-        mutating
-        func target(
-            _ name: String,
-            _ configureTarget: (inout Target) -> Void
-            )
-        {
-            targets.append(Target(name, configureTarget))
-        }
+        var release = Xcode.Target.BuildConfiguration(
+            Xcode.Project.BuildConfiguration.Defaults.iOS.release().name
+        )
     }
 }
