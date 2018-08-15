@@ -17,7 +17,7 @@ Pod::Spec.new do |s|
 
     s.swift_version = '4.2'
 
-    s.cocoapods_version = '>= 0.36'
+    s.cocoapods_version = '>= 1.5.3'
 
     # === iOS
 

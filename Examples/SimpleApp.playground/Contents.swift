@@ -99,7 +99,8 @@ let info: PerTarget = (
     Xcode
         .Target
         .InfoPlist(
-            for: .tests
+            for: .tests,
+            preset: nil
         )
         .prepare(
             name: targetName.tst + ".plist",
@@ -260,9 +261,8 @@ let podfile = CocoaPods
     )
 
 // https://docs.fastlane.tools/getting-started/ios/setup/#use-a-gemfile
-//let gemfile = Fastlane
-//    .Gemfile
-//    .fastlaneSupportOnly()
+//let gemfile = Bundler
+//    .Gemfile()
 //    .prepare(
 //        targetFolder: repoFolder
 //    )

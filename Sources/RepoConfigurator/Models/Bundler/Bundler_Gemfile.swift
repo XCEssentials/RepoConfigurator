@@ -25,7 +25,7 @@
  */
 
 public
-extension Fastlane
+extension Bundler
 {
     public
     struct Gemfile: FixedNameTextFile
@@ -37,6 +37,7 @@ extension Fastlane
 
         // MARK: - Initializers
 
+        public
         init(
             basicFastlane: Bool = true,
             _ otherEntries: String...
