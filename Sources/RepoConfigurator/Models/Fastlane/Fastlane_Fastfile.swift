@@ -99,6 +99,7 @@ extension Fastlane.Fastfile
         releaseBranches: String = Defaults.releaseGitBranchesRegEx,
         productName: String,
         projectName: String? = nil,
+        getCurrentVersionFromTarget currentVersionTargetName: String? = nil,
         usesCocoapods: Bool = true,
         swiftGenTargets: [String] = [],
         sourceryTargets: [String] = [],
@@ -130,6 +131,7 @@ extension Fastlane.Fastfile
             ),
             .regenerateProject(
                 projectName: projectName,
+                getCurrentVersionFromTarget: currentVersionTargetName,
                 usesCocoapods: usesCocoapods,
                 swiftGenTargets: swiftGenTargets,
                 sourceryTargets: sourceryTargets,
@@ -169,6 +171,7 @@ extension Fastlane.Fastfile
         minimumFastlaneVersion: VersionString = Defaults.minimumFastlaneVersion,
         releaseBranches: String = Defaults.releaseGitBranchesRegEx,
         productName: String,
+        getCurrentVersionFromTarget currentVersionTargetName: String? = nil,
         cocoaPodsModuleName: String?, // pass 'nil' if should not maintain podspec file
         projectName: String? = nil, // 'productName' wil be used as fallback
         usesCocoapods: Bool = true,
@@ -198,6 +201,7 @@ extension Fastlane.Fastfile
             ),
             .regenerateProject(
                 projectName: projectName,
+                getCurrentVersionFromTarget: currentVersionTargetName,
                 usesCocoapods: usesCocoapods,
                 swiftGenTargets: swiftGenTargets,
                 sourceryTargets: sourceryTargets,
