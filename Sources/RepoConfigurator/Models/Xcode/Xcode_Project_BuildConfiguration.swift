@@ -45,10 +45,7 @@ extension Xcode.Project
         
         public
         let type: InternalType
-        
-        public
-        let profiles: [String]
-        
+
         //---
         
         public
@@ -73,13 +70,11 @@ extension Xcode.Project
         // internal
         init(
             _ name: String,
-            _ type: InternalType,
-            _ profiles: [String] = []
+            _ type: InternalType
             )
         {
             self.name = name
             self.type = type
-            self.profiles = profiles
         }
     }
 }

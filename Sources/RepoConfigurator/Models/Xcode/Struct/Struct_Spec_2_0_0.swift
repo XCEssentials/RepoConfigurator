@@ -165,7 +165,7 @@ extension Struct.Spec_2_0_0
             // https://github.com/lyptt/struct/wiki/Spec-format:-v2.0#xcconfig-references
             
             // NOTE: when using xcconfig files,
-            // any overrides or profiles will be ignored.
+            // any overrides will be ignored.
             
             result <<< (indentation, Struct.Spec.key("source") + Struct.Spec.value(externalConfig) )
         }

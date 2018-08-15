@@ -32,9 +32,6 @@ extension Xcode.Project.BuildConfiguration
     {
         // MARK: - Instance level members
 
-        public
-        let profiles: [String]
-
         public private(set)
         var settings: [String: Any] = [:]
 
@@ -45,16 +42,6 @@ extension Xcode.Project.BuildConfiguration
             )
         {
             settings.override(with: pairs)
-        }
-
-        // MARK: - Initializers
-
-        // internal
-        init(
-            _ profiles: [String] = []
-            )
-        {
-            self.profiles = profiles
         }
     }
 }
