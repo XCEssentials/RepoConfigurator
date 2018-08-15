@@ -44,12 +44,6 @@ extension Struct
     {
         switch format
         {
-        case .v1_2_1:
-            return Spec_1_2_1.generate(for: project)
-        
-        case .v1_3_0:
-            return Spec_1_3_0.generate(for: project)
-        
         case .v2_0_0:
             return Spec_2_0_0.generate(for: project)
         
