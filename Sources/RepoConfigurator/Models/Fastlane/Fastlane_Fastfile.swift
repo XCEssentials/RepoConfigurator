@@ -407,6 +407,7 @@ extension Fastlane.Fastfile.Section
     static
     func regenerateProject(
         projectName: String,
+        getCurrentVersionFromTarget targetName: String? = nil,
         usesCocoapods: Bool = true,
         swiftGenTargets: [String] = [],
         sourceryTargets: [String] = [],
@@ -435,11 +436,13 @@ extension Fastlane.Fastfile.Section
                     # === Remember current version and build numbers
 
                     versionNumber = get_version_number(
-                        xcodeproj: '\(projectName).xcodeproj'
+                        xcodeproj: '\(projectName).xcodeproj',
+                        target: '\(targetName ?? projectName)'
                     )
 
                     buildNumber = get_build_number(
-                        xcodeproj: '\(projectName).xcodeproj'
+                        xcodeproj: '\(projectName).xcodeproj',
+                        target: '\(targetName ?? projectName)'
                     )
 
                     # === Remove completely current project file/package
