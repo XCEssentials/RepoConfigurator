@@ -445,8 +445,7 @@ extension Fastlane.Fastfile.Section
                     )
 
                     buildNumber = get_build_number(
-                        xcodeproj: '\(projectName).xcodeproj',
-                        target: '\(targetName ?? projectName)'
+                        xcodeproj: '\(projectName).xcodeproj'
                     )
 
                     # === Remove completely current project file/package
