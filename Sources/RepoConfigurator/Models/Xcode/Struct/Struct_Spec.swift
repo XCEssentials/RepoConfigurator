@@ -32,7 +32,6 @@ extension Struct
     {
         case
             //swiftlint:disable identifier_name
-            v2_0_0 = "2.0.0",
             v2_1_0 = "2.1.0"
     }
 }
