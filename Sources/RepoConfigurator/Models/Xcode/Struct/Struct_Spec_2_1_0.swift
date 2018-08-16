@@ -60,7 +60,7 @@ extension Struct.Spec_2_1_0
 
             //---
 
-            result <<< process(&indentation, p.settings)
+            result <<< process(&indentation, p.buildSettings)
 
             //---
 
@@ -255,7 +255,7 @@ extension Struct.Spec_2_1_0
         
         //---
         
-        result <<< process(&indentation, t.settings)
+        result <<< t.buildSettings.asIndentedText(with: &indentation)
         
         //---
         
@@ -281,60 +281,7 @@ extension Struct.Spec_2_1_0
         
         return result
     }
-    
-    //---
-    
-    static
-    func process(
-        _ indentation: inout Indentation,
-        _ set: Xcode.Project.Variant.Target.BuildSettings
-        ) -> IndentedText
-    {
-        // https://github.com/lyptt/struct/issues/77#issuecomment-287573381
-        
-        //---
-        
-        var result: IndentedText = []
-        
-        //---
-        
-        if
-            !set.base.isEmpty ||
-            !set[.debug].isEmpty ||
-            !set[.release].isEmpty
-        {
-            result <<< (indentation, Struct.Spec.key("configurations"))
-            
-            //---
-            
-            indentation++
-            
-            //---
-            
-            if
-                !set.base.isEmpty ||
-                !set[.debug].isEmpty
-            {
-                result <<< process(&indentation, set.base, config: .debug, set[.debug])
-            }
-            
-            if
-                !set.base.isEmpty ||
-                !set[.release].isEmpty
-            {
-                result <<< process(&indentation, set.base, config: .release, set[.release])
-            }
-            
-            //---
-            
-            indentation--
-        }
-        
-        //---
-        
-        return result
-    }
-    
+
     //---
     
     static
@@ -628,7 +575,7 @@ extension Struct.Spec_2_1_0
         
         //---
         
-        result <<< process(&indentation, t.settings)
+        result <<< t.buildSettings.asIndentedText(with: &indentation)
         
         //---
         
@@ -804,85 +751,7 @@ extension Struct.Spec_2_1_0
         
         return result
     }
-    
-    //---
-    
-    static
-    func process(
-        _ indentation: inout Indentation,
-        _ set: Xcode.Target.BuildSettings
-        ) -> IndentedText
-    {
-        // https://github.com/lyptt/struct/issues/77#issuecomment-287573381
-        
-        //---
-        
-        var result: IndentedText = []
-        
-        //---
-        
-        result <<< (indentation, Struct.Spec.key("configurations"))
-        
-        //---
-        
-        indentation++
-        
-        //---
 
-        result <<< process(&indentation, set.base, config: .debug, set[.debug])
-        result <<< process(&indentation, set.base, config: .release, set[.release])
-        
-        //---
-        
-        indentation--
-        
-        //---
-        
-        return result
-    }
-    
-    //---
-    
-    static
-    func process(
-        _ indentation: inout Indentation,
-        _ base: Xcode.RawBuildSettings,
-        config: Xcode.BuildConfiguration,
-        _ overrides: Xcode.RawBuildSettings
-        ) -> IndentedText
-    {
-        // https://github.com/lyptt/struct/issues/77#issuecomment-287573381
-        
-        //---
-        
-        var result: IndentedText = []
-        
-        //---
-        
-        result <<< (indentation, Struct.Spec.key(config.name))
-        
-        //---
-        
-        indentation++
-        
-        //---
-        
-        // https://github.com/lyptt/struct/wiki/Spec-format:-v1.2#overrides
-        
-        for o in base.overriding(with: overrides)
-        {
-            result <<< (indentation, Struct.Spec.key(o.key) + Struct.Spec.value(o.value))
-        }
-        
-        //---
-        
-        indentation--
-        
-        //---
-        
-        return result
-    }
-    
     //---
     
     static

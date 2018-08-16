@@ -40,7 +40,9 @@ extension Xcode.Project.Variant
 
         public
         mutating
-        func include(_ paths: String...)
+        func include(
+            _ paths: String...
+            )
         {
             includes.append(contentsOf: paths)
         }
@@ -52,7 +54,9 @@ extension Xcode.Project.Variant
 
         public
         mutating
-        func exclude(_ patterns: String...)
+        func exclude(
+            _ patterns: String...
+            )
         {
             excludes.append(contentsOf: patterns)
         }
@@ -69,7 +73,9 @@ extension Xcode.Project.Variant
 
         public
         mutating
-        func i18nResource(_ paths: String...)
+        func i18nResource(
+            _ paths: String...
+            )
         {
             i18nResources.append(contentsOf: paths)
         }
@@ -77,7 +83,7 @@ extension Xcode.Project.Variant
         //---
 
         public
-        var settings = Target.BuildSettings()
+        var buildSettings = Xcode.Target.BuildSettings()
 
         public
         var dependencies = Xcode.Target.Dependencies()

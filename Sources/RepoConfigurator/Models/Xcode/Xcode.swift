@@ -25,4 +25,29 @@
  */
 
 public
-enum Xcode {}
+enum Xcode
+{
+    /**
+     XCEssentials recommends to always use only standard Xcode
+     build configurations "Debug" and "Release". For any purposes
+     you would like to use different set of configurations - you
+     should use different targets or project variants.
+     */
+    public
+    enum BuildConfiguration: String, CaseIterable
+    {
+        case debug = "Debug"
+        case release = "Release"
+
+        //---
+
+        public
+        var name: String
+        {
+            return rawValue
+        }
+    }
+
+    public
+    typealias RawBuildSettings = [String: String]
+}

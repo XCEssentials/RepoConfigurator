@@ -24,41 +24,16 @@
 
  */
 
-public
-extension Xcode.Target
+// internal
+extension String
 {
-    public
-    struct BuildSettings
+    var asYAMLKey: String
     {
-//        public
-//        var all = Xcode.Target.BuildConfiguration.Base()
-//
-//        public
-//        var debug = Xcode.Target.BuildConfiguration(.debug)
-//
-//        public
-//        var release = Xcode.Target.BuildConfiguration(.release)
+        return "\(self):"
+    }
 
-        public
-        var base: Xcode.RawBuildSettings = [:]
-
-        private
-        var perConfiguration: [Xcode.BuildConfiguration: Xcode.RawBuildSettings] = [:]
-
-        public
-        subscript(
-            configuration: Xcode.BuildConfiguration
-            ) -> Xcode.RawBuildSettings
-        {
-            get
-            {
-                return perConfiguration[configuration] ?? [:]
-            }
-
-            set(newValue)
-            {
-                perConfiguration[configuration] = newValue
-            }
-        }
+    var asYAMLValue: String
+    {
+        return " \"\(self)\""
     }
 }

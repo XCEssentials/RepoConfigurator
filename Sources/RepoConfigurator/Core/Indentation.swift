@@ -88,19 +88,27 @@ postfix func -- (indentation: inout Indentation)
 
 //---
 
-public
-func indent(
-    with indentation: inout Indentation,
-    body: () -> Void
-    )
-{
-    indentation++
-
-    //---
-
-    body()
-
-    //---
-
-    indentation--
-}
+//public
+//func indent(
+//    with indentation: inout Indentation,
+//    body: () -> TextFilePiece
+//    ) -> IndentedText
+//{
+//    let result: IndentedText
+//
+//    //---
+//
+//    indentation++
+//
+//    //---
+//
+//    result = body().asIndentedText(with: &indentation)
+//
+//    //---
+//
+//    indentation--
+//
+//    //---
+//
+//    return result
+//}

@@ -29,7 +29,7 @@ infix operator <<<
 //---
 
 public
-func <<< (keyName: String, value: Any) -> KeyValuePair
+func <<< (keyName: String, value: String) -> KeyValuePair
 {
     return (keyName, value)
 }

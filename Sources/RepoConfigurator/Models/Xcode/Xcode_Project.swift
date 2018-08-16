@@ -53,7 +53,7 @@ extension Xcode
         //---
 
         public
-        var settings = BuildSettings()
+        var buildSettings = BuildSettings()
 
         public private(set)
         var targets: [Target] = []

@@ -71,3 +71,16 @@ extension Dictionary
         return self.merging(overrides, uniquingKeysWith: { _, new in new })
     }
 }
+
+//internal
+extension Dictionary
+    where
+    Key == String,
+    Value == String
+{
+    var asYAMLSettings: String
+    {
+        // return map{ "\($0.key): \"\($0.value)\"" }.asMultiLine
+        return map{ $0.key.asYAMLKey + $0.value.asYAMLValue }.asMultiLine
+    }
+}

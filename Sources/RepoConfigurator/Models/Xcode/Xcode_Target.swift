@@ -91,13 +91,13 @@ extension Xcode
         //---
         
         public
-        var settings = Target.BuildSettings()
+        var buildSettings = Xcode.Target.BuildSettings()
         
         public
-        var dependencies = Dependencies()
+        var dependencies = Xcode.Target.Dependencies()
         
         public
-        var scripts = Scripts()
+        var scripts = Xcode.Target.Scripts()
         
         public
         var includeCocoapods = false
@@ -123,7 +123,7 @@ extension Xcode
             if
                 type == .app
             {
-                ut.settings.base.override(
+                ut.buildSettings.base.override(
                     
                     // https://github.com/workshop/struct/blob/master/examples/iOS_Application/project.yml#L115
                     "TEST_HOST"
