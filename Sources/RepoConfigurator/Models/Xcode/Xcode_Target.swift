@@ -91,7 +91,7 @@ extension Xcode
         //---
         
         public
-        let configurations = Target.BuildConfigurations()
+        var settings = Target.BuildSettings()
         
         public
         var dependencies = Dependencies()
@@ -123,7 +123,7 @@ extension Xcode
             if
                 type == .app
             {
-                ut.configurations.all.override(
+                ut.settings.base.override(
                     
                     // https://github.com/workshop/struct/blob/master/examples/iOS_Application/project.yml#L115
                     "TEST_HOST"

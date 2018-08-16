@@ -46,6 +46,14 @@ extension Dictionary
         self.merge(overrides, uniquingKeysWith: { _, new in new })
     }
 
+    mutating
+    func override(
+        _ overrides: (Key, Value)...
+        )
+    {
+        self.merge(overrides, uniquingKeysWith: { _, new in new })
+    }
+
     func overriding(
         with overrides: [Key: Value]
         ) -> [Key: Value]

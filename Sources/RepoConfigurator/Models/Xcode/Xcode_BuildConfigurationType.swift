@@ -47,4 +47,7 @@ extension Xcode
             return rawValue
         }
     }
+
+    public
+    typealias RawBuildSettings = [String: Any]
 }

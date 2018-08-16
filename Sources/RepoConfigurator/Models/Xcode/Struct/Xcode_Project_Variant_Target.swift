@@ -77,7 +77,7 @@ extension Xcode.Project.Variant
         //---
 
         public
-        let settings = Target.BuildSettings()
+        var settings = Target.BuildSettings()
 
         public
         var dependencies = Xcode.Target.Dependencies()

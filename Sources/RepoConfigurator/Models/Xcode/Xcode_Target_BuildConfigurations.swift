@@ -28,16 +28,37 @@ public
 extension Xcode.Target
 {
     public
-    final
-    class BuildConfigurations
+    struct BuildSettings
     {
-        public
-        var all = Xcode.Target.BuildConfiguration.Base()
+//        public
+//        var all = Xcode.Target.BuildConfiguration.Base()
+//
+//        public
+//        var debug = Xcode.Target.BuildConfiguration(.debug)
+//
+//        public
+//        var release = Xcode.Target.BuildConfiguration(.release)
 
         public
-        var debug = Xcode.Target.BuildConfiguration(.debug)
+        var base: Xcode.RawBuildSettings = [:]
+
+        private
+        var perConfiguration: [Xcode.BuildConfiguration: Xcode.RawBuildSettings] = [:]
 
         public
-        var release = Xcode.Target.BuildConfiguration(.release)
+        subscript(
+            configuration: Xcode.BuildConfiguration
+            ) -> Xcode.RawBuildSettings
+        {
+            get
+            {
+                return perConfiguration[configuration] ?? [:]
+            }
+
+            set(newValue)
+            {
+                perConfiguration[configuration] = newValue
+            }
+        }
     }
 }

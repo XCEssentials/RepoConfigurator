@@ -28,38 +28,41 @@ public
 extension Xcode.Project
 {
     public
-    final
-    class BuildConfigurations // BuildSettings
+    struct BuildSettings
     {
-        public
-        var all = Xcode.Project.BuildConfiguration.Base()
-
-        public
-        var debug = Xcode.Project.BuildConfiguration(.debug)
-
-        public
-        var release = Xcode.Project.BuildConfiguration(.release)
-
-        // public private(set)
-        // var base: [String: Any]
-
-        // private
-        // var perConfiguration: [Xcode.BuildConfiguration: [String: Any]]
-
-        //public
-        // subscript[Xcode.BuildConfiguration] -> [String: Any]
-        //{ perConfiguration ... }
+//        public
+//        var all = Xcode.Project.BuildConfiguration.Base()
+//
+//        public
+//        var debug = Xcode.Project.BuildConfiguration(.debug)
+//
+//        public
+//        var release = Xcode.Project.BuildConfiguration(.release)
 
         // *.xcconfig file
-        // public
-        // var externalConfig: [Xcode.BuildConfiguration: String]?
+        public
+        var externalConfig: [Xcode.BuildConfiguration: String] = [:]
 
-//        public
-//        mutating
-//        func override(
-//            _ configuration: Xcode.BuildConfiguration? = nil, // base if nil
-//            _ pairs: KeyValuePair...
-//            )
-//        {
+        public
+        var base: Xcode.RawBuildSettings = [:]
+
+        private
+        var perConfiguration: [Xcode.BuildConfiguration: Xcode.RawBuildSettings] = [:]
+
+        public
+        subscript(
+            configuration: Xcode.BuildConfiguration
+            ) -> Xcode.RawBuildSettings
+        {
+            get
+            {
+                return perConfiguration[configuration] ?? [:]
+            }
+
+            set(newValue)
+            {
+                perConfiguration[configuration] = newValue
+            }
+        }
     }
 }
