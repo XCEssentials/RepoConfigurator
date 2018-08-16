@@ -35,13 +35,9 @@ extension Xcode.Target
         var all = Xcode.Target.BuildConfiguration.Base()
 
         public
-        var debug = Xcode.Target.BuildConfiguration(
-            Xcode.Project.BuildConfiguration.Defaults.iOS.debug().name
-        )
+        var debug = Xcode.Target.BuildConfiguration(.debug)
 
         public
-        var release = Xcode.Target.BuildConfiguration(
-            Xcode.Project.BuildConfiguration.Defaults.iOS.release().name
-        )
+        var release = Xcode.Target.BuildConfiguration(.release)
     }
 }

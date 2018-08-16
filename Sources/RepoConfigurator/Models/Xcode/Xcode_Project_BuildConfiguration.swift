@@ -31,20 +31,13 @@ extension Xcode.Project
     struct BuildConfiguration
     {
         public
-        enum InternalType: String
+        let type: Xcode.BuildConfiguration
+
+        public
+        var name: String
         {
-            case
-                debug,
-                release
+            return type.rawValue
         }
-        
-        //---
-        
-        public
-        let name: String
-        
-        public
-        let type: InternalType
 
         //---
         
@@ -69,11 +62,9 @@ extension Xcode.Project
         
         // internal
         init(
-            _ name: String,
-            _ type: InternalType
+            _ type: Xcode.BuildConfiguration
             )
         {
-            self.name = name
             self.type = type
         }
     }

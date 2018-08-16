@@ -31,8 +31,14 @@ extension Xcode.Target
     struct BuildConfiguration
     {
         public
-        let name: String
-        
+        let type: Xcode.BuildConfiguration
+
+        public
+        var name: String
+        {
+            return type.rawValue
+        }
+
         //---
         
         public private(set)
@@ -51,10 +57,10 @@ extension Xcode.Target
         
         // internal
         init(
-            _ name: String
+            _ type: Xcode.BuildConfiguration
             )
         {
-            self.name = name
+            self.type = type
         }
     }
 }

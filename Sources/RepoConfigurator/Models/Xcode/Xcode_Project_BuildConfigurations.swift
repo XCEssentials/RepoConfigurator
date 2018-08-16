@@ -29,15 +29,37 @@ extension Xcode.Project
 {
     public
     final
-    class BuildConfigurations
+    class BuildConfigurations // BuildSettings
     {
         public
         var all = Xcode.Project.BuildConfiguration.Base()
 
         public
-        var debug = Xcode.Project.BuildConfiguration.Defaults.General.debug()
+        var debug = Xcode.Project.BuildConfiguration(.debug)
 
         public
-        var release = Xcode.Project.BuildConfiguration.Defaults.General.release()
+        var release = Xcode.Project.BuildConfiguration(.release)
+
+        // public private(set)
+        // var base: [String: Any]
+
+        // private
+        // var perConfiguration: [Xcode.BuildConfiguration: [String: Any]]
+
+        //public
+        // subscript[Xcode.BuildConfiguration] -> [String: Any]
+        //{ perConfiguration ... }
+
+        // *.xcconfig file
+        // public
+        // var externalConfig: [Xcode.BuildConfiguration: String]?
+
+//        public
+//        mutating
+//        func override(
+//            _ configuration: Xcode.BuildConfiguration? = nil, // base if nil
+//            _ pairs: KeyValuePair...
+//            )
+//        {
     }
 }

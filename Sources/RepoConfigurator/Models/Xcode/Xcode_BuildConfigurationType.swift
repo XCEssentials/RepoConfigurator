@@ -24,30 +24,27 @@
 
  */
 
-extension Xcode.Project.BuildConfiguration.Defaults
+public
+extension Xcode
 {
-    enum General
+    /**
+     XCEssentials recommends to always use only standard Xcode
+     build configurations "Debug" and "Release". For any purposes
+     you would like to use different set of configurations - you
+     should use different targets or project variants.
+     */
+    public
+    enum BuildConfiguration: String
     {
-        static
-        func debug(
-            ) -> Xcode.Project.BuildConfiguration
+        case debug = "Debug"
+        case release = "Release"
+
+        //---
+
+        public
+        var name: String
         {
-            return Xcode
-                .Project
-                .BuildConfiguration
-                .Defaults
-                .debug()
-        }
-        
-        static
-        func release(
-            ) -> Xcode.Project.BuildConfiguration
-        {
-            return Xcode
-                .Project
-                .BuildConfiguration
-                .Defaults
-                .release()
+            return rawValue
         }
     }
 }
