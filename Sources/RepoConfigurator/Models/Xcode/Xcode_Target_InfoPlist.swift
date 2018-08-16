@@ -28,7 +28,8 @@ public
 extension Xcode.Target
 {
     public
-    struct InfoPlist: ArbitraryNamedTextFile
+    final
+    class InfoPlist: ArbitraryNamedTextFile
     {
         // MARK: - Type level members
 
@@ -111,6 +112,7 @@ extension Xcode.Target.InfoPlist
     enum Preset
     {
         case iOS
+
         case macOS(
             copyrightYear: UInt,
             copyrightEntity: String

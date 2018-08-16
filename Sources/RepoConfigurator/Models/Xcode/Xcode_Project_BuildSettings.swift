@@ -25,43 +25,16 @@
  */
 
 public
-extension Xcode.Target
+extension Xcode.Project
 {
     public
-    struct Scripts
+    final
+    class BuildSettings: Xcode.BuildSettings
     {
-        public private(set)
-        var regulars: [String] = []
-        
+        // MARK: - Instance level members
+
+        // *.xcconfig file
         public
-        mutating
-        func regular(_ paths: String...)
-        {
-            regulars.append(contentsOf: paths)
-        }
-        
-        //---
-        
-        public private(set)
-        var beforeBuilds: [String] = []
-        
-        public
-        mutating
-        func beforeBuild(_ paths: String...)
-        {
-            beforeBuilds.append(contentsOf: paths)
-        }
-        
-        //---
-        
-        public private(set)
-        var afterBuilds: [String] = []
-        
-        public
-        mutating
-        func afterBuild(_ paths: String...)
-        {
-            afterBuilds.append(contentsOf: paths)
-        }
+        var externalConfig: [Xcode.BuildConfiguration: String] = [:]
     }
 }

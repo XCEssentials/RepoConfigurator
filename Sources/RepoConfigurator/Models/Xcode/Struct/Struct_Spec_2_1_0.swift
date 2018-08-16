@@ -64,7 +64,7 @@ extension Struct.Spec_2_1_0
 
             //---
 
-            result <<< process(&indentation, p.targets)
+            result <<< process(&indentation, Array(p.targets.values))
 
             //---
 
@@ -144,13 +144,13 @@ extension Struct.Spec_2_1_0
             
             indentation++
             
-            for t in v.targets
+            for t in v.targets.values
             {
                 result <<< process(&indentation, t)
                 
                 //---
                 
-                for tst in t.tests
+                for tst in t.tests.values
                 {
                     result <<< process(&indentation, tst)
                 }
@@ -225,12 +225,12 @@ extension Struct.Spec_2_1_0
         // https://github.com/workshop/struct/wiki/Spec-format:-v2.0#options
         
         if
-            !t.sourceOptions.isEmpty
+            !t.sourceFilesOptions.isEmpty
         {
             result <<< (indentation, "source_options:")
             indentation++
             
-            for (path, opt) in t.sourceOptions
+            for (path, opt) in t.sourceFilesOptions
             {
                 result <<< (indentation, Struct.Spec.key(path) + Struct.Spec.value(opt))
             }
@@ -410,7 +410,7 @@ extension Struct.Spec_2_1_0
     static
     func process(
         _ indentation: inout Indentation,
-        _ targets: [Xcode.Target]
+        _ targets: [Xcode.Project.Target]
         ) -> IndentedText
     {
         // https://github.com/lyptt/struct/wiki/Spec-format:-v2.0#targets
@@ -435,7 +435,7 @@ extension Struct.Spec_2_1_0
             
             //---
             
-            for tst in t.tests
+            for tst in t.tests.values
             {
                 result <<< process(&indentation, tst)
             }
@@ -456,7 +456,7 @@ extension Struct.Spec_2_1_0
     static
     func process(
         _ indentation: inout Indentation,
-        _ t: Xcode.Target
+        _ t: Xcode.Project.Target
         ) -> IndentedText
     {
         // https://github.com/lyptt/struct/wiki/Spec-format:-v2.0#targets
@@ -545,12 +545,12 @@ extension Struct.Spec_2_1_0
         // https://github.com/workshop/struct/wiki/Spec-format:-v2.0#options
         
         if
-            !t.sourceOptions.isEmpty
+            !t.sourceFilesOptions.isEmpty
         {
             result <<< (indentation, "source_options:")
             indentation++
             
-            for (path, opt) in t.sourceOptions
+            for (path, opt) in t.sourceFilesOptions
             {
                 result <<< (indentation, Struct.Spec.key(path) + Struct.Spec.value(opt))
             }
@@ -607,7 +607,7 @@ extension Struct.Spec_2_1_0
     static
     func process(
         _ indentation: inout Indentation,
-        _ deps: Xcode.Target.Dependencies
+        _ deps: Xcode.Dependencies
         ) -> IndentedText
     {
         // https://github.com/lyptt/struct/wiki/Spec-format:-v2.0#references
@@ -696,7 +696,7 @@ extension Struct.Spec_2_1_0
     static
     func processDependencies(
         _ indentation: inout Indentation,
-        binaries: [Xcode.Target.BinaryDependency]
+        binaries: [Xcode.BinaryDependency]
         ) -> IndentedText
     {
         // https://github.com/lyptt/struct/wiki/Spec-format:-v2.0#references
@@ -723,7 +723,7 @@ extension Struct.Spec_2_1_0
     static
     func processDependencies(
         _ indentation: inout Indentation,
-        projects: [Xcode.Target.ProjectDependencies]
+        projects: [Xcode.ProjectDependencies]
         ) -> IndentedText
     {
         // https://github.com/lyptt/struct/wiki/Spec-format:-v2.0#references
@@ -757,7 +757,7 @@ extension Struct.Spec_2_1_0
     static
     func process(
         _ indentation: inout Indentation,
-        scripts: Xcode.Target.Scripts
+        scripts: Xcode.Scripts
         ) -> IndentedText
     {
         // https://github.com/lyptt/struct/wiki/Spec-format:-v2.0#scripts

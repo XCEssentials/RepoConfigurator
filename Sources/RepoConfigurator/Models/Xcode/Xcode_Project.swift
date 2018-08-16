@@ -28,16 +28,19 @@ public
 extension Xcode
 {
     public
-    struct Project: FixedNameTextFile
+    final
+    class Project: FixedNameTextFile
     {
+        // MARK: - Type level members
+
         public
         static
         let fileName: String = "project.yml" // Struct SPEC!
 
+        // MARK: - Instance level members
+
         public
         let specFormat: Struct.Spec
-
-        //---
 
         public
         var fileContent: [IndentedTextGetter]
@@ -45,26 +48,36 @@ extension Xcode
             return [Struct.generateSpec(specFormat, for: self)]
         }
 
-        //---
-
         public
         let name: String
 
-        //---
-
         public
-        var buildSettings = BuildSettings()
+        let buildSettings = Xcode.Project.BuildSettings()
 
         public private(set)
-        var targets: [Target] = []
+        var targets: [String: Target] = [:]
 
-        //---
+        public
+        func target(
+            _ name: String,
+            _ platform: OSIdentifier,
+            _ type: Target.InternalType,
+            _ configureTarget: (Target) -> Void
+            )
+        {
+            targets[name] = .init(name, platform, type, configureTarget)
+        }
+
+        public
+        var variants: [Xcode.Project.Variant] = []
+
+        // MARK: - Initializers
 
         public
         init(
             _ name: String,
             specFormat: Struct.Spec,
-            configureProject: (inout Xcode.Project) -> Void
+            configureProject: (Xcode.Project) -> Void
             )
         {
             self.name = name
@@ -72,27 +85,7 @@ extension Xcode
 
             //---
 
-            configureProject(&self)
+            configureProject(self)
         }
-
-        //---
-
-        public
-        mutating
-        func target(
-            _ name: String,
-            _ platform: OSIdentifier,
-            _ type: Target.InternalType,
-            _ configureTarget: (inout Target) -> Void
-            )
-        {
-            targets
-                .append(Target(platform, name, type, configureTarget))
-        }
-
-        //---
-
-        public
-        var variants: [Xcode.Project.Variant] = []
     }
 }

@@ -25,44 +25,44 @@
  */
 
 public
-extension Xcode.Project
+extension Xcode
 {
     public
-    struct BuildSettings
+    final
+    class Scripts
     {
-//        public
-//        var all = Xcode.Project.BuildConfiguration.Base()
-//
-//        public
-//        var debug = Xcode.Project.BuildConfiguration(.debug)
-//
-//        public
-//        var release = Xcode.Project.BuildConfiguration(.release)
+        // MARK: - Instance level members
 
-        // *.xcconfig file
+        public private(set)
+        var regulars: [String] = []
+        
         public
-        var externalConfig: [Xcode.BuildConfiguration: String] = [:]
-
-        public
-        var base: Xcode.RawBuildSettings = [:]
-
-        private
-        var perConfiguration: [Xcode.BuildConfiguration: Xcode.RawBuildSettings] = [:]
-
-        public
-        subscript(
-            configuration: Xcode.BuildConfiguration
-            ) -> Xcode.RawBuildSettings
+        func regular(_ paths: String...)
         {
-            get
-            {
-                return perConfiguration[configuration] ?? [:]
-            }
-
-            set(newValue)
-            {
-                perConfiguration[configuration] = newValue
-            }
+            regulars.append(contentsOf: paths)
         }
+
+        public private(set)
+        var beforeBuilds: [String] = []
+        
+        public
+        func beforeBuild(_ paths: String...)
+        {
+            beforeBuilds.append(contentsOf: paths)
+        }
+
+        public private(set)
+        var afterBuilds: [String] = []
+        
+        public
+        func afterBuild(_ paths: String...)
+        {
+            afterBuilds.append(contentsOf: paths)
+        }
+
+        // MARK: - Initializers
+
+        public
+        init() {}
     }
 }

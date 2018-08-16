@@ -28,33 +28,39 @@ public
 extension Xcode.Project
 {
     public
-    struct Variant
+    final
+    class Variant
     {
+        // MARK: - Instance level members
+
         public
         let name: String
-        
-        //---
-        
-        public
-        init(_ name: String, _ configure: ((inout Xcode.Project.Variant) -> Void)?)
-        {
-            self.name = name
-            configure?(&self)
-        }
-        
-        //---
-        
+
         public private(set)
-        var targets: [Target] = []
+        var targets: [String: Target] = [:]
         
         public
-        mutating
         func target(
             _ name: String,
-            _ configureTarget: (inout Target) -> Void
+            _ configureTarget: (Target) -> Void
             )
         {
-            targets.append(Target(name, configureTarget))
+            targets[name] = .init(name, configureTarget)
+        }
+
+        // MARK: - Initializers
+
+        public
+        init(
+            _ name: String,
+            _ configure: ((Xcode.Project.Variant) -> Void)?
+            )
+        {
+            self.name = name
+
+            //---
+            
+            configure?(self)
         }
     }
 }

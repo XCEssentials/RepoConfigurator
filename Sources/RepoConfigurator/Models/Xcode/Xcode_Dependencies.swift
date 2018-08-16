@@ -25,7 +25,7 @@
  */
 
 public
-extension Xcode.Target
+extension Xcode
 {
     public
     typealias BinaryDependency = (
@@ -49,41 +49,37 @@ extension Xcode.Target
     //---
     
     public
-    struct Dependencies
+    final
+    class Dependencies
     {
+        // MARK: - Instance level members
+
         public private(set)
         var fromSDKs: [String] = []
         
         public
-        mutating
         func fromSDK(
             _ element: String...
             )
         {
             fromSDKs.append(contentsOf: element)
         }
-        
-        //---
-        
+
         public private(set)
         var otherTargets: [String] = []
         
         public
-        mutating
         func otherTarget(
             _ element: String...
             )
         {
             otherTargets.append(contentsOf: element)
         }
-        
-        //---
-        
+
         public private(set)
         var binaries: [BinaryDependency] = []
         
         public
-        mutating
         func binary(
             _ element: BinaryDependency...
             )
@@ -91,26 +87,20 @@ extension Xcode.Target
             binaries.append(contentsOf: element)
         }
         
-        //---
-        
         public private(set)
         var projects: [ProjectDependencies] = []
         
         public
-        mutating
         func project(
             _ element: ProjectDependencies...
             )
         {
             projects.append(contentsOf: element)
         }
-        
-        //---
-        
-        // internal
-        init()
-        {
-            //
-        }
+
+        // MARK: - Initializers
+
+        public
+        init() {}
     }
 }

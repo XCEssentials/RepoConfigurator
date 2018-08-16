@@ -25,13 +25,45 @@
  */
 
 public
-extension Xcode.Project.Variant
+extension Xcode.Project
 {
     public
     final
     class Target: Xcode.Target
     {
+        // MARK: - Type level members
+
+        public
+        enum InternalType: String
+        {
+            case
+            app = ":application",
+            framework = ":framework",
+            dynamicLibrary = ":library.dynamic",
+            staticLibrary = ":library.static",
+            bundle = ":bundle",
+            unitTest = ":bundle.unit-test",
+            uiTest = ":bundle.ui-testing",
+            appExtension = ":app-extension",
+            tool = ":tool",
+            watchApp = ":application.watchapp",
+            watchApp2 = ":application.watchapp2",
+            watchKitExtension = ":watchkit-extension",
+            watchKit2Extension = ":watchkit2-extension",
+            tvAppExtension = ":tv-app-extension",
+            messagesApp = ":application.messages",
+            appExtensionMessages = ":app-extension.messages",
+            appExtensionMessagesStickers = ":app-extension.messages-sticker-pack",
+            xpcService = ":xpc-service"
+        }
+
         // MARK: - Instance level members
+
+        public
+        let platform: OSIdentifier
+
+        public
+        let type: InternalType
 
         public private(set)
         var tests: [String: Target] = [:]
@@ -42,11 +74,28 @@ extension Xcode.Project.Variant
             _ configureTarget: (Target) -> Void
             )
         {
-            tests[name] = .init(name, configureTarget)
+            tests[name] = .init(name, self.platform, .unitTest, { _ in })
 
             //---
 
-            tests[name].map(configureTarget)
+            tests[name].map{
+
+                $0.dependencies.otherTarget(self.name)
+
+                if
+                    self.type == .app
+                {
+                    $0.buildSettings.base.override(
+
+                        // https://github.com/lyptt/struct/blob/master/examples/iOS_Application/project.yml#L115
+                        "TEST_HOST" <<< "$(BUILT_PRODUCTS_DIR)/\(self.name).app/\(self.name)"
+                    )
+                }
+
+                //---
+
+                configureTarget($0)
+            }
         }
 
         public
@@ -55,26 +104,36 @@ extension Xcode.Project.Variant
             _ configureTarget: (Target) -> Void
             )
         {
-            tests[name] = .init(name, { _ in })
+            tests[name] = .init(name, self.platform, .uiTest, { _ in })
 
             //---
 
             tests[name].map{
 
                 $0.dependencies.otherTarget(self.name)
+
+                //---
+
                 configureTarget($0)
             }
         }
 
         // MARK: - Initializers
 
-        //internal
+        // internal
         required
         init(
             _ name: String,
+            _ platform: OSIdentifier,
+            _ type: InternalType,
             _ configureTarget: (Target) -> Void
             )
         {
+            self.platform = platform
+            self.type = type
+
+            //---
+
             super.init(name)
 
             //---

@@ -25,11 +25,13 @@
  */
 
 public
-extension Xcode.Target
+extension Xcode
 {
     public
-    struct BuildSettings
+    class BuildSettings
     {
+        // MARK: - Instance level members
+
         public
         var base: Xcode.RawBuildSettings = [:]
 
@@ -51,12 +53,17 @@ extension Xcode.Target
                 overrides[configuration] = newValue
             }
         }
+
+        // MARK: - Initializers
+
+        public
+        init() {}
     }
 }
 
 // MARK: - Content rendering
 
-extension Xcode.Target.BuildSettings: TextFilePiece
+extension Xcode.BuildSettings: TextFilePiece
 {
     public
     func asIndentedText(
