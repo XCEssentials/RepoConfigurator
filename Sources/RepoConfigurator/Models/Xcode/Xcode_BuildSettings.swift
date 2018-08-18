@@ -67,7 +67,7 @@ extension Xcode.BuildSettings: TextFilePiece
 {
     public
     func asIndentedText(
-        with indentation: inout Indentation
+        with indentation: Indentation
         ) -> IndentedText
     {
         // NOTE: build settings inside a target follow similar format to
@@ -98,7 +98,7 @@ extension Xcode.BuildSettings: TextFilePiece
         result += """
             configurations:
             """
-            .asIndentedText(with: &indentation)
+            .asIndentedText(with: indentation)
 
         indentation++
 
@@ -106,7 +106,7 @@ extension Xcode.BuildSettings: TextFilePiece
         {
             result += renderSettings(
                 for: configuration,
-                with: &indentation
+                with: indentation
             )
         }
 
@@ -120,7 +120,7 @@ extension Xcode.BuildSettings: TextFilePiece
     private
     func renderSettings(
         for configuration: Xcode.BuildConfiguration,
-        with indentation: inout Indentation
+        with indentation: Indentation
         ) -> IndentedText
     {
         var result: IndentedText = []
@@ -141,7 +141,7 @@ extension Xcode.BuildSettings: TextFilePiece
         result += """
             \(configuration.name):
             """
-            .asIndentedText(with: &indentation)
+            .asIndentedText(with: indentation)
 
         indentation++
 
@@ -150,7 +150,7 @@ extension Xcode.BuildSettings: TextFilePiece
             result <<< """
                 \(item.key): \"\(item.value)\"
                 """
-                .asIndentedText(with: &indentation)
+                .asIndentedText(with: indentation)
         }
 
         indentation--

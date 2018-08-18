@@ -138,10 +138,10 @@ extension Xcode.Target.InfoPlist
 extension Xcode.Target.InfoPlist.Section: TextFilePiece
 {
     func asIndentedText(
-        with indentation: inout Indentation
+        with indentation: Indentation
         ) -> IndentedText
     {
-        return content.asIndentedText(with: &indentation)
+        return content.asIndentedText(with: indentation)
     }
 }
 

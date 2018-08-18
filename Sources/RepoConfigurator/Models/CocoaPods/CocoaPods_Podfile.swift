@@ -167,7 +167,7 @@ extension CocoaPods.Podfile.Target: TextFilePiece
 {
     public
     func asIndentedText(
-        with indentation: inout Indentation
+        with indentation: Indentation
         ) -> IndentedText
     {
         var result: IndentedText = []
@@ -186,7 +186,7 @@ extension CocoaPods.Podfile.Target: TextFilePiece
                 \(usesSwift ? "" : "# ")use_frameworks!
 
             """
-            .asIndentedText(with: &indentation)
+            .asIndentedText(with: indentation)
 
         indentation++
 
@@ -197,7 +197,7 @@ extension CocoaPods.Podfile.Target: TextFilePiece
                 \(Defaults.podsFromSpec)
 
                 """
-                .asIndentedText(with: &indentation)
+                .asIndentedText(with: indentation)
         }
 
         pods.forEach{
@@ -205,13 +205,13 @@ extension CocoaPods.Podfile.Target: TextFilePiece
             result <<< """
                 \($0)
                 """
-                .asIndentedText(with: &indentation)
+                .asIndentedText(with: indentation)
         }
 
         tests.forEach{
 
             result <<< $0
-                .asIndentedText(with: &indentation)
+                .asIndentedText(with: indentation)
 
         }
 
@@ -222,7 +222,7 @@ extension CocoaPods.Podfile.Target: TextFilePiece
 
             end
             """
-            .asIndentedText(with: &indentation)
+            .asIndentedText(with: indentation)
 
         //---
 
@@ -234,7 +234,7 @@ extension CocoaPods.Podfile.UnitTestTarget: TextFilePiece
 {
     public
     func asIndentedText(
-        with indentation: inout Indentation
+        with indentation: Indentation
         ) -> IndentedText
     {
         var result: [String] = []
@@ -271,6 +271,6 @@ extension CocoaPods.Podfile.UnitTestTarget: TextFilePiece
 
         return result
             .asMultiLine
-            .asIndentedText(with: &indentation)
+            .asIndentedText(with: indentation)
     }
 }

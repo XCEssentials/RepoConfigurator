@@ -102,10 +102,10 @@ extension SwiftLint.Section: TextFilePiece
 {
     public
     func asIndentedText(
-        with indentation: inout Indentation
+        with indentation: Indentation
         ) -> IndentedText
     {
-        return content.asIndentedText(with: &indentation)
+        return content.asIndentedText(with: indentation)
     }
 }
 

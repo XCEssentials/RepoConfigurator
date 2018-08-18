@@ -85,7 +85,7 @@ extension CocoaPods
 extension CocoaPods.Podspec.Settings: TextFilePiece
 {
     func asIndentedText(
-        with indentation: inout Indentation
+        with indentation: Indentation
         ) -> IndentedText
     {
         var result: IndentedText = []
@@ -112,14 +112,14 @@ extension CocoaPods.Podspec.Settings: TextFilePiece
 
                 \(s).authors = {
             """
-            .asIndentedText(with: &indentation)
+            .asIndentedText(with: indentation)
 
         //swiftlint:enable line_length
 
         result <<< """
                     \(authors.map{ "'\($0.name)' => '\($0.email)'" }.asMultiLine)
             """
-            .asIndentedText(with: &indentation)
+            .asIndentedText(with: indentation)
 
         result <<< """
                 }
@@ -128,12 +128,12 @@ extension CocoaPods.Podspec.Settings: TextFilePiece
 
                 \(cocoapodsVersion.map{ "\(s).cocoapods_version = '>= \($0)'" } ?? "")
             """
-            .asIndentedText(with: &indentation)
+            .asIndentedText(with: indentation)
 
         indentation++
 
         result <<< otherSettings
-            .asIndentedText(with: &indentation)
+            .asIndentedText(with: indentation)
 
         indentation--
 
@@ -142,7 +142,7 @@ extension CocoaPods.Podspec.Settings: TextFilePiece
 
             end
             """
-            .asIndentedText(with: &indentation)
+            .asIndentedText(with: indentation)
 
         //---
 
@@ -154,7 +154,7 @@ extension CocoaPods.Podspec.Settings: TextFilePiece
 extension CocoaPods.Podspec.PerPlatformSettings: TextFilePiece
 {
     func asIndentedText(
-        with indentation: inout Indentation
+        with indentation: Indentation
         ) -> IndentedText
     {
         var result: IndentedText = []
@@ -172,11 +172,11 @@ extension CocoaPods.Podspec.PerPlatformSettings: TextFilePiece
             \(deploymentTarget.map{ "\(prefix)deployment_target = '\($0.minimumVersion)'" } ?? "")
 
             """
-            .asIndentedText(with: &indentation)
+            .asIndentedText(with: indentation)
 
         result <<< settigns.map{
 
-            "\(prefix)\($0)".asIndentedText(with: &indentation)
+            "\(prefix)\($0)".asIndentedText(with: indentation)
         }
 
         //---

@@ -114,7 +114,7 @@ extension Git.RepoIgnore
 extension Git.RepoIgnore.Section: TextFilePiece
 {
     func asIndentedText(
-        with indentation: inout Indentation
+        with indentation: Indentation
         ) -> IndentedText
     {
         let result: String
@@ -311,6 +311,6 @@ extension Git.RepoIgnore.Section: TextFilePiece
 
         //---
 
-        return result.asIndentedText(with: &indentation)
+        return result.asIndentedText(with: indentation)
     }
 }

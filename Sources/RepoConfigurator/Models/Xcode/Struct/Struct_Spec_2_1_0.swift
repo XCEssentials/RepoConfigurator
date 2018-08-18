@@ -60,19 +60,19 @@ extension Struct.Spec_2_1_0
 
             //---
 
-            result <<< process(&indentation, p.buildSettings)
+            result <<< process(indentation, p.buildSettings)
 
             //---
 
-            result <<< process(&indentation, Array(p.targets.values))
+            result <<< process(indentation, Array(p.targets.values))
 
             //---
 
-            result <<< process(&indentation, variants: p.variants, of: p)
+            result <<< process(indentation, variants: p.variants, of: p)
 
             //---
 
-            result <<< "".asIndentedText(with: &indentation) // empty line in the EOF
+            result <<< "".asIndentedText(with: indentation) // empty line in the EOF
 
             //---
 
@@ -84,7 +84,7 @@ extension Struct.Spec_2_1_0
     
     static
     func process(
-        _ indentation: inout Indentation,
+        _ indentation: Indentation,
         variants: [Xcode.Project.Variant],
         of baseProject: Xcode.Project
         ) -> IndentedText
@@ -112,7 +112,7 @@ extension Struct.Spec_2_1_0
         }
         else
         {
-            result <<< process(&indentation, variants: variants)
+            result <<< process(indentation, variants: variants)
         }
         
         indentation--
@@ -126,7 +126,7 @@ extension Struct.Spec_2_1_0
     
     static
     func process(
-        _ indentation: inout Indentation,
+        _ indentation: Indentation,
         variants: [Xcode.Project.Variant]
         ) -> IndentedText
     {
@@ -146,13 +146,13 @@ extension Struct.Spec_2_1_0
             
             for t in v.targets.values
             {
-                result <<< process(&indentation, t)
+                result <<< process(indentation, t)
                 
                 //---
                 
                 for tst in t.tests.values
                 {
-                    result <<< process(&indentation, tst)
+                    result <<< process(indentation, tst)
                 }
             }
             
@@ -168,7 +168,7 @@ extension Struct.Spec_2_1_0
     
     static
     func process(
-        _ indentation: inout Indentation,
+        _ indentation: Indentation,
         _ t: Xcode.Project.Variant.Target
         ) -> IndentedText
     {
@@ -184,7 +184,7 @@ extension Struct.Spec_2_1_0
         
         //---
         
-        result <<< process(&indentation, t.dependencies)
+        result <<< process(indentation, t.dependencies)
         
         //---
         
@@ -255,11 +255,11 @@ extension Struct.Spec_2_1_0
         
         //---
         
-        result <<< t.buildSettings.asIndentedText(with: &indentation)
+        result <<< t.buildSettings.asIndentedText(with: indentation)
         
         //---
         
-        result <<< t.scripts.asIndentedText(with: &indentation)
+        result <<< t.scripts.asIndentedText(with: indentation)
         
         //---
         
@@ -286,7 +286,7 @@ extension Struct.Spec_2_1_0
     
     static
     func process(
-        _ indentation: inout Indentation,
+        _ indentation: Indentation,
         _ set: Xcode.Project.BuildSettings
         ) -> IndentedText
     {
@@ -307,7 +307,7 @@ extension Struct.Spec_2_1_0
         //---
         
         result <<< process(
-            &indentation,
+            indentation,
             set.base,
             config: .debug,
             set[.debug],
@@ -315,7 +315,7 @@ extension Struct.Spec_2_1_0
         )
 
         result <<< process(
-            &indentation,
+            indentation,
             set.base,
             config: .release,
             set[.release],
@@ -335,7 +335,7 @@ extension Struct.Spec_2_1_0
     
     static
     func process(
-        _ indentation: inout Indentation,
+        _ indentation: Indentation,
         _ base: Xcode.RawBuildSettings,
         config: Xcode.BuildConfiguration,
         _ overrides: Xcode.RawBuildSettings,
@@ -409,7 +409,7 @@ extension Struct.Spec_2_1_0
     
     static
     func process(
-        _ indentation: inout Indentation,
+        _ indentation: Indentation,
         _ targets: [Xcode.Project.Target]
         ) -> IndentedText
     {
@@ -431,13 +431,13 @@ extension Struct.Spec_2_1_0
         
         for t in targets
         {
-            result <<< process(&indentation, t)
+            result <<< process(indentation, t)
             
             //---
             
             for tst in t.tests.values
             {
-                result <<< process(&indentation, tst)
+                result <<< process(indentation, tst)
             }
         }
         
@@ -455,7 +455,7 @@ extension Struct.Spec_2_1_0
     //swiftlint:disable:next cyclomatic_complexity
     static
     func process(
-        _ indentation: inout Indentation,
+        _ indentation: Indentation,
         _ t: Xcode.Project.Target
         ) -> IndentedText
     {
@@ -504,7 +504,7 @@ extension Struct.Spec_2_1_0
         
         //---
         
-        result <<< process(&indentation, t.dependencies)
+        result <<< process(indentation, t.dependencies)
         
         //---
         
@@ -575,11 +575,11 @@ extension Struct.Spec_2_1_0
         
         //---
         
-        result <<< t.buildSettings.asIndentedText(with: &indentation)
+        result <<< t.buildSettings.asIndentedText(with: indentation)
         
         //---
         
-        result <<< t.scripts.asIndentedText(with: &indentation)
+        result <<< t.scripts.asIndentedText(with: indentation)
         
         //---
         
@@ -606,7 +606,7 @@ extension Struct.Spec_2_1_0
     
     static
     func process(
-        _ indentation: inout Indentation,
+        _ indentation: Indentation,
         _ deps: Xcode.Dependencies
         ) -> IndentedText
     {
@@ -628,10 +628,10 @@ extension Struct.Spec_2_1_0
             
             //---
             
-            result <<< processDependencies(&indentation, fromSDK: deps.fromSDKs)
-            result <<< processDependencies(&indentation, targets: deps.otherTargets)
-            result <<< processDependencies(&indentation, binaries: deps.binaries)
-            result <<< processDependencies(&indentation, projects: deps.projects)
+            result <<< processDependencies(indentation, fromSDK: deps.fromSDKs)
+            result <<< processDependencies(indentation, targets: deps.otherTargets)
+            result <<< processDependencies(indentation, binaries: deps.binaries)
+            result <<< processDependencies(indentation, projects: deps.projects)
         }
         
         //---
@@ -643,7 +643,7 @@ extension Struct.Spec_2_1_0
     
     static
     func processDependencies(
-        _ indentation: inout Indentation,
+        _ indentation: Indentation,
         fromSDK: [String]
         ) -> IndentedText
     {
@@ -669,7 +669,7 @@ extension Struct.Spec_2_1_0
     
     static
     func processDependencies(
-        _ indentation: inout Indentation,
+        _ indentation: Indentation,
         targets: [String]
         ) -> IndentedText
     {
@@ -695,7 +695,7 @@ extension Struct.Spec_2_1_0
     
     static
     func processDependencies(
-        _ indentation: inout Indentation,
+        _ indentation: Indentation,
         binaries: [Xcode.BinaryDependency]
         ) -> IndentedText
     {
@@ -722,7 +722,7 @@ extension Struct.Spec_2_1_0
     
     static
     func processDependencies(
-        _ indentation: inout Indentation,
+        _ indentation: Indentation,
         projects: [Xcode.ProjectDependencies]
         ) -> IndentedText
     {

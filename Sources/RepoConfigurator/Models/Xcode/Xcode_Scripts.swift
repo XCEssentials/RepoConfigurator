@@ -73,7 +73,7 @@ extension Xcode.Scripts: TextFilePiece
 {
     public
     func asIndentedText(
-        with indentation: inout Indentation
+        with indentation: Indentation
         ) -> IndentedText
     {
         // https://github.com/lyptt/struct/wiki/Spec-format:-v2.0#scripts
@@ -136,6 +136,6 @@ extension Xcode.Scripts: TextFilePiece
 
         return result
             .asMultiLine
-            .asIndentedText(with: &indentation)
+            .asIndentedText(with: indentation)
     }
 }

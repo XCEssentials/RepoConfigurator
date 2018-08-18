@@ -30,11 +30,11 @@ extension Array: TextFilePiece
 {
     public
     func asIndentedText(
-        with indentation: inout Indentation
+        with indentation: Indentation
         ) -> IndentedText
     {
         return self
-            .map{ $0.asIndentedText(with: &indentation) }
+            .map{ $0.asIndentedText(with: indentation) }
             .reduce(into: IndentedText()){ $0 += $1 }
     }
 }
@@ -47,11 +47,11 @@ extension Array // : TextFilePiece
 {
     public
     func asIndentedText(
-        with indentation: inout Indentation
+        with indentation: Indentation
         ) -> IndentedText
     {
         return self
-            .map{ $0(&indentation) }
+            .map{ $0(indentation) }
             .reduce(into: IndentedText()){ $0 += $1 }
     }
 }

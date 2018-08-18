@@ -25,7 +25,7 @@
  */
 
 public
-struct Indentation: Equatable
+class Indentation: Equatable
 {
     public
     let singleLevel: String
@@ -46,20 +46,16 @@ struct Indentation: Equatable
     }
 
     public
-    var rendered: String
-    {
-        return String(repeating: singleLevel, count: currentLevel)
-    }
+    lazy
+    var rendered: String = .init(repeating: singleLevel, count: currentLevel)
 
     public
-    mutating
     func increaseLevel()
     {
         currentLevel += 1
     }
 
     public
-    mutating
     func decreaseLevel()
     {
         currentLevel -= (currentLevel > 0 ? 1 : 0)
@@ -68,10 +64,19 @@ struct Indentation: Equatable
 
 //---
 
+public
+func == (lhs: Indentation, rhs: Indentation) -> Bool
+{
+    return (lhs.singleLevel == rhs.singleLevel)
+        && (lhs.currentLevel == rhs.currentLevel)
+}
+
+//---
+
 postfix operator ++
 
 public
-postfix func ++ (indentation: inout Indentation)
+postfix func ++ (indentation: Indentation)
 {
     indentation.increaseLevel()
 }
@@ -81,43 +86,26 @@ postfix func ++ (indentation: inout Indentation)
 postfix operator --
 
 public
-postfix func -- (indentation: inout Indentation)
+postfix func -- (indentation: Indentation)
 {
     indentation.decreaseLevel()
 }
 
 //---
 
-//public
-//func indent(
-//    with indentation: inout Indentation,
-//    body: (inout Indentation) -> Void
-//    )
-//{
-//    indentation++
-//
-//    //---
-//
-//    var innerIndentation = indentation
-//
-//    body(&innerIndentation)
-//
-//    // inside 'body' the 'innerIndentation' should be
-//    // either not modified at all or have equal number of
-//    // increases and decreases of indetnation level,
-//    // so that it returns equal to 'indentation'
-//
-//    if
-//        indentation != innerIndentation
-//    {
-//        // since this code is NOT supposed to go
-//        // into production apps at all, it's okay to
-//        // just crash with fatal error
-//
-//        fatalError("Unbalanced indentation detected!")
-//    }
-//
-//    //---
-//
-//    indentation--
-//}
+public
+func indent(
+    with indentation: Indentation,
+    body: () -> Void
+    )
+{
+    indentation++
+
+    //---
+
+    body()
+
+    //---
+
+    indentation--
+}

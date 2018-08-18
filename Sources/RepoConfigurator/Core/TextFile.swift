@@ -32,7 +32,7 @@ public
 protocol TextFilePiece
 {
     func asIndentedText(
-        with indentation: inout Indentation
+        with indentation: Indentation
         ) -> IndentedText
 }
 

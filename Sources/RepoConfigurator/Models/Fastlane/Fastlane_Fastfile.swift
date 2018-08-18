@@ -233,10 +233,10 @@ extension Fastlane.Fastfile.Section: TextFilePiece
 {
     public
     func asIndentedText(
-        with indentation: inout Indentation
+        with indentation: Indentation
         ) -> IndentedText
     {
-        return content.asIndentedText(with: &indentation)
+        return content.asIndentedText(with: indentation)
     }
 }
 
@@ -481,30 +481,30 @@ extension Fastlane.Fastfile.Section
 
                     sh 'cd ./.. && xcodeproj sort "\(projectName).xcodeproj"'
                 """
-                .asIndentedText(with: &indentation)
+                .asIndentedText(with: indentation)
 
             indentation++
 
             result <<< swiftGenBuildPhase(
-                with: &indentation,
+                with: indentation,
                 projectName: projectName,
                 targetNames: swiftGenTargets
             )
 
             result <<< sourceryBuildPhase(
-                with: &indentation,
+                with: indentation,
                 projectName: projectName,
                 targetNames: sourceryTargets
             )
 
             result <<< swiftLintGlobalBuildPhase(
-                with: &indentation,
+                with: indentation,
                 projectName: projectName,
                 targetNames: swiftLintGlobalTargets
             )
 
             result <<< swiftLintPodsBuildPhase(
-                with: &indentation,
+                with: indentation,
                 projectName: projectName,
                 targetNames: swiftLintPodsTargets
             )
@@ -515,7 +515,7 @@ extension Fastlane.Fastfile.Section
 
                 end # lane :REgenerateProject
                 """
-                .asIndentedText(with: &indentation)
+                .asIndentedText(with: indentation)
 
             //---
 
@@ -582,30 +582,30 @@ extension Fastlane.Fastfile.Section
 
                     sh 'cd ./.. && xcodeproj sort "\(projectName).xcodeproj"'
                 """
-                .asIndentedText(with: &indentation)
+                .asIndentedText(with: indentation)
 
             indentation++
 
             result <<< swiftGenBuildPhase(
-                with: &indentation,
+                with: indentation,
                 projectName: projectName,
                 targetNames: swiftGenTargets
             )
 
             result <<< sourceryBuildPhase(
-                with: &indentation,
+                with: indentation,
                 projectName: projectName,
                 targetNames: sourceryTargets
             )
 
             result <<< swiftLintGlobalBuildPhase(
-                with: &indentation,
+                with: indentation,
                 projectName: projectName,
                 targetNames: swiftLintGlobalTargets
             )
 
             result <<< swiftLintPodsBuildPhase(
-                with: &indentation,
+                with: indentation,
                 projectName: projectName,
                 targetNames: swiftLintPodsTargets
             )
@@ -616,7 +616,7 @@ extension Fastlane.Fastfile.Section
 
                 end # lane :generateProject
                 """
-                .asIndentedText(with: &indentation)
+                .asIndentedText(with: indentation)
 
             //---
 
@@ -720,7 +720,7 @@ extension Fastlane.Fastfile.Section
 {
     static
     func swiftGenBuildPhase(
-        with indentation: inout Indentation,
+        with indentation: Indentation,
         projectName: String,
         targetNames: [String]
         ) -> IndentedText
@@ -764,12 +764,12 @@ extension Fastlane.Fastfile.Section
 
             project.save()
             """
-            .asIndentedText(with: &indentation)
+            .asIndentedText(with: indentation)
     }
 
     static
     func sourceryBuildPhase(
-        with indentation: inout Indentation,
+        with indentation: Indentation,
         projectName: String,
         targetNames: [String]
         ) -> IndentedText
@@ -814,12 +814,12 @@ extension Fastlane.Fastfile.Section
 
             project.save()
             """
-            .asIndentedText(with: &indentation)
+            .asIndentedText(with: indentation)
     }
 
     static
     func swiftLintGlobalBuildPhase(
-        with indentation: inout Indentation,
+        with indentation: Indentation,
         projectName: String,
         targetNames: [String]
         ) -> IndentedText
@@ -867,12 +867,12 @@ extension Fastlane.Fastfile.Section
 
             project.save()
             """
-            .asIndentedText(with: &indentation)
+            .asIndentedText(with: indentation)
     }
 
     static
     func swiftLintPodsBuildPhase(
-        with indentation: inout Indentation,
+        with indentation: Indentation,
         projectName: String,
         targetNames: [String]
         ) -> IndentedText
@@ -916,6 +916,6 @@ extension Fastlane.Fastfile.Section
 
             project.save()
             """
-            .asIndentedText(with: &indentation)
+            .asIndentedText(with: indentation)
     }
 }
