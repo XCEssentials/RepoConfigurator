@@ -66,3 +66,76 @@ extension Xcode
         init() {}
     }
 }
+
+// MARK: - Content rendering
+
+extension Xcode.Scripts: TextFilePiece
+{
+    public
+    func asIndentedText(
+        with indentation: inout Indentation
+        ) -> IndentedText
+    {
+        // https://github.com/lyptt/struct/wiki/Spec-format:-v2.0#scripts
+
+        // NOTE: paths to script files are going to be listed here;
+        // according to the examples (see the URL above),
+        // we don't need to put them in quotes.
+
+        //---
+
+        guard
+            !regulars.isEmpty ||
+            !beforeBuilds.isEmpty ||
+            !afterBuilds.isEmpty
+        else
+        {
+            return []
+        }
+
+        //---
+
+        var result: [String] = []
+
+        //---
+
+        result <<< """
+            scripts:
+            """
+
+        result <<< regulars.map{
+
+            """
+            -  \($0)
+            """
+        }
+
+        result <<< """
+                prebuild:
+            """
+
+        result <<< regulars.map{
+
+            """
+                -  \($0)
+            """
+        }
+
+        result <<< """
+                postbuild:
+            """
+
+        result <<< regulars.map{
+
+            """
+                -  \($0)
+            """
+        }
+
+        //---
+
+        return result
+            .asMultiLine
+            .asIndentedText(with: &indentation)
+    }
+}

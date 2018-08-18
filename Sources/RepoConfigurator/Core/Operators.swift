@@ -26,12 +26,43 @@
 
 infix operator <<<
 
-//---
+// MARK: - String <<<
 
 public
 func <<< (keyName: String, value: String) -> KeyValuePair
 {
     return (keyName, value)
+}
+
+public
+func <<< (
+    list: inout [String],
+    element: String
+    )
+{
+    list += [element]
+}
+
+public
+func <<< (
+    list: inout [String],
+    element: String?
+    )
+{
+    if
+        let element = element
+    {
+        list += [element]
+    }
+}
+
+public
+func <<< (
+    list: inout [String],
+    elements: [String]
+    )
+{
+    list += elements
 }
 
 // MARK: - IndentedText <<<

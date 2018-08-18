@@ -259,7 +259,7 @@ extension Struct.Spec_2_1_0
         
         //---
         
-        result <<< process(&indentation, scripts: t.scripts)
+        result <<< t.scripts.asIndentedText(with: &indentation)
         
         //---
         
@@ -579,7 +579,7 @@ extension Struct.Spec_2_1_0
         
         //---
         
-        result <<< process(&indentation, scripts: t.scripts)
+        result <<< t.scripts.asIndentedText(with: &indentation)
         
         //---
         
@@ -745,145 +745,6 @@ extension Struct.Spec_2_1_0
                 result <<< (indentation, Struct.Spec.key("    copy") + Struct.Spec.value(f.copy))
                 result <<< (indentation, Struct.Spec.key("    codeSignOnCopy") + Struct.Spec.value(f.codeSignOnCopy))
             }
-        }
-        
-        //---
-        
-        return result
-    }
-
-    //---
-    
-    static
-    func process(
-        _ indentation: inout Indentation,
-        scripts: Xcode.Scripts
-        ) -> IndentedText
-    {
-        // https://github.com/lyptt/struct/wiki/Spec-format:-v2.0#scripts
-        
-        //---
-        
-        var result: IndentedText = []
-        
-        //---
-        
-        if
-            !scripts.regulars.isEmpty ||
-            !scripts.beforeBuilds.isEmpty ||
-            !scripts.afterBuilds.isEmpty
-        {
-            result <<< (indentation, Struct.Spec.key("scripts"))
-            
-            //---
-            
-            indentation++
-            
-            //---
-            
-            if
-                !scripts.regulars.isEmpty
-            {
-                result <<< processScripts(&indentation, regulars: scripts.regulars)
-            }
-            
-            if
-                !scripts.beforeBuilds.isEmpty
-            {
-                result <<< processScripts(&indentation, beforeBuild: scripts.beforeBuilds)
-            }
-            
-            if
-                !scripts.afterBuilds.isEmpty
-            {
-                result <<< processScripts(&indentation, afterBuild: scripts.afterBuilds)
-            }
-            
-            //---
-            
-            indentation--
-        }
-        
-        //---
-        
-        return result
-    }
-    
-    //---
-    
-    static
-    func processScripts(
-        _ indentation: inout Indentation,
-        regulars: [String]
-        ) -> IndentedText
-    {
-        // https://github.com/lyptt/struct/wiki/Spec-format:-v2.0#scripts
-        
-        //---
-        
-        var result: IndentedText = []
-        
-        //---
-        
-        for s in regulars
-        {
-            result <<< (indentation, "-" + Struct.Spec.value(s))
-        }
-        
-        //---
-        
-        return result
-    }
-    
-    //---
-    
-    static
-    func processScripts(
-        _ indentation: inout Indentation,
-        beforeBuild: [String]
-        ) -> IndentedText
-    {
-        // https://github.com/lyptt/struct/wiki/Spec-format:-v2.0#scripts
-        
-        //---
-        
-        var result: IndentedText = []
-        
-        //---
-        
-        result <<< (indentation, Struct.Spec.key("prebuild"))
-        
-        for s in beforeBuild
-        {
-            result <<< (indentation, "-" + Struct.Spec.value(s))
-        }
-        
-        //---
-        
-        return result
-    }
-    
-    //---
-    
-    static
-    func processScripts(
-        _ indentation: inout Indentation,
-        afterBuild: [String]
-        ) -> IndentedText
-    {
-        // https://github.com/lyptt/struct/wiki/Spec-format:-v2.0#scripts
-        
-        //---
-        
-        var result: IndentedText = []
-        
-        //---
-        
-        result <<< (indentation, Struct.Spec.key("postbuild"))
-        
-        for s in afterBuild
-        {
-            result <<< (indentation, "-" + Struct.Spec.value(s))
         }
         
         //---

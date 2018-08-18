@@ -25,7 +25,7 @@
  */
 
 public
-struct Indentation
+struct Indentation: Equatable
 {
     public
     let singleLevel: String
@@ -91,24 +91,33 @@ postfix func -- (indentation: inout Indentation)
 //public
 //func indent(
 //    with indentation: inout Indentation,
-//    body: () -> TextFilePiece
-//    ) -> IndentedText
+//    body: (inout Indentation) -> Void
+//    )
 //{
-//    let result: IndentedText
-//
-//    //---
-//
 //    indentation++
 //
 //    //---
 //
-//    result = body().asIndentedText(with: &indentation)
+//    var innerIndentation = indentation
+//
+//    body(&innerIndentation)
+//
+//    // inside 'body' the 'innerIndentation' should be
+//    // either not modified at all or have equal number of
+//    // increases and decreases of indetnation level,
+//    // so that it returns equal to 'indentation'
+//
+//    if
+//        indentation != innerIndentation
+//    {
+//        // since this code is NOT supposed to go
+//        // into production apps at all, it's okay to
+//        // just crash with fatal error
+//
+//        fatalError("Unbalanced indentation detected!")
+//    }
 //
 //    //---
 //
 //    indentation--
-//
-//    //---
-//
-//    return result
 //}

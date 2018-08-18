@@ -104,7 +104,7 @@ extension CocoaPods
             let name: String
 
             public
-            let inherit: InheritanceMode?
+            let inheritanceMode: InheritanceMode?
 
             public
             let pods: [String]
@@ -119,7 +119,7 @@ extension CocoaPods
                 )
             {
                 self.name = name
-                self.inherit = inherit
+                self.inheritanceMode = inherit
                 self.pods = pods
             }
         }
@@ -237,7 +237,7 @@ extension CocoaPods.Podfile.UnitTestTarget: TextFilePiece
         with indentation: inout Indentation
         ) -> IndentedText
     {
-        var result: IndentedText = []
+        var result: [String] = []
 
         //---
 
@@ -246,37 +246,31 @@ extension CocoaPods.Podfile.UnitTestTarget: TextFilePiece
             target '\(name)' do
 
             """
-            .asIndentedText(with: &indentation)
 
-        indentation++
+        result <<< inheritanceMode.map{
 
-        inherit.map{
-
-            result <<< """
+            """
                 inherit! \($0.rawValue)
 
-                """
-                .asIndentedText(with: &indentation)
+            """
         }
 
-        pods.forEach{
+        result <<< pods.map{
 
-            result <<< """
+            """
                 \($0)
-                """
-                .asIndentedText(with: &indentation)
+            """
         }
-
-        indentation--
 
         result <<< """
 
             end
             """
-            .asIndentedText(with: &indentation)
 
         //---
 
         return result
+            .asMultiLine
+            .asIndentedText(with: &indentation)
     }
 }

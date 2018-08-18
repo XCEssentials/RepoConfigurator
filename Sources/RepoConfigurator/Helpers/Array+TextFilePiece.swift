@@ -41,7 +41,7 @@ extension Array: TextFilePiece
 
 //---
 
-extension Array
+extension Array // : TextFilePiece
     where
     Element == IndentedTextGetter
 {
