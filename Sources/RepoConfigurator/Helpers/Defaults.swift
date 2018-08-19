@@ -77,7 +77,7 @@ enum Defaults
 
     public
     static
-    let stagingExportMethod: Fastlane.Fastfile.Section.ArchiveExportMethod = .adHoc
+    let stagingExportMethod: Fastlane.Fastfile.ArchiveExportMethod = .adHoc
 
     public
     static

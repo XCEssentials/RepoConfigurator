@@ -72,7 +72,7 @@ extension Xcode
         }
 
         public
-        let buildSettings = Xcode.BuildSettings()
+        let buildSettings = Xcode.Target.BuildSettings()
 
         public
         let dependencies = Xcode.Dependencies()
@@ -81,7 +81,7 @@ extension Xcode
         var scripts = Xcode.Scripts()
 
         public
-        var includeCocoapods = false
+        var includesCocoapods = false
 
         // MARK: - Initializers
 
@@ -92,5 +92,124 @@ extension Xcode
         {
             self.name = name
         }
+    }
+}
+
+// MARK: - Content rendering
+
+//internal
+extension Xcode.Target
+{
+    //internal
+    func renderCoreSettings(
+        with indentation: Indentation
+        ) -> IndentedText
+    {
+        // https://github.com/lyptt/struct/wiki/Spec-format:-v2.0#targets
+
+        //---
+
+        let result: IndentedTextBuffer = .init(with: indentation)
+
+        //---
+
+        // NOTE: we skip 'name' and only render settings,
+        // 'name' and any extra settings should be rendered in a subclass!
+
+        //---
+
+        // https://github.com/lyptt/struct/wiki/Spec-format:-v2.0#references
+
+        result <<< dependencies
+            .asIndentedText(with: indentation)
+
+        //---
+
+        // https://github.com/lyptt/struct/wiki/Spec-format:-v2.0#sources
+
+        result <<< includes.isEmpty.mapIf(false){ """
+            sources:
+            """
+        }
+
+        result <<< includes.map{ """
+            - \($0)
+            """
+        }
+
+        //---
+
+        // https://github.com/lyptt/struct/wiki/Spec-format:-v2.0#excludes
+
+        result <<< excludes.isEmpty.mapIf(false){ """
+            excludes:
+            """
+        }
+
+        indentation.nest{
+
+            result <<< excludes.isEmpty.mapIf(false){ """
+                files:
+                """
+            }
+
+            result <<< excludes.map{ """
+                - "\($0)"
+                """
+            }
+        }
+
+        //---
+
+        // https://github.com/workshop/struct/wiki/Spec-format:-v2.0#options
+
+        result <<< """
+            source_options:
+            """
+
+        indentation.nest{
+
+            result <<< sourceFilesOptions.map{ """
+                "\($0.key)": \($0.value)
+                """
+            }
+        }
+
+        //---
+
+        // https://github.com/lyptt/struct/wiki/Spec-format:-v2.0#i18n-resources
+
+        result <<< i18nResources.isEmpty.mapIf(false){ """
+            i18n-resources:
+            """
+        }
+
+        result <<< i18nResources.map{ """
+            - \($0)
+            """
+        }
+
+        //---
+
+        result <<< buildSettings
+            .asIndentedText(with: indentation)
+
+        //---
+
+        result <<< scripts
+            .asIndentedText(with: indentation)
+
+        //---
+
+        // https://github.com/lyptt/struct/wiki/Spec-format:-v2.0#cocoapods
+
+        result <<< includesCocoapods.mapIf(true){ """
+            includes_cocoapods: true
+            """
+        }
+
+        //---
+
+        return result.content
     }
 }

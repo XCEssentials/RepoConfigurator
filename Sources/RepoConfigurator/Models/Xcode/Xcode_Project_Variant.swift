@@ -64,3 +64,36 @@ extension Xcode.Project
         }
     }
 }
+
+// MARK: - Content rendering
+
+extension Xcode.Project.Variant: TextFilePiece
+{
+    public
+    func asIndentedText(
+        with indentation: Indentation
+        ) -> IndentedText
+    {
+        let result: IndentedTextBuffer = .init(with: indentation)
+
+        //---
+
+        // https://github.com/lyptt/struct/wiki/Spec-format:-v2.0#variants
+        
+        result <<< """
+            \(name):
+            """
+
+        indentation.nest{
+
+            result <<< targets.values.map{
+
+                $0.asIndentedText(with: indentation)
+            }
+        }
+
+        //---
+
+        return result.content
+    }
+}

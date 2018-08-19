@@ -25,17 +25,56 @@
  */
 
 public
-extension Array
-    where
-    Element == IndentedTextGetter
+class IndentedTextBuffer
 {
-    var rendered: String
-    {
-        var indentation = Indentation()
+    public
+    let indentation: Indentation
 
-        return self
-            .asIndentedText(with: indentation)
-            .map{ "\($0.rendered)\($1)" }
-            .joined(separator: "\n")
+    public private(set)
+    var content: IndentedText = []
+
+    public
+    func append(
+        _ newPiece: String
+        )
+    {
+        content.append(
+            (indentation.snapshot, newPiece)
+        )
+    }
+
+    public
+    func append(
+        _ moreContent: IndentedText
+        )
+    {
+        content += moreContent
+    }
+
+    public
+    func append(
+        _ newPiece: TextFilePiece
+        )
+    {
+        content += newPiece.asIndentedText(with: indentation)
+    }
+
+    public
+    func append(
+        _ newPieces: [TextFilePiece]
+        )
+    {
+        newPieces.forEach{
+
+            self.append($0)
+        }
+    }
+
+    public
+    init(
+        with indentation: Indentation
+        )
+    {
+        self.indentation = indentation
     }
 }

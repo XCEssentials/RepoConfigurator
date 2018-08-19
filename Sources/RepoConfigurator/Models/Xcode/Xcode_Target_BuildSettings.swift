@@ -25,7 +25,7 @@
  */
 
 public
-extension Xcode.Project
+extension Xcode.Target
 {
     public
     final
@@ -34,7 +34,7 @@ extension Xcode.Project
 
 // MARK: - Content rendering
 
-extension Xcode.Project.BuildSettings: TextFilePiece
+extension Xcode.Target.BuildSettings: TextFilePiece
 {
     public
     func asIndentedText(
@@ -96,45 +96,30 @@ extension Xcode.Project.BuildSettings: TextFilePiece
         if
             let externalConfig = externalConfig[configuration]
         {
+            // https://github.com/lyptt/struct/wiki/Spec-format:-v2.0#target-xcconfig-references
+
             result <<< """
-                \(configuration):
+                \(configuration): \(externalConfig)
                 """
-
-            indentation.nest{
-
-                // https://github.com/lyptt/struct/wiki/Spec-format:-v2.0#xcconfig-references
-
-                // NOTE: when using xcconfig files,
-                // any overrides will be ignored.
-
-                result <<< """
-                    source: \(externalConfig)
-                    """
-            }
         }
         else
-        if
-            let combinedSettings = Optional(base.overriding(with: self[configuration])),
-            !combinedSettings.isEmpty
         {
-            result <<< """
+            // NO explicit documentation, has similar format to project level
+            // build settings, but does not require 'overrides' keyword, see related
+            // discussion: https://github.com/lyptt/struct/issues/77#issuecomment-287573381
+
+            let combinedSettings = base.overriding(with: self[configuration])
+
+            result <<< combinedSettings.isEmpty.mapIf(false){ """
                 \(configuration):
                 """
+            }
 
             indentation.nest{
 
-                // https://github.com/lyptt/struct/wiki/Spec-format:-v2.0#overrides
-
-                result <<< """
-                    overrides:
+                result <<< combinedSettings.map{ """
+                    \($0.key): "\($0.value)"
                     """
-
-                indentation.nest{
-
-                    result <<< combinedSettings.map{ """
-                        \($0.key): '\($0.value)'
-                        """
-                    }
                 }
             }
         }

@@ -95,7 +95,7 @@ extension Xcode.Scripts: TextFilePiece
 
         //---
 
-        var result: [String] = []
+        let result: IndentedTextBuffer = .init(with: indentation)
 
         //---
 
@@ -103,39 +103,34 @@ extension Xcode.Scripts: TextFilePiece
             scripts:
             """
 
-        result <<< regulars.map{
-
-            """
+        result <<< regulars.map{ """
             -  \($0)
             """
         }
 
-        result <<< """
+        indentation.nest{
+
+            result <<< """
                 prebuild:
-            """
+                """
 
-        result <<< regulars.map{
-
-            """
+            result <<< regulars.map{ """
                 -  \($0)
-            """
-        }
+                """
+            }
 
-        result <<< """
+            result <<< """
                 postbuild:
-            """
+                """
 
-        result <<< regulars.map{
-
-            """
+            result <<< regulars.map{ """
                 -  \($0)
-            """
+                """
+            }
         }
 
         //---
 
-        return result
-            .asMultiLine
-            .asIndentedText(with: indentation)
+        return result.content
     }
 }

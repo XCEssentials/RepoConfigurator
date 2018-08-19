@@ -37,24 +37,24 @@ extension Xcode.Project
         enum InternalType: String
         {
             case
-            app = ":application",
-            framework = ":framework",
-            dynamicLibrary = ":library.dynamic",
-            staticLibrary = ":library.static",
-            bundle = ":bundle",
-            unitTest = ":bundle.unit-test",
-            uiTest = ":bundle.ui-testing",
-            appExtension = ":app-extension",
-            tool = ":tool",
-            watchApp = ":application.watchapp",
-            watchApp2 = ":application.watchapp2",
-            watchKitExtension = ":watchkit-extension",
-            watchKit2Extension = ":watchkit2-extension",
-            tvAppExtension = ":tv-app-extension",
-            messagesApp = ":application.messages",
-            appExtensionMessages = ":app-extension.messages",
-            appExtensionMessagesStickers = ":app-extension.messages-sticker-pack",
-            xpcService = ":xpc-service"
+                app = "application",
+                framework = "framework",
+                dynamicLibrary = "library.dynamic",
+                staticLibrary = "library.static",
+                bundle = "bundle",
+                unitTest = "bundle.unit-test",
+                uiTest = "bundle.ui-testing",
+                appExtension = "app-extension",
+                tool = "tool",
+                watchApp = "application.watchapp",
+                watchApp2 = "application.watchapp2",
+                watchKitExtension = "watchkit-extension",
+                watchKit2Extension = "watchkit2-extension",
+                tvAppExtension = "tv-app-extension",
+                messagesApp = "application.messages",
+                appExtensionMessages = "app-extension.messages",
+                appExtensionMessagesStickers = "app-extension.messages-sticker-pack",
+                xpcService = "xpc-service"
         }
 
         // MARK: - Instance level members
@@ -140,5 +140,87 @@ extension Xcode.Project
 
             configureTarget(self)
         }
+    }
+}
+
+// MARK: - Content rendering
+
+public
+extension OSIdentifier
+{
+    /**
+     Platform ID for Struct config file.
+     See [documentation](https://github.com/lyptt/struct/wiki/Spec-format:-v2.0#platform).
+     */
+    var structId: String
+    {
+        switch self
+        {
+        case .iOS:
+            return "ios"
+
+        case .watchOS:
+            return "watch"
+
+        case .tvOS:
+            return "tv"
+
+        case .macOS:
+            return "mac"
+        }
+    }
+}
+
+extension Xcode.Project.Target: TextFilePiece
+{
+    public
+    func asIndentedText(
+        with indentation: Indentation
+        ) -> IndentedText
+    {
+        // https://github.com/lyptt/struct/wiki/Spec-format:-v2.0#targets
+
+        //---
+
+        let result: IndentedTextBuffer = .init(with: indentation)
+
+        //---
+
+        result <<< """
+            \(name):
+            """
+
+        indentation.nest{
+
+            // https://github.com/lyptt/struct/wiki/Spec-format:-v2.0#platform
+
+            result <<< """
+                platform: \(platform.structId)
+                """
+
+            //---
+
+            // https://github.com/lyptt/struct/wiki/Spec-format:-v2.0#type
+
+            result <<< """
+                type: ":\(type.rawValue)"
+                """
+
+            //---
+
+            result <<< self
+                .renderCoreSettings(with: indentation)
+        }
+
+        //---
+
+        result <<< tests.values.map{
+
+            $0.asIndentedText(with: indentation)
+        }
+
+        //---
+
+        return result.content
     }
 }

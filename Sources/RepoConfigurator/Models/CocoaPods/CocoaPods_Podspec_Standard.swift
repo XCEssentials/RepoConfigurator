@@ -58,7 +58,7 @@ extension CocoaPods.Podspec
             )]
             )
         {
-            fileContent <<<  Parent.Settings(
+            fileContent <<< Parent.Settings(
                 specVar: specVar,
                 product: product,
                 company: company,

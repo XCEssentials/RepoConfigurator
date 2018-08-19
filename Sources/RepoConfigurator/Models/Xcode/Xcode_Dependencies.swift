@@ -34,13 +34,13 @@ extension Xcode
     )
     
     public
-    typealias ProjectDependencies = (
+    typealias ProjectDependency = (
         location: String,
-        frameworks: [ProjectDependency]
+        frameworks: [FrameworkDependency]
     )
     
     public
-    typealias ProjectDependency = (
+    typealias FrameworkDependency = (
         name: String,
         copy: Bool,
         codeSignOnCopy: Bool
@@ -88,11 +88,11 @@ extension Xcode
         }
         
         public private(set)
-        var projects: [ProjectDependencies] = []
+        var projects: [ProjectDependency] = []
         
         public
         func project(
-            _ element: ProjectDependencies...
+            _ element: ProjectDependency...
             )
         {
             projects.append(contentsOf: element)
@@ -102,5 +102,96 @@ extension Xcode
 
         public
         init() {}
+    }
+}
+
+// MARK: - Content rendering
+
+extension Xcode.Dependencies: TextFilePiece
+{
+    public
+    func asIndentedText(
+        with indentation: Indentation
+        ) -> IndentedText
+    {
+        // https://github.com/lyptt/struct/wiki/Spec-format:-v2.0#references
+
+        //---
+
+        guard
+            !fromSDKs.isEmpty ||
+            !otherTargets.isEmpty ||
+            !binaries.isEmpty ||
+            !projects.isEmpty
+        else
+        {
+            return []
+        }
+
+        //---
+
+        let result: IndentedTextBuffer = .init(with: indentation)
+
+        //---
+
+        result <<< """
+            references:
+            """
+
+        result <<< fromSDKs.map{"""
+            - sdkroot: \($0)
+            """
+        }
+
+        result <<< otherTargets.map{"""
+            - location: \($0)
+            """
+        }
+
+        result <<< binaries.map{ """
+            - location: \($0.location)
+              codeSignOnCopy: \($0.codeSignOnCopy)
+            """
+        }
+
+        result <<< projects.map{
+
+            type(of: self).renderSingleProject($0, with: indentation)
+        }
+
+        //---
+
+        return result.content
+    }
+
+    private
+    static
+    func renderSingleProject(
+        _ project: Xcode.ProjectDependency,
+        with indentation: Indentation
+        ) -> IndentedText
+    {
+        let result: IndentedTextBuffer = .init(with: indentation)
+
+        //---
+
+        result <<< """
+            - location: \(project.location)
+              frameworks:
+            """
+
+        indentation.nest{
+
+            result <<< project.frameworks.map{ """
+                - name: \($0.name)
+                  copy: \($0.copy)
+                  codeSignOnCopy: \($0.codeSignOnCopy)
+                """
+            }
+        }
+
+        //---
+
+        return result.content
     }
 }

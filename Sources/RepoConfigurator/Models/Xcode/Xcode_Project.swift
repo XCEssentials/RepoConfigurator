@@ -35,18 +35,19 @@ extension Xcode
 
         public
         static
+        var singleLevelIndentation: String
+        {
+            return .init(repeating: " ", count: 2) // 2 spaces indentation for YAML file!
+        }
+
+        public
+        static
         let fileName: String = "project.yml" // Struct SPEC!
 
         // MARK: - Instance level members
 
-        public
-        let specFormat: Struct.Spec
-
-        public
-        var fileContent: [IndentedTextGetter]
-        {
-            return [Struct.generateSpec(specFormat, for: self)]
-        }
+        public private(set)
+        var fileContent: [IndentedTextGetter] = []
 
         public
         let name: String
@@ -76,16 +77,117 @@ extension Xcode
         public
         init(
             _ name: String,
-            specFormat: Struct.Spec,
             configureProject: (Xcode.Project) -> Void
             )
         {
             self.name = name
-            self.specFormat = specFormat
 
             //---
 
             configureProject(self)
+
+            //---
+
+            self.fileContent = [{
+
+                [weak self] indentation in
+
+                //---
+
+                self?.render(with: indentation) ?? []
+
+                }]
         }
+    }
+}
+
+// MARK: - Content rendering
+
+extension Xcode.Project
+{
+    public
+    func render(
+        with indentation: Indentation
+        ) -> IndentedText
+    {
+        //---
+
+        let result: IndentedTextBuffer = .init(with: indentation)
+
+        //---
+
+        // currently rely on Struct Spec format v.2.1
+        // https://github.com/lyptt/struct/wiki/Spec-format:-v2.0
+
+        result <<< """
+            # https://github.com/lyptt/struct/wiki/Spec-format:-v2.0
+
+            """
+
+        //---
+
+        // https://github.com/lyptt/struct/wiki/Spec-format:-v2.0#version-number
+
+        let specFormatVersion = "2.1.0"
+
+        result <<< """
+            version: \(specFormatVersion)
+            """
+
+        //---
+
+        // https://github.com/lyptt/struct/wiki/Spec-format%3A-v2.0#configurations
+
+        result <<< buildSettings
+
+        //---
+
+        // https://github.com/lyptt/struct/wiki/Spec-format%3A-v2.0#targets
+
+        result <<< """
+            targets:
+            """
+
+        indentation.nest{
+
+            result <<< Array(targets.values)
+        }
+
+        //---
+
+        // https://github.com/lyptt/struct/wiki/Spec-format:-v2.0#variants
+
+        result <<< """
+            variants:
+            """
+
+        //---
+
+        indentation.nest{
+
+            result <<< """
+                $base:
+                """
+
+            indentation.nest{
+
+                // https://github.com/lyptt/struct/wiki/Spec-format:-v2.0#abstract-variants
+
+                result <<< """
+                    abstract: true
+                    """
+            }
+
+            result <<< variants.isEmpty.mapIf(true){ """
+                \(self.name):
+                """
+            }
+
+            result <<< variants
+        }
+
+        //---
+
+        return result.content
     }
 }

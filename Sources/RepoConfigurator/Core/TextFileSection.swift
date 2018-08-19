@@ -24,28 +24,24 @@
 
  */
 
-/**
- Generate Xcode project using Struct CLI tool.
- https://github.com/lyptt/struct
- */
 public
-enum Struct {}
+struct TextFileSection<Context: TextFile>
+{
+    // MARK: - Instance level members
+
+    public
+    let contentGetter: IndentedTextGetter
+}
 
 //---
 
-// internal
-extension Struct
+extension TextFileSection: TextFilePiece
 {
-    static
-    func generateSpec(
-        _ format: Spec,
-        for project: Xcode.Project
-        ) -> IndentedTextGetter
+    public
+    func asIndentedText(
+        with indentation: Indentation
+        ) -> IndentedText
     {
-        switch format
-        {
-        case .v2_1_0:
-            return Spec_2_1_0.generate(for: project)
-        }
+        return contentGetter(indentation)
     }
 }

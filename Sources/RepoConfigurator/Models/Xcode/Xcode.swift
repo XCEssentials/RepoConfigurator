@@ -36,16 +36,8 @@ enum Xcode
     public
     enum BuildConfiguration: String, CaseIterable
     {
-        case debug = "Debug"
-        case release = "Release"
-
-        //---
-
-        public
-        var name: String
-        {
-            return rawValue
-        }
+        case debug
+        case release
     }
 
     public

@@ -35,17 +35,6 @@ extension Git
         static
         let fileName = ".gitignore"
 
-        enum Section
-        {
-            case macOS
-            case cocoa
-            case cocoaPods(ignoreSources: Bool)
-            case carthage(ignoreSources: Bool)
-            case fastlane
-            case archivesExportPath(String) // for apps only
-            case custom(String)
-        }
-
         // MARK: - Instance level members
 
         public
@@ -66,13 +55,13 @@ extension Git.RepoIgnore
         _ otherEntries: String...
         ) -> Git.RepoIgnore
     {
-        let sections: [Section] = [
+        let sections: [TextFileSection<Git.RepoIgnore>] = [
 
-            .macOS,
-            .cocoa,
+            .macOS(),
+            .cocoa(),
             .cocoaPods(ignoreSources: ignoreDependenciesSources),
             .carthage(ignoreSources: ignoreDependenciesSources),
-            .fastlane,
+            .fastlane(),
             .archivesExportPath(archivesExportPath)
         ]
 
@@ -91,13 +80,13 @@ extension Git.RepoIgnore
         _ otherEntries: String...
         ) -> Git.RepoIgnore
     {
-        let sections: [Section] = [
+        let sections: [TextFileSection<Git.RepoIgnore>] = [
 
-            .macOS,
-            .cocoa,
+            .macOS(),
+            .cocoa(),
             .cocoaPods(ignoreSources: ignoreDependenciesSources),
             .carthage(ignoreSources: ignoreDependenciesSources),
-            .fastlane
+            .fastlane()
         ]
 
         //---
@@ -111,206 +100,231 @@ extension Git.RepoIgnore
 
 // MARK: - Content rendering
 
-extension Git.RepoIgnore.Section: TextFilePiece
+fileprivate
+extension TextFileSection
+    where
+    Context == Git.RepoIgnore
 {
-    func asIndentedText(
-        with indentation: Indentation
-        ) -> IndentedText
+    static
+    func macOS(
+        ) -> TextFileSection<Context>
     {
-        let result: String
+        return .init{ """
 
-        //---
+            # ==========
+            ### macOS ###
 
-        switch self
-        {
-        case .macOS:
-            result = """
+            *.DS_Store
+            .AppleDouble
+            .LSOverride
 
-                # ==========
-                ### macOS ###
+            # Icon must end with two \r
+            Icon
 
-                *.DS_Store
-                .AppleDouble
-                .LSOverride
+            # Thumbnails
+            ._*
 
-                # Icon must end with two \r
-                Icon
+            # Files that might appear in the root of a volume
+            .DocumentRevisions-V100
+            .fseventsd
+            .Spotlight-V100
+            .TemporaryItems
+            .Trashes
+            .VolumeIcon.icns
+            .com.apple.timemachine.donotpresent
 
-                # Thumbnails
-                ._*
+            # Directories potentially created on remote AFP share
+            .AppleDB
+            .AppleDesktop
+            Network Trash Folder
+            Temporary Items
+            .apdisk
 
-                # Files that might appear in the root of a volume
-                .DocumentRevisions-V100
-                .fseventsd
-                .Spotlight-V100
-                .TemporaryItems
-                .Trashes
-                .VolumeIcon.icns
-                .com.apple.timemachine.donotpresent
-
-                # Directories potentially created on remote AFP share
-                .AppleDB
-                .AppleDesktop
-                Network Trash Folder
-                Temporary Items
-                .apdisk
-
-                ### macOS ###
-                # ==========
-                #
-                #
-                #
-                """
-
-        case .cocoa:
-            result = """
-
-                # ==========
-                ### Cocoa ###
-
-                # Xcode
-
-                ## Build generated
-                build/
-                DerivedData/
-
-                ## Various settings
-                *.pbxuser
-                !default.pbxuser
-                *.mode1v3
-                !default.mode1v3
-                *.mode2v3
-                !default.mode2v3
-                *.perspectivev3
-                !default.perspectivev3
-                xcuserdata/
-
-                ## Other
-                *.moved-aside
-                *.xccheckout
-                *.xcscmblueprint
-
-                ## Obj-C/Swift specific
-                *.hmap
-                *.ipa
-                *.dSYM.zip
-                *.dSYM
-
-                ## Playgrounds
-                timeline.xctimeline
-                playground.xcworkspace
-
-                # Swift Package Manager
-                #
-                # Add this line if you want to avoid checking in source code from Swift Package Manager dependencies.
-                # Packages/
-                # Package.pins
-                .build/
-
-                ### Cocoa ###
-                # ==========
-                #
-                #
-                #
-                """
-
-        case .cocoaPods(
-            let ignoreSources
-            ):
-            result = """
-
-                # ==========
-                ### CocoaPods ###
-
-                # NOTE: never ignore the lock file.
-                # See https://guides.cocoapods.org/using/using-cocoapods.html#what-is-podfilelock
-
-                \((ignoreSources ? "" : "# "))Pods/
-
-                ### CocoaPods ###
-                # ==========
-                #
-                #
-                #
-                """
-
-        case .carthage(
-            let ignoreSources
-            ):
-            result = """
-
-                # ==========
-                ### Carthage ###
-
-                Carthage/Build
-                \((ignoreSources ? "" : "# "))Carthage/Checkouts
-
-                ### Carthage ###
-                # ==========
-                #
-                #
-                #
-                """
-
-        case .fastlane:
-            result = """
-
-                # ==========
-                ### Fastlane ###
-
-                # For more information about the recommended setup visit:
-                # https://docs.fastlane.tools/best-practices/source-control/#source-control
-
-                fastlane/README.md
-                fastlane/report.xml
-                fastlane/Preview.html
-                fastlane/screenshots
-                fastlane/test_output
-
-                ### Fastlane ###
-                # ==========
-                #
-                #
-                #
-                """
-
-        case .archivesExportPath(
-            let archivesExportPath
-            ):
-            result = """
-
-                # ==========
-                ### Archives Export Path (for apps only) ###
-
-                \(archivesExportPath)
-
-                ### Archives Export Path (for apps only) ###
-                # ==========
-                #
-                #
-                #
-                """
-
-        case .custom(
-            let customEntry
-            ):
-            result = """
-
-                # ==========
-                ### Custom repo-specific ###
-
-                \(customEntry)
-
-                ### Custom repo-specific ###
-                # ==========
-                #
-                #
-                #
-                """
+            ### macOS ###
+            # ==========
+            #
+            #
+            #
+            """
+            .asIndentedText(with: $0)
         }
+    }
 
-        //---
+    static
+    func cocoa(
+        ) -> TextFileSection<Context>
+    {
+        return .init{ """
 
-        return result.asIndentedText(with: indentation)
+            # ==========
+            ### Cocoa ###
+
+            # Xcode
+
+            ## Build generated
+            build/
+            DerivedData/
+
+            ## Various settings
+            *.pbxuser
+            !default.pbxuser
+            *.mode1v3
+            !default.mode1v3
+            *.mode2v3
+            !default.mode2v3
+            *.perspectivev3
+            !default.perspectivev3
+            xcuserdata/
+
+            ## Other
+            *.moved-aside
+            *.xccheckout
+            *.xcscmblueprint
+
+            ## Obj-C/Swift specific
+            *.hmap
+            *.ipa
+            *.dSYM.zip
+            *.dSYM
+
+            ## Playgrounds
+            timeline.xctimeline
+            playground.xcworkspace
+
+            # Swift Package Manager
+            #
+            # Add this line if you want to avoid checking in source code from Swift Package Manager dependencies.
+            # Packages/
+            # Package.pins
+            .build/
+
+            ### Cocoa ###
+            # ==========
+            #
+            #
+            #
+            """
+            .asIndentedText(with: $0)
+        }
+    }
+
+    static
+    func cocoaPods(
+        ignoreSources: Bool
+        ) -> TextFileSection<Context>
+    {
+        return .init{ """
+
+            # ==========
+            ### CocoaPods ###
+
+            # NOTE: never ignore the lock file.
+            # See https://guides.cocoapods.org/using/using-cocoapods.html#what-is-podfilelock
+
+            \((ignoreSources ? "" : "# "))Pods/
+
+            ### CocoaPods ###
+            # ==========
+            #
+            #
+            #
+            """
+            .asIndentedText(with: $0)
+        }
+    }
+
+    static
+    func carthage(
+        ignoreSources: Bool
+        ) -> TextFileSection<Context>
+    {
+        return .init{ """
+
+            # ==========
+            ### Carthage ###
+
+            Carthage/Build
+            \((ignoreSources ? "" : "# "))Carthage/Checkouts
+
+            ### Carthage ###
+            # ==========
+            #
+            #
+            #
+            """
+            .asIndentedText(with: $0)
+        }
+    }
+
+    static
+    func fastlane(
+        ) -> TextFileSection<Context>
+    {
+        return .init{ """
+
+            # ==========
+            ### Fastlane ###
+
+            # For more information about the recommended setup visit:
+            # https://docs.fastlane.tools/best-practices/source-control/#source-control
+
+            fastlane/README.md
+            fastlane/report.xml
+            fastlane/Preview.html
+            fastlane/screenshots
+            fastlane/test_output
+
+            ### Fastlane ###
+            # ==========
+            #
+            #
+            #
+            """
+            .asIndentedText(with: $0)
+        }
+    }
+
+    static
+    func archivesExportPath(
+        _ archivesExportPath: String
+        ) -> TextFileSection<Context>
+    {
+        return .init{ """
+
+            # ==========
+            ### Archives Export Path (for apps only) ###
+
+            \(archivesExportPath)
+
+            ### Archives Export Path (for apps only) ###
+            # ==========
+            #
+            #
+            #
+            """
+            .asIndentedText(with: $0)
+        }
+    }
+
+    static
+    func custom(
+        _ customEntry: String
+        ) -> TextFileSection<Context>
+    {
+        return .init{ """
+
+            # ==========
+            ### Custom repo-specific ###
+
+            \(customEntry)
+
+            ### Custom repo-specific ###
+            # ==========
+            #
+            #
+            #
+            """
+            .asIndentedText(with: $0)
+        }
     }
 }

@@ -26,7 +26,7 @@
 
 public
 typealias IndentedTextLine = (
-    indentation: Indentation,
+    indentation: Indentation.Snapshot,
     content: String
 )
 

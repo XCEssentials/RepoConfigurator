@@ -29,7 +29,10 @@ infix operator <<<
 // MARK: - String <<<
 
 public
-func <<< (keyName: String, value: String) -> KeyValuePair
+func <<< (
+    keyName: String,
+    value: String
+    ) -> KeyValuePair
 {
     return (keyName, value)
 }
@@ -156,4 +159,79 @@ func <<< (
     {
         list += anotherList.map{ $0.asIndentedText }
     }
+}
+
+// MARK: - IndentedTextBuffer <<<
+
+public
+func <<< (
+    receiver: IndentedTextBuffer,
+    input: String
+    )
+{
+    receiver.append(input)
+}
+
+public
+func <<< (
+    receiver: IndentedTextBuffer,
+    input: String?
+    )
+{
+    if
+        let input = input
+    {
+        receiver.append(input)
+    }
+}
+
+public
+func <<< (
+    receiver: IndentedTextBuffer,
+    inputs: [String]
+    )
+{
+    inputs.forEach{
+
+        receiver.append($0)
+    }
+}
+
+public
+func <<< (
+    receiver: IndentedTextBuffer,
+    input: IndentedText
+    )
+{
+    receiver.append(input)
+}
+
+public
+func <<< (
+    receiver: IndentedTextBuffer,
+    inputs: [IndentedText]
+    )
+{
+    inputs.forEach{
+
+        receiver.append($0)
+    }
+}
+
+public
+func <<< (
+    receiver: IndentedTextBuffer,
+    input: TextFilePiece
+    )
+{
+    receiver.append(input)
+}
+
+public
+func <<< (
+    receiver: IndentedTextBuffer,
+    input: Dictionary<String, TextFilePiece>.Values
+    )
+{
+    receiver.append(Array(input))
 }

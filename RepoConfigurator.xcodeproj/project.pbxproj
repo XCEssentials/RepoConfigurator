@@ -11,6 +11,8 @@
 		940F10172124BA2100554520 /* Xcode_BuildSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940F10162124BA2100554520 /* Xcode_BuildSettings.swift */; };
 		940F10192124BAA200554520 /* Xcode_Project_BuildSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940F10182124BAA200554520 /* Xcode_Project_BuildSettings.swift */; };
 		94116DA9211BB9C0001EF7F9 /* Bundler_Gemfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94116DA8211BB9C0001EF7F9 /* Bundler_Gemfile.swift */; };
+		9417FE0921288B9000DE18DA /* IndentedTextBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9417FE0821288B9000DE18DA /* IndentedTextBuffer.swift */; };
+		9417FE0F2128D56600DE18DA /* TextFileSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9417FE0E2128D56600DE18DA /* TextFileSection.swift */; };
 		941CFFC8211520D700326181 /* XCERepoConfigurator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 941CFFBE211520D700326181 /* XCERepoConfigurator.framework */; };
 		941CFFDE2115221000326181 /* RepoConfiguratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941CFFDA2115220600326181 /* RepoConfiguratorTests.swift */; };
 		941CFFDF2115222100326181 /* RepoConfigurator.h in Headers */ = {isa = PBXBuildFile; fileRef = 941CFFDC2115220600326181 /* RepoConfigurator.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -21,6 +23,7 @@
 		941CFFFB2115A78C00326181 /* Git.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941CFFFA2115A78C00326181 /* Git.swift */; };
 		941CFFFD2115A7A000326181 /* Git_RepoIgnore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941CFFFC2115A7A000326181 /* Git_RepoIgnore.swift */; };
 		941CFFFF211609BC00326181 /* Xcode_Target_InfoPlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941CFFFE211609BC00326181 /* Xcode_Target_InfoPlist.swift */; };
+		94212AE22129F1C70023BEC0 /* Xcode_Target_BuildSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94212AE12129F1C70023BEC0 /* Xcode_Target_BuildSettings.swift */; };
 		9424572F211AF7E900A05876 /* SwiftLint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9424572E211AF7E900A05876 /* SwiftLint.swift */; };
 		94245732211B025C00A05876 /* CocoaPods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94245731211B025C00A05876 /* CocoaPods.swift */; };
 		94245734211B034400A05876 /* CocoaPods_Podfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94245733211B034400A05876 /* CocoaPods_Podfile.swift */; };
@@ -38,13 +41,12 @@
 		9459C779211C5F800041C38B /* YesNoStringLiteralsForXcode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9459C778211C5F800041C38B /* YesNoStringLiteralsForXcode.swift */; };
 		946CFA0A211DE6DF00E756CD /* GitHub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946CFA09211DE6DF00E756CD /* GitHub.swift */; };
 		946CFA0C211DE70300E756CD /* GitHub_Pages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946CFA0B211DE70300E756CD /* GitHub_Pages.swift */; };
-		946CFA16211F7FB500E756CD /* Array+IndentedTextGetter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946CFA15211F7FB500E756CD /* Array+IndentedTextGetter.swift */; };
 		946CFA18211F816B00E756CD /* Array+TextFilePiece.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946CFA17211F816B00E756CD /* Array+TextFilePiece.swift */; };
 		946CFA1C2120559B00E756CD /* CocoaPods_Podspec_Standard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946CFA1B2120559B00E756CD /* CocoaPods_Podspec_Standard.swift */; };
 		946CFA1E2120AC7D00E756CD /* Array+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946CFA1D2120AC7D00E756CD /* Array+String.swift */; };
 		946CFA202120C90100E756CD /* CocoaPods_Podspec_WithSubSpecs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946CFA1F2120C90100E756CD /* CocoaPods_Podspec_WithSubSpecs.swift */; };
 		948EB3202120F500000D91D0 /* Bool+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948EB31F2120F500000D91D0 /* Bool+Helper.swift */; };
-		9492E3422125C0B2003558B6 /* Xcode_Project_Variant_Target.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9492E3412125C0B2003558B6 /* Xcode_Project_Variant_Target.swift */; };
+		9492E3422125C0B2003558B6 /* Xcode_Target_ProjectVariant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9492E3412125C0B2003558B6 /* Xcode_Target_ProjectVariant.swift */; };
 		9492E34621262E23003558B6 /* Xcode_Target.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9492E34521262E23003558B6 /* Xcode_Target.swift */; };
 		94C4F9CB211665ED00CFB1DC /* Fastlane.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C4F9CA211665ED00CFB1DC /* Fastlane.swift */; };
 		94C4F9CD2116660900CFB1DC /* Fastlane_Fastfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C4F9CC2116660900CFB1DC /* Fastlane_Fastfile.swift */; };
@@ -52,11 +54,7 @@
 		94CB9FC22116535300641D6E /* Xcode_Project_Variant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CB9FBC2116535300641D6E /* Xcode_Project_Variant.swift */; };
 		94CB9FCB2116536600641D6E /* Xcode_Scripts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CB9FC62116536500641D6E /* Xcode_Scripts.swift */; };
 		94CB9FCC2116536600641D6E /* Xcode_Dependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CB9FC72116536500641D6E /* Xcode_Dependencies.swift */; };
-		94CB9FCE2116536600641D6E /* Xcode_Project_Target.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CB9FC92116536600641D6E /* Xcode_Project_Target.swift */; };
-		94CB9FDB2116583700641D6E /* Struct_Spec_2_1_0.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CB9FD62116583700641D6E /* Struct_Spec_2_1_0.swift */; };
-		94CB9FDC2116583700641D6E /* Struct_Spec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CB9FD72116583700641D6E /* Struct_Spec.swift */; };
-		94CB9FDF2116585000641D6E /* Struct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CB9FDE2116585000641D6E /* Struct.swift */; };
-		94CB9FE12116625900641D6E /* Struct_Spec_InternalHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CB9FE02116625900641D6E /* Struct_Spec_InternalHelpers.swift */; };
+		94CB9FCE2116536600641D6E /* Xcode_Target_Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CB9FC92116536600641D6E /* Xcode_Target_Project.swift */; };
 		94DECE4E21188B4B0026F148 /* String+TextFilePiece.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DECE4D21188B4B0026F148 /* String+TextFilePiece.swift */; };
 		94DECE502118C10E0026F148 /* Xcode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DECE4F2118C10E0026F148 /* Xcode.swift */; };
 		94DECE522118C99F0026F148 /* IndentedText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DECE512118C99F0026F148 /* IndentedText.swift */; };
@@ -80,6 +78,8 @@
 		940F10162124BA2100554520 /* Xcode_BuildSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Xcode_BuildSettings.swift; sourceTree = "<group>"; };
 		940F10182124BAA200554520 /* Xcode_Project_BuildSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Xcode_Project_BuildSettings.swift; sourceTree = "<group>"; };
 		94116DA8211BB9C0001EF7F9 /* Bundler_Gemfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bundler_Gemfile.swift; sourceTree = "<group>"; };
+		9417FE0821288B9000DE18DA /* IndentedTextBuffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndentedTextBuffer.swift; sourceTree = "<group>"; };
+		9417FE0E2128D56600DE18DA /* TextFileSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFileSection.swift; sourceTree = "<group>"; };
 		941CFFBE211520D700326181 /* XCERepoConfigurator.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = XCERepoConfigurator.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		941CFFC7211520D700326181 /* RepoConfiguratorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RepoConfiguratorTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		941CFFDA2115220600326181 /* RepoConfiguratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepoConfiguratorTests.swift; sourceTree = "<group>"; };
@@ -91,6 +91,7 @@
 		941CFFFA2115A78C00326181 /* Git.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Git.swift; sourceTree = "<group>"; };
 		941CFFFC2115A7A000326181 /* Git_RepoIgnore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Git_RepoIgnore.swift; sourceTree = "<group>"; };
 		941CFFFE211609BC00326181 /* Xcode_Target_InfoPlist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Xcode_Target_InfoPlist.swift; sourceTree = "<group>"; };
+		94212AE12129F1C70023BEC0 /* Xcode_Target_BuildSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Xcode_Target_BuildSettings.swift; sourceTree = "<group>"; };
 		9424572E211AF7E900A05876 /* SwiftLint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftLint.swift; sourceTree = "<group>"; };
 		94245731211B025C00A05876 /* CocoaPods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CocoaPods.swift; sourceTree = "<group>"; };
 		94245733211B034400A05876 /* CocoaPods_Podfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CocoaPods_Podfile.swift; sourceTree = "<group>"; };
@@ -108,13 +109,12 @@
 		9459C778211C5F800041C38B /* YesNoStringLiteralsForXcode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YesNoStringLiteralsForXcode.swift; sourceTree = "<group>"; };
 		946CFA09211DE6DF00E756CD /* GitHub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHub.swift; sourceTree = "<group>"; };
 		946CFA0B211DE70300E756CD /* GitHub_Pages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHub_Pages.swift; sourceTree = "<group>"; };
-		946CFA15211F7FB500E756CD /* Array+IndentedTextGetter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+IndentedTextGetter.swift"; sourceTree = "<group>"; };
 		946CFA17211F816B00E756CD /* Array+TextFilePiece.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+TextFilePiece.swift"; sourceTree = "<group>"; };
 		946CFA1B2120559B00E756CD /* CocoaPods_Podspec_Standard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CocoaPods_Podspec_Standard.swift; sourceTree = "<group>"; };
 		946CFA1D2120AC7D00E756CD /* Array+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+String.swift"; sourceTree = "<group>"; };
 		946CFA1F2120C90100E756CD /* CocoaPods_Podspec_WithSubSpecs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CocoaPods_Podspec_WithSubSpecs.swift; sourceTree = "<group>"; };
 		948EB31F2120F500000D91D0 /* Bool+Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bool+Helper.swift"; sourceTree = "<group>"; };
-		9492E3412125C0B2003558B6 /* Xcode_Project_Variant_Target.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Xcode_Project_Variant_Target.swift; sourceTree = "<group>"; };
+		9492E3412125C0B2003558B6 /* Xcode_Target_ProjectVariant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Xcode_Target_ProjectVariant.swift; sourceTree = "<group>"; };
 		9492E34521262E23003558B6 /* Xcode_Target.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Xcode_Target.swift; sourceTree = "<group>"; };
 		94C4F9CA211665ED00CFB1DC /* Fastlane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fastlane.swift; sourceTree = "<group>"; };
 		94C4F9CC2116660900CFB1DC /* Fastlane_Fastfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fastlane_Fastfile.swift; sourceTree = "<group>"; };
@@ -122,11 +122,7 @@
 		94CB9FBC2116535300641D6E /* Xcode_Project_Variant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Xcode_Project_Variant.swift; sourceTree = "<group>"; };
 		94CB9FC62116536500641D6E /* Xcode_Scripts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Xcode_Scripts.swift; sourceTree = "<group>"; };
 		94CB9FC72116536500641D6E /* Xcode_Dependencies.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Xcode_Dependencies.swift; sourceTree = "<group>"; };
-		94CB9FC92116536600641D6E /* Xcode_Project_Target.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Xcode_Project_Target.swift; sourceTree = "<group>"; };
-		94CB9FD62116583700641D6E /* Struct_Spec_2_1_0.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Struct_Spec_2_1_0.swift; sourceTree = "<group>"; };
-		94CB9FD72116583700641D6E /* Struct_Spec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Struct_Spec.swift; sourceTree = "<group>"; };
-		94CB9FDE2116585000641D6E /* Struct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Struct.swift; sourceTree = "<group>"; };
-		94CB9FE02116625900641D6E /* Struct_Spec_InternalHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Struct_Spec_InternalHelpers.swift; sourceTree = "<group>"; };
+		94CB9FC92116536600641D6E /* Xcode_Target_Project.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Xcode_Target_Project.swift; sourceTree = "<group>"; };
 		94DECE4D21188B4B0026F148 /* String+TextFilePiece.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+TextFilePiece.swift"; sourceTree = "<group>"; };
 		94DECE4F2118C10E0026F148 /* Xcode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Xcode.swift; sourceTree = "<group>"; };
 		94DECE512118C99F0026F148 /* IndentedText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndentedText.swift; sourceTree = "<group>"; };
@@ -159,12 +155,14 @@
 				9424AB0E211754C100262B79 /* DeploymentTarget.swift */,
 				9424AB082117542200262B79 /* Indentation.swift */,
 				94DECE512118C99F0026F148 /* IndentedText.swift */,
+				9417FE0821288B9000DE18DA /* IndentedTextBuffer.swift */,
 				9424AB0A2117549500262B79 /* KeyValuePair.swift */,
 				94511D882122020800AB4CD0 /* Operators.swift */,
 				9424AB10211754FE00262B79 /* OSIdentifier.swift */,
 				94245739211B8FE400A05876 /* RawTextFile.swift */,
 				941CFFDC2115220600326181 /* RepoConfigurator.h */,
 				941CFFF3211591E900326181 /* TextFile.swift */,
+				9417FE0E2128D56600DE18DA /* TextFileSection.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -297,37 +295,25 @@
 		94CB9FD22116571600641D6E /* Xcode */ = {
 			isa = PBXGroup;
 			children = (
-				94CB9FD32116582800641D6E /* Struct */,
 				94DECE4F2118C10E0026F148 /* Xcode.swift */,
 				940F10162124BA2100554520 /* Xcode_BuildSettings.swift */,
 				94CB9FC72116536500641D6E /* Xcode_Dependencies.swift */,
 				94CB9FBB2116535200641D6E /* Xcode_Project.swift */,
 				940F10182124BAA200554520 /* Xcode_Project_BuildSettings.swift */,
-				94CB9FC92116536600641D6E /* Xcode_Project_Target.swift */,
 				94CB9FBC2116535300641D6E /* Xcode_Project_Variant.swift */,
-				9492E3412125C0B2003558B6 /* Xcode_Project_Variant_Target.swift */,
 				94CB9FC62116536500641D6E /* Xcode_Scripts.swift */,
 				9492E34521262E23003558B6 /* Xcode_Target.swift */,
+				94212AE12129F1C70023BEC0 /* Xcode_Target_BuildSettings.swift */,
 				941CFFFE211609BC00326181 /* Xcode_Target_InfoPlist.swift */,
+				94CB9FC92116536600641D6E /* Xcode_Target_Project.swift */,
+				9492E3412125C0B2003558B6 /* Xcode_Target_ProjectVariant.swift */,
 			);
 			path = Xcode;
-			sourceTree = "<group>";
-		};
-		94CB9FD32116582800641D6E /* Struct */ = {
-			isa = PBXGroup;
-			children = (
-				94CB9FDE2116585000641D6E /* Struct.swift */,
-				94CB9FD72116583700641D6E /* Struct_Spec.swift */,
-				94CB9FD62116583700641D6E /* Struct_Spec_2_1_0.swift */,
-				94CB9FE02116625900641D6E /* Struct_Spec_InternalHelpers.swift */,
-			);
-			path = Struct;
 			sourceTree = "<group>";
 		};
 		94DECE4C21188AAD0026F148 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				946CFA15211F7FB500E756CD /* Array+IndentedTextGetter.swift */,
 				946CFA1D2120AC7D00E756CD /* Array+String.swift */,
 				946CFA17211F816B00E756CD /* Array+TextFilePiece.swift */,
 				948EB31F2120F500000D91D0 /* Bool+Helper.swift */,
@@ -486,7 +472,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				946CFA16211F7FB500E756CD /* Array+IndentedTextGetter.swift in Sources */,
 				946CFA1E2120AC7D00E756CD /* Array+String.swift in Sources */,
 				946CFA18211F816B00E756CD /* Array+TextFilePiece.swift in Sources */,
 				948EB3202120F500000D91D0 /* Bool+Helper.swift in Sources */,
@@ -510,6 +495,7 @@
 				946CFA0C211DE70300E756CD /* GitHub_Pages.swift in Sources */,
 				9424AB092117542200262B79 /* Indentation.swift in Sources */,
 				94DECE522118C99F0026F148 /* IndentedText.swift in Sources */,
+				9417FE0921288B9000DE18DA /* IndentedTextBuffer.swift in Sources */,
 				9424AB0B2117549500262B79 /* KeyValuePair.swift in Sources */,
 				941CFFEA2115898E00326181 /* License.swift in Sources */,
 				941CFFE82115897100326181 /* License_MIT.swift in Sources */,
@@ -519,24 +505,22 @@
 				9424573A211B8FE400A05876 /* RawTextFile.swift in Sources */,
 				94F1D8DE2125A3DE0051AD3D /* String+Helpers.swift in Sources */,
 				94DECE4E21188B4B0026F148 /* String+TextFilePiece.swift in Sources */,
-				94CB9FDF2116585000641D6E /* Struct.swift in Sources */,
-				94CB9FDC2116583700641D6E /* Struct_Spec.swift in Sources */,
-				94CB9FDB2116583700641D6E /* Struct_Spec_2_1_0.swift in Sources */,
-				94CB9FE12116625900641D6E /* Struct_Spec_InternalHelpers.swift in Sources */,
 				9424572F211AF7E900A05876 /* SwiftLint.swift in Sources */,
 				941CFFF4211591E900326181 /* TextFile.swift in Sources */,
+				9417FE0F2128D56600DE18DA /* TextFileSection.swift in Sources */,
 				941CFFE02115222B00326181 /* Versions.swift in Sources */,
 				94DECE502118C10E0026F148 /* Xcode.swift in Sources */,
 				940F10172124BA2100554520 /* Xcode_BuildSettings.swift in Sources */,
 				94CB9FCC2116536600641D6E /* Xcode_Dependencies.swift in Sources */,
 				94CB9FC12116535300641D6E /* Xcode_Project.swift in Sources */,
 				940F10192124BAA200554520 /* Xcode_Project_BuildSettings.swift in Sources */,
-				94CB9FCE2116536600641D6E /* Xcode_Project_Target.swift in Sources */,
 				94CB9FC22116535300641D6E /* Xcode_Project_Variant.swift in Sources */,
-				9492E3422125C0B2003558B6 /* Xcode_Project_Variant_Target.swift in Sources */,
 				94CB9FCB2116536600641D6E /* Xcode_Scripts.swift in Sources */,
 				9492E34621262E23003558B6 /* Xcode_Target.swift in Sources */,
+				94212AE22129F1C70023BEC0 /* Xcode_Target_BuildSettings.swift in Sources */,
 				941CFFFF211609BC00326181 /* Xcode_Target_InfoPlist.swift in Sources */,
+				94CB9FCE2116536600641D6E /* Xcode_Target_Project.swift in Sources */,
+				9492E3422125C0B2003558B6 /* Xcode_Target_ProjectVariant.swift in Sources */,
 				9459C779211C5F800041C38B /* YesNoStringLiteralsForXcode.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

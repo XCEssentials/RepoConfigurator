@@ -44,12 +44,6 @@ struct SwiftLint: FixedNameTextFile
         value: String
     )
 
-    struct Section
-    {
-        public private(set)
-        var content: [IndentedTextGetter] = []
-    }
-
     // MARK: - Instance level members
 
     public private(set)
@@ -71,20 +65,27 @@ struct SwiftLint: FixedNameTextFile
 
             """
 
-        fileContent <<< Section.disabledRules(
-            setXCEDefaults: defaultXCESettings,
-            disabledRules
-        )
+        //---
 
-        fileContent <<< Section.exclude(
-            setXCEDefaults: defaultXCESettings,
-            exclude
-        )
+        let sections: [TextFileSection<SwiftLint>] = [
 
-        fileContent <<< Section.rulesOptions(
-            setXCEDefaults: defaultXCESettings,
-            rulesOptions
-        )
+            .disabledRules(
+                setXCEDefaults: defaultXCESettings,
+                disabledRules
+            ),
+            .exclude(
+                setXCEDefaults: defaultXCESettings,
+                exclude
+            ),
+            .rulesOptions(
+                setXCEDefaults: defaultXCESettings,
+                rulesOptions
+            )
+        ]
+
+        fileContent <<< sections
+
+        //---
 
         fileContent <<< otherEntries.map{
 
@@ -98,143 +99,152 @@ struct SwiftLint: FixedNameTextFile
 
 // MARK: - Content rendering
 
-extension SwiftLint.Section: TextFilePiece
-{
-    public
-    func asIndentedText(
-        with indentation: Indentation
-        ) -> IndentedText
-    {
-        return content.asIndentedText(with: indentation)
-    }
-}
-
-extension SwiftLint.Section
+fileprivate
+extension TextFileSection
+    where
+    Context == SwiftLint
 {
     static
     func disabledRules(
         setXCEDefaults: Bool,
         _ otherDisabledRules: [String]
-        ) -> SwiftLint.Section
+        ) -> TextFileSection<Context>
     {
-        var content: [IndentedTextGetter] = []
+        return .init{
 
-        //---
+            indentation in
 
-        content <<< """
+            //---
 
-            disabled_rules:
+            let result: IndentedTextBuffer = .init(with: indentation)
 
-            """
+            //---
 
-        content <<< setXCEDefaults.mapIf(true){
+            result <<< """
 
-            """
-                - function_parameter_count
-                - trailing_newline
-                - closure_parameter_position
-                - opening_brace
-                - nesting
-                - function_body_length
-                - file_length
-            """
+                disabled_rules:
+                """
+
+            indentation.nest{
+
+                result <<< setXCEDefaults.mapIf(true){ """
+                    - function_parameter_count
+                    - trailing_newline
+                    - closure_parameter_position
+                    - opening_brace
+                    - nesting
+                    - function_body_length
+                    - file_length
+                    """
+                }
+
+                result <<< otherDisabledRules.map{ """
+                    - \($0)
+                    """
+                }
+            }
+
+            //---
+
+            return result.content
         }
-
-        content <<< otherDisabledRules.map{
-
-            """
-                - \($0)
-            """
-        }
-
-        //---
-
-        return .init(content: content)
     }
 
     static
     func exclude(
         setXCEDefaults: Bool,
         _ otherExclude: [String]
-        ) -> Fastlane.Fastfile.Section
+        ) -> TextFileSection<Context>
     {
-        var content: [IndentedTextGetter] = []
+        return .init{
 
-        //---
+            indentation in
 
-        content <<< """
+            //---
 
-            # paths to ignore during linting. Takes precedence over `included`.
-            excluded:
+            let result: IndentedTextBuffer = .init(with: indentation)
 
-            """
+            //---
 
-        content <<< setXCEDefaults.mapIf(true){
+            result <<< """
 
-            """
-                - Resources
-                - Carthage
-                - Pods
-            """
+                # paths to ignore during linting. Takes precedence over 'included'.
+                excluded:
+                """
+
+            indentation.nest{
+
+                result <<< setXCEDefaults.mapIf(true){ """
+                    - Resources
+                    - Carthage
+                    - Pods
+                    """
+                }
+
+                result <<< otherExclude.map{ """
+                    - \($0)
+                    """
+                }
+            }
+
+            //---
+
+            return result.content
         }
-
-        content <<< otherExclude.map{
-
-            """
-                - \($0)
-            """
-        }
-
-        //---
-
-        return .init(content: content)
     }
 
     static
     func rulesOptions(
         setXCEDefaults: Bool,
         _ otherRulesOptions: [SwiftLint.RuleOption]
-        ) -> Fastlane.Fastfile.Section
+        ) -> TextFileSection<Context>
     {
-        var content: [IndentedTextGetter] = []
+        return .init{
 
-        //---
+            indentation in
 
-        content <<< """
+            //---
 
-            # rules options:
+            let result: IndentedTextBuffer = .init(with: indentation)
 
-            """
+            //---
 
-        content <<< setXCEDefaults.mapIf(true){
+            result <<< (setXCEDefaults || !otherRulesOptions.isEmpty).mapIf(true){"""
 
-            // NOTE: NO extra indentation!
+                # rules options:
+                """
+            }
 
-            """
-            line_length:
-                ignores_comments: true
-            trailing_whitespace:
-                ignores_empty_lines: true
-            type_name:
-                allowed_symbols: _
-            statement_position:
-                # https://github.com/realm/SwiftLint/issues/1181#issuecomment-272445593
-                statement_mode: uncuddled_else
-            """
+            result <<< setXCEDefaults.mapIf(true){
+
+                // NOTE: NO extra indentation!
+
+                """
+                line_length:
+                    ignores_comments: true
+                trailing_whitespace:
+                    ignores_empty_lines: true
+                type_name:
+                    allowed_symbols: _
+                statement_position:
+                    # https://github.com/realm/SwiftLint/issues/1181#issuecomment-272445593
+                    statement_mode: uncuddled_else
+                """
+            }
+
+            result <<< otherRulesOptions.map{
+
+                // NOTE: NO extra indentation!
+
+                """
+                \($0.rule):
+                    \($0.option): \($0.value)
+                """
+            }
+
+            //---
+
+            return result.content
         }
-
-        content <<< otherRulesOptions.map{
-
-            // NOTE: NO extra indentation!
-
-            """
-            \($0.rule):
-                \($0.option): \($0.value)
-            """
-        }
-
-        //---
-
-        return .init(content: content)
     }
 }

@@ -27,38 +27,111 @@
 public
 class Indentation: Equatable
 {
+    // MARK: - Type level members
+
+    public
+    typealias Snapshot = [String]
+
+    // MARK: - Instance level members
+
     public
     let singleLevel: String
 
     public private(set)
     var currentLevel = 0
 
-    //---
-
     public
-    init(
-        singleLevel: String = .init(repeating: " ", count: 4),
-        currentLevel: Int = 0
-        )
+    var snapshot: [String]
     {
-        self.singleLevel = singleLevel
-        self.currentLevel = currentLevel
+        return .init(repeating: singleLevel, count: currentLevel)
     }
 
     public
-    lazy
-    var rendered: String = .init(repeating: singleLevel, count: currentLevel)
+    var rendered: String
+    {
+        return .init(repeating: singleLevel, count: currentLevel)
+    }
 
     public
-    func increaseLevel()
+    func increaseLevel() // TODO: make 'private' and rely on 'nest' func only!
     {
         currentLevel += 1
     }
 
     public
-    func decreaseLevel()
+    func decreaseLevel() // TODO: make 'private' and rely on 'nest' func only!
     {
         currentLevel -= (currentLevel > 0 ? 1 : 0)
+    }
+
+    public
+    func nest(
+        body: () -> Void
+        )
+    {
+        self.increaseLevel()
+
+        //---
+
+        body()
+
+        //---
+
+        self.decreaseLevel()
+    }
+
+    public
+    func nestIf(
+        _ condition: Bool,
+        body: () -> Void
+        )
+    {
+        self.increaseLevel()
+
+        //---
+
+        if
+            condition
+        {
+            body()
+        }
+
+        //---
+
+        self.decreaseLevel()
+    }
+
+    public
+    func nestIfUnwrap<T>(
+        _ optionalValue: T?,
+        body: (T) -> Void
+        )
+    {
+        self.increaseLevel()
+
+        //---
+
+        if
+            let unwrappedValue = optionalValue
+        {
+            body(unwrappedValue)
+        }
+
+        //---
+
+        self.decreaseLevel()
+    }
+
+    // MARK: - Initializers
+
+    public
+    init(
+        singleLevel: String,
+        currentLevel: Int = 0
+        )
+    {
+        self.singleLevel = singleLevel
+        self.currentLevel = currentLevel
     }
 }
 
@@ -73,7 +146,7 @@ func == (lhs: Indentation, rhs: Indentation) -> Bool
 
 //---
 
-postfix operator ++
+postfix operator ++ // TODO: remove at all and rely on 'nest' func only!
 
 public
 postfix func ++ (indentation: Indentation)
