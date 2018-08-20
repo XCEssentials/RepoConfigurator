@@ -227,7 +227,7 @@
 				946CFA08211DE6CD00E756CD /* GitHub */,
 				941CFFE62115896200326181 /* License */,
 				9424572D211AF7DA00A05876 /* SwiftLint */,
-				94CB9FD22116571600641D6E /* Xcode */,
+				94CB9FD22116571600641D6E /* Struct */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -296,7 +296,7 @@
 			path = Fastlane;
 			sourceTree = "<group>";
 		};
-		94CB9FD22116571600641D6E /* Xcode */ = {
+		94CB9FD22116571600641D6E /* Struct */ = {
 			isa = PBXGroup;
 			children = (
 				94212AE3212AFA160023BEC0 /* Struct.swift */,
@@ -314,7 +314,7 @@
 				94CB9FC92116536600641D6E /* Xcode_Target_Project.swift */,
 				9492E3412125C0B2003558B6 /* Xcode_Target_ProjectVariant.swift */,
 			);
-			path = Xcode;
+			path = Struct;
 			sourceTree = "<group>";
 		};
 		94DECE4C21188AAD0026F148 /* Helpers */ = {
