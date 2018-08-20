@@ -25,48 +25,4 @@
  */
 
 public
-extension Bundler
-{
-    public
-    struct Gemfile: FixedNameTextFile
-    {
-        // MARK: - Instance level members
-
-        public
-        let fileContent: IndentedText
-
-        // MARK: - Initializers
-
-        public
-        init(
-            basicFastlane: Bool = true,
-            _ otherEntries: String...
-            )
-        {
-            let result = IndentedTextBuffer()
-
-            //---
-
-            result <<< """
-                source "https://rubygems.org"
-
-                """
-
-            result <<< basicFastlane.mapIf(true){ """
-
-                gem "fastlane"
-                """
-            }
-
-            result <<< otherEntries.map{ """
-
-                \($0)
-                """
-            }
-
-            //---
-
-            fileContent = result.content
-        }
-    }
-}
+enum Struct {}

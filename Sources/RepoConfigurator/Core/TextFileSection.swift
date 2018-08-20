@@ -30,7 +30,7 @@ struct TextFileSection<Context: TextFile>
     // MARK: - Instance level members
 
     public
-    let contentGetter: IndentedTextGetter
+    let contentGetter: (Indentation) -> IndentedText // former 'IndentedTextGetter'
 }
 
 //---

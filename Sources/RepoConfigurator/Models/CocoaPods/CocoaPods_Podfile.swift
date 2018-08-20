@@ -30,16 +30,10 @@ extension CocoaPods
     public
     struct Podfile: FixedNameTextFile
     {
-        // MARK: - Type level members
-
-        public
-        static
-        let fileName = "Podfile"
-
         // MARK: - Instance level members
 
-        public private(set)
-        var fileContent: [IndentedTextGetter] = []
+        public
+        let fileContent: IndentedText
 
         // MARK: - Initializers
 
@@ -50,25 +44,21 @@ extension CocoaPods
             otherGlobalEntries: [String] = []
             )
         {
-            fileContent <<< [
+            let result = IndentedTextBuffer()
 
-                "workspace '\(workspaceName)'",
-                targets,
-                otherGlobalEntries.map{ "\n\($0)" }.asMultiLine
-            ]
-        }
+            //---
 
-        public
-        init(
-            workspaceName: String,
-            targets: [Target]
-            )
-        {
-            self.init(
-                workspaceName: workspaceName,
-                targets: targets,
-                otherGlobalEntries: []
-            )
+            result <<< """
+                workspace '\(workspaceName)'
+                """
+
+            result <<< targets
+
+            result <<< otherGlobalEntries
+
+            //---
+
+            fileContent = result.content
         }
     }
 }

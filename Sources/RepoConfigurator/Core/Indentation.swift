@@ -126,12 +126,10 @@ class Indentation: Equatable
 
     public
     init(
-        singleLevel: String,
-        currentLevel: Int = 0
+        singleLevel: String = .init(repeating: " ", count: 4)
         )
     {
         self.singleLevel = singleLevel
-        self.currentLevel = currentLevel
     }
 }
 

@@ -24,6 +24,8 @@
 		941CFFFD2115A7A000326181 /* Git_RepoIgnore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941CFFFC2115A7A000326181 /* Git_RepoIgnore.swift */; };
 		941CFFFF211609BC00326181 /* Xcode_Target_InfoPlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941CFFFE211609BC00326181 /* Xcode_Target_InfoPlist.swift */; };
 		94212AE22129F1C70023BEC0 /* Xcode_Target_BuildSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94212AE12129F1C70023BEC0 /* Xcode_Target_BuildSettings.swift */; };
+		94212AE4212AFA160023BEC0 /* Struct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94212AE3212AFA160023BEC0 /* Struct.swift */; };
+		94212AE6212B02B60023BEC0 /* Struct_Spec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94212AE5212B02B60023BEC0 /* Struct_Spec.swift */; };
 		9424572F211AF7E900A05876 /* SwiftLint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9424572E211AF7E900A05876 /* SwiftLint.swift */; };
 		94245732211B025C00A05876 /* CocoaPods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94245731211B025C00A05876 /* CocoaPods.swift */; };
 		94245734211B034400A05876 /* CocoaPods_Podfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94245733211B034400A05876 /* CocoaPods_Podfile.swift */; };
@@ -92,6 +94,8 @@
 		941CFFFC2115A7A000326181 /* Git_RepoIgnore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Git_RepoIgnore.swift; sourceTree = "<group>"; };
 		941CFFFE211609BC00326181 /* Xcode_Target_InfoPlist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Xcode_Target_InfoPlist.swift; sourceTree = "<group>"; };
 		94212AE12129F1C70023BEC0 /* Xcode_Target_BuildSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Xcode_Target_BuildSettings.swift; sourceTree = "<group>"; };
+		94212AE3212AFA160023BEC0 /* Struct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Struct.swift; sourceTree = "<group>"; };
+		94212AE5212B02B60023BEC0 /* Struct_Spec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Struct_Spec.swift; sourceTree = "<group>"; };
 		9424572E211AF7E900A05876 /* SwiftLint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftLint.swift; sourceTree = "<group>"; };
 		94245731211B025C00A05876 /* CocoaPods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CocoaPods.swift; sourceTree = "<group>"; };
 		94245733211B034400A05876 /* CocoaPods_Podfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CocoaPods_Podfile.swift; sourceTree = "<group>"; };
@@ -295,6 +299,8 @@
 		94CB9FD22116571600641D6E /* Xcode */ = {
 			isa = PBXGroup;
 			children = (
+				94212AE3212AFA160023BEC0 /* Struct.swift */,
+				94212AE5212B02B60023BEC0 /* Struct_Spec.swift */,
 				94DECE4F2118C10E0026F148 /* Xcode.swift */,
 				940F10162124BA2100554520 /* Xcode_BuildSettings.swift */,
 				94CB9FC72116536500641D6E /* Xcode_Dependencies.swift */,
@@ -503,6 +509,7 @@
 				9424AB11211754FE00262B79 /* OSIdentifier.swift in Sources */,
 				9424AB132117552100262B79 /* PathPrefix.swift in Sources */,
 				9424573A211B8FE400A05876 /* RawTextFile.swift in Sources */,
+				94212AE6212B02B60023BEC0 /* Struct_Spec.swift in Sources */,
 				94F1D8DE2125A3DE0051AD3D /* String+Helpers.swift in Sources */,
 				94DECE4E21188B4B0026F148 /* String+TextFilePiece.swift in Sources */,
 				9424572F211AF7E900A05876 /* SwiftLint.swift in Sources */,
@@ -511,6 +518,7 @@
 				941CFFE02115222B00326181 /* Versions.swift in Sources */,
 				94DECE502118C10E0026F148 /* Xcode.swift in Sources */,
 				940F10172124BA2100554520 /* Xcode_BuildSettings.swift in Sources */,
+				94212AE4212AFA160023BEC0 /* Struct.swift in Sources */,
 				94CB9FCC2116536600641D6E /* Xcode_Dependencies.swift in Sources */,
 				94CB9FC12116535300641D6E /* Xcode_Project.swift in Sources */,
 				940F10192124BAA200554520 /* Xcode_Project_BuildSettings.swift in Sources */,

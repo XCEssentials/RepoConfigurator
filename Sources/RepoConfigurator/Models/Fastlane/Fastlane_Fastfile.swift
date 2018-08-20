@@ -49,8 +49,8 @@ extension Fastlane
 
         // MARK: - Instance level members
 
-        public private(set)
-        var fileContent: [IndentedTextGetter] = []
+        public
+        let fileContent: IndentedText
     }
 }
 
@@ -63,20 +63,20 @@ extension Fastlane.Fastfile
     static
     func custom(
         predefinedSections: [TextFileSection<Fastlane.Fastfile>] = [],
-        otherEntries: String...
+        otherEntries: [String] = []
         ) -> Fastlane.Fastfile
     {
-        var content: [IndentedTextGetter] = []
+        let result = IndentedTextBuffer()
 
         //---
 
-        content <<< predefinedSections
+        result <<< predefinedSections
 
-        content <<< otherEntries
+        result <<< otherEntries
 
         //---
 
-        return .init(fileContent: content)
+        return .init(fileContent: result.content)
     }
 
     public
@@ -97,7 +97,7 @@ extension Fastlane.Fastfile
         stagingSchemeName: String? = nil,
         stagingExportMethod: ArchiveExportMethod = Defaults.stagingExportMethod,
         archivesExportPath: String = Defaults.archivesExportPath,
-        otherEntries: String...
+        otherEntries: [String] = []
         ) -> Fastlane.Fastfile
     {
         let projectName = projectName ?? productName
@@ -146,10 +146,17 @@ extension Fastlane.Fastfile
 
         //---
 
-        return .init(
-            fileContent: sections.map{ $0.asIndentedText }
-                + otherEntries.map{ $0.asIndentedText }
-        )
+        let result = IndentedTextBuffer()
+
+        //---
+
+        result <<< sections
+
+        result <<< otherEntries
+
+        //---
+
+        return .init(fileContent: result.content)
     }
 
     public
@@ -168,7 +175,7 @@ extension Fastlane.Fastfile
         sourceryTargets: [String] = [],
         swiftLintGlobalTargets: [String]? = nil,
         swiftLintPodsTargets: [String] = [],
-        otherEntries: String...
+        otherEntries: [String] = []
         ) -> Fastlane.Fastfile
     {
         let projectName = projectName ?? productName
@@ -209,10 +216,17 @@ extension Fastlane.Fastfile
 
         //---
 
-        return .init(
-            fileContent: sections.map{ $0.asIndentedText }
-                + otherEntries.map{ $0.asIndentedText }
-        )
+        let result = IndentedTextBuffer()
+
+        //---
+
+        result <<< sections
+
+        result <<< otherEntries
+
+        //---
+
+        return .init(fileContent: result.content)
     }
 }
 
@@ -782,7 +796,7 @@ extension TextFileSection
     {
         guard
             !targetNames.isEmpty
-            else
+        else
         {
             return []
         }
@@ -832,7 +846,7 @@ extension TextFileSection
     {
         guard
             !targetNames.isEmpty
-            else
+        else
         {
             return []
         }
@@ -885,7 +899,7 @@ extension TextFileSection
     {
         guard
             !targetNames.isEmpty
-            else
+        else
         {
             return []
         }

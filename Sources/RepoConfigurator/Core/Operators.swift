@@ -97,69 +97,69 @@ func <<< (
     list += elements.flatMap{ $0 }
 }
 
-// MARK: - [IndentedTextGetter] <<<
-
-public
-func <<< (
-    list: inout [IndentedTextGetter],
-    element: @escaping IndentedTextGetter
-    )
-{
-    list += [element]
-}
-
-public
-func <<< (
-    list: inout [IndentedTextGetter],
-    anotherList: [IndentedTextGetter]
-    )
-{
-    list += anotherList
-}
-
-public
-func <<< (
-    list: inout [IndentedTextGetter],
-    element: TextFilePiece
-    )
-{
-    list += [element.asIndentedText]
-}
-
-public
-func <<< (
-    list: inout [IndentedTextGetter],
-    element: TextFilePiece?
-    )
-{
-    if
-        let element = element
-    {
-        list += [element.asIndentedText]
-    }
-}
-
-public
-func <<< (
-    list: inout [IndentedTextGetter],
-    anotherList: [TextFilePiece]
-    )
-{
-    list += anotherList.map{ $0.asIndentedText }
-}
-
-public
-func <<< (
-    list: inout [IndentedTextGetter],
-    anotherList: [TextFilePiece]?
-    )
-{
-    if
-        let anotherList = anotherList
-    {
-        list += anotherList.map{ $0.asIndentedText }
-    }
-}
+//// MARK: - [IndentedTextGetter] <<<
+//
+//public
+//func <<< (
+//    list: inout [IndentedTextGetter],
+//    element: @escaping IndentedTextGetter
+//    )
+//{
+//    list += [element]
+//}
+//
+//public
+//func <<< (
+//    list: inout [IndentedTextGetter],
+//    anotherList: [IndentedTextGetter]
+//    )
+//{
+//    list += anotherList
+//}
+//
+//public
+//func <<< (
+//    list: inout [IndentedTextGetter],
+//    element: TextFilePiece
+//    )
+//{
+//    list += [element.asIndentedText]
+//}
+//
+//public
+//func <<< (
+//    list: inout [IndentedTextGetter],
+//    element: TextFilePiece?
+//    )
+//{
+//    if
+//        let element = element
+//    {
+//        list += [element.asIndentedText]
+//    }
+//}
+//
+//public
+//func <<< (
+//    list: inout [IndentedTextGetter],
+//    anotherList: [TextFilePiece]
+//    )
+//{
+//    list += anotherList.map{ $0.asIndentedText }
+//}
+//
+//public
+//func <<< (
+//    list: inout [IndentedTextGetter],
+//    anotherList: [TextFilePiece]?
+//    )
+//{
+//    if
+//        let anotherList = anotherList
+//    {
+//        list += anotherList.map{ $0.asIndentedText }
+//    }
+//}
 
 // MARK: - IndentedTextBuffer <<<
 

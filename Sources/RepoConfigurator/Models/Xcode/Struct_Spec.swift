@@ -25,15 +25,16 @@
  */
 
 public
-extension CocoaPods.Podspec
+extension Struct
 {
     public
-    struct Standard: ArbitraryNamedTextFile
+    struct Spec: FixedNameTextFile
     {
         // MARK: - Type level members
 
         public
-        typealias Parent = CocoaPods.Podspec
+        static
+        let fileName: String = "project.yml"
 
         // MARK: - Instance level members
 
@@ -44,46 +45,27 @@ extension CocoaPods.Podspec
 
         public
         init(
-            specVar: String = Defaults.specVariable,
-            product: Product,
-            company: Company,
-            initialVersion: VersionString = Defaults.initialVersionString,
-            license: License,
-            authors: [Author],
-            cocoapodsVersion: VersionString? = Defaults.cocoapodsVersion,
-            swiftVersion: VersionString? = Defaults.swiftVersion,
-            otherSettings: [(
-                deploymentTarget: DeploymentTarget?,
-                settigns: [String]
-            )]
+            productName: String,
+            configureProject: (Xcode.Project) -> Void
             )
         {
-            let result = IndentedTextBuffer()
+            let model = Xcode.Project(productName)
+
+            configureProject(model)
 
             //---
 
-            result <<< Parent.Settings(
-                specVar: specVar,
-                product: product,
-                company: company,
-                initialVersion: initialVersion,
-                license: license,
-                authors: authors,
-                cocoapodsVersion: cocoapodsVersion,
-                swiftVersion: swiftVersion,
-                otherSettings: otherSettings.map{
-
-                    Parent.PerPlatformSettings(
-                        specVar: specVar,
-                        deploymentTarget: $0.deploymentTarget,
-                        settigns: $0.settigns
-                    )
-                }
+            let result: IndentedTextBuffer = .init(
+                with: Indentation(singleLevel: .init(repeating: " ", count: 2))
             )
 
             //---
 
-            fileContent = result.content
+            result <<< model
+
+            //---
+
+            self.fileContent = result.content
         }
     }
 }

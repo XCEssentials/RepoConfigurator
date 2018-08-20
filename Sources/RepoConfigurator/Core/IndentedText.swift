@@ -37,5 +37,5 @@ typealias IndentedText = [IndentedTextLine]
 
 //---
 
-public
-typealias IndentedTextGetter = (Indentation) -> IndentedText
+//public
+//typealias IndentedTextGetter = (Indentation) -> IndentedText

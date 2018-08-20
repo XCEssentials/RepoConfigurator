@@ -41,31 +41,15 @@ protocol TextFilePiece
 public
 protocol TextFile
 {
-    static
-    var singleLevelIndentation: String { get }
-
-    var fileContent: [IndentedTextGetter] { get }
+    var fileContent: IndentedText { get }
 }
 
 public
 extension TextFile
 {
-    static
-    var singleLevelIndentation: String
-    {
-        return .init(repeating: " ", count: 4)
-    }
-
     var rendered: String
     {
-        let indentation = Indentation(
-            singleLevel: type(of: self).singleLevelIndentation
-        )
-
-        //---
-
         return fileContent
-            .asIndentedText(with: indentation)
             .map{ "\($0.joined())\($1)" }
             .joined(separator: "\n")
     }

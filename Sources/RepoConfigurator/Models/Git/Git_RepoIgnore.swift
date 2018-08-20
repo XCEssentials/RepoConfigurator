@@ -38,7 +38,7 @@ extension Git
         // MARK: - Instance level members
 
         public
-        let fileContent: [IndentedTextGetter]
+        let fileContent: IndentedText
     }
 }
 
@@ -52,7 +52,7 @@ extension Git.RepoIgnore
     func app(
         ignoreDependenciesSources: Bool = false,
         archivesExportPath: String = Defaults.archivesExportPath,
-        _ otherEntries: String...
+        otherEntries: [String] = []
         ) -> Git.RepoIgnore
     {
         let sections: [TextFileSection<Git.RepoIgnore>] = [
@@ -67,17 +67,24 @@ extension Git.RepoIgnore
 
         //---
 
-        return .init(
-            fileContent: sections.map{ $0.asIndentedText }
-                + otherEntries.map{ $0.asIndentedText }
-        )
+        let result = IndentedTextBuffer()
+
+        //---
+
+        result <<< sections
+
+        result <<< otherEntries
+
+        //---
+
+        return .init(fileContent: result.content)
     }
 
     public
     static
     func framework(
         ignoreDependenciesSources: Bool = true,
-        _ otherEntries: String...
+        otherEntries: [String] = []
         ) -> Git.RepoIgnore
     {
         let sections: [TextFileSection<Git.RepoIgnore>] = [
@@ -91,10 +98,17 @@ extension Git.RepoIgnore
 
         //---
 
-        return .init(
-            fileContent: sections.map{ $0.asIndentedText }
-                + otherEntries.map{ $0.asIndentedText }
-        )
+        let result = IndentedTextBuffer()
+
+        //---
+
+        result <<< sections
+
+        result <<< otherEntries
+
+        //---
+
+        return .init(fileContent: result.content)
     }
 }
 

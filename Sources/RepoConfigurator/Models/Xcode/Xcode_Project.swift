@@ -29,25 +29,9 @@ extension Xcode
 {
     public
     final
-    class Project: FixedNameTextFile
+    class Project
     {
-        // MARK: - Type level members
-
-        public
-        static
-        var singleLevelIndentation: String
-        {
-            return .init(repeating: " ", count: 2) // 2 spaces indentation for YAML file!
-        }
-
-        public
-        static
-        let fileName: String = "project.yml" // Struct SPEC!
-
         // MARK: - Instance level members
-
-        public private(set)
-        var fileContent: [IndentedTextGetter] = []
 
         public
         let name: String
@@ -76,37 +60,20 @@ extension Xcode
 
         public
         init(
-            _ name: String,
-            configureProject: (Xcode.Project) -> Void
+            _ name: String
             )
         {
             self.name = name
-
-            //---
-
-            configureProject(self)
-
-            //---
-
-            self.fileContent = [{
-
-                [weak self] indentation in
-
-                //---
-
-                self?.render(with: indentation) ?? []
-
-                }]
         }
     }
 }
 
 // MARK: - Content rendering
 
-extension Xcode.Project
+extension Xcode.Project: TextFilePiece
 {
     public
-    func render(
+    func asIndentedText(
         with indentation: Indentation
         ) -> IndentedText
     {

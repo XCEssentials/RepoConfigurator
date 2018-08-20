@@ -27,6 +27,8 @@
 public
 class IndentedTextBuffer
 {
+    // MARK: - Instance level members
+
     public
     let indentation: Indentation
 
@@ -70,9 +72,11 @@ class IndentedTextBuffer
         }
     }
 
+    // MARK: - Initializers
+
     public
     init(
-        with indentation: Indentation
+        with indentation: Indentation = Indentation()
         )
     {
         self.indentation = indentation

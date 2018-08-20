@@ -43,8 +43,8 @@ extension Xcode.Target
 
         // MARK: - Instance level members
 
-        public private(set)
-        var fileContent: [IndentedTextGetter] = []
+        public
+        let fileContent: IndentedText
 
         // MARK: - Initializers
 
@@ -57,29 +57,35 @@ extension Xcode.Target
             _ otherEntries: String...
             )
         {
-            fileContent <<< TextFileSection<Xcode.Target.InfoPlist>.header()
-
-            fileContent <<< TextFileSection<Xcode.Target.InfoPlist>.basic(
-                packageType: packageType,
-                initialVersionString: initialVersionString,
-                initialBuildNumber: initialBuildNumber
-            )
+            let result = IndentedTextBuffer()
 
             //---
+
+            typealias Section = TextFileSection<Xcode.Target.InfoPlist>
+
+            result <<< [
+
+                Section.header(),
+                Section.basic(
+                    packageType: packageType,
+                    initialVersionString: initialVersionString,
+                    initialBuildNumber: initialBuildNumber
+                )
+            ]
 
             switch preset
             {
             case .some(.iOS) where packageType == .app:
-                fileContent <<< TextFileSection<Xcode.Target.InfoPlist>.iOSApp()
+                result <<< Section.iOSApp()
 
             case .some(.macOS(let year, let entity)) where packageType == .app:
-                fileContent <<< TextFileSection<Xcode.Target.InfoPlist>.macOSApp(
+                result <<< Section.macOSApp(
                     copyrightYear: year,
                     copyrightEntity: entity
                 )
 
             case .some(.macOS(let year, let entity)) where packageType == .framework:
-                fileContent <<< TextFileSection<Xcode.Target.InfoPlist>.macOSFramework(
+                result <<< Section.macOSFramework(
                     copyrightYear: year,
                     copyrightEntity: entity
                 )
@@ -88,11 +94,13 @@ extension Xcode.Target
                 break
             }
 
-            fileContent <<< otherEntries
+            result <<< otherEntries
+
+            result <<< Section.footer()
 
             //---
 
-            fileContent <<< TextFileSection<Xcode.Target.InfoPlist>.footer()
+            fileContent = result.content
         }
     }
 }

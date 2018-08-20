@@ -46,8 +46,8 @@ struct SwiftLint: FixedNameTextFile
 
     // MARK: - Instance level members
 
-    public private(set)
-    var fileContent: [IndentedTextGetter] = []
+    public
+    let fileContent: IndentedText
 
     // MARK: - Initializers
 
@@ -60,10 +60,7 @@ struct SwiftLint: FixedNameTextFile
         otherEntries: [String] = []
         )
     {
-        fileContent <<< """
-            # see docs at https://github.com/realm/SwiftLint
-
-            """
+        let result = IndentedTextBuffer()
 
         //---
 
@@ -83,17 +80,24 @@ struct SwiftLint: FixedNameTextFile
             )
         ]
 
-        fileContent <<< sections
-
         //---
 
-        fileContent <<< otherEntries.map{
+        result <<< """
+            # see docs at https://github.com/realm/SwiftLint
 
             """
+
+        result <<< sections
+
+        result <<< otherEntries.map{ """
 
             \($0)
             """
         }
+
+        //---
+
+        fileContent = result.content
     }
 }
 
