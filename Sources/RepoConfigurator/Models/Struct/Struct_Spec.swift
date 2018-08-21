@@ -45,7 +45,7 @@ extension Struct
 
         public
         init(
-            productName: String,
+            _ productName: String,
             configureProject: (Xcode.Project) -> Void
             )
         {

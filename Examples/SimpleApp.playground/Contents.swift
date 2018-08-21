@@ -137,14 +137,14 @@ let testHostPath = "$(BUILT_PRODUCTS_DIR)/"
 
 //---
 
-let project = Xcode
-    .Project(productName, specFormat: .v2_1_0){
+let project = Struct
+    .Spec(productName){
 
         project in
 
         //---
 
-        project.configurations.all.override(
+        project.buildSettings.base.override(
 
             "DEVELOPMENT_TEAM" <<< company.developmentTeamId,
 
@@ -165,7 +165,7 @@ let project = Xcode
 
         )
 
-        project.configurations.debug.override(
+        project.buildSettings[.debug].override(
 
             "SWIFT_OPTIMIZATION_LEVEL" <<< "-Onone"
         )
@@ -182,7 +182,7 @@ let project = Xcode
 
             //---
 
-            app.configurations.all.override(
+            app.buildSettings.base.override(
 
                 "SWIFT_VERSION" <<< "$(inherited)",
 
@@ -196,7 +196,7 @@ let project = Xcode
                 "TARGETED_DEVICE_FAMILY" <<< DeviceFamily.iOS.phone
             )
 
-            app.configurations.debug.override(
+            app.buildSettings[.debug].override(
 
                 "MTL_ENABLE_DEBUG_INFO" <<< YES
             )
@@ -213,7 +213,7 @@ let project = Xcode
 
                 //---
 
-                appTests.configurations.all.override(
+                appTests.buildSettings.base.override(
 
                     "TEST_HOST" <<< testHostPath,
                     
@@ -231,7 +231,7 @@ let project = Xcode
                     "FRAMEWORK_SEARCH_PATHS" <<< "$(inherited) $(BUILT_PRODUCTS_DIR)"
                 )
 
-                appTests.configurations.debug.override(
+                appTests.buildSettings[.debug].override(
 
                     "MTL_ENABLE_DEBUG_INFO" <<< YES
                 )
@@ -246,8 +246,8 @@ let podfile = CocoaPods
     .Podfile(
         workspaceName: productName,
         targets: [
-            .init(
-                targetName: targetName.main,
+            .target(
+                targetName.main,
                 deploymentTarget: depTarget,
                 pods: [
 

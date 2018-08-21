@@ -88,7 +88,7 @@ extension TextFileSection
 {
     static
     func target(
-        targetName: String,
+        _ targetName: String,
         projectName: String? = nil,
         deploymentTarget: DeploymentTarget,
         usesSwift: Bool = true, // adds 'use_frameworks!'
