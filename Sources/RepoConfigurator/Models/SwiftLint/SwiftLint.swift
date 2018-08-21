@@ -60,7 +60,9 @@ struct SwiftLint: FixedNameTextFile
         otherEntries: [String] = []
         )
     {
-        let result = IndentedTextBuffer()
+        let result: IndentedTextBuffer = .init(
+            with: Defaults.singleLevelOfIndentationForYAMLFiles
+        )
 
         //---
 
@@ -216,8 +218,11 @@ extension TextFileSection
             result <<< (setXCEDefaults || !otherRulesOptions.isEmpty).mapIf(true){"""
 
                 # rules options:
+
                 """
             }
+
+            let i = indentation.singleLevel //swiftlint:disable:this identifier_name
 
             result <<< setXCEDefaults.mapIf(true){
 
@@ -225,14 +230,14 @@ extension TextFileSection
 
                 """
                 line_length:
-                    ignores_comments: true
+                \(i)ignores_comments: true
                 trailing_whitespace:
-                    ignores_empty_lines: true
+                \(i)ignores_empty_lines: true
                 type_name:
-                    allowed_symbols: _
+                \(i)allowed_symbols: _
                 statement_position:
-                    # https://github.com/realm/SwiftLint/issues/1181#issuecomment-272445593
-                    statement_mode: uncuddled_else
+                \(i)# https://github.com/realm/SwiftLint/issues/1181#issuecomment-272445593
+                \(i)statement_mode: uncuddled_else
                 """
             }
 

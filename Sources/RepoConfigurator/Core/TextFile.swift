@@ -50,7 +50,7 @@ extension TextFile
     var rendered: String
     {
         return fileContent
-            .map{ "\($0.joined())\($1)" }
+            .map{ "\($0)\($1)" }
             .joined(separator: "\n")
     }
 }

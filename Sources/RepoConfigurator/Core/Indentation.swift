@@ -30,7 +30,7 @@ class Indentation: Equatable
     // MARK: - Type level members
 
     public
-    typealias Snapshot = [String]
+    typealias Snapshot = String
 
     // MARK: - Instance level members
 
@@ -41,7 +41,7 @@ class Indentation: Equatable
     var currentLevel = 0
 
     public
-    var snapshot: [String]
+    var snapshot: Snapshot
     {
         return .init(repeating: singleLevel, count: currentLevel)
     }
@@ -126,7 +126,7 @@ class Indentation: Equatable
 
     public
     init(
-        singleLevel: String = .init(repeating: " ", count: 4)
+        _ singleLevel: String = Defaults.standardSingleLevelOfIndentation
         )
     {
         self.singleLevel = singleLevel

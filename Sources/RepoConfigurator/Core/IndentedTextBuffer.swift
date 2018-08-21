@@ -71,4 +71,13 @@ class IndentedTextBuffer
     {
         self.indentation = indentation
     }
+
+    public
+    convenience
+    init(
+        with customSingleLevelOfIndentation: String
+        )
+    {
+        self.init(with: Indentation(customSingleLevelOfIndentation))
+    }
 }

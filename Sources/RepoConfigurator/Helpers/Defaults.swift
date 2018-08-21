@@ -94,4 +94,12 @@ enum Defaults
     public
     static
     let releaseGitBranchesRegEx: String = "(release/*|hotfix/*)" // Git-Flow
+
+    public
+    static
+    let standardSingleLevelOfIndentation: String = .init(repeating: " ", count: 4)
+
+    public
+    static
+    let singleLevelOfIndentationForYAMLFiles: String = .init(repeating: " ", count: 2)
 }
