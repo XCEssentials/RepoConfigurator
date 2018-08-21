@@ -152,14 +152,14 @@ let emptyFile: PerTarget = (
         )
 )
 
-let project = Xcode
-    .Project(product.name, specFormat: .v2_1_0){
+let project = Struct
+    .Spec(product.name){
 
         project in
 
         //---
 
-        project.configurations.all.override(
+        project.buildSettings.base.override(
 
             "IPHONEOS_DEPLOYMENT_TARGET" <<< depTarget.minimumVersion,
             "SWIFT_VERSION" <<< swiftVersion,
@@ -177,7 +177,7 @@ let project = Xcode
             "CLANG_WARN_STRICT_PROTOTYPES" <<< YES
         )
 
-        project.configurations.debug.override(
+        project.buildSettings[.debug].override(
 
             "SWIFT_OPTIMIZATION_LEVEL" <<< "-Onone"
         )
@@ -194,7 +194,7 @@ let project = Xcode
 
             //---
 
-            fwk.configurations.all.override(
+            fwk.buildSettings.base.override(
 
                 "SWIFT_VERSION" <<< "$(inherited)",
 
@@ -216,7 +216,7 @@ let project = Xcode
                 "SKIP_INSTALL" <<< YES
             )
 
-            fwk.configurations.debug.override(
+            fwk.buildSettings[.debug].override(
 
                 "MTL_ENABLE_DEBUG_INFO" <<< YES
             )
@@ -233,7 +233,7 @@ let project = Xcode
 
                 //---
 
-                fwkTests.configurations.all.override(
+                fwkTests.buildSettings.base.override(
 
                     "SWIFT_VERSION" <<< "$(inherited)",
 
@@ -249,7 +249,7 @@ let project = Xcode
                     "FRAMEWORK_SEARCH_PATHS" <<< "$(inherited) $(BUILT_PRODUCTS_DIR)"
                 )
 
-                fwkTests.configurations.debug.override(
+                fwkTests.buildSettings[.debug].override(
 
                     "MTL_ENABLE_DEBUG_INFO" <<< YES
                 )
@@ -270,8 +270,8 @@ let podfile = CocoaPods
     .Podfile(
         workspaceName: product.name,
         targets: [
-            .init(
-                targetName: targetName.main,
+            .target(
+                targetName.main,
                 deploymentTarget: depTarget,
                 includePodsFromPodspec: true,
                 pods: [
@@ -287,7 +287,7 @@ let podfile = CocoaPods
 
 let podspec = CocoaPods
     .Podspec
-    .Standard(
+    .standard(
         product: product,
         company: company,
         license: license.model.cocoaPodsLicenseSummary,
