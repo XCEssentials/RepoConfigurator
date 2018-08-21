@@ -25,7 +25,7 @@
  */
 
 public
-struct TextFileSection<Context: TextFile>
+struct TextFileSection<Context>
 {
     // MARK: - Instance level members
 

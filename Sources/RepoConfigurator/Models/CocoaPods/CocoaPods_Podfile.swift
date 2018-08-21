@@ -30,6 +30,22 @@ extension CocoaPods
     public
     struct Podfile: FixedNameTextFile
     {
+        // MARK: - Type level members
+
+        public
+        enum Target {}
+
+        public
+        enum UnitTestTarget {}
+
+        public
+        enum InheritanceMode: String
+        {
+            case nothing = "none"
+            case searchPaths = "search_paths"
+            case complete = "complete"
+        }
+        
         // MARK: - Instance level members
 
         public
@@ -40,7 +56,7 @@ extension CocoaPods
         public
         init(
             workspaceName: String,
-            targets: [Target],
+            targets: [TextFileSection<Target>],
             otherGlobalEntries: [String] = []
             )
         {
@@ -63,200 +79,132 @@ extension CocoaPods
     }
 }
 
-public
-extension CocoaPods.Podfile
-{
-    public
-    struct Target
-    {
-        // MARK: - Instance level members
-
-        public
-        let targetName: String
-
-        public
-        let projectName: String
-
-        public
-        let deploymentTarget: DeploymentTarget
-
-        public
-        let usesSwift: Bool // adds 'use_frameworks!
-
-        public
-        let includePodsFromPodspec: Bool
-
-        public
-        let pods: [String]
-
-        public
-        let tests: [UnitTestTarget]
-
-        // MARK: - Initializers
-
-        public
-        init(
-            targetName: String,
-            projectName: String? = nil,
-            deploymentTarget: DeploymentTarget,
-            usesSwift: Bool = true, // adds 'use_frameworks!'
-            includePodsFromPodspec: Bool = false,
-            pods: [String],
-            tests: UnitTestTarget...
-            )
-        {
-            self.targetName = targetName
-            self.projectName = projectName ?? targetName
-            self.deploymentTarget = deploymentTarget
-            self.usesSwift = usesSwift
-            self.includePodsFromPodspec = includePodsFromPodspec
-            self.pods = pods
-            self.tests = tests
-        }
-    }
-}
-
-public
-extension CocoaPods.Podfile
-{
-    public
-    struct UnitTestTarget
-    {
-        // MARK: - Type level members
-
-        public
-        enum InheritanceMode: String
-        {
-            case nothing = ":none"
-            case searchPaths = ":search_paths"
-            case complete = ":complete"
-        }
-
-        // MARK: - Instance level members
-
-        public
-        let name: String
-
-        public
-        let inheritanceMode: InheritanceMode?
-
-        public
-        let pods: [String]
-
-        // MARK: - Initializers
-
-        public
-        init(
-            _ name: String,
-            inherit: InheritanceMode? = .searchPaths,
-            _ pods: String...
-            )
-        {
-            self.name = name
-            self.inheritanceMode = inherit
-            self.pods = pods
-        }
-    }
-}
-
 // MARK: - Content rendering
 
-extension CocoaPods.Podfile.Target: TextFilePiece
+public
+extension TextFileSection
+    where
+    Context == CocoaPods.Podfile.Target
 {
-    public
-    func asIndentedText(
-        with indentation: Indentation
-        ) -> IndentedText
+    static
+    func target(
+        targetName: String,
+        projectName: String? = nil,
+        deploymentTarget: DeploymentTarget,
+        usesSwift: Bool = true, // adds 'use_frameworks!'
+        includePodsFromPodspec: Bool = false,
+        pods: [String],
+        tests: TextFileSection<CocoaPods.Podfile.UnitTestTarget>...
+        ) -> TextFileSection<Context>
     {
-        let result: IndentedTextBuffer = .init(with: indentation)
+        return .init{
 
-        //---
+            indentation in
 
-        result <<< """
+            //---
 
-            target '\(targetName)' do
+            let result: IndentedTextBuffer = .init(with: indentation)
 
-            """
-
-        indentation.nest{
+            //---
 
             result <<< """
-                project '\(projectName)'
-                platform :\(deploymentTarget.platform.cocoaPodsId), '\(deploymentTarget.minimumVersion)'
 
-                # Comment the next line if you're not using Swift
-                # and don't want to use dynamic frameworks
-                \(usesSwift ? "" : "# ")use_frameworks!
+                target '\(targetName)' do
 
                 """
 
-            result <<< includePodsFromPodspec.mapIf(true){ """
-                \(Defaults.podsFromSpec)
+            indentation.nest{
 
+                result <<< """
+                    project '\(projectName ?? targetName)'
+                    platform :\(deploymentTarget.platform.cocoaPodsId), '\(deploymentTarget.minimumVersion)'
+
+                    # Comment the next line if you're not using Swift
+                    # and don't want to use dynamic frameworks
+                    \(usesSwift ? "" : "# ")use_frameworks!
+
+                    """
+
+                result <<< includePodsFromPodspec.mapIf(true){ """
+                    \(Defaults.podsFromSpec)
+
+                    """
+                }
+
+                result <<< pods.map{ """
+                    \($0)
+                    """
+                }
+
+                result <<< tests.map{
+
+                    $0.contentGetter(indentation)
+                }
+            }
+
+            // end target
+            result <<< """
+
+                end
                 """
-            }
 
-            result <<< pods.map{ """
-                \($0)
-                """
-            }
+            //---
 
-            result <<< tests.map{
-
-                $0.asIndentedText(with: indentation)
-            }
+            return result.content
         }
-
-        // end target
-        result <<< """
-
-            end
-            """
-
-        //---
-
-        return result.content
     }
 }
 
-extension CocoaPods.Podfile.UnitTestTarget: TextFilePiece
+public
+extension TextFileSection
+    where
+    Context == CocoaPods.Podfile.UnitTestTarget
 {
-    public
-    func asIndentedText(
-        with indentation: Indentation
-        ) -> IndentedText
+    static
+    func unitTestTarget(
+        _ name: String,
+        inherit inheritanceMode: CocoaPods.Podfile.InheritanceMode? = .searchPaths,
+        _ pods: String...
+        ) -> TextFileSection<Context>
     {
-        let result: IndentedTextBuffer = .init(with: indentation)
+        return .init{
 
-        //---
+            indentation in
 
-        result <<< """
+            //---
 
-            target '\(name)' do
+            let result: IndentedTextBuffer = .init(with: indentation)
 
-            """
+            //---
 
-        indentation.nest{
+            result <<< """
 
-            result <<< inheritanceMode.map{ """
-                inherit! \($0.rawValue)
+                target '\(name)' do
 
                 """
+
+            indentation.nest{
+
+                result <<< inheritanceMode.map{ """
+                    inherit! :\($0.rawValue)
+
+                    """
+                }
+
+                result <<< pods.map{ """
+                    \($0)
+                    """
+                }
             }
 
-            result <<< pods.map{ """
-                \($0)
+            result <<< """
+
+                end
                 """
-            }
+
+            //---
+
+            return result.content
         }
-
-        result <<< """
-
-            end
-            """
-
-        //---
-
-        return result.content
     }
 }

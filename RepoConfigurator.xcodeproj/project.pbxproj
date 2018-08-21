@@ -44,9 +44,7 @@
 		946CFA0A211DE6DF00E756CD /* GitHub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946CFA09211DE6DF00E756CD /* GitHub.swift */; };
 		946CFA0C211DE70300E756CD /* GitHub_Pages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946CFA0B211DE70300E756CD /* GitHub_Pages.swift */; };
 		946CFA18211F816B00E756CD /* Array+TextFilePiece.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946CFA17211F816B00E756CD /* Array+TextFilePiece.swift */; };
-		946CFA1C2120559B00E756CD /* CocoaPods_Podspec_Standard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946CFA1B2120559B00E756CD /* CocoaPods_Podspec_Standard.swift */; };
 		946CFA1E2120AC7D00E756CD /* Array+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946CFA1D2120AC7D00E756CD /* Array+String.swift */; };
-		946CFA202120C90100E756CD /* CocoaPods_Podspec_WithSubSpecs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946CFA1F2120C90100E756CD /* CocoaPods_Podspec_WithSubSpecs.swift */; };
 		948EB3202120F500000D91D0 /* Bool+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948EB31F2120F500000D91D0 /* Bool+Helper.swift */; };
 		9492E3422125C0B2003558B6 /* Xcode_Target_ProjectVariant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9492E3412125C0B2003558B6 /* Xcode_Target_ProjectVariant.swift */; };
 		9492E34621262E23003558B6 /* Xcode_Target.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9492E34521262E23003558B6 /* Xcode_Target.swift */; };
@@ -114,9 +112,7 @@
 		946CFA09211DE6DF00E756CD /* GitHub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHub.swift; sourceTree = "<group>"; };
 		946CFA0B211DE70300E756CD /* GitHub_Pages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHub_Pages.swift; sourceTree = "<group>"; };
 		946CFA17211F816B00E756CD /* Array+TextFilePiece.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+TextFilePiece.swift"; sourceTree = "<group>"; };
-		946CFA1B2120559B00E756CD /* CocoaPods_Podspec_Standard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CocoaPods_Podspec_Standard.swift; sourceTree = "<group>"; };
 		946CFA1D2120AC7D00E756CD /* Array+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+String.swift"; sourceTree = "<group>"; };
-		946CFA1F2120C90100E756CD /* CocoaPods_Podspec_WithSubSpecs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CocoaPods_Podspec_WithSubSpecs.swift; sourceTree = "<group>"; };
 		948EB31F2120F500000D91D0 /* Bool+Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bool+Helper.swift"; sourceTree = "<group>"; };
 		9492E3412125C0B2003558B6 /* Xcode_Target_ProjectVariant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Xcode_Target_ProjectVariant.swift; sourceTree = "<group>"; };
 		9492E34521262E23003558B6 /* Xcode_Target.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Xcode_Target.swift; sourceTree = "<group>"; };
@@ -264,8 +260,6 @@
 				94245731211B025C00A05876 /* CocoaPods.swift */,
 				94245733211B034400A05876 /* CocoaPods_Podfile.swift */,
 				94245735211B3EE200A05876 /* CocoaPods_Podspec.swift */,
-				946CFA1B2120559B00E756CD /* CocoaPods_Podspec_Standard.swift */,
-				946CFA1F2120C90100E756CD /* CocoaPods_Podspec_WithSubSpecs.swift */,
 			);
 			path = CocoaPods;
 			sourceTree = "<group>";
@@ -486,8 +480,6 @@
 				94245732211B025C00A05876 /* CocoaPods.swift in Sources */,
 				94245734211B034400A05876 /* CocoaPods_Podfile.swift in Sources */,
 				94245736211B3EE200A05876 /* CocoaPods_Podspec.swift in Sources */,
-				946CFA1C2120559B00E756CD /* CocoaPods_Podspec_Standard.swift in Sources */,
-				946CFA202120C90100E756CD /* CocoaPods_Podspec_WithSubSpecs.swift in Sources */,
 				94511D872121D21400AB4CD0 /* CustomTextFile.swift in Sources */,
 				9424573C211B9EE500A05876 /* Defaults.swift in Sources */,
 				9424AB0F211754C100262B79 /* DeploymentTarget.swift in Sources */,
