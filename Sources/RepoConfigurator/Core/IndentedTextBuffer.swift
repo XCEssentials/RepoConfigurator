@@ -37,16 +37,6 @@ class IndentedTextBuffer
 
     public
     func append(
-        _ newPiece: String
-        )
-    {
-        content.append(
-            (indentation.snapshot, newPiece)
-        )
-    }
-
-    public
-    func append(
         _ moreContent: IndentedText
         )
     {
