@@ -26,12 +26,46 @@
 
 infix operator <<<
 
-//---
+// MARK: - String <<<
 
 public
-func <<< (keyName: String, value: Any) -> KeyValuePair
+func <<< (
+    keyName: String,
+    value: String
+    ) -> KeyValuePair
 {
     return (keyName, value)
+}
+
+public
+func <<< (
+    list: inout [String],
+    element: String
+    )
+{
+    list += [element]
+}
+
+public
+func <<< (
+    list: inout [String],
+    element: String?
+    )
+{
+    if
+        let element = element
+    {
+        list += [element]
+    }
+}
+
+public
+func <<< (
+    list: inout [String],
+    elements: [String]
+    )
+{
+    list += elements
 }
 
 // MARK: - IndentedText <<<
@@ -63,66 +97,77 @@ func <<< (
     list += elements.flatMap{ $0 }
 }
 
-// MARK: - [IndentedTextGetter] <<<
+// MARK: - IndentedTextBuffer <<<
 
 public
 func <<< (
-    list: inout [IndentedTextGetter],
-    element: @escaping IndentedTextGetter
+    receiver: IndentedTextBuffer,
+    input: String
     )
 {
-    list += [element]
+    receiver.append(input)
 }
 
 public
 func <<< (
-    list: inout [IndentedTextGetter],
-    anotherList: [IndentedTextGetter]
-    )
-{
-    list += anotherList
-}
-
-public
-func <<< (
-    list: inout [IndentedTextGetter],
-    element: TextFilePiece
-    )
-{
-    list += [element.asIndentedText]
-}
-
-public
-func <<< (
-    list: inout [IndentedTextGetter],
-    element: TextFilePiece?
+    receiver: IndentedTextBuffer,
+    input: String?
     )
 {
     if
-        let element = element
+        let input = input
     {
-        list += [element.asIndentedText]
+        receiver.append(input)
     }
 }
 
 public
 func <<< (
-    list: inout [IndentedTextGetter],
-    anotherList: [TextFilePiece]
+    receiver: IndentedTextBuffer,
+    inputs: [String]
     )
 {
-    list += anotherList.map{ $0.asIndentedText }
+    inputs.forEach{
+
+        receiver.append($0)
+    }
 }
 
 public
 func <<< (
-    list: inout [IndentedTextGetter],
-    anotherList: [TextFilePiece]?
+    receiver: IndentedTextBuffer,
+    input: IndentedText
     )
 {
-    if
-        let anotherList = anotherList
-    {
-        list += anotherList.map{ $0.asIndentedText }
+    receiver.append(input)
+}
+
+public
+func <<< (
+    receiver: IndentedTextBuffer,
+    inputs: [IndentedText]
+    )
+{
+    inputs.forEach{
+
+        receiver.append($0)
     }
+}
+
+public
+func <<< (
+    receiver: IndentedTextBuffer,
+    input: TextFilePiece
+    )
+{
+    receiver.append(input)
+}
+
+public
+func <<< (
+    receiver: IndentedTextBuffer,
+    input: Dictionary<String, TextFilePiece>.Values
+    )
+{
+    receiver.append(Array(input))
 }

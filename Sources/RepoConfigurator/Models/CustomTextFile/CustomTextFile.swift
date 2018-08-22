@@ -29,8 +29,8 @@ struct CustomTextFile: ArbitraryNamedTextFile
 {
     // MARK: - Instance level members
 
-    public private(set)
-    var fileContent: [IndentedTextGetter] = []
+    public
+    let fileContent: IndentedText
 
     // MARK: - Initializers
 
@@ -39,17 +39,25 @@ struct CustomTextFile: ArbitraryNamedTextFile
         _ customEntries: String...
         )
     {
+        let result = IndentedTextBuffer()
+
+        //---
+
         if
             customEntries.isEmpty
         {
-            fileContent <<< """
+            result <<< """
                 // empty file
 
                 """
         }
         else
         {
-            fileContent <<< customEntries
+            result <<< customEntries
         }
+
+        //---
+
+        fileContent = result.content
     }
 }

@@ -38,8 +38,8 @@ extension GitHub
 
         // MARK: - Instance level members
 
-        public private(set)
-        var fileContent: [IndentedTextGetter] = []
+        public
+        let fileContent: IndentedText
 
         // MARK: - Initializers
 
@@ -49,15 +49,23 @@ extension GitHub
             otherEntries: String...
             )
         {
-            fileContent <<< """
+            let result = IndentedTextBuffer()
+
+            //---
+
+            result <<< """
                 theme: \(themeName)
                 """
 
-            fileContent <<< otherEntries.map{ """
+            result <<< otherEntries.map{ """
 
                 \($0)
                 """
             }
+
+            //---
+
+            fileContent = result.content
         }
     }
 }

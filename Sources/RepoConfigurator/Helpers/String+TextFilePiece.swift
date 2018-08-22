@@ -28,13 +28,13 @@ extension String: TextFilePiece
 {
     public
     func asIndentedText(
-        with indentation: inout Indentation
+        with indentation: Indentation
         ) -> IndentedText
     {
         return split(
             separator: "\n",
             omittingEmptySubsequences: false // to preserve empty lines!
             )
-            .map{ (indentation, String($0)) }
+            .map{ (indentation.snapshot, String($0)) }
     }
 }

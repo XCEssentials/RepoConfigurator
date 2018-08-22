@@ -62,9 +62,7 @@ struct RawTextFile<T: TextFile>
     public
     var content: String
     {
-        var result = model
-            .fileContent
-            .rendered
+        var result = model.rendered
 
         //---
 

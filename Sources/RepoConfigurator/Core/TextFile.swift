@@ -32,7 +32,7 @@ public
 protocol TextFilePiece
 {
     func asIndentedText(
-        with indentation: inout Indentation
+        with indentation: Indentation
         ) -> IndentedText
 }
 
@@ -41,7 +41,18 @@ protocol TextFilePiece
 public
 protocol TextFile
 {
-    var fileContent: [IndentedTextGetter] { get }
+    var fileContent: IndentedText { get }
+}
+
+public
+extension TextFile
+{
+    var rendered: String
+    {
+        return fileContent
+            .map{ "\($0)\($1)" }
+            .joined(separator: "\n")
+    }
 }
 
 // MARK: - ARBITRARY Named Text File

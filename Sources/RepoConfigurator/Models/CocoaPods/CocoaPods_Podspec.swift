@@ -28,8 +28,10 @@ public
 extension CocoaPods
 {
     public
-    enum Podspec
+    struct Podspec: ArbitraryNamedTextFile
     {
+        // MARK: - Type level members
+
         public
         typealias Product = (
             name: String,
@@ -55,50 +57,122 @@ extension CocoaPods
             email: String
         )
 
-        // internal
-        struct Settings
-        {
-            let specVar: String
-            let product: Product
-            let company: Company
-            let initialVersion: VersionString
-            let license: License
-            let authors: [Author]
-            let cocoapodsVersion: VersionString? // for ex. '>= 0.36'
-            let swiftVersion: VersionString?
-            let otherSettings: TextFilePiece
+        fileprivate
+        enum GeneralSettings {}
+
+        fileprivate
+        enum PerPlatformSettings {}
+
+        // MARK: - Instance level members
+
+        public
+        let fileContent: IndentedText
+    }
+}
+
+// MARK: - Presets
+
+public
+extension CocoaPods.Podspec
+{
+    static
+    func standard(
+        specVar: String = Defaults.specVariable,
+        product: Product,
+        company: Company,
+        initialVersion: VersionString = Defaults.initialVersionString,
+        license: License,
+        authors: [Author],
+        cocoapodsVersion: VersionString? = Defaults.cocoapodsVersion,
+        swiftVersion: VersionString? = Defaults.swiftVersion,
+        otherSettings: [(
+            deploymentTarget: DeploymentTarget?,
+            settigns: [String]
+        )]
+        ) -> CocoaPods.Podspec
+    {
+        let result = IndentedTextBuffer()
+
+        //---
+
+        result <<< """
+            Pod::Spec.new do |\(specVar)|
+
+            """
+
+        result.indentation.nest{
+
+            result <<< TextFileSection<GeneralSettings>.generalSettings(
+                specVar: specVar,
+                product: product,
+                company: company,
+                initialVersion: initialVersion,
+                license: license,
+                authors: authors,
+                cocoapodsVersion: cocoapodsVersion,
+                swiftVersion: swiftVersion
+            )
+
+            result <<< otherSettings.map{
+
+                TextFileSection<PerPlatformSettings>.perPlatformSettings(
+                    specVar: specVar,
+                    deploymentTarget: $0.deploymentTarget,
+                    settigns: $0.settigns
+                )
+            }
         }
 
-        // internal
-        struct PerPlatformSettings
-        {
-            let specVar: String
-            let deploymentTarget: DeploymentTarget?
-            let settigns: [String]
-        }
+        result <<< """
+
+            end # spec
+            """
+
+        //---
+
+        return .init(fileContent: result.content)
     }
+
+    // TODO: implement later!
+    //static
+    //func withSubSpecs()
+    //{}
 }
 
 // MARK: - Content rendering
 
-//internal
-extension CocoaPods.Podspec.Settings: TextFilePiece
+fileprivate
+extension TextFileSection
+    where
+    Context == CocoaPods.Podspec.GeneralSettings
 {
-    func asIndentedText(
-        with indentation: inout Indentation
-        ) -> IndentedText
+    static
+    func generalSettings(
+        specVar: String = Defaults.specVariable,
+        product: CocoaPods.Podspec.Product,
+        company: CocoaPods.Podspec.Company,
+        initialVersion: VersionString = Defaults.initialVersionString,
+        license: CocoaPods.Podspec.License,
+        authors: [CocoaPods.Podspec.Author],
+        cocoapodsVersion: VersionString? = Defaults.cocoapodsVersion,
+        swiftVersion: VersionString? = Defaults.swiftVersion
+        ) -> TextFileSection<Context>
     {
-        var result: IndentedText = []
+        return .init{
 
-        let s = specVar // swiftlint:disable:this identifier_name
+            indentation in
 
-        //---
+            //---
 
-        //swiftlint:disable line_length
+            let result: IndentedTextBuffer = .init(with: indentation)
 
-        result <<< """
-            Pod::Spec.new do |\(s)|
+            //---
 
+            let s = specVar // swiftlint:disable:this identifier_name
+
+            //swiftlint:disable line_length
+
+            result <<< """
                 \(s).name          = '\(company.prefix)\(product.name)'
                 \(s).summary       = '\(product.summary)'
                 \(s).version       = '\(initialVersion)'
@@ -111,76 +185,80 @@ extension CocoaPods.Podspec.Settings: TextFilePiece
                 \(s).license       = { :type => '\(license.type)', :file => '\(license.fileName)' }
 
                 \(s).authors = {
-            """
-            .asIndentedText(with: &indentation)
+                """
 
-        //swiftlint:enable line_length
+            //swiftlint:enable line_length
 
-        result <<< """
-                    \(authors.map{ "'\($0.name)' => '\($0.email)'" }.asMultiLine)
-            """
-            .asIndentedText(with: &indentation)
+            indentation.nest{
 
-        result <<< """
+                result <<< authors.map{ """
+                    "'\($0.name)' => '\($0.email)'"
+                    """
                 }
+            }
+
+            result <<< """
+                } # authors
 
                 \(swiftVersion.map{ "\(s).swift_version = '\($0)'" } ?? "")
 
                 \(cocoapodsVersion.map{ "\(s).cocoapods_version = '>= \($0)'" } ?? "")
-            """
-            .asIndentedText(with: &indentation)
 
-        indentation++
+                """
 
-        result <<< otherSettings
-            .asIndentedText(with: &indentation)
+            //---
 
-        indentation--
-
-        // end spec
-        result <<< """
-
-            end
-            """
-            .asIndentedText(with: &indentation)
-
-        //---
-
-        return result
+            return result.content
+        }
     }
 }
 
-//internal
-extension CocoaPods.Podspec.PerPlatformSettings: TextFilePiece
+fileprivate
+extension TextFileSection
+    where
+    Context == CocoaPods.Podspec.PerPlatformSettings
 {
-    func asIndentedText(
-        with indentation: inout Indentation
-        ) -> IndentedText
+    static
+    func perPlatformSettings(
+        specVar: String = Defaults.specVariable,
+        deploymentTarget: DeploymentTarget?,
+        settigns: [String]
+        ) -> TextFileSection<Context>
     {
-        var result: IndentedText = []
+        return .init{
 
-        let s = specVar // swiftlint:disable:this identifier_name
+            indentation in
 
-        //---
+            //---
 
-        let prefix = "\(s).\(deploymentTarget.map{ "\($0.platform.cocoaPodsId)." } ?? "")"
+            let result: IndentedTextBuffer = .init(with: indentation)
 
-        result <<< """
+            //---
 
-            # === \(deploymentTarget.map{ "\($0.platform.rawValue)" } ?? "All platforms")
+            let platfromId = deploymentTarget.map{ $0.platform }
+            let platfromPrefix = platfromId.map{ "\($0.cocoaPodsId)." }
+            let prefix = "\(specVar).\(platfromPrefix ?? "")"
 
-            \(deploymentTarget.map{ "\(prefix)deployment_target = '\($0.minimumVersion)'" } ?? "")
+            result <<< """
 
-            """
-            .asIndentedText(with: &indentation)
+                # === \(platfromId.map{ "\($0.rawValue)" } ?? "All platforms")
 
-        result <<< settigns.map{
+                """
 
-            "\(prefix)\($0)".asIndentedText(with: &indentation)
+            result <<< deploymentTarget.map{ """
+                \(prefix)deployment_target = '\($0.minimumVersion)'
+
+                """
+            }
+
+            result <<< settigns.map{ """
+                \(prefix)\($0)
+                """
+            }
+
+            //---
+
+            return result.content
         }
-
-        //---
-
-        return result
     }
 }

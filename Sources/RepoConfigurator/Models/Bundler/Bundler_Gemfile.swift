@@ -32,8 +32,8 @@ extension Bundler
     {
         // MARK: - Instance level members
 
-        public private(set)
-        var fileContent: [IndentedTextGetter] = []
+        public
+        let fileContent: IndentedText
 
         // MARK: - Initializers
 
@@ -43,22 +43,30 @@ extension Bundler
             _ otherEntries: String...
             )
         {
-            fileContent <<< """
+            let result = IndentedTextBuffer()
+
+            //---
+
+            result <<< """
                 source "https://rubygems.org"
 
                 """
 
-            fileContent <<< basicFastlane.mapIf(true){ """
+            result <<< basicFastlane.mapIf(true){ """
 
                 gem "fastlane"
                 """
             }
 
-            fileContent <<< otherEntries.map{ """
+            result <<< otherEntries.map{ """
 
                 \($0)
                 """
             }
+
+            //---
+
+            fileContent = result.content
         }
     }
 }

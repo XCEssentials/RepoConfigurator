@@ -31,37 +31,26 @@ extension Fastlane
     {
         // MARK: - Type level members
 
+        /**
+         Method used to export the archive.
+         Valid values are: app-store, ad-hoc, package, enterprise, development, developer-id.
+         See more: https://docs.fastlane.tools/actions/gym/#parameters
+         */
         public
-        struct Section
+        enum ArchiveExportMethod: String
         {
-            // MARK: - Type level members
-
-            /**
-             Method used to export the archive.
-             Valid values are: app-store, ad-hoc, package, enterprise, development, developer-id.
-             See more: https://docs.fastlane.tools/actions/gym/#parameters
-             */
-            public
-            enum ArchiveExportMethod: String
-            {
-                case appStore = "app-store"
-                case adHoc = "ad-hoc"
-                case package = "package"
-                case enterprise = "enterprise"
-                case development = "development"
-                case developerId = "developer-id"
-            }
-
-            // MARK: - Instance level members
-
-            public private(set)
-            var content: [IndentedTextGetter] = []
+            case appStore = "app-store"
+            case adHoc = "ad-hoc"
+            case package = "package"
+            case enterprise = "enterprise"
+            case development = "development"
+            case developerId = "developer-id"
         }
 
         // MARK: - Instance level members
 
-        public private(set)
-        var fileContent: [IndentedTextGetter] = []
+        public
+        let fileContent: IndentedText
     }
 }
 
@@ -73,21 +62,21 @@ extension Fastlane.Fastfile
     public
     static
     func custom(
-        predefinedSections: [Section] = [],
-        otherEntries: String...
+        predefinedSections: [TextFileSection<Fastlane.Fastfile>] = [],
+        otherEntries: [String] = []
         ) -> Fastlane.Fastfile
     {
-        var content: [IndentedTextGetter] = []
+        let result = IndentedTextBuffer()
 
         //---
 
-        content <<< predefinedSections
+        result <<< predefinedSections
 
-        content <<< otherEntries
+        result <<< otherEntries
 
         //---
 
-        return .init(fileContent: content)
+        return .init(fileContent: result.content)
     }
 
     public
@@ -106,9 +95,9 @@ extension Fastlane.Fastfile
         swiftLintGlobalTargets: [String]? = nil,
         swiftLintPodsTargets: [String] = [],
         stagingSchemeName: String? = nil,
-        stagingExportMethod: Section.ArchiveExportMethod = Defaults.stagingExportMethod,
+        stagingExportMethod: ArchiveExportMethod = Defaults.stagingExportMethod,
         archivesExportPath: String = Defaults.archivesExportPath,
-        otherEntries: String...
+        otherEntries: [String] = []
         ) -> Fastlane.Fastfile
     {
         let projectName = projectName ?? productName
@@ -117,7 +106,7 @@ extension Fastlane.Fastfile
 
         //---
 
-        let sections: [Section] = [
+        let sections: [TextFileSection<Fastlane.Fastfile>] = [
 
             .defaultHeader(
                 optOutUsage: optOutUsage,
@@ -157,10 +146,17 @@ extension Fastlane.Fastfile
 
         //---
 
-        return .init(
-            fileContent: sections.map{ $0.asIndentedText }
-                + otherEntries.map{ $0.asIndentedText }
-        )
+        let result = IndentedTextBuffer()
+
+        //---
+
+        result <<< sections
+
+        result <<< otherEntries
+
+        //---
+
+        return .init(fileContent: result.content)
     }
 
     public
@@ -179,7 +175,7 @@ extension Fastlane.Fastfile
         sourceryTargets: [String] = [],
         swiftLintGlobalTargets: [String]? = nil,
         swiftLintPodsTargets: [String] = [],
-        otherEntries: String...
+        otherEntries: [String] = []
         ) -> Fastlane.Fastfile
     {
         let projectName = projectName ?? productName
@@ -187,7 +183,7 @@ extension Fastlane.Fastfile
 
         //---
 
-        let sections: [Section] = [
+        let sections: [TextFileSection<Fastlane.Fastfile>] = [
 
             .defaultHeader(
                 optOutUsage: optOutUsage,
@@ -220,42 +216,47 @@ extension Fastlane.Fastfile
 
         //---
 
-        return .init(
-            fileContent: sections.map{ $0.asIndentedText }
-                + otherEntries.map{ $0.asIndentedText }
-        )
+        let result = IndentedTextBuffer()
+
+        //---
+
+        result <<< sections
+
+        result <<< otherEntries
+
+        //---
+
+        return .init(fileContent: result.content)
     }
 }
 
 // MARK: - Content rendering
 
-extension Fastlane.Fastfile.Section: TextFilePiece
-{
-    public
-    func asIndentedText(
-        with indentation: inout Indentation
-        ) -> IndentedText
-    {
-        return content.asIndentedText(with: &indentation)
-    }
-}
-
 public
-extension Fastlane.Fastfile.Section
+extension TextFileSection
+    where
+    Context == Fastlane.Fastfile
 {
     static
     func defaultHeader(
         optOutUsage: Bool = false,
         autoUpdateFastlane: Bool = false,
         minimumFastlaneVersion: VersionString = Defaults.minimumFastlaneVersion
-        ) -> Fastlane.Fastfile.Section
+        ) -> TextFileSection<Context>
     {
-        return .init(
-            content: [
+        return .init{
 
-                //swiftlint:disable line_length
+            indentation in
 
-                """
+            //---
+
+            let result: IndentedTextBuffer = .init(with: indentation)
+
+            //---
+
+            //swiftlint:disable line_length
+
+            result <<< """
                 # Customise this file, documentation can be found here:
                 # https://github.com/KrauseFx/fastlane/tree/master/docs
                 # All available actions: https://github.com/KrauseFx/fastlane/blob/master/docs/Actions.md
@@ -278,12 +279,15 @@ extension Fastlane.Fastfile.Section
                 # This is the minimum version number required.
                 # Update this, if you use features of a newer version
                 fastlane_version '\(minimumFastlaneVersion)'
-                """
-                .asIndentedText
 
-                //swiftlint:enable line_length
-            ]
-        )
+                """
+
+            //swiftlint:enable line_length
+
+            //---
+
+            return result.content
+        }
     }
 
     static
@@ -291,121 +295,135 @@ extension Fastlane.Fastfile.Section
         ensureGitBranch: String? = Defaults.releaseGitBranchesRegEx,
         projectName: String,
         cocoaPodsModuleName: String? // pass 'nil' if should not maintain podspec file
-        ) -> Fastlane.Fastfile.Section
+        ) -> TextFileSection<Context>
     {
-        var content: [IndentedTextGetter] = []
+        let laneName = #function.split(separator: "(").first!
 
         //---
 
-        content <<< """
+        return .init{
 
-            lane :beforeRelease do
-            """
+            indentation in
 
-        content <<< ensureGitBranch.map{ """
+            //---
 
-                ensure_git_branch(
-                    branch: '\($0)'
-                )
-            """
-        }
+            let result: IndentedTextBuffer = .init(with: indentation)
 
-        content <<< """
+            //---
 
-                ensure_git_status_clean
-            """
+            result <<< """
 
-        content <<< (cocoaPodsModuleName != nil).mapIf(true){ """
+                lane :\(laneName) do
+                """
 
-                # ===
+            indentation.nest{
 
-                pod_lib_lint(
-                    allow_warnings: true,
-                    quick: true
-                )
-            """
-        }
+                result <<< ensureGitBranch.map{ """
 
-        content <<< """
+                    ensure_git_branch(
+                        branch: '\($0)'
+                    )
+                    """
+                }
 
-                # ===
+                result <<< """
 
-                versionNumber = get_version_number(
-                    xcodeproj: '\(projectName).xcodeproj'
-                )
+                    ensure_git_status_clean
+                    """
 
-                puts 'Current VERSION number: ' + versionNumber
+                result <<< (cocoaPodsModuleName != nil).mapIf(true){ """
 
-                # === Infer new version number
+                    # ===
 
-                defaultNewVersion = git_branch.split('/').last
+                    pod_lib_lint(
+                        allow_warnings: true,
+                        quick: true
+                    )
+                    """
+                }
 
-                # === Define new version number
+                result <<< """
 
-                useInferredNEWVersionNumber = prompt(
-                    text: 'Proceed with inferred NEW version number (' + defaultNewVersion + ')?',
-                    boolean: true
-                )
+                    # ===
 
-                if useInferredNEWVersionNumber
-
-                    newVersionNumber = defaultNewVersion
-
-                else
-
-                    newVersionNumber = prompt(
-                        text: 'New VERSION number:'
+                    versionNumber = get_version_number(
+                        xcodeproj: '\(projectName).xcodeproj'
                     )
 
-                end
+                    puts 'Current VERSION number: ' + versionNumber
 
-                # === Apply NEW version number and increment build number
+                    # === Infer new version number
 
-                increment_version_number(
-                    xcodeproj: '\(projectName).xcodeproj',
-                    version_number: newVersionNumber
-                )
+                    defaultNewVersion = git_branch.split('/').last
 
-                increment_build_number(
-                    xcodeproj: '\(projectName).xcodeproj'
-                )
+                    # === Define new version number
 
-                # ===
+                    useInferredNEWVersionNumber = prompt(
+                        text: 'Proceed with inferred NEW version number (' + defaultNewVersion + ')?',
+                        boolean: true
+                    )
 
-                newBuildNumber = get_build_number(
-                    xcodeproj: '\(projectName).xcodeproj'
-                )
+                    if useInferredNEWVersionNumber
 
-                commit_version_bump( # it will fail if more than version bump
-                    xcodeproj: '\(projectName).xcodeproj',
-                    message: 'Version Bump to ' + newVersionNumber + ' (' + newBuildNumber + ')'
-                )
-            """
+                        newVersionNumber = defaultNewVersion
 
-        content <<< cocoaPodsModuleName.map{ """
+                    else
 
-                # ===
+                        newVersionNumber = prompt(
+                            text: 'New VERSION number:'
+                        )
 
-                version_bump_podspec(
-                    path: './\($0).podspec',
-                    version_number: newVersionNumber
-                )
+                    end
 
-                git_commit(
-                    path: './\($0).podspec',
-                    message: 'Version Bump to ' + newVersionNumber + ' in Podspec file'
-                )
-            """
+                    # === Apply NEW version number and increment build number
+
+                    increment_version_number(
+                        xcodeproj: '\(projectName).xcodeproj',
+                        version_number: newVersionNumber
+                    )
+
+                    increment_build_number(
+                        xcodeproj: '\(projectName).xcodeproj'
+                    )
+
+                    # ===
+
+                    newBuildNumber = get_build_number(
+                        xcodeproj: '\(projectName).xcodeproj'
+                    )
+
+                    commit_version_bump( # it will fail if more than version bump
+                        xcodeproj: '\(projectName).xcodeproj',
+                        message: 'Version Bump to ' + newVersionNumber + ' (' + newBuildNumber + ')'
+                    )
+                    """
+
+                result <<< cocoaPodsModuleName.map{ """
+
+                    # ===
+
+                    version_bump_podspec(
+                        path: './\($0).podspec',
+                        version_number: newVersionNumber
+                    )
+
+                    git_commit(
+                        path: './\($0).podspec',
+                        message: 'Version Bump to ' + newVersionNumber + ' in Podspec file'
+                    )
+                    """
+                }
+            }
+
+            result <<< """
+
+                end # lane :\(laneName)
+                """
+
+            //---
+
+            return result.content
         }
-
-        content <<< """
-
-            end # lane :beforeRelease
-            """
-
-        //---
-
-        return .init(content: content)
     }
 
     static
@@ -417,26 +435,32 @@ extension Fastlane.Fastfile.Section
         sourceryTargets: [String] = [],
         swiftLintGlobalTargets: [String]? = nil,
         swiftLintPodsTargets: [String] = []
-        ) -> Fastlane.Fastfile.Section
+        ) -> TextFileSection<Context>
     {
+        let laneName = #function.split(separator: "(").first!
         let swiftLintGlobalTargets = swiftLintGlobalTargets ?? [projectName]
 
         //---
 
-        let getter: IndentedTextGetter = {
+        return .init{
 
             indentation in
 
             //---
 
-            var result: IndentedText = []
+            let result: IndentedTextBuffer = .init(with: indentation)
 
             //---
 
             result <<< """
 
-                lane :REgenerateProject do
+                lane :\(laneName) do
 
+                """
+
+            indentation.nest{
+
+                result <<< """
                     # === Remember current version and build numbers
 
                     versionNumber = get_version_number(
@@ -480,51 +504,42 @@ extension Fastlane.Fastfile.Section
                     # is inside 'Fastlane' folder
 
                     sh 'cd ./.. && xcodeproj sort "\(projectName).xcodeproj"'
-                """
-                .asIndentedText(with: &indentation)
+                    """
 
-            indentation++
+                result <<< swiftGenBuildPhase(
+                    with: indentation,
+                    projectName: projectName,
+                    targetNames: swiftGenTargets
+                )
 
-            result <<< swiftGenBuildPhase(
-                with: &indentation,
-                projectName: projectName,
-                targetNames: swiftGenTargets
-            )
+                result <<< sourceryBuildPhase(
+                    with: indentation,
+                    projectName: projectName,
+                    targetNames: sourceryTargets
+                )
 
-            result <<< sourceryBuildPhase(
-                with: &indentation,
-                projectName: projectName,
-                targetNames: sourceryTargets
-            )
+                result <<< swiftLintGlobalBuildPhase(
+                    with: indentation,
+                    projectName: projectName,
+                    targetNames: swiftLintGlobalTargets
+                )
 
-            result <<< swiftLintGlobalBuildPhase(
-                with: &indentation,
-                projectName: projectName,
-                targetNames: swiftLintGlobalTargets
-            )
-
-            result <<< swiftLintPodsBuildPhase(
-                with: &indentation,
-                projectName: projectName,
-                targetNames: swiftLintPodsTargets
-            )
-
-            indentation--
+                result <<< swiftLintPodsBuildPhase(
+                    with: indentation,
+                    projectName: projectName,
+                    targetNames: swiftLintPodsTargets
+                )
+            }
 
             result <<< """
 
-                end # lane :REgenerateProject
+                end # lane :\(laneName)
                 """
-                .asIndentedText(with: &indentation)
 
             //---
 
-            return result
+            return result.content
         }
-
-        //---
-
-        return .init(content: [getter])
     }
 
     static
@@ -535,19 +550,20 @@ extension Fastlane.Fastfile.Section
         sourceryTargets: [String] = [],
         swiftLintGlobalTargets: [String]? = nil,
         swiftLintPodsTargets: [String] = []
-        ) -> Fastlane.Fastfile.Section
+        ) -> TextFileSection<Context>
     {
+        let laneName = #function.split(separator: "(").first!
         let swiftLintGlobalTargets = swiftLintGlobalTargets ?? [projectName]
 
         //---
 
-        let getter: IndentedTextGetter = {
+        return .init{
 
             indentation in
 
             //---
 
-            var result: IndentedText = []
+            let result: IndentedTextBuffer = .init(with: indentation)
 
             //---
 
@@ -555,6 +571,11 @@ extension Fastlane.Fastfile.Section
 
                 lane :generateProject do
 
+                """
+
+            indentation.nest{
+
+                result <<< """
                     # === Generate project from scratch
 
                     # default initial location for any command
@@ -581,51 +602,42 @@ extension Fastlane.Fastfile.Section
                     # is inside 'Fastlane' folder
 
                     sh 'cd ./.. && xcodeproj sort "\(projectName).xcodeproj"'
-                """
-                .asIndentedText(with: &indentation)
+                    """
 
-            indentation++
+                result <<< swiftGenBuildPhase(
+                    with: indentation,
+                    projectName: projectName,
+                    targetNames: swiftGenTargets
+                )
 
-            result <<< swiftGenBuildPhase(
-                with: &indentation,
-                projectName: projectName,
-                targetNames: swiftGenTargets
-            )
+                result <<< sourceryBuildPhase(
+                    with: indentation,
+                    projectName: projectName,
+                    targetNames: sourceryTargets
+                )
 
-            result <<< sourceryBuildPhase(
-                with: &indentation,
-                projectName: projectName,
-                targetNames: sourceryTargets
-            )
+                result <<< swiftLintGlobalBuildPhase(
+                    with: indentation,
+                    projectName: projectName,
+                    targetNames: swiftLintGlobalTargets
+                )
 
-            result <<< swiftLintGlobalBuildPhase(
-                with: &indentation,
-                projectName: projectName,
-                targetNames: swiftLintGlobalTargets
-            )
-
-            result <<< swiftLintPodsBuildPhase(
-                with: &indentation,
-                projectName: projectName,
-                targetNames: swiftLintPodsTargets
-            )
-
-            indentation--
+                result <<< swiftLintPodsBuildPhase(
+                    with: indentation,
+                    projectName: projectName,
+                    targetNames: swiftLintPodsTargets
+                )
+            }
 
             result <<< """
 
-                end # lane :generateProject
+                end # lane :\(laneName)
                 """
-                .asIndentedText(with: &indentation)
 
             //---
 
-            return result
+            return result.content
         }
-
-        //---
-
-        return .init(content: [getter])
     }
 
     static
@@ -633,94 +645,102 @@ extension Fastlane.Fastfile.Section
         productName: String,
         projectName: String? = nil, // 'productName' will be used if 'nil'
         schemeName: String? = nil, // 'productName' will be used if 'nil'
-        exportMethod: ArchiveExportMethod = Defaults.stagingExportMethod,
+        exportMethod: Fastlane.Fastfile.ArchiveExportMethod = Defaults.stagingExportMethod,
         archivesExportPath: String = Defaults.archivesExportPath
-        ) -> Fastlane.Fastfile.Section
+        ) -> TextFileSection<Context>
     {
+        let laneName = #function.split(separator: "(").first!
         let projectName = projectName ?? productName
         let schemeName = schemeName ?? productName
 
         //---
 
-        let getter = """
+        return .init{
 
-            lane :archiveBeta do
+            indentation in
 
-                ensure_git_status_clean
+            //swiftlint:disable line_length
 
-                # === Set basic parameters
+            return """
 
-                buildNumber = get_build_number(
-                    xcodeproj: '\(projectName).xcodeproj'
-                )
+                lane :\(laneName) do
 
-                versionNumber = get_version_number(
-                    xcodeproj: '\(projectName).xcodeproj'
-                )
+                    ensure_git_status_clean
 
-                puts 'Attempt to use SCHEME: \(schemeName)'
+                    # === Set basic parameters
 
-                # === Check if target version number is eligible for this line
-
-                # project must be on version number 'X.Y.Z-beta.*'
-
-                if (!(versionNumber.include? 'dirty') && (versionNumber.include? 'beta'))
-
-                    # git status is clean at this point
-
-                    # === main part
-
-                    # seems to be allowed to run this lane
-
-                    gym(
-                        scheme: '\(schemeName)',
-                        export_method: '\(exportMethod.rawValue)',
-                        output_name: '\(productName)_' + versionNumber + '_' + buildNumber + '.ipa',
-                        output_directory: '\(archivesExportPath)'
+                    buildNumber = get_build_number(
+                        xcodeproj: '\(projectName).xcodeproj'
                     )
 
-                    # === mark dirty
-
-                    # puts 'NOTE: Mark project version as dirty now.'
-
-                    newVersionNumber = versionNumber + '+dirty'
-                    newBuildNumber = buildNumber
-
-                    increment_version_number(
-                        xcodeproj: '\(projectName).xcodeproj',
-                        version_number: newVersionNumber
+                    versionNumber = get_version_number(
+                        xcodeproj: '\(projectName).xcodeproj'
                     )
 
-                    # only set 'dirty' mark in 'versionNumber'!
+                    puts 'Attempt to use SCHEME: \(schemeName)'
 
-                    commit_version_bump(
-                        xcodeproj: '\(projectName).xcodeproj',
-                        message: 'Version Bump to ' + newVersionNumber + ' (' + newBuildNumber + ')'
-                    )
+                    # === Check if target version number is eligible for this line
 
-                else
+                    # project must be on version number 'X.Y.Z-beta.*'
 
-                    puts 'ERROR: This VERSION (' + versionNumber + ') of the app can NOT be archived using this lane.'
-                    puts 'NOTE: this lane is for beta (STAGING) builds ONLY.'
+                    if (!(versionNumber.include? 'dirty') && (versionNumber.include? 'beta'))
 
-                end
+                        # git status is clean at this point
 
-            end # lane :archiveBeta
-            """
-            .asIndentedText
+                        # === main part
 
-        //---
+                        # seems to be allowed to run this lane
 
-        return .init(content: [getter])
+                        gym(
+                            scheme: '\(schemeName)',
+                            export_method: '\(exportMethod.rawValue)',
+                            output_name: '\(productName)_' + versionNumber + '_' + buildNumber + '.ipa',
+                            output_directory: '\(archivesExportPath)'
+                        )
+
+                        # === mark dirty
+
+                        # puts 'NOTE: Mark project version as dirty now.'
+
+                        newVersionNumber = versionNumber + '+dirty'
+                        newBuildNumber = buildNumber
+
+                        increment_version_number(
+                            xcodeproj: '\(projectName).xcodeproj',
+                            version_number: newVersionNumber
+                        )
+
+                        # only set 'dirty' mark in 'versionNumber'!
+
+                        commit_version_bump(
+                            xcodeproj: '\(projectName).xcodeproj',
+                            message: 'Version Bump to ' + newVersionNumber + ' (' + newBuildNumber + ')'
+                        )
+
+                    else
+
+                        puts 'ERROR: This VERSION (' + versionNumber + ') of the app can NOT be archived using this lane.'
+                        puts 'NOTE: this lane is for beta (STAGING) builds ONLY.'
+
+                    end
+
+                end # lane :\(laneName)
+                """
+                .asIndentedText(with: indentation)
+
+            //swiftlint:enable line_length
+        }
     }
 }
 
-//internal
-extension Fastlane.Fastfile.Section
+fileprivate
+extension TextFileSection
+    where
+    Context == Fastlane.Fastfile
 {
     static
     func swiftGenBuildPhase(
-        with indentation: inout Indentation,
+        with indentation: Indentation,
         projectName: String,
         targetNames: [String]
         ) -> IndentedText
@@ -764,19 +784,19 @@ extension Fastlane.Fastfile.Section
 
             project.save()
             """
-            .asIndentedText(with: &indentation)
+            .asIndentedText(with: indentation)
     }
 
     static
     func sourceryBuildPhase(
-        with indentation: inout Indentation,
+        with indentation: Indentation,
         projectName: String,
         targetNames: [String]
         ) -> IndentedText
     {
         guard
             !targetNames.isEmpty
-            else
+        else
         {
             return []
         }
@@ -814,19 +834,19 @@ extension Fastlane.Fastfile.Section
 
             project.save()
             """
-            .asIndentedText(with: &indentation)
+            .asIndentedText(with: indentation)
     }
 
     static
     func swiftLintGlobalBuildPhase(
-        with indentation: inout Indentation,
+        with indentation: Indentation,
         projectName: String,
         targetNames: [String]
         ) -> IndentedText
     {
         guard
             !targetNames.isEmpty
-            else
+        else
         {
             return []
         }
@@ -867,19 +887,19 @@ extension Fastlane.Fastfile.Section
 
             project.save()
             """
-            .asIndentedText(with: &indentation)
+            .asIndentedText(with: indentation)
     }
 
     static
     func swiftLintPodsBuildPhase(
-        with indentation: inout Indentation,
+        with indentation: Indentation,
         projectName: String,
         targetNames: [String]
         ) -> IndentedText
     {
         guard
             !targetNames.isEmpty
-            else
+        else
         {
             return []
         }
@@ -916,6 +936,6 @@ extension Fastlane.Fastfile.Section
 
             project.save()
             """
-            .asIndentedText(with: &indentation)
+            .asIndentedText(with: indentation)
     }
 }

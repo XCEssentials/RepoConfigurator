@@ -12,8 +12,8 @@ Pod::Spec.new do |s|
     s.license       = { :type => 'MIT', :file => 'LICENSE' }
 
     s.authors = {
-        'John Appleseed' => 'john@example.com'
-    }
+        "'John Appleseed' => 'john@example.com'"
+    } # authors
 
     s.swift_version = '4.2'
 
@@ -25,4 +25,4 @@ Pod::Spec.new do |s|
 
     s.ios.source_files = 'Sources/SimpleFramework/**/*.swift'
 
-end
+end # spec
