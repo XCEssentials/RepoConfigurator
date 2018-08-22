@@ -25,4 +25,4 @@
  */
 
 public
-typealias KeyValuePair = (key: String, value: Any)
+typealias KeyValuePair = (key: String, value: String)

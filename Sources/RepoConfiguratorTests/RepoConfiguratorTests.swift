@@ -9,30 +9,64 @@
 import XCTest
 
 // @testable
-import RepoConfigurator
+import XCERepoConfigurator
 
-class RepoConfiguratorTests: XCTestCase {
-    
-    override func setUp() {
-        super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
-    
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-        super.tearDown()
-    }
-    
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-    
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+//---
+
+class RepoConfiguratorTests: XCTestCase
+{
+    lazy
+    var currentBundle: Bundle = .init(for: type(of: self))
+
+    let targetFolder = URL.init(fileURLWithPath: "") // doesn't matter
+
+    func targetOutputFromResource(
+        named resourceName: String,
+        withExtension resourceExtension: String
+        ) -> String
+    {
+        if
+            let source = currentBundle.url(
+                forResource: resourceName,
+                withExtension: resourceExtension
+            ),
+            let data = try? Data(contentsOf: source),
+            let result = String(data: data, encoding: .utf8)
+        {
+            return result
+        }
+        else
+        {
+            return ""
         }
     }
-    
+}
+
+//---
+
+extension RepoConfiguratorTests
+{
+    func testSwiftLint()
+    {
+        let targetOutput = targetOutputFromResource(
+            named: ".swiftlint",
+            withExtension: "yml"
+        )
+
+        //---
+
+        let model = SwiftLint
+            .init(
+                exclude: [
+                    "Templates"
+                ]
+            )
+            .prepare(
+                targetFolder: targetFolder
+            )
+
+        //---
+
+        XCTAssert(model.content == targetOutput)
+    }
 }

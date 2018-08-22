@@ -84,12 +84,13 @@ lane :beforeRelease do
 
 end # lane :beforeRelease
 
-lane :REgenerateProject do
+lane :regenerateProject do
 
     # === Remember current version and build numbers
 
     versionNumber = get_version_number(
-        xcodeproj: 'SimpleApp.xcodeproj'
+        xcodeproj: 'SimpleApp.xcodeproj',
+        target: 'SimpleApp'
     )
 
     buildNumber = get_build_number(
@@ -156,7 +157,7 @@ lane :REgenerateProject do
 
     project.save()
 
-end # lane :REgenerateProject
+end # lane :regenerateProject
 
 lane :generateProject do
 
