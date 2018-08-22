@@ -120,6 +120,57 @@
 		94C4F9CA211665ED00CFB1DC /* Fastlane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fastlane.swift; sourceTree = "<group>"; };
 		94C4F9CC2116660900CFB1DC /* Fastlane_Fastfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fastlane_Fastfile.swift; sourceTree = "<group>"; };
 		94C9D879212CC333000CCADB /* .swiftlint.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .swiftlint.yml; sourceTree = "<group>"; };
+		94C9D87F212D7407000CCADB /* FWK-macOS-completeSettings-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "FWK-macOS-completeSettings-Customized.rb"; sourceTree = "<group>"; };
+		94C9D880212D7407000CCADB /* FWK-tvOS-Debug-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "FWK-tvOS-Debug-Customized.rb"; sourceTree = "<group>"; };
+		94C9D881212D7407000CCADB /* FWK-iOS-Release-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "FWK-iOS-Release-Customized.rb"; sourceTree = "<group>"; };
+		94C9D882212D7407000CCADB /* FWK-tvOS-TST-Debug-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "FWK-tvOS-TST-Debug-Customized.rb"; sourceTree = "<group>"; };
+		94C9D883212D7407000CCADB /* FWK-tvOS-Release-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "FWK-tvOS-Release-Customized.rb"; sourceTree = "<group>"; };
+		94C9D884212D7407000CCADB /* FWK-watchOS-completeSettings-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "FWK-watchOS-completeSettings-Customized.rb"; sourceTree = "<group>"; };
+		94C9D885212D7407000CCADB /* FWK-macOS-TST-Debug-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "FWK-macOS-TST-Debug-Customized.rb"; sourceTree = "<group>"; };
+		94C9D886212D7407000CCADB /* FWK-iOS-completeSettings-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "FWK-iOS-completeSettings-Customized.rb"; sourceTree = "<group>"; };
+		94C9D887212D7407000CCADB /* FWK-tvOS-completeSettings-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "FWK-tvOS-completeSettings-Customized.rb"; sourceTree = "<group>"; };
+		94C9D888212D7407000CCADB /* FWK-watchOS-Debug-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "FWK-watchOS-Debug-Customized.rb"; sourceTree = "<group>"; };
+		94C9D889212D7407000CCADB /* FWK-macOS-TST-completeSettings-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "FWK-macOS-TST-completeSettings-Customized.rb"; sourceTree = "<group>"; };
+		94C9D88A212D7407000CCADB /* FWK-iOS-TST-completeSettings-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "FWK-iOS-TST-completeSettings-Customized.rb"; sourceTree = "<group>"; };
+		94C9D88B212D7407000CCADB /* FWK-macOS-Debug-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "FWK-macOS-Debug-Customized.rb"; sourceTree = "<group>"; };
+		94C9D88C212D7407000CCADB /* FWK-tvOS-TST-completeSettings-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "FWK-tvOS-TST-completeSettings-Customized.rb"; sourceTree = "<group>"; };
+		94C9D88D212D7407000CCADB /* FWK-iOS-Debug-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "FWK-iOS-Debug-Customized.rb"; sourceTree = "<group>"; };
+		94C9D88E212D7407000CCADB /* FWK-iOS-TST-Release-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "FWK-iOS-TST-Release-Customized.rb"; sourceTree = "<group>"; };
+		94C9D88F212D7407000CCADB /* FWK-watchOS-Release-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "FWK-watchOS-Release-Customized.rb"; sourceTree = "<group>"; };
+		94C9D890212D7407000CCADB /* FWK-iOS-TST-Debug-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "FWK-iOS-TST-Debug-Customized.rb"; sourceTree = "<group>"; };
+		94C9D891212D7407000CCADB /* FWK-macOS-TST-Release-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "FWK-macOS-TST-Release-Customized.rb"; sourceTree = "<group>"; };
+		94C9D892212D7407000CCADB /* FWK-tvOS-TST-Release-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "FWK-tvOS-TST-Release-Customized.rb"; sourceTree = "<group>"; };
+		94C9D893212D7407000CCADB /* FWK-macOS-Release-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "FWK-macOS-Release-Customized.rb"; sourceTree = "<group>"; };
+		94C9D895212D7407000CCADB /* APP-macOS-TST-Release-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "APP-macOS-TST-Release-Customized.rb"; sourceTree = "<group>"; };
+		94C9D896212D7407000CCADB /* APP-watchOS-completeSettings-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "APP-watchOS-completeSettings-Customized.rb"; sourceTree = "<group>"; };
+		94C9D897212D7407000CCADB /* APP-macOS-Debug-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "APP-macOS-Debug-Customized.rb"; sourceTree = "<group>"; };
+		94C9D898212D7407000CCADB /* APP-iOS-TST-Release-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "APP-iOS-TST-Release-Customized.rb"; sourceTree = "<group>"; };
+		94C9D899212D7407000CCADB /* APP-watchOS-Release-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "APP-watchOS-Release-Customized.rb"; sourceTree = "<group>"; };
+		94C9D89A212D7407000CCADB /* APP-tvOS-TST-Release-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "APP-tvOS-TST-Release-Customized.rb"; sourceTree = "<group>"; };
+		94C9D89B212D7407000CCADB /* APP-tvOS-Release-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "APP-tvOS-Release-Customized.rb"; sourceTree = "<group>"; };
+		94C9D89C212D7407000CCADB /* APP-iOS-completeSettings-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "APP-iOS-completeSettings-Customized.rb"; sourceTree = "<group>"; };
+		94C9D89D212D7407000CCADB /* APP-macOS-UITST-Release-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "APP-macOS-UITST-Release-Customized.rb"; sourceTree = "<group>"; };
+		94C9D89E212D7407000CCADB /* APP-tvOS-UITST-completeSettings-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "APP-tvOS-UITST-completeSettings-Customized.rb"; sourceTree = "<group>"; };
+		94C9D89F212D7407000CCADB /* APP-macOS-TST-Debug-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "APP-macOS-TST-Debug-Customized.rb"; sourceTree = "<group>"; };
+		94C9D8A0212D7407000CCADB /* APP-macOS-UITST-completeSettings-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "APP-macOS-UITST-completeSettings-Customized.rb"; sourceTree = "<group>"; };
+		94C9D8A1212D7407000CCADB /* APP-macOS-Release-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "APP-macOS-Release-Customized.rb"; sourceTree = "<group>"; };
+		94C9D8A2212D7407000CCADB /* APP-macOS-UITST-Debug-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "APP-macOS-UITST-Debug-Customized.rb"; sourceTree = "<group>"; };
+		94C9D8A3212D7407000CCADB /* APP-tvOS-Debug-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "APP-tvOS-Debug-Customized.rb"; sourceTree = "<group>"; };
+		94C9D8A4212D7407000CCADB /* APP-iOS-Release-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "APP-iOS-Release-Customized.rb"; sourceTree = "<group>"; };
+		94C9D8A5212D7407000CCADB /* APP-iOS-UITST-Release-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "APP-iOS-UITST-Release-Customized.rb"; sourceTree = "<group>"; };
+		94C9D8A6212D7407000CCADB /* APP-iOS-TST-Debug-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "APP-iOS-TST-Debug-Customized.rb"; sourceTree = "<group>"; };
+		94C9D8A7212D7407000CCADB /* APP-macOS-TST-completeSettings-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "APP-macOS-TST-completeSettings-Customized.rb"; sourceTree = "<group>"; };
+		94C9D8A8212D7407000CCADB /* APP-tvOS-TST-completeSettings-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "APP-tvOS-TST-completeSettings-Customized.rb"; sourceTree = "<group>"; };
+		94C9D8A9212D7407000CCADB /* APP-macOS-completeSettings-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "APP-macOS-completeSettings-Customized.rb"; sourceTree = "<group>"; };
+		94C9D8AA212D7407000CCADB /* APP-tvOS-TST-Debug-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "APP-tvOS-TST-Debug-Customized.rb"; sourceTree = "<group>"; };
+		94C9D8AB212D7407000CCADB /* APP-iOS-UITST-Debug-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "APP-iOS-UITST-Debug-Customized.rb"; sourceTree = "<group>"; };
+		94C9D8AC212D7407000CCADB /* APP-iOS-UITST-completeSettings-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "APP-iOS-UITST-completeSettings-Customized.rb"; sourceTree = "<group>"; };
+		94C9D8AD212D7407000CCADB /* APP-tvOS-UITST-Release-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "APP-tvOS-UITST-Release-Customized.rb"; sourceTree = "<group>"; };
+		94C9D8AE212D7407000CCADB /* APP-iOS-Debug-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "APP-iOS-Debug-Customized.rb"; sourceTree = "<group>"; };
+		94C9D8AF212D7407000CCADB /* APP-watchOS-Debug-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "APP-watchOS-Debug-Customized.rb"; sourceTree = "<group>"; };
+		94C9D8B0212D7407000CCADB /* APP-tvOS-UITST-Debug-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "APP-tvOS-UITST-Debug-Customized.rb"; sourceTree = "<group>"; };
+		94C9D8B1212D7407000CCADB /* APP-tvOS-completeSettings-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "APP-tvOS-completeSettings-Customized.rb"; sourceTree = "<group>"; };
+		94C9D8B2212D7407000CCADB /* APP-iOS-TST-completeSettings-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "APP-iOS-TST-completeSettings-Customized.rb"; sourceTree = "<group>"; };
 		94CB9FBB2116535200641D6E /* Xcode_Project.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Xcode_Project.swift; sourceTree = "<group>"; };
 		94CB9FBC2116535300641D6E /* Xcode_Project_Variant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Xcode_Project_Variant.swift; sourceTree = "<group>"; };
 		94CB9FC62116536500641D6E /* Xcode_Scripts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Xcode_Scripts.swift; sourceTree = "<group>"; };
@@ -174,6 +225,7 @@
 			children = (
 				A270F6B0C53210622D202770 /* Frameworks */,
 				941CFFBF211520D700326181 /* Products */,
+				94C9D87B212D7407000CCADB /* References */,
 				94C9D877212CC238000CCADB /* Resources */,
 				941CFFD82115220600326181 /* Sources */,
 			);
@@ -307,6 +359,96 @@
 				94C9D879212CC333000CCADB /* .swiftlint.yml */,
 			);
 			path = RepoConfiguratorTests;
+			sourceTree = "<group>";
+		};
+		94C9D87B212D7407000CCADB /* References */ = {
+			isa = PBXGroup;
+			children = (
+				94C9D87C212D7407000CCADB /* XcodeBuildSettignsDefaults */,
+			);
+			path = References;
+			sourceTree = "<group>";
+		};
+		94C9D87C212D7407000CCADB /* XcodeBuildSettignsDefaults */ = {
+			isa = PBXGroup;
+			children = (
+				94C9D87D212D7407000CCADB /* Xcode10-beta5 */,
+			);
+			path = XcodeBuildSettignsDefaults;
+			sourceTree = "<group>";
+		};
+		94C9D87D212D7407000CCADB /* Xcode10-beta5 */ = {
+			isa = PBXGroup;
+			children = (
+				94C9D87E212D7407000CCADB /* FWK */,
+				94C9D894212D7407000CCADB /* APP */,
+			);
+			path = "Xcode10-beta5";
+			sourceTree = "<group>";
+		};
+		94C9D87E212D7407000CCADB /* FWK */ = {
+			isa = PBXGroup;
+			children = (
+				94C9D87F212D7407000CCADB /* FWK-macOS-completeSettings-Customized.rb */,
+				94C9D880212D7407000CCADB /* FWK-tvOS-Debug-Customized.rb */,
+				94C9D881212D7407000CCADB /* FWK-iOS-Release-Customized.rb */,
+				94C9D882212D7407000CCADB /* FWK-tvOS-TST-Debug-Customized.rb */,
+				94C9D883212D7407000CCADB /* FWK-tvOS-Release-Customized.rb */,
+				94C9D884212D7407000CCADB /* FWK-watchOS-completeSettings-Customized.rb */,
+				94C9D885212D7407000CCADB /* FWK-macOS-TST-Debug-Customized.rb */,
+				94C9D886212D7407000CCADB /* FWK-iOS-completeSettings-Customized.rb */,
+				94C9D887212D7407000CCADB /* FWK-tvOS-completeSettings-Customized.rb */,
+				94C9D888212D7407000CCADB /* FWK-watchOS-Debug-Customized.rb */,
+				94C9D889212D7407000CCADB /* FWK-macOS-TST-completeSettings-Customized.rb */,
+				94C9D88A212D7407000CCADB /* FWK-iOS-TST-completeSettings-Customized.rb */,
+				94C9D88B212D7407000CCADB /* FWK-macOS-Debug-Customized.rb */,
+				94C9D88C212D7407000CCADB /* FWK-tvOS-TST-completeSettings-Customized.rb */,
+				94C9D88D212D7407000CCADB /* FWK-iOS-Debug-Customized.rb */,
+				94C9D88E212D7407000CCADB /* FWK-iOS-TST-Release-Customized.rb */,
+				94C9D88F212D7407000CCADB /* FWK-watchOS-Release-Customized.rb */,
+				94C9D890212D7407000CCADB /* FWK-iOS-TST-Debug-Customized.rb */,
+				94C9D891212D7407000CCADB /* FWK-macOS-TST-Release-Customized.rb */,
+				94C9D892212D7407000CCADB /* FWK-tvOS-TST-Release-Customized.rb */,
+				94C9D893212D7407000CCADB /* FWK-macOS-Release-Customized.rb */,
+			);
+			path = FWK;
+			sourceTree = "<group>";
+		};
+		94C9D894212D7407000CCADB /* APP */ = {
+			isa = PBXGroup;
+			children = (
+				94C9D895212D7407000CCADB /* APP-macOS-TST-Release-Customized.rb */,
+				94C9D896212D7407000CCADB /* APP-watchOS-completeSettings-Customized.rb */,
+				94C9D897212D7407000CCADB /* APP-macOS-Debug-Customized.rb */,
+				94C9D898212D7407000CCADB /* APP-iOS-TST-Release-Customized.rb */,
+				94C9D899212D7407000CCADB /* APP-watchOS-Release-Customized.rb */,
+				94C9D89A212D7407000CCADB /* APP-tvOS-TST-Release-Customized.rb */,
+				94C9D89B212D7407000CCADB /* APP-tvOS-Release-Customized.rb */,
+				94C9D89C212D7407000CCADB /* APP-iOS-completeSettings-Customized.rb */,
+				94C9D89D212D7407000CCADB /* APP-macOS-UITST-Release-Customized.rb */,
+				94C9D89E212D7407000CCADB /* APP-tvOS-UITST-completeSettings-Customized.rb */,
+				94C9D89F212D7407000CCADB /* APP-macOS-TST-Debug-Customized.rb */,
+				94C9D8A0212D7407000CCADB /* APP-macOS-UITST-completeSettings-Customized.rb */,
+				94C9D8A1212D7407000CCADB /* APP-macOS-Release-Customized.rb */,
+				94C9D8A2212D7407000CCADB /* APP-macOS-UITST-Debug-Customized.rb */,
+				94C9D8A3212D7407000CCADB /* APP-tvOS-Debug-Customized.rb */,
+				94C9D8A4212D7407000CCADB /* APP-iOS-Release-Customized.rb */,
+				94C9D8A5212D7407000CCADB /* APP-iOS-UITST-Release-Customized.rb */,
+				94C9D8A6212D7407000CCADB /* APP-iOS-TST-Debug-Customized.rb */,
+				94C9D8A7212D7407000CCADB /* APP-macOS-TST-completeSettings-Customized.rb */,
+				94C9D8A8212D7407000CCADB /* APP-tvOS-TST-completeSettings-Customized.rb */,
+				94C9D8A9212D7407000CCADB /* APP-macOS-completeSettings-Customized.rb */,
+				94C9D8AA212D7407000CCADB /* APP-tvOS-TST-Debug-Customized.rb */,
+				94C9D8AB212D7407000CCADB /* APP-iOS-UITST-Debug-Customized.rb */,
+				94C9D8AC212D7407000CCADB /* APP-iOS-UITST-completeSettings-Customized.rb */,
+				94C9D8AD212D7407000CCADB /* APP-tvOS-UITST-Release-Customized.rb */,
+				94C9D8AE212D7407000CCADB /* APP-iOS-Debug-Customized.rb */,
+				94C9D8AF212D7407000CCADB /* APP-watchOS-Debug-Customized.rb */,
+				94C9D8B0212D7407000CCADB /* APP-tvOS-UITST-Debug-Customized.rb */,
+				94C9D8B1212D7407000CCADB /* APP-tvOS-completeSettings-Customized.rb */,
+				94C9D8B2212D7407000CCADB /* APP-iOS-TST-completeSettings-Customized.rb */,
+			);
+			path = APP;
 			sourceTree = "<group>";
 		};
 		94CB9FD22116571600641D6E /* Struct */ = {
