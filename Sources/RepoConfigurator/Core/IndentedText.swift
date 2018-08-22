@@ -34,8 +34,3 @@ typealias IndentedTextLine = (
 
 public
 typealias IndentedText = [IndentedTextLine]
-
-//---
-
-//public
-//typealias IndentedTextGetter = (Indentation) -> IndentedText

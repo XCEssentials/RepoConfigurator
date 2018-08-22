@@ -38,20 +38,3 @@ extension Array: TextFilePiece
             .reduce(into: IndentedText()){ $0 += $1 }
     }
 }
-
-//---
-
-//extension Array // : TextFilePiece
-//    where
-//    Element == IndentedTextGetter
-//{
-//    public
-//    func asIndentedText(
-//        with indentation: Indentation
-//        ) -> IndentedText
-//    {
-//        return self
-//            .map{ $0(indentation) }
-//            .reduce(into: IndentedText()){ $0 += $1 }
-//    }
-//}
