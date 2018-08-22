@@ -192,7 +192,7 @@ extension TextFileSection
             indentation.nest{
 
                 result <<< authors.map{ """
-                    "'\($0.name)' => '\($0.email)'"
+                    '\($0.name)' => '\($0.email)'
                     """
                 }
             }
