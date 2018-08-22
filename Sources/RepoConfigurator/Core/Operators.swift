@@ -169,5 +169,8 @@ func <<< (
     input: Dictionary<String, TextFilePiece>.Values
     )
 {
-    receiver.append(Array(input))
+    input.forEach{
+
+        receiver.append($0)
+    }
 }

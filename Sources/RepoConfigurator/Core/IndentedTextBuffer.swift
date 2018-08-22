@@ -51,16 +51,16 @@ class IndentedTextBuffer
         content += newPiece.asIndentedText(with: indentation)
     }
 
-    public
-    func append(
-        _ newPieces: [TextFilePiece]
-        )
-    {
-        newPieces.forEach{
-
-            self.append($0)
-        }
-    }
+//    public
+//    func append(
+//        _ newPieces: [TextFilePiece]
+//        )
+//    {
+//        newPieces.forEach{
+//
+//            self.append($0)
+//        }
+//    }
 
     // MARK: - Initializers
 
