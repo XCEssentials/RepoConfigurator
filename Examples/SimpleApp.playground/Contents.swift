@@ -172,71 +172,75 @@ let project = Struct
 
         //---
 
-        project.target(targetName.main, .iOS, .app) {
+//        project.target(targetName.main, .iOS, .app)
+        project.targets(
 
-            app in
+            Mobile.App(targetName.main){
 
-            //---
-
-            app.include(sourcesPath.main)
-
-            //---
-
-            app.buildSettings.base.override(
-
-                "SWIFT_VERSION" <<< "$(inherited)",
-
-                "IPHONEOS_DEPLOYMENT_TARGET" <<< depTarget.minimumVersion,
-                "PRODUCT_BUNDLE_IDENTIFIER" <<< bundleId.main,
-                "INFOPLIST_FILE" <<< infoPlistsPath.main,
-
-                //--- iOS related:
-
-                "SDKROOT" <<< "iphoneos",
-                "TARGETED_DEVICE_FAMILY" <<< DeviceFamily.iOS.phone
-            )
-
-            app.buildSettings[.debug].override(
-
-                "MTL_ENABLE_DEBUG_INFO" <<< YES
-            )
-
-            //---
-
-            app.unitTests(targetName.tst) {
-
-                appTests in
+                app in
 
                 //---
 
-                appTests.include(sourcesPath.tst)
+                app.include(sourcesPath.main)
 
                 //---
 
-                appTests.buildSettings.base.override(
+                app.buildSettings.base.override(
 
-                    "TEST_HOST" <<< testHostPath,
-                    
                     "SWIFT_VERSION" <<< "$(inherited)",
 
-                    // very important for unit tests,
-                    // prevents the error when unit test do not start at all
-                    "LD_RUNPATH_SEARCH_PATHS" <<<
-                    "$(inherited) @executable_path/Frameworks @loader_path/Frameworks",
-
                     "IPHONEOS_DEPLOYMENT_TARGET" <<< depTarget.minimumVersion,
+                    "PRODUCT_BUNDLE_IDENTIFIER" <<< bundleId.main,
+                    "INFOPLIST_FILE" <<< infoPlistsPath.main,
 
-                    "PRODUCT_BUNDLE_IDENTIFIER" <<< bundleId.tst,
-                    "INFOPLIST_FILE" <<< infoPlistsPath.tst,
-                    "FRAMEWORK_SEARCH_PATHS" <<< "$(inherited) $(BUILT_PRODUCTS_DIR)"
+                    //--- iOS related:
+
+                    "SDKROOT" <<< "iphoneos",
+                    "TARGETED_DEVICE_FAMILY" <<< DeviceFamily.iOS.phone
                 )
 
-                appTests.buildSettings[.debug].override(
+                app.buildSettings[.debug].override(
 
                     "MTL_ENABLE_DEBUG_INFO" <<< YES
                 )
+
+                //---
+
+                app.addUnitTests(targetName.tst) {
+
+                    appTests in
+
+                    //---
+
+                    appTests.include(sourcesPath.tst)
+
+                    //---
+
+                    appTests.buildSettings.base.override(
+
+                        "TEST_HOST" <<< testHostPath,
+
+                        "SWIFT_VERSION" <<< "$(inherited)",
+
+                        // very important for unit tests,
+                        // prevents the error when unit test do not start at all
+                        "LD_RUNPATH_SEARCH_PATHS" <<<
+                        "$(inherited) @executable_path/Frameworks @loader_path/Frameworks",
+
+                        "IPHONEOS_DEPLOYMENT_TARGET" <<< depTarget.minimumVersion,
+
+                        "PRODUCT_BUNDLE_IDENTIFIER" <<< bundleId.tst,
+                        "INFOPLIST_FILE" <<< infoPlistsPath.tst,
+                        "FRAMEWORK_SEARCH_PATHS" <<< "$(inherited) $(BUILT_PRODUCTS_DIR)"
+                    )
+
+                    appTests.buildSettings[.debug].override(
+
+                        "MTL_ENABLE_DEBUG_INFO" <<< YES
+                    )
+                }
             }
-        }
+        )
     }
     .prepare(
         targetFolder: repoFolder

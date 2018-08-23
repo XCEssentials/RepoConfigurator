@@ -4,58 +4,36 @@ version: 2.1.0
 configurations:
   debug:
     overrides:
-      CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS: 'YES'
-      DEVELOPMENT_TEAM: 'ABCXYZ123'
-      IPHONEOS_DEPLOYMENT_TARGET: '11.0'
+      CURRENT_PROJECT_VERSION: '0'
+      CLANG_WARN_STRICT_PROTOTYPES: 'YES'
+      CLANG_WARN_NON_LITERAL_NULL_CONVERSION: 'YES'
       SWIFT_OPTIMIZATION_LEVEL: '-Onone'
       CLANG_WARN_RANGE_LOOP_ANALYSIS: 'YES'
-      CLANG_WARN_NON_LITERAL_NULL_CONVERSION: 'YES'
-      CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING: 'YES'
-      CLANG_WARN_STRICT_PROTOTYPES: 'YES'
       CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF: 'YES'
-      SWIFT_VERSION: '4.2'
-      CURRENT_PROJECT_VERSION: '0'
-      CLANG_WARN_COMMA: 'YES'
+      CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING: 'YES'
+      CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS: 'YES'
+      IPHONEOS_DEPLOYMENT_TARGET: '11.0'
       CLANG_WARN_OBJC_LITERAL_CONVERSION: 'YES'
       VERSIONING_SYSTEM: 'apple-generic'
+      CLANG_WARN_COMMA: 'YES'
+      DEVELOPMENT_TEAM: 'ABCXYZ123'
+      SWIFT_VERSION: '4.2'
   release:
     overrides:
-      CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS: 'YES'
-      DEVELOPMENT_TEAM: 'ABCXYZ123'
-      IPHONEOS_DEPLOYMENT_TARGET: '11.0'
-      CLANG_WARN_RANGE_LOOP_ANALYSIS: 'YES'
-      CLANG_WARN_NON_LITERAL_NULL_CONVERSION: 'YES'
-      CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING: 'YES'
-      CLANG_WARN_STRICT_PROTOTYPES: 'YES'
-      CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF: 'YES'
-      SWIFT_VERSION: '4.2'
       CURRENT_PROJECT_VERSION: '0'
-      CLANG_WARN_COMMA: 'YES'
+      CLANG_WARN_STRICT_PROTOTYPES: 'YES'
+      CLANG_WARN_NON_LITERAL_NULL_CONVERSION: 'YES'
+      CLANG_WARN_RANGE_LOOP_ANALYSIS: 'YES'
+      CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF: 'YES'
+      CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING: 'YES'
+      CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS: 'YES'
+      IPHONEOS_DEPLOYMENT_TARGET: '11.0'
       CLANG_WARN_OBJC_LITERAL_CONVERSION: 'YES'
       VERSIONING_SYSTEM: 'apple-generic'
+      CLANG_WARN_COMMA: 'YES'
+      DEVELOPMENT_TEAM: 'ABCXYZ123'
+      SWIFT_VERSION: '4.2'
 targets:
-  SimpleApp:
-    platform: ios
-    type: ":application"
-    sources:
-    - Sources/SimpleApp
-    source_options:
-    configurations:
-      debug:
-        SWIFT_VERSION: "$(inherited)"
-        TARGETED_DEVICE_FAMILY: "1"
-        MTL_ENABLE_DEBUG_INFO: "YES"
-        INFOPLIST_FILE: "Info/SimpleApp.plist"
-        IPHONEOS_DEPLOYMENT_TARGET: "11.0"
-        PRODUCT_BUNDLE_IDENTIFIER: "com.SomeCoolCompany.SimpleApp"
-        SDKROOT: "iphoneos"
-      release:
-        TARGETED_DEVICE_FAMILY: "1"
-        IPHONEOS_DEPLOYMENT_TARGET: "11.0"
-        INFOPLIST_FILE: "Info/SimpleApp.plist"
-        PRODUCT_BUNDLE_IDENTIFIER: "com.SomeCoolCompany.SimpleApp"
-        SWIFT_VERSION: "$(inherited)"
-        SDKROOT: "iphoneos"
   SimpleAppTests:
     platform: ios
     type: ":bundle.unit-test"
@@ -63,25 +41,45 @@ targets:
     - location: SimpleApp
     sources:
     - Sources/SimpleAppTests
-    source_options:
     configurations:
       debug:
+        PRODUCT_BUNDLE_IDENTIFIER: "com.SomeCoolCompany.SimpleAppTests"
+        FRAMEWORK_SEARCH_PATHS: "$(inherited) $(BUILT_PRODUCTS_DIR)"
+        LD_RUNPATH_SEARCH_PATHS: "$(inherited) @executable_path/Frameworks @loader_path/Frameworks"
+        IPHONEOS_DEPLOYMENT_TARGET: "11.0"
+        INFOPLIST_FILE: "Info/SimpleAppTests.plist"
         SWIFT_VERSION: "$(inherited)"
         MTL_ENABLE_DEBUG_INFO: "YES"
-        INFOPLIST_FILE: "Info/SimpleAppTests.plist"
         TEST_HOST: "$(BUILT_PRODUCTS_DIR)/SimpleApp.app/SimpleApp"
-        LD_RUNPATH_SEARCH_PATHS: "$(inherited) @executable_path/Frameworks @loader_path/Frameworks"
-        FRAMEWORK_SEARCH_PATHS: "$(inherited) $(BUILT_PRODUCTS_DIR)"
-        IPHONEOS_DEPLOYMENT_TARGET: "11.0"
-        PRODUCT_BUNDLE_IDENTIFIER: "com.SomeCoolCompany.SimpleAppTests"
       release:
-        SWIFT_VERSION: "$(inherited)"
-        INFOPLIST_FILE: "Info/SimpleAppTests.plist"
-        TEST_HOST: "$(BUILT_PRODUCTS_DIR)/SimpleApp.app/SimpleApp"
-        LD_RUNPATH_SEARCH_PATHS: "$(inherited) @executable_path/Frameworks @loader_path/Frameworks"
-        FRAMEWORK_SEARCH_PATHS: "$(inherited) $(BUILT_PRODUCTS_DIR)"
-        IPHONEOS_DEPLOYMENT_TARGET: "11.0"
         PRODUCT_BUNDLE_IDENTIFIER: "com.SomeCoolCompany.SimpleAppTests"
+        FRAMEWORK_SEARCH_PATHS: "$(inherited) $(BUILT_PRODUCTS_DIR)"
+        LD_RUNPATH_SEARCH_PATHS: "$(inherited) @executable_path/Frameworks @loader_path/Frameworks"
+        IPHONEOS_DEPLOYMENT_TARGET: "11.0"
+        INFOPLIST_FILE: "Info/SimpleAppTests.plist"
+        SWIFT_VERSION: "$(inherited)"
+        TEST_HOST: "$(BUILT_PRODUCTS_DIR)/SimpleApp.app/SimpleApp"
+  SimpleApp:
+    platform: ios
+    type: ":application"
+    sources:
+    - Sources/SimpleApp
+    configurations:
+      debug:
+        PRODUCT_BUNDLE_IDENTIFIER: "com.SomeCoolCompany.SimpleApp"
+        SWIFT_VERSION: "$(inherited)"
+        IPHONEOS_DEPLOYMENT_TARGET: "11.0"
+        INFOPLIST_FILE: "Info/SimpleApp.plist"
+        SDKROOT: "iphoneos"
+        MTL_ENABLE_DEBUG_INFO: "YES"
+        TARGETED_DEVICE_FAMILY: "1"
+      release:
+        INFOPLIST_FILE: "Info/SimpleApp.plist"
+        TARGETED_DEVICE_FAMILY: "1"
+        IPHONEOS_DEPLOYMENT_TARGET: "11.0"
+        SDKROOT: "iphoneos"
+        SWIFT_VERSION: "$(inherited)"
+        PRODUCT_BUNDLE_IDENTIFIER: "com.SomeCoolCompany.SimpleApp"
 variants:
   $base:
     abstract: true

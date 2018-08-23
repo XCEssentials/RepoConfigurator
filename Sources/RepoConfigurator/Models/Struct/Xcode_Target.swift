@@ -163,9 +163,10 @@ extension Xcode.Target
 
         // https://github.com/workshop/struct/wiki/Spec-format:-v2.0#options
 
-        result <<< """
+        result <<< sourceFilesOptions.isEmpty.mapIf(false){ """
             source_options:
             """
+        }
 
         indentation.nest{
 

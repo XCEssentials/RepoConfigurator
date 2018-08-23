@@ -184,77 +184,80 @@ let project = Struct
 
         //---
 
-        project.target(targetName.main, .iOS, .framework) {
+        project.targets(
 
-            fwk in
+            Mobile.Framework(targetName.main){
 
-            //---
-
-            fwk.include(sourcesPath.main)
-
-            //---
-
-            fwk.buildSettings.base.override(
-
-                "SWIFT_VERSION" <<< "$(inherited)",
-
-                "IPHONEOS_DEPLOYMENT_TARGET" <<< depTarget.minimumVersion,
-                "PRODUCT_BUNDLE_IDENTIFIER" <<< bundleId.main,
-                "INFOPLIST_FILE" <<< infoPlistsPath.main,
-
-                //--- iOS related:
-
-                "SDKROOT" <<< "iphoneos",
-                "TARGETED_DEVICE_FAMILY" <<< DeviceFamily.iOS.universal,
-
-                //--- Framework related:
-
-                "CODE_SIGN_IDENTITY" <<< "",
-
-                "PRODUCT_NAME" <<< "\(company.prefix)$(TARGET_NAME:c99extidentifier)",
-                "DEFINES_MODULE" <<< NO,
-                "SKIP_INSTALL" <<< YES
-            )
-
-            fwk.buildSettings[.debug].override(
-
-                "MTL_ENABLE_DEBUG_INFO" <<< YES
-            )
-
-            //---
-
-            fwk.unitTests(targetName.tst) {
-
-                fwkTests in
+                fwk in
 
                 //---
 
-                fwkTests.include(sourcesPath.tst)
+                fwk.include(sourcesPath.main)
 
                 //---
 
-                fwkTests.buildSettings.base.override(
+                fwk.buildSettings.base.override(
 
                     "SWIFT_VERSION" <<< "$(inherited)",
 
-                    // very important for unit tests,
-                    // prevents the error when unit test do not start at all
-                    "LD_RUNPATH_SEARCH_PATHS" <<<
-                    "$(inherited) @executable_path/Frameworks @loader_path/Frameworks",
-
                     "IPHONEOS_DEPLOYMENT_TARGET" <<< depTarget.minimumVersion,
+                    "PRODUCT_BUNDLE_IDENTIFIER" <<< bundleId.main,
+                    "INFOPLIST_FILE" <<< infoPlistsPath.main,
 
-                    "PRODUCT_BUNDLE_IDENTIFIER" <<< bundleId.tst,
-                    "INFOPLIST_FILE" <<< infoPlistsPath.tst,
-                    "FRAMEWORK_SEARCH_PATHS" <<< "$(inherited) $(BUILT_PRODUCTS_DIR)"
+                    //--- iOS related:
+
+                    "SDKROOT" <<< "iphoneos",
+                    "TARGETED_DEVICE_FAMILY" <<< DeviceFamily.iOS.universal,
+
+                    //--- Framework related:
+
+                    "CODE_SIGN_IDENTITY" <<< "",
+
+                    "PRODUCT_NAME" <<< "\(company.prefix)$(TARGET_NAME:c99extidentifier)",
+                    "DEFINES_MODULE" <<< NO,
+                    "SKIP_INSTALL" <<< YES
                 )
 
-                fwkTests.buildSettings[.debug].override(
+                fwk.buildSettings[.debug].override(
 
                     "MTL_ENABLE_DEBUG_INFO" <<< YES
                 )
+
+                //---
+
+                fwk.addUnitTests(targetName.tst){
+
+                    fwkTests in
+
+                    //---
+
+                    fwkTests.include(sourcesPath.tst)
+
+                    //---
+
+                    fwkTests.buildSettings.base.override(
+
+                        "SWIFT_VERSION" <<< "$(inherited)",
+
+                        // very important for unit tests,
+                        // prevents the error when unit test do not start at all
+                        "LD_RUNPATH_SEARCH_PATHS" <<<
+                        "$(inherited) @executable_path/Frameworks @loader_path/Frameworks",
+
+                        "IPHONEOS_DEPLOYMENT_TARGET" <<< depTarget.minimumVersion,
+
+                        "PRODUCT_BUNDLE_IDENTIFIER" <<< bundleId.tst,
+                        "INFOPLIST_FILE" <<< infoPlistsPath.tst,
+                        "FRAMEWORK_SEARCH_PATHS" <<< "$(inherited) $(BUILT_PRODUCTS_DIR)"
+                    )
+
+                    fwkTests.buildSettings[.debug].override(
+
+                        "MTL_ENABLE_DEBUG_INFO" <<< YES
+                    )
+                }
             }
-        }
+        )
     }
     .prepare(
         targetFolder: repoFolder

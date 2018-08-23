@@ -216,7 +216,7 @@ extension Mobile
 
     public
     final
-    class Framework: Xcode.Target
+    class Framework: Xcode.Target, XcodeTargetCore
     {
         static
         public
@@ -367,7 +367,7 @@ extension Watch
 {
     public
     final
-    class Framework: Xcode.Target
+    class Framework: Xcode.Target, XcodeTargetCore
     {
         static
         public
@@ -678,7 +678,7 @@ extension TV
 
     public
     final
-    class Framework: Xcode.Target
+    class Framework: Xcode.Target, XcodeTargetCore
     {
         static
         public
@@ -1014,7 +1014,7 @@ extension Desktop
 
     public
     final
-    class Framework: Xcode.Target
+    class Framework: Xcode.Target, XcodeTargetCore
     {
         static
         public
