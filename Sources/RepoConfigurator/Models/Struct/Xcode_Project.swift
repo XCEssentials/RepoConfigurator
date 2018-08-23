@@ -40,17 +40,18 @@ extension Xcode
         let buildSettings = Xcode.Project.BuildSettings()
 
         public private(set)
-        var targets: [String: Target] = [:]
+        var targetsByName: [String: TextFilePiece] = [:]
 
         public
-        func target(
-            _ name: String,
-            _ platform: OSIdentifier,
-            _ type: Target.InternalType,
-            _ configureTarget: (Target) -> Void
+        func targets(
+            _ items: XcodeTargetCore...
             )
         {
-            targets[name] = .init(name, platform, type, configureTarget)
+            items.forEach{
+
+                targetsByName[$0.name] = $0
+                targetsByName.override(with: $0.dependentTargets)
+            }
         }
 
         public
@@ -117,7 +118,11 @@ extension Xcode.Project: TextFilePiece
 
         indentation.nest{
 
-            result <<< Array(targets.values)
+            //result <<< Array(targets.values)
+            result <<< targetsByName.values.map{
+
+                $0.asIndentedText(with: indentation)
+            }
         }
 
         //---

@@ -25,18 +25,16 @@
  */
 
 public
-enum CocoaPods {}
+protocol LicenseTextFile: FixedNameTextFile {}
 
 //---
 
 public
-extension WidelyUsedLicense
+extension LicenseTextFile
 {
-    var cocoaPodsLicenseSummary: CocoaPods.Podspec.License
+    static
+    var fileName: String
     {
-        return (
-            type: licenseType,
-            fileName
-        )
+        return "LICENSE"
     }
 }

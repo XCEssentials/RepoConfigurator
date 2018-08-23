@@ -67,3 +67,11 @@ When your config is ready — execute the playground to actually generate the f
 ## Conclusion
 
 Note, that you might want to write some files only once during the repo lifetime (in the beginning), but in most cases it is supposed that all those files described in the config should be kept up to date only via this config. So whenever you want to rename the product or change any of it's settings, or add a CocoaPods dependency — those fixes should be done in the config and then entire playgroudn should be executed to regenerate everything. This way we always can guarantee that everything is up to date and in sync with each other, plus it's super easy to review all settings in one place.
+
+
+
+## TODO
+
+- [ ] `Struct` — add `Scheme` support.
+- [ ] `Struct` — test with latest version of tool (currently tested with v.2.x).
+- [ ] `Struct` — test and potentially improve targets support beyond iOS app/framework.

@@ -25,18 +25,34 @@
  */
 
 public
-enum CocoaPods {}
+protocol WidelyUsedLicense: LicenseTextFile
+{
+    static
+    var licenseType: String { get }
+}
 
 //---
 
 public
 extension WidelyUsedLicense
 {
-    var cocoaPodsLicenseSummary: CocoaPods.Podspec.License
+    static
+    var licenseType: String
     {
-        return (
-            type: licenseType,
-            fileName
-        )
+        // by default return intrinsic license type based on type name
+
+        return String
+            .init(describing: self)
+            .components(
+                separatedBy: .whitespacesAndNewlines
+            )
+            .first
+            ??
+        ""
+    }
+
+    var licenseType: String
+    {
+        return Self.licenseType
     }
 }

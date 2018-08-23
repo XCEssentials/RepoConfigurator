@@ -31,41 +31,6 @@ extension Xcode.Project.Variant
     final
     class Target: Xcode.Target
     {
-        // MARK: - Instance level members
-
-        public private(set)
-        var tests: [String: Target] = [:]
-
-        public
-        func unitTests(
-            _ name: String = "Tests",
-            _ configureTarget: (Target) -> Void
-            )
-        {
-            tests[name] = .init(name, configureTarget)
-
-            //---
-
-            tests[name].map(configureTarget)
-        }
-
-        public
-        func uiTests(
-            _ name: String = "UITests",
-            _ configureTarget: (Target) -> Void
-            )
-        {
-            tests[name] = .init(name, { _ in })
-
-            //---
-
-            tests[name].map{
-
-                $0.dependencies.otherTarget(self.name)
-                configureTarget($0)
-            }
-        }
-
         // MARK: - Initializers
 
         //internal
@@ -109,13 +74,6 @@ extension Xcode.Project.Variant.Target: TextFilePiece
 
             result <<< self
                 .renderCoreSettings(with: indentation)
-        }
-
-        //---
-
-        result <<< tests.values.map{
-
-            $0.asIndentedText(with: indentation)
         }
 
         //---

@@ -97,10 +97,10 @@ extension Xcode
 
 // MARK: - Content rendering
 
-//internal
+public
 extension Xcode.Target
 {
-    //internal
+    //internal - getting ready to conform to 'XcodeTargetCore'
     func renderCoreSettings(
         with indentation: Indentation
         ) -> IndentedText

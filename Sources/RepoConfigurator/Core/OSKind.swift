@@ -25,18 +25,54 @@
  */
 
 public
-enum CocoaPods {}
+protocol OSKind
+{
+    static
+    var structId: String { get }
+}
 
 //---
 
 public
-extension WidelyUsedLicense
+enum Mobile: OSKind
 {
-    var cocoaPodsLicenseSummary: CocoaPods.Podspec.License
+    public
+    static
+    var structId: String
     {
-        return (
-            type: licenseType,
-            fileName
-        )
+        return "ios"
+    }
+}
+
+public
+enum Desktop: OSKind
+{
+    public
+    static
+    var structId: String
+    {
+        return "mac"
+    }
+}
+
+public
+enum Watch: OSKind
+{
+    public
+    static
+    var structId: String
+    {
+        return "watch"
+    }
+}
+
+public
+enum TV: OSKind //swiftlint:disable:this type_name
+{
+    public
+    static
+    var structId: String
+    {
+        return "tv"
     }
 }
