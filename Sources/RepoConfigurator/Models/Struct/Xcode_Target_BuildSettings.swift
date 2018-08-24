@@ -925,7 +925,7 @@ extension Xcode.Target.BuildSettings
             CODE_SIGN_IDENTITY = iPhone Developer
             CODE_SIGN_STYLE = Automatic
             COPY_PHASE_STRIP = NO
-            CURRENT_PROJECT_VERSION = 1
+            CURRENT_PROJECT_VERSION = \(Defaults.initialBuildNumber)
             DEFINES_MODULE = YES
             DYLIB_COMPATIBILITY_VERSION = 1
             DYLIB_CURRENT_VERSION = 1
@@ -1102,7 +1102,7 @@ extension Xcode.Target.BuildSettings
             CODE_SIGN_STYLE = Automatic
             COMBINE_HIDPI_IMAGES = YES
             COPY_PHASE_STRIP = NO
-            CURRENT_PROJECT_VERSION = 1
+            CURRENT_PROJECT_VERSION = \(Defaults.initialBuildNumber)
             DEFINES_MODULE = YES
             DYLIB_COMPATIBILITY_VERSION = 1
             DYLIB_CURRENT_VERSION = 1
@@ -1276,7 +1276,7 @@ extension Xcode.Target.BuildSettings
             CODE_SIGN_IDENTITY =
             CODE_SIGN_STYLE = Automatic
             COPY_PHASE_STRIP = NO
-            CURRENT_PROJECT_VERSION = 1
+            CURRENT_PROJECT_VERSION = \(Defaults.initialBuildNumber)
             DEFINES_MODULE = YES
             DYLIB_COMPATIBILITY_VERSION = 1
             DYLIB_CURRENT_VERSION = 1
@@ -1452,7 +1452,7 @@ extension Xcode.Target.BuildSettings
             CODE_SIGN_IDENTITY =
             CODE_SIGN_STYLE = Automatic
             COPY_PHASE_STRIP = NO
-            CURRENT_PROJECT_VERSION = 1
+            CURRENT_PROJECT_VERSION = \(Defaults.initialBuildNumber)
             DEFINES_MODULE = YES
             DYLIB_COMPATIBILITY_VERSION = 1
             DYLIB_CURRENT_VERSION = 1

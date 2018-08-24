@@ -33,7 +33,7 @@ enum Defaults
 {
     public
     static
-    let initialVersionString: VersionString = "0.1.0"
+    let initialVersionString: VersionString = "0.1.0+dirty"
 
     public
     static
