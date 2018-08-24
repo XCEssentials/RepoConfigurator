@@ -70,6 +70,23 @@ Note, that you might want to write some files only once during the repo lifetime
 
 
 
+## Remember
+
+Most of the initializers have some parameters with default values, look into documentation/sources to discover all available parameters to configure output file according to your needs.
+
+
+
+When define Xcode project target, don't forget to set following build settings.
+
+- `SWIFT_VERSION` on project level;
+- `DEVELOPMENT_TEAM` with development team ID;
+- `INFOPLIST_FILE` with relative path to corresponding info plist file;
+- `PRODUCT_BUNDLE_IDENTIFIER`;
+- `TEST_HOST` with path to host app, for unit testing targets only;
+- `TEST_TARGET_NAME` for UI testing targets only.
+
+
+
 ## TODO
 
 - [ ] `Struct` — add `Scheme` support.

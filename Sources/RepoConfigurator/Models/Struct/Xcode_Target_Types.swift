@@ -64,11 +64,10 @@ extension Mobile
 
             newTarget.dependencies.otherTarget(self.name)
 
-            // only wihtin iOS APP context:
+            newTarget.buildSettings.iOSAppTests()
 
             newTarget.buildSettings.base.override(
 
-                // https://github.com/lyptt/struct/blob/master/examples/iOS_Application/project.yml#L107
                 "TEST_HOST" <<< "$(BUILT_PRODUCTS_DIR)/\(self.name).app/\(self.name)"
             )
 
@@ -93,9 +92,10 @@ extension Mobile
 
             newTarget.dependencies.otherTarget(self.name)
 
+            newTarget.buildSettings.iOSAppUITests()
+
             newTarget.buildSettings.base.override(
 
-                // https://github.com/lyptt/struct/blob/master/examples/iOS_Application/project.yml#L120
                 "TEST_TARGET_NAME" <<< "\(self.name)"
             )
 
@@ -114,6 +114,10 @@ extension Mobile
             )
         {
             super.init(name)
+
+            //---
+
+            self.buildSettings.iOSApp()
 
             //---
 
@@ -245,6 +249,8 @@ extension Mobile
 
             //---
 
+            newTarget.buildSettings.iOSFwkTests()
+
             newTarget.dependencies.otherTarget(self.name)
 
             //---
@@ -262,6 +268,10 @@ extension Mobile
             )
         {
             super.init(name)
+
+            //---
+
+            self.buildSettings.iOSFwk()
 
             //---
 
@@ -313,6 +323,8 @@ extension Mobile
         static
         public
         let targetType: Xcode.TargetType = .staticLibrary
+
+        // MARK: Initializers
 
         public
         required
@@ -390,6 +402,10 @@ extension Watch
 
             //---
 
+            self.buildSettings.watchOSFwk()
+
+            //---
+
             configure(self)
         }
     }
@@ -452,6 +468,10 @@ extension Watch
 
             //---
 
+            self.buildSettings.watchOSApp()
+
+            //---
+
             configure(self)
         }
     }
@@ -480,6 +500,10 @@ extension Watch
             )
         {
             super.init(name)
+
+            //---
+
+            self.buildSettings.watchOSApp()
 
             //---
 
@@ -590,11 +614,10 @@ extension TV
 
             newTarget.dependencies.otherTarget(self.name)
 
-            // only wihtin iOS APP context:
+            newTarget.buildSettings.tvOSAppTests()
 
             newTarget.buildSettings.base.override(
 
-                // https://github.com/lyptt/struct/blob/master/examples/iOS_Application/project.yml#L107
                 "TEST_HOST" <<< "$(BUILT_PRODUCTS_DIR)/\(self.name).app/\(self.name)"
             )
 
@@ -619,9 +642,10 @@ extension TV
 
             newTarget.dependencies.otherTarget(self.name)
 
+            newTarget.buildSettings.tvOSAppUITests()
+
             newTarget.buildSettings.base.override(
 
-                // https://github.com/lyptt/struct/blob/master/examples/iOS_Application/project.yml#L120
                 "TEST_TARGET_NAME" <<< "\(self.name)"
             )
 
@@ -640,6 +664,10 @@ extension TV
             )
         {
             super.init(name)
+
+            //---
+
+            self.buildSettings.tvOSApp()
 
             //---
 
@@ -707,6 +735,8 @@ extension TV
 
             //---
 
+            newTarget.buildSettings.tvOSFwkTests()
+
             newTarget.dependencies.otherTarget(self.name)
 
             //---
@@ -724,6 +754,10 @@ extension TV
             )
         {
             super.init(name)
+
+            //---
+
+            self.buildSettings.tvOSFwk()
 
             //---
 
@@ -831,12 +865,12 @@ extension Desktop
 
             newTarget.dependencies.otherTarget(self.name)
 
-            // only wihtin iOS APP context:
+            newTarget.buildSettings.macOSAppTests()
 
             newTarget.buildSettings.base.override(
 
                 // https://github.com/lyptt/struct/blob/master/examples/iOS_Application/project.yml#L107
-                "TEST_HOST" <<< "$(BUILT_PRODUCTS_DIR)/\(self.name).app/\(self.name)"
+                "TEST_HOST" <<< "$(BUILT_PRODUCTS_DIR)/\(self.name).app/Contents/MacOS/\(self.name)"
             )
 
             //---
@@ -860,9 +894,10 @@ extension Desktop
 
             newTarget.dependencies.otherTarget(self.name)
 
+            newTarget.buildSettings.macOSAppUITests()
+
             newTarget.buildSettings.base.override(
 
-                // https://github.com/lyptt/struct/blob/master/examples/iOS_Application/project.yml#L120
                 "TEST_TARGET_NAME" <<< "\(self.name)"
             )
 
@@ -881,6 +916,10 @@ extension Desktop
             )
         {
             super.init(name)
+
+            //---
+
+            self.buildSettings.macOSApp()
 
             //---
 
@@ -1043,6 +1082,8 @@ extension Desktop
 
             //---
 
+            newTarget.buildSettings.macOSFwkTests()
+
             newTarget.dependencies.otherTarget(self.name)
 
             //---
@@ -1060,6 +1101,10 @@ extension Desktop
             )
         {
             super.init(name)
+
+            //---
+
+            self.buildSettings.macOSFwk()
 
             //---
 
