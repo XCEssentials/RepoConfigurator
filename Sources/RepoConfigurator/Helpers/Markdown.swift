@@ -24,17 +24,35 @@
 
  */
 
-public
-protocol LicenseTextFile: FixedNameTextFile {}
+import Foundation
 
 //---
 
 public
-extension LicenseTextFile
+enum Markdown {}
+
+//---
+
+public
+extension Markdown
 {
     static
-    var fileName: String
+    func image(
+        _ altText: String,
+        link: String
+        ) -> String
     {
-        return Defaults.licenseFileName
+        return "![\(altText)](\(link)"
+    }
+
+    static
+    func embed(
+        _ content: String,
+        intoLink link: String
+        ) -> String?
+    {
+        return URL
+            .init(string: link)
+            .map{ "[\(content)](\($0.absoluteString)" }
     }
 }

@@ -24,17 +24,69 @@
 
  */
 
-public
-protocol LicenseTextFile: FixedNameTextFile {}
+import Foundation
 
 //---
 
 public
-extension LicenseTextFile
+class ExternalFile
+{
+    // MARK: Type level members
+
+    public
+    enum Errors: Error
+    {
+        case resourceNotFound
+    }
+
+    private
+    static
+    var currentBundle: Bundle
+    {
+        return .init(for: self)
+    }
+
+    // MARK: Initializers
+
+    private
+    init() {}
+}
+
+//---
+
+public
+extension ExternalFile
 {
     static
-    var fileName: String
+    func load(
+        from source: URL
+        ) throws -> String
     {
-        return Defaults.licenseFileName
+        return try String(contentsOf: source)
+    }
+
+    static
+    func loadFromResource(
+        named resourceName: String,
+        withExtension resourceExtension: String,
+        encoding: String.Encoding = .utf8
+        ) throws -> String
+    {
+        guard
+            let source = currentBundle.url(
+                forResource: resourceName,
+                withExtension: resourceExtension
+            )
+        else
+        {
+            throw Errors.resourceNotFound
+        }
+
+        //---
+
+        return try String(
+            contentsOf: source,
+            encoding: encoding
+        )
     }
 }

@@ -102,4 +102,8 @@ enum Defaults
     public
     static
     let singleLevelOfIndentationForYAMLFiles: String = .init(repeating: " ", count: 2)
+
+    public
+    static
+    let licenseFileName = "LICENSE"
 }

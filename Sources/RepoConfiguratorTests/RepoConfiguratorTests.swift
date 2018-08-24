@@ -25,20 +25,15 @@ class RepoConfiguratorTests: XCTestCase
         withExtension resourceExtension: String
         ) -> String
     {
-        if
-            let source = currentBundle.url(
-                forResource: resourceName,
+        let result = try? ExternalFile
+            .loadFromResource(
+                named: resourceName,
                 withExtension: resourceExtension
-            ),
-            let data = try? Data(contentsOf: source),
-            let result = String(data: data, encoding: .utf8)
-        {
-            return result
-        }
-        else
-        {
-            return ""
-        }
+            )
+
+        //---
+
+        return result ?? ""
     }
 }
 
