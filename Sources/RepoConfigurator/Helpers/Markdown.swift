@@ -42,7 +42,7 @@ extension Markdown
         link: String
         ) -> String
     {
-        return "![\(altText)](\(link)"
+        return "![\(altText)](\(link))"
     }
 
     static
@@ -53,6 +53,6 @@ extension Markdown
     {
         return URL
             .init(string: link)
-            .map{ "[\(content)](\($0.absoluteString)" }
+            .map{ "[\(content)](\($0.absoluteString))" }
     }
 }

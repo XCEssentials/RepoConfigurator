@@ -1,8 +1,3 @@
-[![GitHub License](https://img.shields.io/github/license/XCEssentials/RepoConfigurator.svg?longCache=true)](https://github.com/XCEssentials/RepoConfigurator/blob/master/LICENSE)
-[![GitHub Tag](https://img.shields.io/github/tag/XCEssentials/RepoConfigurator.svg?longCache=true)](https://github.com/XCEssentials/RepoConfigurator/tags)
-[![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-brightgreen.svg?longCache=true)](https://github.com/Carthage/Carthage)
-[![Requires Xcode](https://img.shields.io/badge/Xcode-required-lightgray.svg?longCache=true)](https://developer.apple.com/xcode/)
-[![Written in Swift](https://img.shields.io/badge/Swift-4.2-orange.svg?longCache=true)](https://developer.apple.com/swift/)
 
 # RepoConfigurator
 

@@ -111,7 +111,7 @@ extension Shields
             ) throws -> Badge
         {
             guard
-                subject.isEmpty
+                !subject.isEmpty
             else
             {
                 throw Errors.invalidParamters(
@@ -120,7 +120,7 @@ extension Shields
             }
 
             guard
-                status.isEmpty
+                !status.isEmpty
             else
             {
                 throw Errors.invalidParamters(
@@ -129,7 +129,7 @@ extension Shields
             }
 
             guard
-                color.isEmpty
+                !color.isEmpty
             else
             {
                 throw Errors.invalidParamters(
@@ -156,9 +156,10 @@ extension Shields
             ) throws -> Badge
         {
             guard
-                linkPath.isEmpty
+                !linkPath.isEmpty
             else
             {
+                print(linkPath)
                 throw Errors.invalidParamters(
                     message: "Link path can NOT be blank!"
                 )

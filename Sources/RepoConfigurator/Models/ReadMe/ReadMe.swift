@@ -51,7 +51,7 @@ extension ReadMe
     static
     func openSourceProduct(
         header: [TextFileSection<ReadMe>],
-        _ content: String...
+        _ content: String?...
         ) -> ReadMe
     {
         let result = IndentedTextBuffer()
@@ -59,7 +59,7 @@ extension ReadMe
         //---
 
         result <<< header
-        result <<< content
+        result <<< content.compactMap{ $0 }
 
         //---
 
@@ -305,6 +305,7 @@ extension TextFileSection
         status: String,
         color: String,
         _ parameters: Shields.Parameters = .parameters(),
+        title: String,
         link: String
         ) throws -> TextFileSection<Context>
     {
@@ -320,7 +321,7 @@ extension TextFileSection
             .absoluteString
 
         let mdImage = Markdown.image(
-            subject,
+            title,
             link: linkToBadge
         )
 
