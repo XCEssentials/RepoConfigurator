@@ -30,18 +30,18 @@ extension Struct
     public
     struct Spec: FixedNameTextFile
     {
-        // MARK: - Type level members
+        // MARK: Type level members
 
         public
         static
         let fileName: String = "project.yml"
 
-        // MARK: - Instance level members
+        // MARK: Instance level members
 
         public
         let fileContent: IndentedText
 
-        // MARK: - Initializers
+        // MARK: Initializers
 
         public
         init(

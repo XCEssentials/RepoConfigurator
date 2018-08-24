@@ -31,7 +31,7 @@ import Foundation
 public
 struct RawTextFile<T: TextFile>
 {
-    // MARK: - Type level members
+    // MARK: Type level members
 
     public
     enum IfFileExistsWritePolicy
@@ -40,7 +40,7 @@ struct RawTextFile<T: TextFile>
         case override
     }
 
-    // MARK: - Instance level members
+    // MARK: Instance level members
 
     public
     let model: T

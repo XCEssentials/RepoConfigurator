@@ -30,7 +30,7 @@ extension CocoaPods
     public
     struct Podspec: ArbitraryNamedTextFile
     {
-        // MARK: - Type level members
+        // MARK: Type level members
 
         public
         typealias Product = (
@@ -63,7 +63,7 @@ extension CocoaPods
         fileprivate
         enum PerPlatformSettings {}
 
-        // MARK: - Instance level members
+        // MARK: Instance level members
 
         public
         let fileContent: IndentedText

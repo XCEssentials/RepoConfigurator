@@ -30,7 +30,7 @@ extension Xcode
     public
     class Target
     {
-        // MARK: - Instance level members
+        // MARK: Instance level members
 
         public
         let name: String
@@ -83,7 +83,7 @@ extension Xcode
         public
         var includesCocoapods = false
 
-        // MARK: - Initializers
+        // MARK: Initializers
 
         //internal
         init(

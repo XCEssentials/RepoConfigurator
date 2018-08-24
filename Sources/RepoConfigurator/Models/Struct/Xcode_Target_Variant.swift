@@ -31,7 +31,7 @@ extension Xcode.Project.Variant
     final
     class Target: Xcode.Target
     {
-        // MARK: - Initializers
+        // MARK: Initializers
 
         //internal
         required

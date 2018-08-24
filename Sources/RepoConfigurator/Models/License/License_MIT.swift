@@ -34,12 +34,12 @@ extension License
     public
     struct MIT: WidelyUsedLicense
     {
-        // MARK: - Instance level members
+        // MARK: Instance level members
 
         public
         let fileContent: IndentedText
 
-        // MARK: - Initializers
+        // MARK: Initializers
 
         public
         init(

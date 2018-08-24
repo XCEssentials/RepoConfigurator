@@ -30,18 +30,18 @@ extension GitHub
     public
     struct PagesConfig: FixedNameTextFile
     {
-        // MARK: - Type level members
+        // MARK: Type level members
 
         public
         static
         let fileName: String = "_config.yml"
 
-        // MARK: - Instance level members
+        // MARK: Instance level members
 
         public
         let fileContent: IndentedText
 
-        // MARK: - Initializers
+        // MARK: Initializers
 
         public
         init(

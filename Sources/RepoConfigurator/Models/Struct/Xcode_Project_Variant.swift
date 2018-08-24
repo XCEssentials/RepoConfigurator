@@ -31,7 +31,7 @@ extension Xcode.Project
     final
     class Variant
     {
-        // MARK: - Instance level members
+        // MARK: Instance level members
 
         public
         let name: String
@@ -50,7 +50,7 @@ extension Xcode.Project
             }
         }
 
-        // MARK: - Initializers
+        // MARK: Initializers
 
         public
         init(

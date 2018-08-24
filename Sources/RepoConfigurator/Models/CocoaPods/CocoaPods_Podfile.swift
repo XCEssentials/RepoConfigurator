@@ -30,7 +30,7 @@ extension CocoaPods
     public
     struct Podfile: FixedNameTextFile
     {
-        // MARK: - Type level members
+        // MARK: Type level members
 
         public
         enum Target {}
@@ -46,12 +46,12 @@ extension CocoaPods
             case complete = "complete"
         }
         
-        // MARK: - Instance level members
+        // MARK: Instance level members
 
         public
         let fileContent: IndentedText
 
-        // MARK: - Initializers
+        // MARK: Initializers
 
         public
         init(

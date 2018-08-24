@@ -29,7 +29,7 @@ extension Fastlane
     public
     struct Fastfile: FixedNameTextFile
     {
-        // MARK: - Type level members
+        // MARK: Type level members
 
         /**
          Method used to export the archive.
@@ -47,7 +47,7 @@ extension Fastlane
             case developerId = "developer-id"
         }
 
-        // MARK: - Instance level members
+        // MARK: Instance level members
 
         public
         let fileContent: IndentedText
