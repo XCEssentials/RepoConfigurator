@@ -30,7 +30,7 @@ extension Xcode
     public
     class Target
     {
-        // MARK: - Instance level members
+        // MARK: Instance level members
 
         public
         let name: String
@@ -83,7 +83,7 @@ extension Xcode
         public
         var includesCocoapods = false
 
-        // MARK: - Initializers
+        // MARK: Initializers
 
         //internal
         init(
@@ -97,10 +97,10 @@ extension Xcode
 
 // MARK: - Content rendering
 
-//internal
+public
 extension Xcode.Target
 {
-    //internal
+    //internal - getting ready to conform to 'XcodeTargetCore'
     func renderCoreSettings(
         with indentation: Indentation
         ) -> IndentedText
@@ -163,9 +163,10 @@ extension Xcode.Target
 
         // https://github.com/workshop/struct/wiki/Spec-format:-v2.0#options
 
-        result <<< """
+        result <<< sourceFilesOptions.isEmpty.mapIf(false){ """
             source_options:
             """
+        }
 
         indentation.nest{
 

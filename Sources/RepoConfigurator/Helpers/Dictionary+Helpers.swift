@@ -72,6 +72,76 @@ extension Dictionary
     }
 }
 
+public
+extension Dictionary
+    where
+    Key == String,
+    Value == String
+{
+    mutating
+    func overrideWithXcodeBuildSettings(
+        _ overrides: String
+        )
+    {
+        /*
+
+         We expect to get a multiline like this:
+
+         """
+         ALWAYS_SEARCH_USER_PATHS = NO
+         ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon
+         """
+
+         and then convert it into '[KeyValuePair]'.
+
+         */
+
+        overrides
+            .split(separator: "\n")
+            .map{
+
+                (input) -> (key: String?, value: String?) in
+
+                //---
+
+                let elements = input.split(separator: "=")
+
+                //---
+
+                return (
+                    elements
+                        .first?
+                        .trimmingCharacters(in: .whitespacesAndNewlines),
+                    elements
+                        .dropFirst()
+                        .joined()
+                        .trimmingCharacters(in: .whitespacesAndNewlines)
+                )
+            }
+            .compactMap{
+
+                (input) -> KeyValuePair? in
+
+                //---
+
+                if
+                    let key = input.key,
+                    let value = input.value
+                {
+                    return (key, value)
+                }
+                else
+                {
+                    return nil
+                }
+            }
+            .forEach{
+
+                self[$0.key] = $0.value
+            }
+    }
+}
+
 //internal
 extension Dictionary
     where

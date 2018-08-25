@@ -31,7 +31,7 @@ extension Xcode
     final
     class Project
     {
-        // MARK: - Instance level members
+        // MARK: Instance level members
 
         public
         let name: String
@@ -40,23 +40,44 @@ extension Xcode
         let buildSettings = Xcode.Project.BuildSettings()
 
         public private(set)
-        var targets: [String: Target] = [:]
+        var targetsByName: [String: TextFilePiece] = [:]
 
         public
-        func target(
-            _ name: String,
-            _ platform: OSIdentifier,
-            _ type: Target.InternalType,
-            _ configureTarget: (Target) -> Void
+        func targets(
+            _ items: XcodeTargetCore...
             )
         {
-            targets[name] = .init(name, platform, type, configureTarget)
+            items.forEach{
+
+                targetsByName[$0.name] = $0
+                targetsByName.override(with: $0.dependentTargets)
+            }
+        }
+
+        public private(set)
+        var schemesByName: [String: Xcode.Scheme] = [:]
+
+        public
+        func schemes(
+            _ items: Xcode.Scheme...
+            )
+        {
+            items.forEach{
+
+                schemesByName[$0.name] = $0
+            }
         }
 
         public
         var variants: [Xcode.Project.Variant] = []
 
-        // MARK: - Initializers
+        /**
+         https://github.com/lyptt/struct/wiki/Spec-format:-v2.0#lifecycle-hooks
+         */
+        public
+        var lifecycleHooks: (pre: String?, post: String?) = (nil, nil)
+
+        // MARK: Initializers
 
         public
         init(
@@ -83,7 +104,6 @@ extension Xcode.Project: TextFilePiece
 
         //---
 
-        // currently rely on Struct Spec format v.2.1
         // https://github.com/lyptt/struct/wiki/Spec-format:-v2.0
 
         result <<< """
@@ -95,7 +115,8 @@ extension Xcode.Project: TextFilePiece
 
         // https://github.com/lyptt/struct/wiki/Spec-format:-v2.0#version-number
 
-        let specFormatVersion = "2.1.0"
+        // currently rely on Struct Spec format v.2.2
+        let specFormatVersion = "2.2.0"
 
         result <<< """
             version: \(specFormatVersion)
@@ -117,7 +138,51 @@ extension Xcode.Project: TextFilePiece
 
         indentation.nest{
 
-            result <<< Array(targets.values)
+            result <<< targetsByName.values.map{
+
+                $0.asIndentedText(with: indentation)
+            }
+        }
+
+        //---
+
+        // https://github.com/lyptt/struct/wiki/Spec-format%3A-v2.0#schemes
+
+        result <<< """
+            schemes:
+            """
+
+        //---
+
+        indentation.nest{
+
+            result <<< schemesByName.values.map{
+
+                $0.contentGetter(indentation)
+            }
+        }
+
+        //---
+
+        // https://github.com/lyptt/struct/wiki/Spec-format:-v2.0#lifecycle-hooks
+
+        result <<< (lifecycleHooks.pre ?? lifecycleHooks.post != nil).mapIf(true){ """
+            scripts:
+            """
+        }
+
+        indentation.nestIfUnwrap(lifecycleHooks.pre){
+
+            result <<< """
+                pre-generate: \($0)
+                """
+        }
+
+        indentation.nestIfUnwrap(lifecycleHooks.post){
+
+            result <<< """
+                post-generate: \($0)
+                """
         }
 
         //---

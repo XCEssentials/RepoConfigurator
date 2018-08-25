@@ -1,10 +1,8 @@
-[![GitHub license](https://img.shields.io/github/license/XCEssentials/RepoConfigurator.svg)](https://github.com/XCEssentials/RepoConfigurator/blob/master/LICENSE)
-[![GitHub tag](https://img.shields.io/github/tag/XCEssentials/RepoConfigurator.svg)](https://github.com/XCEssentials/RepoConfigurator/tags)
-[![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-brightgreen.svg)](https://github.com/Carthage/Carthage)
-[![Requires Xcode](https://img.shields.io/badge/requires-Xcode-lightgray.svg)](https://developer.apple.com/xcode/)
-[![Written in Swift](https://img.shields.io/badge/Swift-4-orange.svg)](https://developer.apple.com/swift/)
-
-
+[![GitHub License](https://img.shields.io/github/license/XCEssentials/RepoConfigurator.svg?longCache=true)](https://github.com/XCEssentials/RepoConfigurator/blob/master/LICENSE)
+[![GitHub Tag](https://img.shields.io/github/tag/XCEssentials/RepoConfigurator.svg?longCache=true)](https://github.com/XCEssentials/RepoConfigurator/tags)
+[![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-brightgreen.svg?longCache=true)](https://github.com/Carthage/Carthage)
+[![Requires Xcode](https://img.shields.io/badge/Xcode-required-lightgray.svg?longCache=true)](https://developer.apple.com/xcode/)
+[![Written in Swift](https://img.shields.io/badge/Swift-4.2-orange.svg?longCache=true)](https://developer.apple.com/swift/)
 
 # RepoConfigurator
 
@@ -16,7 +14,7 @@ Generate repo config files using Swift and Xcode playgrounds.
 
 Install as dependency via [Carthage](https://github.com/Carthage/Carthage).
 
-```rub
+```ruby
 github "XCEssentials/RepoConfigurator"
 ```
 
@@ -67,3 +65,26 @@ When your config is ready — execute the playground to actually generate the f
 ## Conclusion
 
 Note, that you might want to write some files only once during the repo lifetime (in the beginning), but in most cases it is supposed that all those files described in the config should be kept up to date only via this config. So whenever you want to rename the product or change any of it's settings, or add a CocoaPods dependency — those fixes should be done in the config and then entire playgroudn should be executed to regenerate everything. This way we always can guarantee that everything is up to date and in sync with each other, plus it's super easy to review all settings in one place.
+
+
+
+## Remember
+
+Most of the initializers have some parameters with default values, look into documentation/sources to discover all available parameters to configure output file according to your needs.
+
+
+
+When define Xcode project target, don't forget to set following build settings.
+
+- `SWIFT_VERSION` on project level;
+- `DEVELOPMENT_TEAM` with development team ID;
+- `INFOPLIST_FILE` with relative path to corresponding info plist file;
+- `PRODUCT_BUNDLE_IDENTIFIER`.
+
+
+
+## TODO
+
+- [ ] `Struct` — add `Scheme` support.
+- [ ] `Struct` — test with latest version of tool (currently tested with v.2.x).
+- [ ] `Struct` — test and potentially improve targets support beyond iOS app/framework.

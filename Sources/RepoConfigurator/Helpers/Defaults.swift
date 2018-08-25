@@ -33,7 +33,7 @@ enum Defaults
 {
     public
     static
-    let initialVersionString: VersionString = "0.1.0"
+    let initialVersionString: VersionString = "0.1.0+dirty"
 
     public
     static
@@ -102,4 +102,12 @@ enum Defaults
     public
     static
     let singleLevelOfIndentationForYAMLFiles: String = .init(repeating: " ", count: 2)
+
+    public
+    static
+    let licenseFileName = "LICENSE"
+
+    public
+    static
+    let scriptsFolderPath = "Scripts"
 }

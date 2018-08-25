@@ -2,7 +2,7 @@ Pod::Spec.new do |s|
 
     s.name          = 'SCCSimpleFramework'
     s.summary       = 'A simple framework.'
-    s.version       = '0.1.0'
+    s.version       = '0.1.0+dirty'
     s.homepage      = 'https://SomeCoolCompany.github.io/SimpleFramework'
 
     s.source        = { :git => 'https://github.com/SomeCoolCompany/SimpleFramework.git', :tag => s.version }
@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
     s.license       = { :type => 'MIT', :file => 'LICENSE' }
 
     s.authors = {
-        "'John Appleseed' => 'john@example.com'"
+        'John Appleseed' => 'john@example.com'
     } # authors
 
     s.swift_version = '4.2'

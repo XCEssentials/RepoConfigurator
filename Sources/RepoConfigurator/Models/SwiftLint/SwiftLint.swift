@@ -30,7 +30,7 @@
 public
 struct SwiftLint: FixedNameTextFile
 {
-    // MARK: - Type level members
+    // MARK: Type level members
 
     public
     static
@@ -44,12 +44,12 @@ struct SwiftLint: FixedNameTextFile
         value: String
     )
 
-    // MARK: - Instance level members
+    // MARK: Instance level members
 
     public
     let fileContent: IndentedText
 
-    // MARK: - Initializers
+    // MARK: Initializers
 
     public
     init(

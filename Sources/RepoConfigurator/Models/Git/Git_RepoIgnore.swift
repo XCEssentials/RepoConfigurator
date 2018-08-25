@@ -29,13 +29,13 @@ extension Git
     public
     struct RepoIgnore: FixedNameTextFile
     {
-        // MARK: - Type level members
+        // MARK: Type level members
 
         public
         static
         let fileName = ".gitignore"
 
-        // MARK: - Instance level members
+        // MARK: Instance level members
 
         public
         let fileContent: IndentedText

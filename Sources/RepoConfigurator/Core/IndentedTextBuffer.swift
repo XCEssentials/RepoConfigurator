@@ -27,7 +27,7 @@
 public
 class IndentedTextBuffer
 {
-    // MARK: - Instance level members
+    // MARK: Instance level members
 
     public
     let indentation: Indentation
@@ -51,18 +51,18 @@ class IndentedTextBuffer
         content += newPiece.asIndentedText(with: indentation)
     }
 
-    public
-    func append(
-        _ newPieces: [TextFilePiece]
-        )
-    {
-        newPieces.forEach{
+//    public
+//    func append(
+//        _ newPieces: [TextFilePiece]
+//        )
+//    {
+//        newPieces.forEach{
+//
+//            self.append($0)
+//        }
+//    }
 
-            self.append($0)
-        }
-    }
-
-    // MARK: - Initializers
+    // MARK: Initializers
 
     public
     init(

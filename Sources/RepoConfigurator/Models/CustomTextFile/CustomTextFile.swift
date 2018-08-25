@@ -27,12 +27,12 @@
 public
 struct CustomTextFile: ArbitraryNamedTextFile
 {
-    // MARK: - Instance level members
+    // MARK: Instance level members
 
     public
     let fileContent: IndentedText
 
-    // MARK: - Initializers
+    // MARK: Initializers
 
     public
     init(
