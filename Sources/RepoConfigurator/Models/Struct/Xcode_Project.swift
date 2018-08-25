@@ -84,7 +84,6 @@ extension Xcode.Project: TextFilePiece
 
         //---
 
-        // currently rely on Struct Spec format v.2.1
         // https://github.com/lyptt/struct/wiki/Spec-format:-v2.0
 
         result <<< """
@@ -96,7 +95,8 @@ extension Xcode.Project: TextFilePiece
 
         // https://github.com/lyptt/struct/wiki/Spec-format:-v2.0#version-number
 
-        let specFormatVersion = "2.1.0"
+        // currently rely on Struct Spec format v.2.2
+        let specFormatVersion = "2.2.0"
 
         result <<< """
             version: \(specFormatVersion)
