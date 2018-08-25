@@ -161,27 +161,9 @@ let project = Struct
 
         project.buildSettings.base.override(
 
-            "IPHONEOS_DEPLOYMENT_TARGET" <<< depTarget.minimumVersion,
             "SWIFT_VERSION" <<< swiftVersion,
-            "VERSIONING_SYSTEM" <<< "apple-generic",
-
-            "CURRENT_PROJECT_VERSION" <<< "0", // just a default non-empty value
-
-            "CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING" <<< YES,
-            "CLANG_WARN_COMMA" <<< YES,
-            "CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS" <<< YES,
-            "CLANG_WARN_NON_LITERAL_NULL_CONVERSION" <<< YES,
-            "CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF" <<< YES,
-            "CLANG_WARN_OBJC_LITERAL_CONVERSION" <<< YES,
-            "CLANG_WARN_RANGE_LOOP_ANALYSIS" <<< YES,
-            "CLANG_WARN_STRICT_PROTOTYPES" <<< YES
+            "IPHONEOS_DEPLOYMENT_TARGET" <<< depTarget.minimumVersion
         )
-
-        project.buildSettings[.debug].override(
-
-            "SWIFT_OPTIMIZATION_LEVEL" <<< "-Onone"
-        )
-
         //---
 
         project.targets(
@@ -198,29 +180,17 @@ let project = Struct
 
                 fwk.buildSettings.base.override(
 
-                    "SWIFT_VERSION" <<< "$(inherited)",
-
-                    "IPHONEOS_DEPLOYMENT_TARGET" <<< depTarget.minimumVersion,
-                    "PRODUCT_BUNDLE_IDENTIFIER" <<< bundleId.main,
                     "INFOPLIST_FILE" <<< infoPlistsPath.main,
+                    "PRODUCT_BUNDLE_IDENTIFIER" <<< bundleId.main,
 
                     //--- iOS related:
 
-                    "SDKROOT" <<< "iphoneos",
+                    "IPHONEOS_DEPLOYMENT_TARGET" <<< depTarget.minimumVersion,
                     "TARGETED_DEVICE_FAMILY" <<< DeviceFamily.iOS.universal,
 
                     //--- Framework related:
 
-                    "CODE_SIGN_IDENTITY" <<< "",
-
-                    "PRODUCT_NAME" <<< "\(company.prefix)$(TARGET_NAME:c99extidentifier)",
-                    "DEFINES_MODULE" <<< NO,
-                    "SKIP_INSTALL" <<< YES
-                )
-
-                fwk.buildSettings[.debug].override(
-
-                    "MTL_ENABLE_DEBUG_INFO" <<< YES
+                    "PRODUCT_NAME" <<< "\(company.prefix)$(TARGET_NAME:c99extidentifier)"
                 )
 
                 //---
@@ -237,23 +207,10 @@ let project = Struct
 
                     fwkTests.buildSettings.base.override(
 
-                        "SWIFT_VERSION" <<< "$(inherited)",
-
-                        // very important for unit tests,
-                        // prevents the error when unit test do not start at all
-                        "LD_RUNPATH_SEARCH_PATHS" <<<
-                        "$(inherited) @executable_path/Frameworks @loader_path/Frameworks",
-
-                        "IPHONEOS_DEPLOYMENT_TARGET" <<< depTarget.minimumVersion,
-
-                        "PRODUCT_BUNDLE_IDENTIFIER" <<< bundleId.tst,
                         "INFOPLIST_FILE" <<< infoPlistsPath.tst,
-                        "FRAMEWORK_SEARCH_PATHS" <<< "$(inherited) $(BUILT_PRODUCTS_DIR)"
-                    )
+                        "PRODUCT_BUNDLE_IDENTIFIER" <<< bundleId.tst,
 
-                    fwkTests.buildSettings[.debug].override(
-
-                        "MTL_ENABLE_DEBUG_INFO" <<< YES
+                        "IPHONEOS_DEPLOYMENT_TARGET" <<< depTarget.minimumVersion
                     )
                 }
             }

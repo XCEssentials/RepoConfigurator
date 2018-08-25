@@ -75,6 +75,7 @@ extension Xcode.Target.BuildSettings
             CODE_SIGN_IDENTITY = iPhone Developer
             CODE_SIGN_STYLE = Automatic
             COPY_PHASE_STRIP = NO
+            CURRENT_PROJECT_VERSION = \(Defaults.initialBuildNumber)
             ENABLE_STRICT_OBJC_MSGSEND = YES
             GCC_C_LANGUAGE_STANDARD = gnu11
             GCC_NO_COMMON_BLOCKS = YES
@@ -161,6 +162,7 @@ extension Xcode.Target.BuildSettings
             CODE_SIGN_IDENTITY = iPhone Developer
             CODE_SIGN_STYLE = Automatic
             COPY_PHASE_STRIP = NO
+            CURRENT_PROJECT_VERSION = \(Defaults.initialBuildNumber)
             ENABLE_STRICT_OBJC_MSGSEND = YES
             GCC_C_LANGUAGE_STANDARD = gnu11
             GCC_NO_COMMON_BLOCKS = YES
@@ -246,6 +248,7 @@ extension Xcode.Target.BuildSettings
             CODE_SIGN_IDENTITY = iPhone Developer
             CODE_SIGN_STYLE = Automatic
             COPY_PHASE_STRIP = NO
+            CURRENT_PROJECT_VERSION = \(Defaults.initialBuildNumber)
             ENABLE_STRICT_OBJC_MSGSEND = YES
             GCC_C_LANGUAGE_STANDARD = gnu11
             GCC_NO_COMMON_BLOCKS = YES
@@ -333,6 +336,7 @@ extension Xcode.Target.BuildSettings
             CODE_SIGN_STYLE = Automatic
             COMBINE_HIDPI_IMAGES = YES
             COPY_PHASE_STRIP = NO
+            CURRENT_PROJECT_VERSION = \(Defaults.initialBuildNumber)
             ENABLE_STRICT_OBJC_MSGSEND = YES
             GCC_C_LANGUAGE_STANDARD = gnu11
             GCC_NO_COMMON_BLOCKS = YES
@@ -418,6 +422,7 @@ extension Xcode.Target.BuildSettings
             CODE_SIGN_STYLE = Automatic
             COMBINE_HIDPI_IMAGES = YES
             COPY_PHASE_STRIP = NO
+            CURRENT_PROJECT_VERSION = \(Defaults.initialBuildNumber)
             ENABLE_STRICT_OBJC_MSGSEND = YES
             GCC_C_LANGUAGE_STANDARD = gnu11
             GCC_NO_COMMON_BLOCKS = YES
@@ -502,6 +507,7 @@ extension Xcode.Target.BuildSettings
             CODE_SIGN_STYLE = Automatic
             COMBINE_HIDPI_IMAGES = YES
             COPY_PHASE_STRIP = NO
+            CURRENT_PROJECT_VERSION = \(Defaults.initialBuildNumber)
             ENABLE_STRICT_OBJC_MSGSEND = YES
             GCC_C_LANGUAGE_STANDARD = gnu11
             GCC_NO_COMMON_BLOCKS = YES
@@ -585,6 +591,7 @@ extension Xcode.Target.BuildSettings
             CLANG_WARN_UNREACHABLE_CODE = YES
             CODE_SIGN_STYLE = Automatic
             COPY_PHASE_STRIP = NO
+            CURRENT_PROJECT_VERSION = \(Defaults.initialBuildNumber)
             ENABLE_STRICT_OBJC_MSGSEND = YES
             GCC_C_LANGUAGE_STANDARD = gnu11
             GCC_NO_COMMON_BLOCKS = YES
@@ -670,6 +677,7 @@ extension Xcode.Target.BuildSettings
             CLANG_WARN_UNREACHABLE_CODE = YES
             CODE_SIGN_STYLE = Automatic
             COPY_PHASE_STRIP = NO
+            CURRENT_PROJECT_VERSION = \(Defaults.initialBuildNumber)
             ENABLE_STRICT_OBJC_MSGSEND = YES
             GCC_C_LANGUAGE_STANDARD = gnu11
             GCC_NO_COMMON_BLOCKS = YES
@@ -754,6 +762,7 @@ extension Xcode.Target.BuildSettings
             CLANG_WARN_UNREACHABLE_CODE = YES
             CODE_SIGN_STYLE = Automatic
             COPY_PHASE_STRIP = NO
+            CURRENT_PROJECT_VERSION = \(Defaults.initialBuildNumber)
             ENABLE_STRICT_OBJC_MSGSEND = YES
             GCC_C_LANGUAGE_STANDARD = gnu11
             GCC_NO_COMMON_BLOCKS = YES
@@ -840,6 +849,7 @@ extension Xcode.Target.BuildSettings
             CODE_SIGN_IDENTITY = iPhone Developer
             CODE_SIGN_STYLE = Automatic
             COPY_PHASE_STRIP = NO
+            CURRENT_PROJECT_VERSION = \(Defaults.initialBuildNumber)
             ENABLE_STRICT_OBJC_MSGSEND = YES
             GCC_C_LANGUAGE_STANDARD = gnu11
             GCC_NO_COMMON_BLOCKS = YES
@@ -1017,6 +1027,7 @@ extension Xcode.Target.BuildSettings
             CODE_SIGN_IDENTITY = iPhone Developer
             CODE_SIGN_STYLE = Automatic
             COPY_PHASE_STRIP = NO
+            CURRENT_PROJECT_VERSION = \(Defaults.initialBuildNumber)
             ENABLE_STRICT_OBJC_MSGSEND = YES
             GCC_C_LANGUAGE_STANDARD = gnu11
             GCC_NO_COMMON_BLOCKS = YES
@@ -1194,6 +1205,7 @@ extension Xcode.Target.BuildSettings
             CODE_SIGN_STYLE = Automatic
             COMBINE_HIDPI_IMAGES = YES
             COPY_PHASE_STRIP = NO
+            CURRENT_PROJECT_VERSION = \(Defaults.initialBuildNumber)
             ENABLE_STRICT_OBJC_MSGSEND = YES
             GCC_C_LANGUAGE_STANDARD = gnu11
             GCC_NO_COMMON_BLOCKS = YES
@@ -1367,6 +1379,7 @@ extension Xcode.Target.BuildSettings
             CLANG_WARN_UNREACHABLE_CODE = YES
             CODE_SIGN_STYLE = Automatic
             COPY_PHASE_STRIP = NO
+            CURRENT_PROJECT_VERSION = \(Defaults.initialBuildNumber)
             ENABLE_STRICT_OBJC_MSGSEND = YES
             GCC_C_LANGUAGE_STANDARD = gnu11
             GCC_NO_COMMON_BLOCKS = YES

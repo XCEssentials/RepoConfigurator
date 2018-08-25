@@ -74,9 +74,7 @@ When define Xcode project target, don't forget to set following build settings.
 - `SWIFT_VERSION` on project level;
 - `DEVELOPMENT_TEAM` with development team ID;
 - `INFOPLIST_FILE` with relative path to corresponding info plist file;
-- `PRODUCT_BUNDLE_IDENTIFIER`;
-- `TEST_HOST` with path to host app, for unit testing targets only;
-- `TEST_TARGET_NAME` for UI testing targets only.
+- `PRODUCT_BUNDLE_IDENTIFIER`.
 
 
 
