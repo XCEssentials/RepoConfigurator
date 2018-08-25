@@ -88,7 +88,6 @@ extension Xcode.Target.BuildSettings
             IPHONEOS_DEPLOYMENT_TARGET = 12.0
             LD_RUNPATH_SEARCH_PATHS = $(inherited) @executable_path/Frameworks
             MTL_FAST_MATH = YES
-            PRODUCT_NAME = $(TARGET_NAME)
             SDKROOT = iphoneos
             SWIFT_VERSION = $(inherited)
             TARGETED_DEVICE_FAMILY = 1,2
@@ -175,7 +174,6 @@ extension Xcode.Target.BuildSettings
             IPHONEOS_DEPLOYMENT_TARGET = 12.0
             LD_RUNPATH_SEARCH_PATHS = $(inherited) @executable_path/Frameworks @loader_path/Frameworks
             MTL_FAST_MATH = YES
-            PRODUCT_NAME = $(TARGET_NAME)
             SDKROOT = iphoneos
             SWIFT_VERSION = $(inherited)
             TARGETED_DEVICE_FAMILY = 1,2
@@ -261,7 +259,6 @@ extension Xcode.Target.BuildSettings
             IPHONEOS_DEPLOYMENT_TARGET = 12.0
             LD_RUNPATH_SEARCH_PATHS = $(inherited) @executable_path/Frameworks @loader_path/Frameworks
             MTL_FAST_MATH = YES
-            PRODUCT_NAME = $(TARGET_NAME)
             SDKROOT = iphoneos
             SWIFT_VERSION = $(inherited)
             TARGETED_DEVICE_FAMILY = 1,2
@@ -349,7 +346,6 @@ extension Xcode.Target.BuildSettings
             LD_RUNPATH_SEARCH_PATHS = $(inherited) @executable_path/../Frameworks
             MACOSX_DEPLOYMENT_TARGET = 10.13
             MTL_FAST_MATH = YES
-            PRODUCT_NAME = $(TARGET_NAME)
             SDKROOT = macosx
             SWIFT_VERSION = $(inherited)
             """
@@ -435,7 +431,6 @@ extension Xcode.Target.BuildSettings
             LD_RUNPATH_SEARCH_PATHS = $(inherited) @executable_path/../Frameworks @loader_path/../Frameworks
             MACOSX_DEPLOYMENT_TARGET = 10.13
             MTL_FAST_MATH = YES
-            PRODUCT_NAME = $(TARGET_NAME)
             SDKROOT = macosx
             SWIFT_VERSION = $(inherited)
             """
@@ -520,7 +515,6 @@ extension Xcode.Target.BuildSettings
             LD_RUNPATH_SEARCH_PATHS = $(inherited) @executable_path/../Frameworks @loader_path/../Frameworks
             MACOSX_DEPLOYMENT_TARGET = 10.13
             MTL_FAST_MATH = YES
-            PRODUCT_NAME = $(TARGET_NAME)
             SDKROOT = macosx
             SWIFT_VERSION = $(inherited)
             """
@@ -603,7 +597,6 @@ extension Xcode.Target.BuildSettings
             GCC_WARN_UNUSED_VARIABLE = YES
             LD_RUNPATH_SEARCH_PATHS = $(inherited) @executable_path/Frameworks
             MTL_FAST_MATH = YES
-            PRODUCT_NAME = $(TARGET_NAME)
             SDKROOT = appletvos
             SWIFT_VERSION = $(inherited)
             TARGETED_DEVICE_FAMILY = 3
@@ -689,7 +682,6 @@ extension Xcode.Target.BuildSettings
             GCC_WARN_UNUSED_VARIABLE = YES
             LD_RUNPATH_SEARCH_PATHS = $(inherited) @executable_path/Frameworks @loader_path/Frameworks
             MTL_FAST_MATH = YES
-            PRODUCT_NAME = $(TARGET_NAME)
             SDKROOT = appletvos
             SWIFT_VERSION = $(inherited)
             TARGETED_DEVICE_FAMILY = 3
@@ -774,7 +766,6 @@ extension Xcode.Target.BuildSettings
             GCC_WARN_UNUSED_VARIABLE = YES
             LD_RUNPATH_SEARCH_PATHS = $(inherited) @executable_path/Frameworks @loader_path/Frameworks
             MTL_FAST_MATH = YES
-            PRODUCT_NAME = $(TARGET_NAME)
             SDKROOT = appletvos
             SWIFT_VERSION = $(inherited)
             TARGETED_DEVICE_FAMILY = 3
@@ -861,7 +852,6 @@ extension Xcode.Target.BuildSettings
             GCC_WARN_UNUSED_VARIABLE = YES
             IBSC_MODULE = watchOS_YYY_Extension
             MTL_FAST_MATH = YES
-            PRODUCT_NAME = $(TARGET_NAME)
             SDKROOT = watchos
             SKIP_INSTALL = YES
             SWIFT_VERSION = $(inherited)
@@ -1040,7 +1030,6 @@ extension Xcode.Target.BuildSettings
             IPHONEOS_DEPLOYMENT_TARGET = 12.0
             LD_RUNPATH_SEARCH_PATHS = $(inherited) @executable_path/Frameworks @loader_path/Frameworks
             MTL_FAST_MATH = YES
-            PRODUCT_NAME = $(TARGET_NAME)
             SDKROOT = iphoneos
             SWIFT_VERSION = $(inherited)
             TARGETED_DEVICE_FAMILY = 1,2
@@ -1218,7 +1207,6 @@ extension Xcode.Target.BuildSettings
             LD_RUNPATH_SEARCH_PATHS = $(inherited) @executable_path/../Frameworks @loader_path/../Frameworks
             MACOSX_DEPLOYMENT_TARGET = 10.13
             MTL_FAST_MATH = YES
-            PRODUCT_NAME = $(TARGET_NAME)
             SDKROOT = macosx
             SWIFT_VERSION = $(inherited)
             """
@@ -1391,7 +1379,6 @@ extension Xcode.Target.BuildSettings
             GCC_WARN_UNUSED_VARIABLE = YES
             LD_RUNPATH_SEARCH_PATHS = $(inherited) @executable_path/Frameworks @loader_path/Frameworks
             MTL_FAST_MATH = YES
-            PRODUCT_NAME = $(TARGET_NAME)
             SDKROOT = appletvos
             SWIFT_VERSION = $(inherited)
             TARGETED_DEVICE_FAMILY = 3
