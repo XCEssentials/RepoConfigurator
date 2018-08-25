@@ -54,6 +54,20 @@ extension Xcode
             }
         }
 
+        public private(set)
+        var schemesByName: [String: Xcode.Scheme] = [:]
+
+        public
+        func schemes(
+            _ items: Xcode.Scheme...
+            )
+        {
+            items.forEach{
+
+                schemesByName[$0.name] = $0
+            }
+        }
+
         public
         var variants: [Xcode.Project.Variant] = []
 
@@ -118,10 +132,27 @@ extension Xcode.Project: TextFilePiece
 
         indentation.nest{
 
-            //result <<< Array(targets.values)
             result <<< targetsByName.values.map{
 
                 $0.asIndentedText(with: indentation)
+            }
+        }
+
+        //---
+
+        // https://github.com/lyptt/struct/wiki/Spec-format%3A-v2.0#schemes
+
+        result <<< """
+            schemes:
+            """
+
+        //---
+
+        indentation.nest{
+
+            result <<< schemesByName.values.map{
+
+                $0.contentGetter(indentation)
             }
         }
 
