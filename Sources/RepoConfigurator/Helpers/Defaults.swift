@@ -106,4 +106,8 @@ enum Defaults
     public
     static
     let licenseFileName = "LICENSE"
+
+    public
+    static
+    let scriptsFolderPath = "Scripts"
 }

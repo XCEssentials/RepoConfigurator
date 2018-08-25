@@ -71,6 +71,12 @@ extension Xcode
         public
         var variants: [Xcode.Project.Variant] = []
 
+        /**
+         https://github.com/lyptt/struct/wiki/Spec-format:-v2.0#lifecycle-hooks
+         */
+        public
+        var lifecycleHooks: (pre: String?, post: String?) = (nil, nil)
+
         // MARK: Initializers
 
         public
@@ -154,6 +160,29 @@ extension Xcode.Project: TextFilePiece
 
                 $0.contentGetter(indentation)
             }
+        }
+
+        //---
+
+        // https://github.com/lyptt/struct/wiki/Spec-format:-v2.0#lifecycle-hooks
+
+        result <<< (lifecycleHooks.pre ?? lifecycleHooks.post != nil).mapIf(true){ """
+            scripts:
+            """
+        }
+
+        indentation.nestIfUnwrap(lifecycleHooks.pre){
+
+            result <<< """
+                pre-generate: \($0)
+                """
+        }
+
+        indentation.nestIfUnwrap(lifecycleHooks.post){
+
+            result <<< """
+                post-generate: \($0)
+                """
         }
 
         //---

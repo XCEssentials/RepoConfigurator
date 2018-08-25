@@ -50,6 +50,8 @@
 		946CFA18211F816B00E756CD /* Array+TextFilePiece.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946CFA17211F816B00E756CD /* Array+TextFilePiece.swift */; };
 		946CFA1E2120AC7D00E756CD /* Array+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946CFA1D2120AC7D00E756CD /* Array+String.swift */; };
 		9485ACF321317D9A00AF768B /* Xcode_Scheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9485ACF221317D9A00AF768B /* Xcode_Scheme.swift */; };
+		9486B6152131E76700C26546 /* Struct_Spec_PostGenerateScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9486B6142131E76700C26546 /* Struct_Spec_PostGenerateScript.swift */; };
+		9486B6172131F4B300C26546 /* Struct_Spec_PreGenerateScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9486B6162131F4B300C26546 /* Struct_Spec_PreGenerateScript.swift */; };
 		948EB3202120F500000D91D0 /* Bool+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948EB31F2120F500000D91D0 /* Bool+Helper.swift */; };
 		9492E3422125C0B2003558B6 /* Xcode_Target_Variant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9492E3412125C0B2003558B6 /* Xcode_Target_Variant.swift */; };
 		9492E34621262E23003558B6 /* Xcode_Target.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9492E34521262E23003558B6 /* Xcode_Target.swift */; };
@@ -128,6 +130,8 @@
 		946CFA17211F816B00E756CD /* Array+TextFilePiece.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+TextFilePiece.swift"; sourceTree = "<group>"; };
 		946CFA1D2120AC7D00E756CD /* Array+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+String.swift"; sourceTree = "<group>"; };
 		9485ACF221317D9A00AF768B /* Xcode_Scheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Xcode_Scheme.swift; sourceTree = "<group>"; };
+		9486B6142131E76700C26546 /* Struct_Spec_PostGenerateScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Struct_Spec_PostGenerateScript.swift; sourceTree = "<group>"; };
+		9486B6162131F4B300C26546 /* Struct_Spec_PreGenerateScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Struct_Spec_PreGenerateScript.swift; sourceTree = "<group>"; };
 		948EB31F2120F500000D91D0 /* Bool+Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bool+Helper.swift"; sourceTree = "<group>"; };
 		9492E3412125C0B2003558B6 /* Xcode_Target_Variant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Xcode_Target_Variant.swift; sourceTree = "<group>"; };
 		9492E34521262E23003558B6 /* Xcode_Target.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Xcode_Target.swift; sourceTree = "<group>"; };
@@ -488,6 +492,8 @@
 			children = (
 				94212AE3212AFA160023BEC0 /* Struct.swift */,
 				94212AE5212B02B60023BEC0 /* Struct_Spec.swift */,
+				9486B6142131E76700C26546 /* Struct_Spec_PostGenerateScript.swift */,
+				9486B6162131F4B300C26546 /* Struct_Spec_PreGenerateScript.swift */,
 				94DECE4F2118C10E0026F148 /* Xcode.swift */,
 				940F10162124BA2100554520 /* Xcode_BuildSettings.swift */,
 				94CB9FC72116536500641D6E /* Xcode_Dependencies.swift */,
@@ -708,6 +714,8 @@
 				94DECE4E21188B4B0026F148 /* String+TextFilePiece.swift in Sources */,
 				94212AE4212AFA160023BEC0 /* Struct.swift in Sources */,
 				94212AE6212B02B60023BEC0 /* Struct_Spec.swift in Sources */,
+				9486B6152131E76700C26546 /* Struct_Spec_PostGenerateScript.swift in Sources */,
+				9486B6172131F4B300C26546 /* Struct_Spec_PreGenerateScript.swift in Sources */,
 				9424572F211AF7E900A05876 /* SwiftLint.swift in Sources */,
 				941CFFF4211591E900326181 /* TextFile.swift in Sources */,
 				9417FE0F2128D56600DE18DA /* TextFileSection.swift in Sources */,
