@@ -52,7 +52,7 @@ extension Xcode
     final
     class Dependencies
     {
-        // MARK: - Instance level members
+        // MARK: Instance level members
 
         public private(set)
         var fromSDKs: [String] = []
@@ -98,7 +98,7 @@ extension Xcode
             projects.append(contentsOf: element)
         }
 
-        // MARK: - Initializers
+        // MARK: Initializers
 
         public
         init() {}

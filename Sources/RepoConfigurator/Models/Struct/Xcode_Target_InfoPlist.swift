@@ -31,7 +31,7 @@ extension Xcode.Target
     final
     class InfoPlist: ArbitraryNamedTextFile
     {
-        // MARK: - Type level members
+        // MARK: Type level members
 
         public
         enum PackageType: String
@@ -41,12 +41,12 @@ extension Xcode.Target
             case tests = "BNDL"
         }
 
-        // MARK: - Instance level members
+        // MARK: Instance level members
 
         public
         let fileContent: IndentedText
 
-        // MARK: - Initializers
+        // MARK: Initializers
 
         public
         init(

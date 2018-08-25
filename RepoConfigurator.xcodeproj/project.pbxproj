@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9403C25F21303A270019995A /* ReadMe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9403C25E21303A270019995A /* ReadMe.swift */; };
+		9403C261213043CA0019995A /* Shields.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9403C260213043CA0019995A /* Shields.swift */; };
+		9403C2642130729E0019995A /* Markdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9403C2632130729E0019995A /* Markdown.swift */; };
+		9403C266213092660019995A /* ExternalFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9403C265213092660019995A /* ExternalFile.swift */; };
 		940F10112124A26F00554520 /* Dictionary+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940F10102124A26F00554520 /* Dictionary+Helpers.swift */; };
 		940F10172124BA2100554520 /* Xcode_BuildSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940F10162124BA2100554520 /* Xcode_BuildSettings.swift */; };
 		940F10192124BAA200554520 /* Xcode_Project_BuildSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940F10182124BAA200554520 /* Xcode_Project_BuildSettings.swift */; };
@@ -45,17 +49,24 @@
 		946CFA0C211DE70300E756CD /* GitHub_Pages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946CFA0B211DE70300E756CD /* GitHub_Pages.swift */; };
 		946CFA18211F816B00E756CD /* Array+TextFilePiece.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946CFA17211F816B00E756CD /* Array+TextFilePiece.swift */; };
 		946CFA1E2120AC7D00E756CD /* Array+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946CFA1D2120AC7D00E756CD /* Array+String.swift */; };
+		9485ACF321317D9A00AF768B /* Xcode_Scheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9485ACF221317D9A00AF768B /* Xcode_Scheme.swift */; };
+		9486B6152131E76700C26546 /* Struct_Spec_PostGenerateScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9486B6142131E76700C26546 /* Struct_Spec_PostGenerateScript.swift */; };
+		9486B6172131F4B300C26546 /* Struct_Spec_PreGenerateScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9486B6162131F4B300C26546 /* Struct_Spec_PreGenerateScript.swift */; };
 		948EB3202120F500000D91D0 /* Bool+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948EB31F2120F500000D91D0 /* Bool+Helper.swift */; };
-		9492E3422125C0B2003558B6 /* Xcode_Target_ProjectVariant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9492E3412125C0B2003558B6 /* Xcode_Target_ProjectVariant.swift */; };
+		9492E3422125C0B2003558B6 /* Xcode_Target_Variant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9492E3412125C0B2003558B6 /* Xcode_Target_Variant.swift */; };
 		9492E34621262E23003558B6 /* Xcode_Target.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9492E34521262E23003558B6 /* Xcode_Target.swift */; };
 		94C4F9CB211665ED00CFB1DC /* Fastlane.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C4F9CA211665ED00CFB1DC /* Fastlane.swift */; };
 		94C4F9CD2116660900CFB1DC /* Fastlane_Fastfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C4F9CC2116660900CFB1DC /* Fastlane_Fastfile.swift */; };
 		94C9D87A212CC333000CCADB /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 94C9D879212CC333000CCADB /* .swiftlint.yml */; };
+		94C9D8B6212E1551000CCADB /* OSKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C9D8B5212E1551000CCADB /* OSKind.swift */; };
+		94C9D8B8212E248D000CCADB /* Xcode_Target_Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C9D8B7212E248D000CCADB /* Xcode_Target_Types.swift */; };
+		94C9D8C1212F38E1000CCADB /* WidelyUsedLicense.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C9D8C0212F38E1000CCADB /* WidelyUsedLicense.swift */; };
+		94C9D8C3212F432D000CCADB /* LicenseTextFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C9D8C2212F432D000CCADB /* LicenseTextFile.swift */; };
 		94CB9FC12116535300641D6E /* Xcode_Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CB9FBB2116535200641D6E /* Xcode_Project.swift */; };
 		94CB9FC22116535300641D6E /* Xcode_Project_Variant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CB9FBC2116535300641D6E /* Xcode_Project_Variant.swift */; };
 		94CB9FCB2116536600641D6E /* Xcode_Scripts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CB9FC62116536500641D6E /* Xcode_Scripts.swift */; };
 		94CB9FCC2116536600641D6E /* Xcode_Dependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CB9FC72116536500641D6E /* Xcode_Dependencies.swift */; };
-		94CB9FCE2116536600641D6E /* Xcode_Target_Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CB9FC92116536600641D6E /* Xcode_Target_Project.swift */; };
+		94CB9FCE2116536600641D6E /* Xcode_Target_Core.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CB9FC92116536600641D6E /* Xcode_Target_Core.swift */; };
 		94DECE4E21188B4B0026F148 /* String+TextFilePiece.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DECE4D21188B4B0026F148 /* String+TextFilePiece.swift */; };
 		94DECE502118C10E0026F148 /* Xcode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DECE4F2118C10E0026F148 /* Xcode.swift */; };
 		94DECE522118C99F0026F148 /* IndentedText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DECE512118C99F0026F148 /* IndentedText.swift */; };
@@ -75,6 +86,10 @@
 
 /* Begin PBXFileReference section */
 		4E1F4DEB6F7DBC42C29FF945 /* Pods_RepoConfigurator.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RepoConfigurator.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9403C25E21303A270019995A /* ReadMe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadMe.swift; sourceTree = "<group>"; };
+		9403C260213043CA0019995A /* Shields.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shields.swift; sourceTree = "<group>"; };
+		9403C2632130729E0019995A /* Markdown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Markdown.swift; sourceTree = "<group>"; };
+		9403C265213092660019995A /* ExternalFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalFile.swift; sourceTree = "<group>"; };
 		940F10102124A26F00554520 /* Dictionary+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+Helpers.swift"; sourceTree = "<group>"; };
 		940F10162124BA2100554520 /* Xcode_BuildSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Xcode_BuildSettings.swift; sourceTree = "<group>"; };
 		940F10182124BAA200554520 /* Xcode_Project_BuildSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Xcode_Project_BuildSettings.swift; sourceTree = "<group>"; };
@@ -114,17 +129,75 @@
 		946CFA0B211DE70300E756CD /* GitHub_Pages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHub_Pages.swift; sourceTree = "<group>"; };
 		946CFA17211F816B00E756CD /* Array+TextFilePiece.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+TextFilePiece.swift"; sourceTree = "<group>"; };
 		946CFA1D2120AC7D00E756CD /* Array+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+String.swift"; sourceTree = "<group>"; };
+		9485ACF221317D9A00AF768B /* Xcode_Scheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Xcode_Scheme.swift; sourceTree = "<group>"; };
+		9486B6142131E76700C26546 /* Struct_Spec_PostGenerateScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Struct_Spec_PostGenerateScript.swift; sourceTree = "<group>"; };
+		9486B6162131F4B300C26546 /* Struct_Spec_PreGenerateScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Struct_Spec_PreGenerateScript.swift; sourceTree = "<group>"; };
 		948EB31F2120F500000D91D0 /* Bool+Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bool+Helper.swift"; sourceTree = "<group>"; };
-		9492E3412125C0B2003558B6 /* Xcode_Target_ProjectVariant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Xcode_Target_ProjectVariant.swift; sourceTree = "<group>"; };
+		9492E3412125C0B2003558B6 /* Xcode_Target_Variant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Xcode_Target_Variant.swift; sourceTree = "<group>"; };
 		9492E34521262E23003558B6 /* Xcode_Target.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Xcode_Target.swift; sourceTree = "<group>"; };
 		94C4F9CA211665ED00CFB1DC /* Fastlane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fastlane.swift; sourceTree = "<group>"; };
 		94C4F9CC2116660900CFB1DC /* Fastlane_Fastfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fastlane_Fastfile.swift; sourceTree = "<group>"; };
 		94C9D879212CC333000CCADB /* .swiftlint.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .swiftlint.yml; sourceTree = "<group>"; };
+		94C9D87F212D7407000CCADB /* FWK-macOS-completeSettings-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "FWK-macOS-completeSettings-Customized.rb"; sourceTree = "<group>"; };
+		94C9D880212D7407000CCADB /* FWK-tvOS-Debug-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "FWK-tvOS-Debug-Customized.rb"; sourceTree = "<group>"; };
+		94C9D881212D7407000CCADB /* FWK-iOS-Release-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "FWK-iOS-Release-Customized.rb"; sourceTree = "<group>"; };
+		94C9D882212D7407000CCADB /* FWK-tvOS-TST-Debug-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "FWK-tvOS-TST-Debug-Customized.rb"; sourceTree = "<group>"; };
+		94C9D883212D7407000CCADB /* FWK-tvOS-Release-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "FWK-tvOS-Release-Customized.rb"; sourceTree = "<group>"; };
+		94C9D884212D7407000CCADB /* FWK-watchOS-completeSettings-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "FWK-watchOS-completeSettings-Customized.rb"; sourceTree = "<group>"; };
+		94C9D885212D7407000CCADB /* FWK-macOS-TST-Debug-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "FWK-macOS-TST-Debug-Customized.rb"; sourceTree = "<group>"; };
+		94C9D886212D7407000CCADB /* FWK-iOS-completeSettings-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "FWK-iOS-completeSettings-Customized.rb"; sourceTree = "<group>"; };
+		94C9D887212D7407000CCADB /* FWK-tvOS-completeSettings-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "FWK-tvOS-completeSettings-Customized.rb"; sourceTree = "<group>"; };
+		94C9D888212D7407000CCADB /* FWK-watchOS-Debug-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "FWK-watchOS-Debug-Customized.rb"; sourceTree = "<group>"; };
+		94C9D889212D7407000CCADB /* FWK-macOS-TST-completeSettings-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "FWK-macOS-TST-completeSettings-Customized.rb"; sourceTree = "<group>"; };
+		94C9D88A212D7407000CCADB /* FWK-iOS-TST-completeSettings-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "FWK-iOS-TST-completeSettings-Customized.rb"; sourceTree = "<group>"; };
+		94C9D88B212D7407000CCADB /* FWK-macOS-Debug-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "FWK-macOS-Debug-Customized.rb"; sourceTree = "<group>"; };
+		94C9D88C212D7407000CCADB /* FWK-tvOS-TST-completeSettings-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "FWK-tvOS-TST-completeSettings-Customized.rb"; sourceTree = "<group>"; };
+		94C9D88D212D7407000CCADB /* FWK-iOS-Debug-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "FWK-iOS-Debug-Customized.rb"; sourceTree = "<group>"; };
+		94C9D88E212D7407000CCADB /* FWK-iOS-TST-Release-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "FWK-iOS-TST-Release-Customized.rb"; sourceTree = "<group>"; };
+		94C9D88F212D7407000CCADB /* FWK-watchOS-Release-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "FWK-watchOS-Release-Customized.rb"; sourceTree = "<group>"; };
+		94C9D890212D7407000CCADB /* FWK-iOS-TST-Debug-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "FWK-iOS-TST-Debug-Customized.rb"; sourceTree = "<group>"; };
+		94C9D891212D7407000CCADB /* FWK-macOS-TST-Release-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "FWK-macOS-TST-Release-Customized.rb"; sourceTree = "<group>"; };
+		94C9D892212D7407000CCADB /* FWK-tvOS-TST-Release-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "FWK-tvOS-TST-Release-Customized.rb"; sourceTree = "<group>"; };
+		94C9D893212D7407000CCADB /* FWK-macOS-Release-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "FWK-macOS-Release-Customized.rb"; sourceTree = "<group>"; };
+		94C9D895212D7407000CCADB /* APP-macOS-TST-Release-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "APP-macOS-TST-Release-Customized.rb"; sourceTree = "<group>"; };
+		94C9D896212D7407000CCADB /* APP-watchOS-completeSettings-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "APP-watchOS-completeSettings-Customized.rb"; sourceTree = "<group>"; };
+		94C9D897212D7407000CCADB /* APP-macOS-Debug-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "APP-macOS-Debug-Customized.rb"; sourceTree = "<group>"; };
+		94C9D898212D7407000CCADB /* APP-iOS-TST-Release-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "APP-iOS-TST-Release-Customized.rb"; sourceTree = "<group>"; };
+		94C9D899212D7407000CCADB /* APP-watchOS-Release-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "APP-watchOS-Release-Customized.rb"; sourceTree = "<group>"; };
+		94C9D89A212D7407000CCADB /* APP-tvOS-TST-Release-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "APP-tvOS-TST-Release-Customized.rb"; sourceTree = "<group>"; };
+		94C9D89B212D7407000CCADB /* APP-tvOS-Release-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "APP-tvOS-Release-Customized.rb"; sourceTree = "<group>"; };
+		94C9D89C212D7407000CCADB /* APP-iOS-completeSettings-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "APP-iOS-completeSettings-Customized.rb"; sourceTree = "<group>"; };
+		94C9D89D212D7407000CCADB /* APP-macOS-UITST-Release-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "APP-macOS-UITST-Release-Customized.rb"; sourceTree = "<group>"; };
+		94C9D89E212D7407000CCADB /* APP-tvOS-UITST-completeSettings-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "APP-tvOS-UITST-completeSettings-Customized.rb"; sourceTree = "<group>"; };
+		94C9D89F212D7407000CCADB /* APP-macOS-TST-Debug-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "APP-macOS-TST-Debug-Customized.rb"; sourceTree = "<group>"; };
+		94C9D8A0212D7407000CCADB /* APP-macOS-UITST-completeSettings-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "APP-macOS-UITST-completeSettings-Customized.rb"; sourceTree = "<group>"; };
+		94C9D8A1212D7407000CCADB /* APP-macOS-Release-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "APP-macOS-Release-Customized.rb"; sourceTree = "<group>"; };
+		94C9D8A2212D7407000CCADB /* APP-macOS-UITST-Debug-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "APP-macOS-UITST-Debug-Customized.rb"; sourceTree = "<group>"; };
+		94C9D8A3212D7407000CCADB /* APP-tvOS-Debug-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "APP-tvOS-Debug-Customized.rb"; sourceTree = "<group>"; };
+		94C9D8A4212D7407000CCADB /* APP-iOS-Release-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "APP-iOS-Release-Customized.rb"; sourceTree = "<group>"; };
+		94C9D8A5212D7407000CCADB /* APP-iOS-UITST-Release-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "APP-iOS-UITST-Release-Customized.rb"; sourceTree = "<group>"; };
+		94C9D8A6212D7407000CCADB /* APP-iOS-TST-Debug-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "APP-iOS-TST-Debug-Customized.rb"; sourceTree = "<group>"; };
+		94C9D8A7212D7407000CCADB /* APP-macOS-TST-completeSettings-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "APP-macOS-TST-completeSettings-Customized.rb"; sourceTree = "<group>"; };
+		94C9D8A8212D7407000CCADB /* APP-tvOS-TST-completeSettings-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "APP-tvOS-TST-completeSettings-Customized.rb"; sourceTree = "<group>"; };
+		94C9D8A9212D7407000CCADB /* APP-macOS-completeSettings-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "APP-macOS-completeSettings-Customized.rb"; sourceTree = "<group>"; };
+		94C9D8AA212D7407000CCADB /* APP-tvOS-TST-Debug-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "APP-tvOS-TST-Debug-Customized.rb"; sourceTree = "<group>"; };
+		94C9D8AB212D7407000CCADB /* APP-iOS-UITST-Debug-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "APP-iOS-UITST-Debug-Customized.rb"; sourceTree = "<group>"; };
+		94C9D8AC212D7407000CCADB /* APP-iOS-UITST-completeSettings-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "APP-iOS-UITST-completeSettings-Customized.rb"; sourceTree = "<group>"; };
+		94C9D8AD212D7407000CCADB /* APP-tvOS-UITST-Release-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "APP-tvOS-UITST-Release-Customized.rb"; sourceTree = "<group>"; };
+		94C9D8AE212D7407000CCADB /* APP-iOS-Debug-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "APP-iOS-Debug-Customized.rb"; sourceTree = "<group>"; };
+		94C9D8AF212D7407000CCADB /* APP-watchOS-Debug-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "APP-watchOS-Debug-Customized.rb"; sourceTree = "<group>"; };
+		94C9D8B0212D7407000CCADB /* APP-tvOS-UITST-Debug-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "APP-tvOS-UITST-Debug-Customized.rb"; sourceTree = "<group>"; };
+		94C9D8B1212D7407000CCADB /* APP-tvOS-completeSettings-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "APP-tvOS-completeSettings-Customized.rb"; sourceTree = "<group>"; };
+		94C9D8B2212D7407000CCADB /* APP-iOS-TST-completeSettings-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "APP-iOS-TST-completeSettings-Customized.rb"; sourceTree = "<group>"; };
+		94C9D8B5212E1551000CCADB /* OSKind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSKind.swift; sourceTree = "<group>"; };
+		94C9D8B7212E248D000CCADB /* Xcode_Target_Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Xcode_Target_Types.swift; sourceTree = "<group>"; };
+		94C9D8C0212F38E1000CCADB /* WidelyUsedLicense.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidelyUsedLicense.swift; sourceTree = "<group>"; };
+		94C9D8C2212F432D000CCADB /* LicenseTextFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicenseTextFile.swift; sourceTree = "<group>"; };
 		94CB9FBB2116535200641D6E /* Xcode_Project.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Xcode_Project.swift; sourceTree = "<group>"; };
 		94CB9FBC2116535300641D6E /* Xcode_Project_Variant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Xcode_Project_Variant.swift; sourceTree = "<group>"; };
 		94CB9FC62116536500641D6E /* Xcode_Scripts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Xcode_Scripts.swift; sourceTree = "<group>"; };
 		94CB9FC72116536500641D6E /* Xcode_Dependencies.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Xcode_Dependencies.swift; sourceTree = "<group>"; };
-		94CB9FC92116536600641D6E /* Xcode_Target_Project.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Xcode_Target_Project.swift; sourceTree = "<group>"; };
+		94CB9FC92116536600641D6E /* Xcode_Target_Core.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Xcode_Target_Core.swift; sourceTree = "<group>"; };
 		94DECE4D21188B4B0026F148 /* String+TextFilePiece.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+TextFilePiece.swift"; sourceTree = "<group>"; };
 		94DECE4F2118C10E0026F148 /* Xcode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Xcode.swift; sourceTree = "<group>"; };
 		94DECE512118C99F0026F148 /* IndentedText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndentedText.swift; sourceTree = "<group>"; };
@@ -151,16 +224,27 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9403C25D21303A160019995A /* ReadMe */ = {
+			isa = PBXGroup;
+			children = (
+				9403C25E21303A270019995A /* ReadMe.swift */,
+				9403C260213043CA0019995A /* Shields.swift */,
+			);
+			path = ReadMe;
+			sourceTree = "<group>";
+		};
 		941C0000211617C100326181 /* Core */ = {
 			isa = PBXGroup;
 			children = (
 				9424AB0E211754C100262B79 /* DeploymentTarget.swift */,
+				9403C265213092660019995A /* ExternalFile.swift */,
 				9424AB082117542200262B79 /* Indentation.swift */,
 				94DECE512118C99F0026F148 /* IndentedText.swift */,
 				9417FE0821288B9000DE18DA /* IndentedTextBuffer.swift */,
 				9424AB0A2117549500262B79 /* KeyValuePair.swift */,
 				94511D882122020800AB4CD0 /* Operators.swift */,
 				9424AB10211754FE00262B79 /* OSIdentifier.swift */,
+				94C9D8B5212E1551000CCADB /* OSKind.swift */,
 				94245739211B8FE400A05876 /* RawTextFile.swift */,
 				941CFFDC2115220600326181 /* RepoConfigurator.h */,
 				941CFFF3211591E900326181 /* TextFile.swift */,
@@ -174,6 +258,7 @@
 			children = (
 				A270F6B0C53210622D202770 /* Frameworks */,
 				941CFFBF211520D700326181 /* Products */,
+				94C9D87B212D7407000CCADB /* References */,
 				94C9D877212CC238000CCADB /* Resources */,
 				941CFFD82115220600326181 /* Sources */,
 			);
@@ -225,8 +310,9 @@
 				941CFFF92115A77600326181 /* Git */,
 				946CFA08211DE6CD00E756CD /* GitHub */,
 				941CFFE62115896200326181 /* License */,
-				9424572D211AF7DA00A05876 /* SwiftLint */,
+				9403C25D21303A160019995A /* ReadMe */,
 				94CB9FD22116571600641D6E /* Struct */,
+				9424572D211AF7DA00A05876 /* SwiftLint */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -236,6 +322,8 @@
 			children = (
 				941CFFE92115898E00326181 /* License.swift */,
 				941CFFE72115897100326181 /* License_MIT.swift */,
+				94C9D8C2212F432D000CCADB /* LicenseTextFile.swift */,
+				94C9D8C0212F38E1000CCADB /* WidelyUsedLicense.swift */,
 			);
 			path = License;
 			sourceTree = "<group>";
@@ -309,23 +397,117 @@
 			path = RepoConfiguratorTests;
 			sourceTree = "<group>";
 		};
+		94C9D87B212D7407000CCADB /* References */ = {
+			isa = PBXGroup;
+			children = (
+				94C9D87C212D7407000CCADB /* XcodeBuildSettignsDefaults */,
+			);
+			path = References;
+			sourceTree = "<group>";
+		};
+		94C9D87C212D7407000CCADB /* XcodeBuildSettignsDefaults */ = {
+			isa = PBXGroup;
+			children = (
+				94C9D87D212D7407000CCADB /* Xcode10-beta5 */,
+			);
+			path = XcodeBuildSettignsDefaults;
+			sourceTree = "<group>";
+		};
+		94C9D87D212D7407000CCADB /* Xcode10-beta5 */ = {
+			isa = PBXGroup;
+			children = (
+				94C9D894212D7407000CCADB /* APP */,
+				94C9D87E212D7407000CCADB /* FWK */,
+			);
+			path = "Xcode10-beta5";
+			sourceTree = "<group>";
+		};
+		94C9D87E212D7407000CCADB /* FWK */ = {
+			isa = PBXGroup;
+			children = (
+				94C9D886212D7407000CCADB /* FWK-iOS-completeSettings-Customized.rb */,
+				94C9D88D212D7407000CCADB /* FWK-iOS-Debug-Customized.rb */,
+				94C9D881212D7407000CCADB /* FWK-iOS-Release-Customized.rb */,
+				94C9D88A212D7407000CCADB /* FWK-iOS-TST-completeSettings-Customized.rb */,
+				94C9D890212D7407000CCADB /* FWK-iOS-TST-Debug-Customized.rb */,
+				94C9D88E212D7407000CCADB /* FWK-iOS-TST-Release-Customized.rb */,
+				94C9D87F212D7407000CCADB /* FWK-macOS-completeSettings-Customized.rb */,
+				94C9D88B212D7407000CCADB /* FWK-macOS-Debug-Customized.rb */,
+				94C9D893212D7407000CCADB /* FWK-macOS-Release-Customized.rb */,
+				94C9D889212D7407000CCADB /* FWK-macOS-TST-completeSettings-Customized.rb */,
+				94C9D885212D7407000CCADB /* FWK-macOS-TST-Debug-Customized.rb */,
+				94C9D891212D7407000CCADB /* FWK-macOS-TST-Release-Customized.rb */,
+				94C9D887212D7407000CCADB /* FWK-tvOS-completeSettings-Customized.rb */,
+				94C9D880212D7407000CCADB /* FWK-tvOS-Debug-Customized.rb */,
+				94C9D883212D7407000CCADB /* FWK-tvOS-Release-Customized.rb */,
+				94C9D88C212D7407000CCADB /* FWK-tvOS-TST-completeSettings-Customized.rb */,
+				94C9D882212D7407000CCADB /* FWK-tvOS-TST-Debug-Customized.rb */,
+				94C9D892212D7407000CCADB /* FWK-tvOS-TST-Release-Customized.rb */,
+				94C9D884212D7407000CCADB /* FWK-watchOS-completeSettings-Customized.rb */,
+				94C9D888212D7407000CCADB /* FWK-watchOS-Debug-Customized.rb */,
+				94C9D88F212D7407000CCADB /* FWK-watchOS-Release-Customized.rb */,
+			);
+			path = FWK;
+			sourceTree = "<group>";
+		};
+		94C9D894212D7407000CCADB /* APP */ = {
+			isa = PBXGroup;
+			children = (
+				94C9D89C212D7407000CCADB /* APP-iOS-completeSettings-Customized.rb */,
+				94C9D8AE212D7407000CCADB /* APP-iOS-Debug-Customized.rb */,
+				94C9D8A4212D7407000CCADB /* APP-iOS-Release-Customized.rb */,
+				94C9D8B2212D7407000CCADB /* APP-iOS-TST-completeSettings-Customized.rb */,
+				94C9D8A6212D7407000CCADB /* APP-iOS-TST-Debug-Customized.rb */,
+				94C9D898212D7407000CCADB /* APP-iOS-TST-Release-Customized.rb */,
+				94C9D8AC212D7407000CCADB /* APP-iOS-UITST-completeSettings-Customized.rb */,
+				94C9D8AB212D7407000CCADB /* APP-iOS-UITST-Debug-Customized.rb */,
+				94C9D8A5212D7407000CCADB /* APP-iOS-UITST-Release-Customized.rb */,
+				94C9D8A9212D7407000CCADB /* APP-macOS-completeSettings-Customized.rb */,
+				94C9D897212D7407000CCADB /* APP-macOS-Debug-Customized.rb */,
+				94C9D8A1212D7407000CCADB /* APP-macOS-Release-Customized.rb */,
+				94C9D8A7212D7407000CCADB /* APP-macOS-TST-completeSettings-Customized.rb */,
+				94C9D89F212D7407000CCADB /* APP-macOS-TST-Debug-Customized.rb */,
+				94C9D895212D7407000CCADB /* APP-macOS-TST-Release-Customized.rb */,
+				94C9D8A0212D7407000CCADB /* APP-macOS-UITST-completeSettings-Customized.rb */,
+				94C9D8A2212D7407000CCADB /* APP-macOS-UITST-Debug-Customized.rb */,
+				94C9D89D212D7407000CCADB /* APP-macOS-UITST-Release-Customized.rb */,
+				94C9D8B1212D7407000CCADB /* APP-tvOS-completeSettings-Customized.rb */,
+				94C9D8A3212D7407000CCADB /* APP-tvOS-Debug-Customized.rb */,
+				94C9D89B212D7407000CCADB /* APP-tvOS-Release-Customized.rb */,
+				94C9D8A8212D7407000CCADB /* APP-tvOS-TST-completeSettings-Customized.rb */,
+				94C9D8AA212D7407000CCADB /* APP-tvOS-TST-Debug-Customized.rb */,
+				94C9D89A212D7407000CCADB /* APP-tvOS-TST-Release-Customized.rb */,
+				94C9D89E212D7407000CCADB /* APP-tvOS-UITST-completeSettings-Customized.rb */,
+				94C9D8B0212D7407000CCADB /* APP-tvOS-UITST-Debug-Customized.rb */,
+				94C9D8AD212D7407000CCADB /* APP-tvOS-UITST-Release-Customized.rb */,
+				94C9D896212D7407000CCADB /* APP-watchOS-completeSettings-Customized.rb */,
+				94C9D8AF212D7407000CCADB /* APP-watchOS-Debug-Customized.rb */,
+				94C9D899212D7407000CCADB /* APP-watchOS-Release-Customized.rb */,
+			);
+			path = APP;
+			sourceTree = "<group>";
+		};
 		94CB9FD22116571600641D6E /* Struct */ = {
 			isa = PBXGroup;
 			children = (
 				94212AE3212AFA160023BEC0 /* Struct.swift */,
 				94212AE5212B02B60023BEC0 /* Struct_Spec.swift */,
+				9486B6142131E76700C26546 /* Struct_Spec_PostGenerateScript.swift */,
+				9486B6162131F4B300C26546 /* Struct_Spec_PreGenerateScript.swift */,
 				94DECE4F2118C10E0026F148 /* Xcode.swift */,
 				940F10162124BA2100554520 /* Xcode_BuildSettings.swift */,
 				94CB9FC72116536500641D6E /* Xcode_Dependencies.swift */,
 				94CB9FBB2116535200641D6E /* Xcode_Project.swift */,
 				940F10182124BAA200554520 /* Xcode_Project_BuildSettings.swift */,
 				94CB9FBC2116535300641D6E /* Xcode_Project_Variant.swift */,
+				9485ACF221317D9A00AF768B /* Xcode_Scheme.swift */,
 				94CB9FC62116536500641D6E /* Xcode_Scripts.swift */,
 				9492E34521262E23003558B6 /* Xcode_Target.swift */,
 				94212AE12129F1C70023BEC0 /* Xcode_Target_BuildSettings.swift */,
+				94CB9FC92116536600641D6E /* Xcode_Target_Core.swift */,
 				941CFFFE211609BC00326181 /* Xcode_Target_InfoPlist.swift */,
-				94CB9FC92116536600641D6E /* Xcode_Target_Project.swift */,
-				9492E3412125C0B2003558B6 /* Xcode_Target_ProjectVariant.swift */,
+				94C9D8B7212E248D000CCADB /* Xcode_Target_Types.swift */,
+				9492E3412125C0B2003558B6 /* Xcode_Target_Variant.swift */,
 			);
 			path = Struct;
 			sourceTree = "<group>";
@@ -339,6 +521,7 @@
 				9424573B211B9EE500A05876 /* Defaults.swift */,
 				9424AB0C211754B200262B79 /* DeviceFamily.swift */,
 				940F10102124A26F00554520 /* Dictionary+Helpers.swift */,
+				9403C2632130729E0019995A /* Markdown.swift */,
 				9424AB122117552100262B79 /* PathPrefix.swift */,
 				94F1D8DD2125A3DE0051AD3D /* String+Helpers.swift */,
 				94DECE4D21188B4B0026F148 /* String+TextFilePiece.swift */,
@@ -505,6 +688,7 @@
 				9424AB0F211754C100262B79 /* DeploymentTarget.swift in Sources */,
 				9424AB0D211754B200262B79 /* DeviceFamily.swift in Sources */,
 				940F10112124A26F00554520 /* Dictionary+Helpers.swift in Sources */,
+				9403C266213092660019995A /* ExternalFile.swift in Sources */,
 				94C4F9CB211665ED00CFB1DC /* Fastlane.swift in Sources */,
 				94C4F9CD2116660900CFB1DC /* Fastlane_Fastfile.swift in Sources */,
 				941CFFFB2115A78C00326181 /* Git.swift in Sources */,
@@ -517,30 +701,40 @@
 				9424AB0B2117549500262B79 /* KeyValuePair.swift in Sources */,
 				941CFFEA2115898E00326181 /* License.swift in Sources */,
 				941CFFE82115897100326181 /* License_MIT.swift in Sources */,
+				94C9D8C3212F432D000CCADB /* LicenseTextFile.swift in Sources */,
+				9403C2642130729E0019995A /* Markdown.swift in Sources */,
 				94511D892122020800AB4CD0 /* Operators.swift in Sources */,
 				9424AB11211754FE00262B79 /* OSIdentifier.swift in Sources */,
+				94C9D8B6212E1551000CCADB /* OSKind.swift in Sources */,
 				9424AB132117552100262B79 /* PathPrefix.swift in Sources */,
 				9424573A211B8FE400A05876 /* RawTextFile.swift in Sources */,
-				94212AE6212B02B60023BEC0 /* Struct_Spec.swift in Sources */,
+				9403C25F21303A270019995A /* ReadMe.swift in Sources */,
+				9403C261213043CA0019995A /* Shields.swift in Sources */,
 				94F1D8DE2125A3DE0051AD3D /* String+Helpers.swift in Sources */,
 				94DECE4E21188B4B0026F148 /* String+TextFilePiece.swift in Sources */,
+				94212AE4212AFA160023BEC0 /* Struct.swift in Sources */,
+				94212AE6212B02B60023BEC0 /* Struct_Spec.swift in Sources */,
+				9486B6152131E76700C26546 /* Struct_Spec_PostGenerateScript.swift in Sources */,
+				9486B6172131F4B300C26546 /* Struct_Spec_PreGenerateScript.swift in Sources */,
 				9424572F211AF7E900A05876 /* SwiftLint.swift in Sources */,
 				941CFFF4211591E900326181 /* TextFile.swift in Sources */,
 				9417FE0F2128D56600DE18DA /* TextFileSection.swift in Sources */,
 				941CFFE02115222B00326181 /* Versions.swift in Sources */,
+				94C9D8C1212F38E1000CCADB /* WidelyUsedLicense.swift in Sources */,
 				94DECE502118C10E0026F148 /* Xcode.swift in Sources */,
 				940F10172124BA2100554520 /* Xcode_BuildSettings.swift in Sources */,
-				94212AE4212AFA160023BEC0 /* Struct.swift in Sources */,
 				94CB9FCC2116536600641D6E /* Xcode_Dependencies.swift in Sources */,
 				94CB9FC12116535300641D6E /* Xcode_Project.swift in Sources */,
 				940F10192124BAA200554520 /* Xcode_Project_BuildSettings.swift in Sources */,
 				94CB9FC22116535300641D6E /* Xcode_Project_Variant.swift in Sources */,
+				9485ACF321317D9A00AF768B /* Xcode_Scheme.swift in Sources */,
 				94CB9FCB2116536600641D6E /* Xcode_Scripts.swift in Sources */,
 				9492E34621262E23003558B6 /* Xcode_Target.swift in Sources */,
 				94212AE22129F1C70023BEC0 /* Xcode_Target_BuildSettings.swift in Sources */,
+				94CB9FCE2116536600641D6E /* Xcode_Target_Core.swift in Sources */,
 				941CFFFF211609BC00326181 /* Xcode_Target_InfoPlist.swift in Sources */,
-				94CB9FCE2116536600641D6E /* Xcode_Target_Project.swift in Sources */,
-				9492E3422125C0B2003558B6 /* Xcode_Target_ProjectVariant.swift in Sources */,
+				94C9D8B8212E248D000CCADB /* Xcode_Target_Types.swift in Sources */,
+				9492E3422125C0B2003558B6 /* Xcode_Target_Variant.swift in Sources */,
 				9459C779211C5F800041C38B /* YesNoStringLiteralsForXcode.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -598,7 +792,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 12;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -662,7 +856,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 12;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -694,7 +888,7 @@
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = UJA88X59XP;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 11;
+				DYLIB_CURRENT_VERSION = 12;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_VERSION = A;
 				INFOPLIST_FILE = Info/RepoConfigurator.plist;
@@ -719,7 +913,7 @@
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = UJA88X59XP;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 11;
+				DYLIB_CURRENT_VERSION = 12;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_VERSION = A;
 				INFOPLIST_FILE = Info/RepoConfigurator.plist;

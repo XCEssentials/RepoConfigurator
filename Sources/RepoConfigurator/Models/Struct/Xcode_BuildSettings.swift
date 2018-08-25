@@ -30,7 +30,7 @@ extension Xcode
     public
     class BuildSettings
     {
-        // MARK: - Instance level members
+        // MARK: Instance level members
 
         public
         var base: Xcode.RawBuildSettings = [:]
@@ -58,7 +58,7 @@ extension Xcode
             }
         }
 
-        // MARK: - Initializers
+        // MARK: Initializers
 
         public
         init() {}

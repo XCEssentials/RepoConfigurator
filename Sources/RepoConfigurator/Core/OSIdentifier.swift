@@ -32,3 +32,53 @@ enum OSIdentifier: String
     case tvOS
     case macOS
 }
+
+// MARK: - Content rendering
+
+public
+extension OSIdentifier
+{
+    var cocoaPodsId: String
+    {
+        switch self
+        {
+        case .iOS:
+            return "ios"
+
+        case .watchOS:
+            return "watchos"
+
+        case .tvOS:
+            return "tvos"
+
+        case .macOS:
+            return "osx"
+        }
+    }
+}
+
+public
+extension OSIdentifier
+{
+    /**
+     Platform ID for Struct config file.
+     See [documentation](https://github.com/lyptt/struct/wiki/Spec-format:-v2.0#platform).
+     */
+    var structId: String
+    {
+        switch self
+        {
+        case .iOS:
+            return "ios"
+
+        case .watchOS:
+            return "watch"
+
+        case .tvOS:
+            return "tv"
+
+        case .macOS:
+            return "mac"
+        }
+    }
+}

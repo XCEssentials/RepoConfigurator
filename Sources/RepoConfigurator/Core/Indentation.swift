@@ -27,12 +27,12 @@
 public
 class Indentation: Equatable
 {
-    // MARK: - Type level members
+    // MARK: Type level members
 
     public
     typealias Snapshot = String
 
-    // MARK: - Instance level members
+    // MARK: Instance level members
 
     public
     let singleLevel: String
@@ -122,7 +122,7 @@ class Indentation: Equatable
         self.decreaseLevel()
     }
 
-    // MARK: - Initializers
+    // MARK: Initializers
 
     public
     init(

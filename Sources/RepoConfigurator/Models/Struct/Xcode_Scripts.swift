@@ -31,7 +31,7 @@ extension Xcode
     final
     class Scripts
     {
-        // MARK: - Instance level members
+        // MARK: Instance level members
 
         public private(set)
         var regulars: [String] = []
@@ -60,7 +60,7 @@ extension Xcode
             afterBuilds.append(contentsOf: paths)
         }
 
-        // MARK: - Initializers
+        // MARK: Initializers
 
         public
         init() {}

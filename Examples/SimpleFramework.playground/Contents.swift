@@ -161,100 +161,60 @@ let project = Struct
 
         project.buildSettings.base.override(
 
-            "IPHONEOS_DEPLOYMENT_TARGET" <<< depTarget.minimumVersion,
             "SWIFT_VERSION" <<< swiftVersion,
-            "VERSIONING_SYSTEM" <<< "apple-generic",
-
-            "CURRENT_PROJECT_VERSION" <<< "0", // just a default non-empty value
-
-            "CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING" <<< YES,
-            "CLANG_WARN_COMMA" <<< YES,
-            "CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS" <<< YES,
-            "CLANG_WARN_NON_LITERAL_NULL_CONVERSION" <<< YES,
-            "CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF" <<< YES,
-            "CLANG_WARN_OBJC_LITERAL_CONVERSION" <<< YES,
-            "CLANG_WARN_RANGE_LOOP_ANALYSIS" <<< YES,
-            "CLANG_WARN_STRICT_PROTOTYPES" <<< YES
+            "IPHONEOS_DEPLOYMENT_TARGET" <<< depTarget.minimumVersion
         )
-
-        project.buildSettings[.debug].override(
-
-            "SWIFT_OPTIMIZATION_LEVEL" <<< "-Onone"
-        )
-
         //---
 
-        project.target(targetName.main, .iOS, .framework) {
+        project.targets(
 
-            fwk in
+            Mobile.Framework(targetName.main){
 
-            //---
-
-            fwk.include(sourcesPath.main)
-
-            //---
-
-            fwk.buildSettings.base.override(
-
-                "SWIFT_VERSION" <<< "$(inherited)",
-
-                "IPHONEOS_DEPLOYMENT_TARGET" <<< depTarget.minimumVersion,
-                "PRODUCT_BUNDLE_IDENTIFIER" <<< bundleId.main,
-                "INFOPLIST_FILE" <<< infoPlistsPath.main,
-
-                //--- iOS related:
-
-                "SDKROOT" <<< "iphoneos",
-                "TARGETED_DEVICE_FAMILY" <<< DeviceFamily.iOS.universal,
-
-                //--- Framework related:
-
-                "CODE_SIGN_IDENTITY" <<< "",
-
-                "PRODUCT_NAME" <<< "\(company.prefix)$(TARGET_NAME:c99extidentifier)",
-                "DEFINES_MODULE" <<< NO,
-                "SKIP_INSTALL" <<< YES
-            )
-
-            fwk.buildSettings[.debug].override(
-
-                "MTL_ENABLE_DEBUG_INFO" <<< YES
-            )
-
-            //---
-
-            fwk.unitTests(targetName.tst) {
-
-                fwkTests in
+                fwk in
 
                 //---
 
-                fwkTests.include(sourcesPath.tst)
+                fwk.include(sourcesPath.main)
 
                 //---
 
-                fwkTests.buildSettings.base.override(
+                fwk.buildSettings.base.override(
 
-                    "SWIFT_VERSION" <<< "$(inherited)",
+                    "INFOPLIST_FILE" <<< infoPlistsPath.main,
+                    "PRODUCT_BUNDLE_IDENTIFIER" <<< bundleId.main,
 
-                    // very important for unit tests,
-                    // prevents the error when unit test do not start at all
-                    "LD_RUNPATH_SEARCH_PATHS" <<<
-                    "$(inherited) @executable_path/Frameworks @loader_path/Frameworks",
+                    //--- iOS related:
 
                     "IPHONEOS_DEPLOYMENT_TARGET" <<< depTarget.minimumVersion,
+                    "TARGETED_DEVICE_FAMILY" <<< DeviceFamily.iOS.universal,
 
-                    "PRODUCT_BUNDLE_IDENTIFIER" <<< bundleId.tst,
-                    "INFOPLIST_FILE" <<< infoPlistsPath.tst,
-                    "FRAMEWORK_SEARCH_PATHS" <<< "$(inherited) $(BUILT_PRODUCTS_DIR)"
+                    //--- Framework related:
+
+                    "PRODUCT_NAME" <<< "\(company.prefix)$(TARGET_NAME:c99extidentifier)"
                 )
 
-                fwkTests.buildSettings[.debug].override(
+                //---
 
-                    "MTL_ENABLE_DEBUG_INFO" <<< YES
-                )
+                fwk.addUnitTests(targetName.tst){
+
+                    fwkTests in
+
+                    //---
+
+                    fwkTests.include(sourcesPath.tst)
+
+                    //---
+
+                    fwkTests.buildSettings.base.override(
+
+                        "INFOPLIST_FILE" <<< infoPlistsPath.tst,
+                        "PRODUCT_BUNDLE_IDENTIFIER" <<< bundleId.tst,
+
+                        "IPHONEOS_DEPLOYMENT_TARGET" <<< depTarget.minimumVersion
+                    )
+                }
             }
-        }
+        )
     }
     .prepare(
         targetFolder: repoFolder

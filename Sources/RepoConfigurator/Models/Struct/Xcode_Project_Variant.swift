@@ -31,24 +31,26 @@ extension Xcode.Project
     final
     class Variant
     {
-        // MARK: - Instance level members
+        // MARK: Instance level members
 
         public
         let name: String
 
         public private(set)
-        var targets: [String: Target] = [:]
-        
+        var targetsByName: [String: Target] = [:]
+
         public
-        func target(
-            _ name: String,
-            _ configureTarget: (Target) -> Void
+        func targets(
+            _ items: Target...
             )
         {
-            targets[name] = .init(name, configureTarget)
+            items.forEach{
+
+                targetsByName[$0.name] = $0
+            }
         }
 
-        // MARK: - Initializers
+        // MARK: Initializers
 
         public
         init(
@@ -86,7 +88,7 @@ extension Xcode.Project.Variant: TextFilePiece
 
         indentation.nest{
 
-            result <<< targets.values.map{
+            result <<< targetsByName.values.map{
 
                 $0.asIndentedText(with: indentation)
             }
