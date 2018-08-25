@@ -294,6 +294,7 @@ extension TextFileSection
     func beforeRelease(
         ensureGitBranch: String? = Defaults.releaseGitBranchesRegEx,
         projectName: String,
+        getCurrentVersionFromTarget targetName: String? = nil,
         cocoaPodsModuleName: String? // pass 'nil' if should not maintain podspec file
         ) -> TextFileSection<Context>
     {
@@ -344,10 +345,11 @@ extension TextFileSection
 
                 result <<< """
 
-                    # ===
+                    # === Remember current version number
 
                     versionNumber = get_version_number(
-                        xcodeproj: '\(projectName).xcodeproj'
+                        xcodeproj: '\(projectName).xcodeproj',
+                        target: '\(targetName ?? projectName)'
                     )
 
                     puts 'Current VERSION number: ' + versionNumber
