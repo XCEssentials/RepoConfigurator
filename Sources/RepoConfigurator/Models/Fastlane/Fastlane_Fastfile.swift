@@ -116,6 +116,7 @@ extension Fastlane.Fastfile
             .beforeRelease(
                 ensureGitBranch: releaseBranches,
                 projectName: projectName,
+                getCurrentVersionFromTarget: currentVersionTargetName,
                 cocoaPodsModuleName: nil // N/A, it's an app!
             ),
             .regenerateProject(
@@ -193,6 +194,7 @@ extension Fastlane.Fastfile
             .beforeRelease(
                 ensureGitBranch: releaseBranches,
                 projectName: projectName,
+                getCurrentVersionFromTarget: currentVersionTargetName,
                 cocoaPodsModuleName: cocoaPodsModuleName
             ),
             .regenerateProject(
