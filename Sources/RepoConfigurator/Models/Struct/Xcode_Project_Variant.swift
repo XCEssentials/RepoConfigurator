@@ -88,9 +88,9 @@ extension Xcode.Project.Variant: TextFilePiece
 
         indentation.nest{
 
-            result <<< targetsByName.values.map{
+            result <<< targetsByName.sortedByKey().map{
 
-                $0.asIndentedText(with: indentation)
+                $0.value.asIndentedText(with: indentation)
             }
         }
 
