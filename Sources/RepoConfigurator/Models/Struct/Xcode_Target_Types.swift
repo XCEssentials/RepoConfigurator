@@ -41,7 +41,7 @@ extension Mobile
 
         static
         public
-        let targetType: Xcode.TargetType = .app
+        let targetType: Xcodeproj.ProductType = .app
 
         // MARK: Instance level members
 
@@ -137,7 +137,7 @@ extension Mobile
 
         static
         public
-        let targetType: Xcode.TargetType = .appExtension
+        let targetType: Xcodeproj.ProductType = .appExtension
 
         // MARK: Initializers
 
@@ -168,7 +168,7 @@ extension Mobile
 
         static
         public
-        let targetType: Xcode.TargetType = .appExtensionMessages
+        let targetType: Xcodeproj.ProductType = .messagesExtension
 
         // MARK: Initializers
 
@@ -199,7 +199,7 @@ extension Mobile
 
         static
         public
-        let targetType: Xcode.TargetType = .appExtensionMessagesStickers
+        let targetType: Xcodeproj.ProductType = .messagesStickerPack
 
         // MARK: Initializers
 
@@ -228,7 +228,7 @@ extension Mobile
 
         static
         public
-        let targetType: Xcode.TargetType = .framework
+        let targetType: Xcodeproj.ProductType = .framework
 
         // MARK: Instance level members
 
@@ -291,7 +291,7 @@ extension Mobile
 
         static
         public
-        let targetType: Xcode.TargetType = .messagesApp
+        let targetType: Xcodeproj.ProductType = .messagesApp
 
         // MARK: Initializers
 
@@ -322,7 +322,7 @@ extension Mobile
 
         static
         public
-        let targetType: Xcode.TargetType = .staticLibrary
+        let targetType: Xcodeproj.ProductType = .staticLibrary
 
         // MARK: Initializers
 
@@ -353,7 +353,7 @@ extension Mobile
 
         static
         public
-        let targetType: Xcode.TargetType = .uiTest
+        let targetType: Xcodeproj.ProductType = .uiTestBundle
     }
 
     public
@@ -368,7 +368,7 @@ extension Mobile
 
         static
         public
-        let targetType: Xcode.TargetType = .unitTest
+        let targetType: Xcodeproj.ProductType = .unitTestBundle
     }
 }
 
@@ -387,7 +387,7 @@ extension Watch
 
         static
         public
-        let targetType: Xcode.TargetType = .framework
+        let targetType: Xcodeproj.ProductType = .framework
 
         // MARK: Initializers
 
@@ -422,7 +422,7 @@ extension Watch
 
         static
         public
-        let targetType: Xcode.TargetType = .staticLibrary
+        let targetType: Xcodeproj.ProductType = .staticLibrary
 
         // MARK: Initializers
 
@@ -453,7 +453,7 @@ extension Watch
 
         static
         public
-        let targetType: Xcode.TargetType = .watchApp
+        let targetType: Xcodeproj.ProductType = .watchApp
 
         // MARK: Initializers
 
@@ -488,7 +488,7 @@ extension Watch
 
         static
         public
-        let targetType: Xcode.TargetType = .watchApp2
+        let targetType: Xcodeproj.ProductType = .watch2App
 
         // MARK: Initializers
 
@@ -523,7 +523,7 @@ extension Watch
 
         static
         public
-        let targetType: Xcode.TargetType = .watchKitExtension
+        let targetType: Xcodeproj.ProductType = .watchKitExtension
 
         // MARK: Initializers
 
@@ -554,7 +554,7 @@ extension Watch
 
         static
         public
-        let targetType: Xcode.TargetType = .watchKit2Extension
+        let targetType: Xcodeproj.ProductType = .watchKit2Extension
 
         // MARK: Initializers
 
@@ -591,7 +591,7 @@ extension TV
 
         static
         public
-        let targetType: Xcode.TargetType = .app
+        let targetType: Xcodeproj.ProductType = .app
 
         // MARK: Instance level members
 
@@ -687,7 +687,7 @@ extension TV
 
         static
         public
-        let targetType: Xcode.TargetType = .tvAppExtension
+        let targetType: Xcodeproj.ProductType = .tvAppExtension
 
         public
         required
@@ -714,7 +714,7 @@ extension TV
 
         static
         public
-        let targetType: Xcode.TargetType = .framework
+        let targetType: Xcodeproj.ProductType = .framework
 
         // MARK: Instance level members
 
@@ -777,7 +777,7 @@ extension TV
 
         static
         public
-        let targetType: Xcode.TargetType = .staticLibrary
+        let targetType: Xcodeproj.ProductType = .staticLibrary
 
         public
         required
@@ -806,7 +806,7 @@ extension TV
 
         static
         public
-        let targetType: Xcode.TargetType = .uiTest
+        let targetType: Xcodeproj.ProductType = .uiTestBundle
     }
 
     public
@@ -821,7 +821,7 @@ extension TV
 
         static
         public
-        let targetType: Xcode.TargetType = .unitTest
+        let targetType: Xcodeproj.ProductType = .unitTestBundle
     }
 }
 
@@ -842,7 +842,7 @@ extension Desktop
 
         static
         public
-        let targetType: Xcode.TargetType = .app
+        let targetType: Xcodeproj.ProductType = .app
 
         // MARK: Instance level members
 
@@ -939,7 +939,7 @@ extension Desktop
 
         static
         public
-        let targetType: Xcode.TargetType = .appExtension
+        let targetType: Xcodeproj.ProductType = .appExtension
 
         // MARK: Initializers
 
@@ -970,7 +970,7 @@ extension Desktop
 
         static
         public
-        let targetType: Xcode.TargetType = .bundle
+        let targetType: Xcodeproj.ProductType = .bundle
 
         // MARK: Initializers
 
@@ -1001,7 +1001,7 @@ extension Desktop
 
         static
         public
-        let targetType: Xcode.TargetType = .tool
+        let targetType: Xcodeproj.ProductType = .commandLineTool
 
         // MARK: Initializers
 
@@ -1032,7 +1032,7 @@ extension Desktop
 
         static
         public
-        let targetType: Xcode.TargetType = .dynamicLibrary
+        let targetType: Xcodeproj.ProductType = .dynamicLibrary
 
         // MARK: Initializers
 
@@ -1061,7 +1061,7 @@ extension Desktop
 
         static
         public
-        let targetType: Xcode.TargetType = .framework
+        let targetType: Xcodeproj.ProductType = .framework
 
         // MARK: Instance level members
 
@@ -1124,7 +1124,7 @@ extension Desktop
 
         static
         public
-        let targetType: Xcode.TargetType = .staticLibrary
+        let targetType: Xcodeproj.ProductType = .staticLibrary
 
         // MARK: Initializers
 
@@ -1155,7 +1155,7 @@ extension Desktop
 
         static
         public
-        let targetType: Xcode.TargetType = .uiTest
+        let targetType: Xcodeproj.ProductType = .uiTestBundle
     }
 
     public
@@ -1170,7 +1170,7 @@ extension Desktop
 
         static
         public
-        let targetType: Xcode.TargetType = .unitTest
+        let targetType: Xcodeproj.ProductType = .unitTestBundle
     }
 
     public
@@ -1185,6 +1185,6 @@ extension Desktop
 
         static
         public
-        let targetType: Xcode.TargetType = .xpcService
+        let targetType: Xcodeproj.ProductType = .xpcService
     }
 }
