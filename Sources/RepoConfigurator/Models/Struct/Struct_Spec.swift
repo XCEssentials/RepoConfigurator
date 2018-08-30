@@ -34,10 +34,6 @@ extension Struct
 
         public
         static
-        let preGenerateScriptName = "pre-generate.rb"
-
-        public
-        static
         let fileName: String = "project.yml"
 
         // MARK: Instance level members
