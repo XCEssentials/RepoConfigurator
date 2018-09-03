@@ -89,6 +89,7 @@
 		4E1F4DEB6F7DBC42C29FF945 /* Pods_RepoConfigurator.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RepoConfigurator.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		94006CAD213DDF2500ED70B5 /* XCTestManifests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XCTestManifests.swift; sourceTree = "<group>"; };
 		94006CAE213DDF2500ED70B5 /* RepoConfiguratorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepoConfiguratorTests.swift; sourceTree = "<group>"; };
+		94006CB5213DE5E300ED70B5 /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
 		9403C25E21303A270019995A /* ReadMe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadMe.swift; sourceTree = "<group>"; };
 		9403C260213043CA0019995A /* Shields.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shields.swift; sourceTree = "<group>"; };
 		9403C2632130729E0019995A /* Markdown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Markdown.swift; sourceTree = "<group>"; };
@@ -275,6 +276,7 @@
 		941CFFB4211520D700326181 = {
 			isa = PBXGroup;
 			children = (
+				94006CB5213DE5E300ED70B5 /* Package.swift */,
 				A270F6B0C53210622D202770 /* Frameworks */,
 				941CFFBF211520D700326181 /* Products */,
 				94C9D87B212D7407000CCADB /* References */,
