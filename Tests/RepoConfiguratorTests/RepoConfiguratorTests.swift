@@ -47,8 +47,11 @@ extension RepoConfiguratorTests
               - function_body_length
               - file_length
 
-            # paths to ignore during linting. Takes precedence over 'included'.
-            excluded:
+            included: # paths to include during linting. `--path` is ignored if present.
+              - Sources
+              - Tests
+
+            excluded: # paths to ignore during linting. Takes precedence over `included`.
               - Resources
               - Carthage
               - Pods
@@ -71,9 +74,12 @@ extension RepoConfiguratorTests
 
         let model = SwiftLint
             .init(
-                exclude: [
+                .disabledRules(),
+                .included(),
+                .excluded([
                     "Templates"
-                ]
+                ]),
+                .rulesOptions()
             )
             .prepare(
                 targetFolder: targetFolder
