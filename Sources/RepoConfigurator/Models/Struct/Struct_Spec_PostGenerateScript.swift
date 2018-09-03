@@ -137,6 +137,8 @@ extension TextFileSection
 
             //---
 
+            //swiftlint:disable line_length
+
             result <<< """
                 # https://www.rubydoc.info/github/CocoaPods/Xcodeproj/Xcodeproj/Project
                 # https://github.com/CocoaPods/Xcodeproj/blob/master/spec/project/object/native_target_spec.rb
@@ -144,6 +146,8 @@ extension TextFileSection
 
                 \(xcodeproj)
                 """
+
+            //swiftlint:enable line_length
 
             indentation.nest{
 
