@@ -45,13 +45,7 @@ let readme = try ReadMe
                 repo: productName
             ),
             .carthageCompatibleBadge(),
-            .staticShieldsBadge(
-                "Xcode",
-                status: "required",
-                color: "lightgray",
-                title: "Requires Xcode",
-                link: "https://developer.apple.com/xcode/"
-            ),
+            .swiftPMCompatibleBadge(),
             .writtenInSwiftBadge(
                 version: swiftVersion
             )
@@ -73,11 +67,7 @@ let gitignore = Git
     )
 
 let swiftLint = SwiftLint
-    .init(
-        exclude: [
-            "Templates"
-        ]
-    )
+    .standard()
     .prepare(
         targetFolder: repoFolder
     )
