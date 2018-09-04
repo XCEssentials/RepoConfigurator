@@ -53,7 +53,7 @@ struct SwiftLint: FixedNameTextFile
 
     public
     init(
-        _ sections: TextFileSection<SwiftLint>...
+        sections: [TextFileSection<SwiftLint>]
         )
     {
         let result: IndentedTextBuffer = .init(
@@ -72,6 +72,54 @@ struct SwiftLint: FixedNameTextFile
         //---
 
         fileContent = result.content
+    }
+}
+
+// MARK: - Presets
+
+public
+extension SwiftLint
+{
+    static
+    func standard(
+        setXCEDefaults: Bool = true,
+        disabledRules: [String] = [],
+        include: [String] = [],
+        exclude: [String] = [],
+        rulesOptions: [SwiftLint.RuleOption] = [],
+        otherEntries: [String] = []
+        ) -> SwiftLint
+    {
+        var sections: [TextFileSection<SwiftLint>] = [
+
+            .disabledRules(
+                setXCEDefaults: setXCEDefaults,
+                disabledRules
+            ),
+            .included(
+                setXCEDefaults: setXCEDefaults,
+                include
+            ),
+            .excluded(
+                setXCEDefaults: setXCEDefaults,
+                exclude
+            ),
+            .rulesOptions(
+                setXCEDefaults: setXCEDefaults,
+                rulesOptions
+            )
+        ]
+
+        //---
+
+        sections += otherEntries.map{
+
+            .custom($0)
+        }
+
+        //---
+
+        return .init(sections: sections)
     }
 }
 
