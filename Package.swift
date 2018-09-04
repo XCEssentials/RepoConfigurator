@@ -6,11 +6,11 @@ import PackageDescription
 let package = Package(
     name: "XCERepoConfigurator",
     products: [
-        .library(name: "XCERepoConfigurator", targets: ["XCERepoConfigurator"])
+        .library(name: "XCERepoConfigurator", targets: ["RepoConfigurator"])
     ],
     targets: [
         .target(
-            name: "XCERepoConfigurator",
+            name: "RepoConfigurator",
             dependencies: [
                 // none
             ],
@@ -19,7 +19,7 @@ let package = Package(
         .testTarget(
             name: "RepoConfiguratorTests",
             dependencies: [
-                "XCERepoConfigurator"
+                "RepoConfigurator"
             ]
         )
     ],
