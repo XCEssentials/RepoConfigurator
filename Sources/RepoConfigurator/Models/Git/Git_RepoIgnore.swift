@@ -59,6 +59,7 @@ extension Git.RepoIgnore
 
             .macOS(),
             .cocoa(),
+            .swiftPackageManager(ignoreSources: ignoreDependenciesSources),
             .cocoaPods(ignoreSources: ignoreDependenciesSources),
             .carthage(ignoreSources: ignoreDependenciesSources),
             .fastlane(),
@@ -91,6 +92,7 @@ extension Git.RepoIgnore
 
             .macOS(),
             .cocoa(),
+            .swiftPackageManager(ignoreSources: ignoreDependenciesSources),
             .cocoaPods(ignoreSources: ignoreDependenciesSources),
             .carthage(ignoreSources: ignoreDependenciesSources),
             .fastlane()
@@ -205,14 +207,31 @@ extension TextFileSection
             timeline.xctimeline
             playground.xcworkspace
 
-            # Swift Package Manager
+            ### Cocoa ###
+            # ==========
             #
-            # Add this line if you want to avoid checking in source code from Swift Package Manager dependencies.
-            # Packages/
-            # Package.pins
+            #
+            #
+            """
+            .asIndentedText(with: $0)
+        }
+    }
+
+    static
+    func swiftPackageManager(
+        ignoreSources: Bool
+        ) -> TextFileSection<Context>
+    {
+        return .init{ """
+
+            # ==========
+            ### Swift Package Manager ###
+            #
+            \((ignoreSources ? "" : "# "))Packages/
+            \((ignoreSources ? "" : "# "))Package.pins
             .build/
 
-            ### Cocoa ###
+            ### Swift Package Manager ###
             # ==========
             #
             #

@@ -138,9 +138,9 @@ extension Xcode.Project: TextFilePiece
 
         indentation.nest{
 
-            result <<< targetsByName.values.map{
+            result <<< targetsByName.sortedByKey().map{
 
-                $0.asIndentedText(with: indentation)
+                $0.value.asIndentedText(with: indentation)
             }
         }
 
@@ -156,9 +156,9 @@ extension Xcode.Project: TextFilePiece
 
         indentation.nest{
 
-            result <<< schemesByName.values.map{
+            result <<< schemesByName.sortedByKey().map{
 
-                $0.contentGetter(indentation)
+                $0.value.contentGetter(indentation)
             }
         }
 

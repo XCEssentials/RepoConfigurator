@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		94006CAF213DDF2600ED70B5 /* XCTestManifests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94006CAD213DDF2500ED70B5 /* XCTestManifests.swift */; };
+		94006CB0213DDF2600ED70B5 /* RepoConfiguratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94006CAE213DDF2500ED70B5 /* RepoConfiguratorTests.swift */; };
 		9403C25F21303A270019995A /* ReadMe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9403C25E21303A270019995A /* ReadMe.swift */; };
 		9403C261213043CA0019995A /* Shields.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9403C260213043CA0019995A /* Shields.swift */; };
 		9403C2642130729E0019995A /* Markdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9403C2632130729E0019995A /* Markdown.swift */; };
@@ -18,7 +20,6 @@
 		9417FE0921288B9000DE18DA /* IndentedTextBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9417FE0821288B9000DE18DA /* IndentedTextBuffer.swift */; };
 		9417FE0F2128D56600DE18DA /* TextFileSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9417FE0E2128D56600DE18DA /* TextFileSection.swift */; };
 		941CFFC8211520D700326181 /* XCERepoConfigurator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 941CFFBE211520D700326181 /* XCERepoConfigurator.framework */; };
-		941CFFDE2115221000326181 /* RepoConfiguratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941CFFDA2115220600326181 /* RepoConfiguratorTests.swift */; };
 		941CFFDF2115222100326181 /* RepoConfigurator.h in Headers */ = {isa = PBXBuildFile; fileRef = 941CFFDC2115220600326181 /* RepoConfigurator.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		941CFFE02115222B00326181 /* Versions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941CFFDD2115220600326181 /* Versions.swift */; };
 		941CFFE82115897100326181 /* License_MIT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941CFFE72115897100326181 /* License_MIT.swift */; };
@@ -42,6 +43,7 @@
 		9424AB0F211754C100262B79 /* DeploymentTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9424AB0E211754C100262B79 /* DeploymentTarget.swift */; };
 		9424AB11211754FE00262B79 /* OSIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9424AB10211754FE00262B79 /* OSIdentifier.swift */; };
 		9424AB132117552100262B79 /* PathPrefix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9424AB122117552100262B79 /* PathPrefix.swift */; };
+		943261852138884800764E92 /* Xcodeproj.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943261842138884800764E92 /* Xcodeproj.swift */; };
 		94511D872121D21400AB4CD0 /* CustomTextFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94511D862121D21400AB4CD0 /* CustomTextFile.swift */; };
 		94511D892122020800AB4CD0 /* Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94511D882122020800AB4CD0 /* Operators.swift */; };
 		9459C779211C5F800041C38B /* YesNoStringLiteralsForXcode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9459C778211C5F800041C38B /* YesNoStringLiteralsForXcode.swift */; };
@@ -57,7 +59,6 @@
 		9492E34621262E23003558B6 /* Xcode_Target.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9492E34521262E23003558B6 /* Xcode_Target.swift */; };
 		94C4F9CB211665ED00CFB1DC /* Fastlane.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C4F9CA211665ED00CFB1DC /* Fastlane.swift */; };
 		94C4F9CD2116660900CFB1DC /* Fastlane_Fastfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C4F9CC2116660900CFB1DC /* Fastlane_Fastfile.swift */; };
-		94C9D87A212CC333000CCADB /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 94C9D879212CC333000CCADB /* .swiftlint.yml */; };
 		94C9D8B6212E1551000CCADB /* OSKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C9D8B5212E1551000CCADB /* OSKind.swift */; };
 		94C9D8B8212E248D000CCADB /* Xcode_Target_Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C9D8B7212E248D000CCADB /* Xcode_Target_Types.swift */; };
 		94C9D8C1212F38E1000CCADB /* WidelyUsedLicense.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C9D8C0212F38E1000CCADB /* WidelyUsedLicense.swift */; };
@@ -86,6 +87,9 @@
 
 /* Begin PBXFileReference section */
 		4E1F4DEB6F7DBC42C29FF945 /* Pods_RepoConfigurator.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RepoConfigurator.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		94006CAD213DDF2500ED70B5 /* XCTestManifests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XCTestManifests.swift; sourceTree = "<group>"; };
+		94006CAE213DDF2500ED70B5 /* RepoConfiguratorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepoConfiguratorTests.swift; sourceTree = "<group>"; };
+		94006CB5213DE5E300ED70B5 /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
 		9403C25E21303A270019995A /* ReadMe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadMe.swift; sourceTree = "<group>"; };
 		9403C260213043CA0019995A /* Shields.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shields.swift; sourceTree = "<group>"; };
 		9403C2632130729E0019995A /* Markdown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Markdown.swift; sourceTree = "<group>"; };
@@ -98,7 +102,6 @@
 		9417FE0E2128D56600DE18DA /* TextFileSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFileSection.swift; sourceTree = "<group>"; };
 		941CFFBE211520D700326181 /* XCERepoConfigurator.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = XCERepoConfigurator.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		941CFFC7211520D700326181 /* RepoConfiguratorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RepoConfiguratorTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		941CFFDA2115220600326181 /* RepoConfiguratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepoConfiguratorTests.swift; sourceTree = "<group>"; };
 		941CFFDC2115220600326181 /* RepoConfigurator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RepoConfigurator.h; sourceTree = "<group>"; };
 		941CFFDD2115220600326181 /* Versions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Versions.swift; sourceTree = "<group>"; };
 		941CFFE72115897100326181 /* License_MIT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = License_MIT.swift; sourceTree = "<group>"; };
@@ -122,6 +125,7 @@
 		9424AB0E211754C100262B79 /* DeploymentTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeploymentTarget.swift; sourceTree = "<group>"; };
 		9424AB10211754FE00262B79 /* OSIdentifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSIdentifier.swift; sourceTree = "<group>"; };
 		9424AB122117552100262B79 /* PathPrefix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathPrefix.swift; sourceTree = "<group>"; };
+		943261842138884800764E92 /* Xcodeproj.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Xcodeproj.swift; sourceTree = "<group>"; };
 		94511D862121D21400AB4CD0 /* CustomTextFile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTextFile.swift; sourceTree = "<group>"; };
 		94511D882122020800AB4CD0 /* Operators.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Operators.swift; sourceTree = "<group>"; };
 		9459C778211C5F800041C38B /* YesNoStringLiteralsForXcode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YesNoStringLiteralsForXcode.swift; sourceTree = "<group>"; };
@@ -137,7 +141,6 @@
 		9492E34521262E23003558B6 /* Xcode_Target.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Xcode_Target.swift; sourceTree = "<group>"; };
 		94C4F9CA211665ED00CFB1DC /* Fastlane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fastlane.swift; sourceTree = "<group>"; };
 		94C4F9CC2116660900CFB1DC /* Fastlane_Fastfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fastlane_Fastfile.swift; sourceTree = "<group>"; };
-		94C9D879212CC333000CCADB /* .swiftlint.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .swiftlint.yml; sourceTree = "<group>"; };
 		94C9D87F212D7407000CCADB /* FWK-macOS-completeSettings-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "FWK-macOS-completeSettings-Customized.rb"; sourceTree = "<group>"; };
 		94C9D880212D7407000CCADB /* FWK-tvOS-Debug-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "FWK-tvOS-Debug-Customized.rb"; sourceTree = "<group>"; };
 		94C9D881212D7407000CCADB /* FWK-iOS-Release-Customized.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = "FWK-iOS-Release-Customized.rb"; sourceTree = "<group>"; };
@@ -224,6 +227,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		94006CA7213DDF1A00ED70B5 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				94006CAC213DDF2500ED70B5 /* RepoConfiguratorTests */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+		94006CAC213DDF2500ED70B5 /* RepoConfiguratorTests */ = {
+			isa = PBXGroup;
+			children = (
+				94006CAD213DDF2500ED70B5 /* XCTestManifests.swift */,
+				94006CAE213DDF2500ED70B5 /* RepoConfiguratorTests.swift */,
+			);
+			path = RepoConfiguratorTests;
+			sourceTree = "<group>";
+		};
 		9403C25D21303A160019995A /* ReadMe */ = {
 			isa = PBXGroup;
 			children = (
@@ -256,11 +276,12 @@
 		941CFFB4211520D700326181 = {
 			isa = PBXGroup;
 			children = (
+				94006CB5213DE5E300ED70B5 /* Package.swift */,
 				A270F6B0C53210622D202770 /* Frameworks */,
 				941CFFBF211520D700326181 /* Products */,
 				94C9D87B212D7407000CCADB /* References */,
-				94C9D877212CC238000CCADB /* Resources */,
 				941CFFD82115220600326181 /* Sources */,
+				94006CA7213DDF1A00ED70B5 /* Tests */,
 			);
 			sourceTree = "<group>";
 		};
@@ -277,17 +298,8 @@
 			isa = PBXGroup;
 			children = (
 				941CFFDB2115220600326181 /* RepoConfigurator */,
-				941CFFD92115220600326181 /* RepoConfiguratorTests */,
 			);
 			path = Sources;
-			sourceTree = "<group>";
-		};
-		941CFFD92115220600326181 /* RepoConfiguratorTests */ = {
-			isa = PBXGroup;
-			children = (
-				941CFFDA2115220600326181 /* RepoConfiguratorTests.swift */,
-			);
-			path = RepoConfiguratorTests;
 			sourceTree = "<group>";
 		};
 		941CFFDB2115220600326181 /* RepoConfigurator */ = {
@@ -303,6 +315,7 @@
 		941CFFE12115765C00326181 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				943261862138884D00764E92 /* Xcodeproj */,
 				94E322BF21242ADF00343B0B /* Bundler */,
 				94245730211B024A00A05876 /* CocoaPods */,
 				94511D852121D21400AB4CD0 /* CustomTextFile */,
@@ -355,6 +368,14 @@
 			path = CocoaPods;
 			sourceTree = "<group>";
 		};
+		943261862138884D00764E92 /* Xcodeproj */ = {
+			isa = PBXGroup;
+			children = (
+				943261842138884800764E92 /* Xcodeproj.swift */,
+			);
+			path = Xcodeproj;
+			sourceTree = "<group>";
+		};
 		94511D852121D21400AB4CD0 /* CustomTextFile */ = {
 			isa = PBXGroup;
 			children = (
@@ -379,22 +400,6 @@
 				94C4F9CC2116660900CFB1DC /* Fastlane_Fastfile.swift */,
 			);
 			path = Fastlane;
-			sourceTree = "<group>";
-		};
-		94C9D877212CC238000CCADB /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				94C9D878212CC238000CCADB /* RepoConfiguratorTests */,
-			);
-			path = Resources;
-			sourceTree = "<group>";
-		};
-		94C9D878212CC238000CCADB /* RepoConfiguratorTests */ = {
-			isa = PBXGroup;
-			children = (
-				94C9D879212CC333000CCADB /* .swiftlint.yml */,
-			);
-			path = RepoConfiguratorTests;
 			sourceTree = "<group>";
 		};
 		94C9D87B212D7407000CCADB /* References */ = {
@@ -647,7 +652,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				94C9D87A212CC333000CCADB /* .swiftlint.yml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -689,6 +693,7 @@
 				9424AB0D211754B200262B79 /* DeviceFamily.swift in Sources */,
 				940F10112124A26F00554520 /* Dictionary+Helpers.swift in Sources */,
 				9403C266213092660019995A /* ExternalFile.swift in Sources */,
+				943261852138884800764E92 /* Xcodeproj.swift in Sources */,
 				94C4F9CB211665ED00CFB1DC /* Fastlane.swift in Sources */,
 				94C4F9CD2116660900CFB1DC /* Fastlane_Fastfile.swift in Sources */,
 				941CFFFB2115A78C00326181 /* Git.swift in Sources */,
@@ -743,7 +748,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				941CFFDE2115221000326181 /* RepoConfiguratorTests.swift in Sources */,
+				94006CB0213DDF2600ED70B5 /* RepoConfiguratorTests.swift in Sources */,
+				94006CAF213DDF2600ED70B5 /* XCTestManifests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -792,7 +798,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 15;
+				CURRENT_PROJECT_VERSION = 16;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -810,11 +816,11 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG XCODE";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.2;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -856,7 +862,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 15;
+				CURRENT_PROJECT_VERSION = 16;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -868,9 +874,10 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = XCODE;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 4.2;
@@ -888,7 +895,7 @@
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = UJA88X59XP;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 15;
+				DYLIB_CURRENT_VERSION = 16;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_VERSION = A;
 				INFOPLIST_FILE = Info/RepoConfigurator.plist;
@@ -913,7 +920,7 @@
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = UJA88X59XP;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 15;
+				DYLIB_CURRENT_VERSION = 16;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_VERSION = A;
 				INFOPLIST_FILE = Info/RepoConfigurator.plist;

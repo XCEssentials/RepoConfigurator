@@ -170,7 +170,7 @@ extension Xcode.Target
 
         indentation.nest{
 
-            result <<< sourceFilesOptions.map{ """
+            result <<< sourceFilesOptions.sortedByKey().map{ """
                 "\($0.key)": \($0.value)
                 """
             }
