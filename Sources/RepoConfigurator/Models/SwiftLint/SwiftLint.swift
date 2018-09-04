@@ -53,34 +53,12 @@ struct SwiftLint: FixedNameTextFile
 
     public
     init(
-        defaultXCESettings: Bool = true,
-        disabledRules: [String] = [],
-        exclude: [String] = [],
-        rulesOptions: [RuleOption] = [],
-        otherEntries: [String] = []
+        sections: [TextFileSection<SwiftLint>]
         )
     {
         let result: IndentedTextBuffer = .init(
             with: Defaults.singleLevelOfIndentationForYAMLFiles
         )
-
-        //---
-
-        let sections: [TextFileSection<SwiftLint>] = [
-
-            .disabledRules(
-                setXCEDefaults: defaultXCESettings,
-                disabledRules
-            ),
-            .exclude(
-                setXCEDefaults: defaultXCESettings,
-                exclude
-            ),
-            .rulesOptions(
-                setXCEDefaults: defaultXCESettings,
-                rulesOptions
-            )
-        ]
 
         //---
 
@@ -91,29 +69,71 @@ struct SwiftLint: FixedNameTextFile
 
         result <<< sections
 
-        result <<< otherEntries.map{ """
-
-            \($0)
-            """
-        }
-
         //---
 
         fileContent = result.content
     }
 }
 
+// MARK: - Presets
+
+public
+extension SwiftLint
+{
+    static
+    func standard(
+        setXCEDefaults: Bool = true,
+        disabledRules: [String] = [],
+        include: [String] = [],
+        exclude: [String] = [],
+        rulesOptions: [SwiftLint.RuleOption] = [],
+        otherEntries: [String] = []
+        ) -> SwiftLint
+    {
+        var sections: [TextFileSection<SwiftLint>] = [
+
+            .disabledRules(
+                setXCEDefaults: setXCEDefaults,
+                disabledRules
+            ),
+            .included(
+                setXCEDefaults: setXCEDefaults,
+                include
+            ),
+            .excluded(
+                setXCEDefaults: setXCEDefaults,
+                exclude
+            ),
+            .rulesOptions(
+                setXCEDefaults: setXCEDefaults,
+                rulesOptions
+            )
+        ]
+
+        //---
+
+        sections += otherEntries.map{
+
+            .custom($0)
+        }
+
+        //---
+
+        return .init(sections: sections)
+    }
+}
+
 // MARK: - Content rendering
 
-fileprivate
+public
 extension TextFileSection
     where
     Context == SwiftLint
 {
     static
     func disabledRules(
-        setXCEDefaults: Bool,
-        _ otherDisabledRules: [String]
+        setXCEDefaults: Bool = true,
+        _ otherDisabledRules: [String] = []
         ) -> TextFileSection<Context>
     {
         return .init{
@@ -157,9 +177,9 @@ extension TextFileSection
     }
 
     static
-    func exclude(
-        setXCEDefaults: Bool,
-        _ otherExclude: [String]
+    func included(
+        setXCEDefaults: Bool = true,
+        _ otherInclude: [String] = []
         ) -> TextFileSection<Context>
     {
         return .init{
@@ -174,8 +194,48 @@ extension TextFileSection
 
             result <<< """
 
-                # paths to ignore during linting. Takes precedence over 'included'.
-                excluded:
+                included: # paths to include during linting. `--path` is ignored if present.
+                """
+
+            indentation.nest{
+
+                result <<< setXCEDefaults.mapIf(true){ """
+                    - Sources
+                    - Tests
+                    """
+                }
+
+                result <<< otherInclude.map{ """
+                    - \($0)
+                    """
+                }
+            }
+
+            //---
+
+            return result.content
+        }
+    }
+
+    static
+    func excluded(
+        setXCEDefaults: Bool = true,
+        _ otherExclude: [String] = []
+        ) -> TextFileSection<Context>
+    {
+        return .init{
+
+            indentation in
+
+            //---
+
+            let result: IndentedTextBuffer = .init(with: indentation)
+
+            //---
+
+            result <<< """
+
+                excluded: # paths to ignore during linting. Takes precedence over `included`.
                 """
 
             indentation.nest{
@@ -201,8 +261,8 @@ extension TextFileSection
 
     static
     func rulesOptions(
-        setXCEDefaults: Bool,
-        _ otherRulesOptions: [SwiftLint.RuleOption]
+        setXCEDefaults: Bool = true,
+        _ otherRulesOptions: [SwiftLint.RuleOption] = []
         ) -> TextFileSection<Context>
     {
         return .init{
@@ -255,5 +315,19 @@ extension TextFileSection
 
             return result.content
         }
+    }
+
+    static
+    func custom(
+        _ customEntry: String
+        ) -> TextFileSection<Context>
+    {
+        return .init(
+            contentGetter: """
+
+                \(customEntry)
+                """
+                .asIndentedText
+            )
     }
 }

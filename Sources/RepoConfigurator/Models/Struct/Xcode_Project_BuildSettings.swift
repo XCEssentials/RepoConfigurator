@@ -131,7 +131,7 @@ extension Xcode.Project.BuildSettings: TextFilePiece
 
                 indentation.nest{
 
-                    result <<< combinedSettings.map{ """
+                    result <<< combinedSettings.sortedByKey().map{ """
                         \($0.key): '\($0.value)'
                         """
                     }

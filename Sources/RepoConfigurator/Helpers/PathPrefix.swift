@@ -35,6 +35,7 @@ enum PathPrefix
     static
     let root = URL(fileURLWithPath: "/")
 
+    @available(OSX 10.12, *)
     public
     static
     let userHomeDir = FileManager

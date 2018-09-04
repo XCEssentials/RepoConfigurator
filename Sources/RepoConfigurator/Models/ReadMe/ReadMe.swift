@@ -263,6 +263,44 @@ extension TextFileSection
     }
 
     static
+    func swiftPMCompatibleBadge(
+        status: String = "compatible",
+        color: String = "brightgreen",
+        _ parameters: Shields.Parameters = .parameters()
+        ) throws -> TextFileSection<Context>
+    {
+        let imgAltText = "Swift Package Manager Compatible"
+
+        let linkToBadge = try Shields
+            .Badge
+            .static(
+                "SPM",
+                status: status,
+                color: color,
+                parameters
+            )
+            .output
+            .absoluteString
+
+        let link = "https://swift.org/package-manager/"
+
+        let mdImage = Markdown.image(
+            imgAltText,
+            link: linkToBadge
+        )
+
+        let result = Markdown.embed(
+            mdImage,
+            intoLink: link
+            )
+            ?? mdImage
+
+        //---
+
+        return .init(contentGetter: result.asIndentedText)
+    }
+
+    static
     func writtenInSwiftBadge(
         version swiftVersionNumber: String = Defaults.swiftVersion,
         _ parameters: Shields.Parameters = .parameters()

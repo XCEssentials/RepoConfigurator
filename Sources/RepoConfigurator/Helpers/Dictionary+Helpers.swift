@@ -75,6 +75,17 @@ extension Dictionary
 public
 extension Dictionary
     where
+    Key == String
+{
+    func sortedByKey() -> [(key: Key, value: Value)]
+    {
+        return sorted{ $0.key < $1.key }
+    }
+}
+
+public
+extension Dictionary
+    where
     Key == String,
     Value == String
 {

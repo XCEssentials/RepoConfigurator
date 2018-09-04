@@ -29,10 +29,11 @@ lane :beforeRelease do
 
     ensure_git_status_clean
 
-    # ===
+    # === Remember current version number
 
     versionNumber = get_version_number(
-        xcodeproj: 'RepoConfigurator.xcodeproj'
+        xcodeproj: 'RepoConfigurator.xcodeproj',
+        target: 'RepoConfigurator'
     )
 
     puts 'Current VERSION number: ' + versionNumber

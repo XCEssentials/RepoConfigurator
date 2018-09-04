@@ -4,16 +4,6 @@
    <FileRef
       location = "group:RepoConfigurator.xcodeproj">
    </FileRef>
-   <Group
-      location = "group:Examples"
-      name = "Examples">
-      <FileRef
-         location = "group:SimpleApp.playground">
-      </FileRef>
-      <FileRef
-         location = "group:/Users/maxim/Library/Mobile Documents/com~apple~CloudDocs/Dev/XCEssentials/RepoConfigurator/Examples/SimpleFramework.playground">
-      </FileRef>
-   </Group>
    <FileRef
       location = "group:RepoConfigurator.playground">
    </FileRef>

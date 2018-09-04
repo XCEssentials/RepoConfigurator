@@ -25,37 +25,6 @@
  */
 
 public
-extension Xcode
-{
-    /**
-     https://github.com/lyptt/struct/wiki/Spec-format:-v2.0#type
-     */
-    public
-    enum TargetType: String
-    {
-        case
-            app = "application",
-            appExtension = "app-extension",
-            appExtensionMessages = "app-extension.messages",
-            appExtensionMessagesStickers = "app-extension.messages-sticker-pack",
-            bundle = "bundle",
-            dynamicLibrary = "library.dynamic",
-            framework = "framework",
-            messagesApp = "application.messages",
-            staticLibrary = "library.static",
-            tool = "tool",
-            tvAppExtension = "tv-app-extension",
-            uiTest = "bundle.ui-testing",
-            unitTest = "bundle.unit-test",
-            watchApp = "application.watchapp",
-            watchApp2 = "application.watchapp2",
-            watchKit2Extension = "watchkit2-extension",
-            watchKitExtension = "watchkit-extension",
-            xpcService = "xpc-service"
-    }
-}
-
-public
 protocol XcodeTargetCore: TextFilePiece
 {
     static
@@ -65,7 +34,7 @@ protocol XcodeTargetCore: TextFilePiece
      https://github.com/lyptt/struct/wiki/Spec-format:-v2.0#type
      */
     static
-    var targetType: Xcode.TargetType { get }
+    var targetType: Xcodeproj.ProductType { get }
 
     var name: String { get }
 
@@ -121,7 +90,7 @@ extension XcodeTargetCore // : TextFilePiece
             // https://github.com/lyptt/struct/wiki/Spec-format:-v2.0#type
 
             result <<< """
-                type: ":\(type(of: self).targetType.rawValue)"
+                type: ":\(type(of: self).targetType.structId)"
                 """
 
             //---
