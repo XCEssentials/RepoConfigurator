@@ -94,7 +94,7 @@ extension TextFileSection
             .absoluteString
 
         let link = link
-            ?? "https://github.com/\(account)/\(repo)/blob/master/\(Defaults.licenseFileName)"
+            ?? "\(Defaults.licenseFileName)"
 
         let mdImage = Markdown.image(
             imgAltText,
@@ -169,7 +169,7 @@ extension TextFileSection
             .absoluteString
 
         let link = link
-            ?? "https://cocoapods.org/pods/\(podName)"
+            ?? "\(podName).podspec"
 
         let mdImage = Markdown.image(
             imgAltText,
@@ -206,7 +206,7 @@ extension TextFileSection
             .absoluteString
 
         let link = link
-            ?? "https://cocoapods.org/pods/\(podName)"
+            ?? "\(podName).podspec"
 
         let mdImage = Markdown.image(
             imgAltText,
@@ -282,7 +282,7 @@ extension TextFileSection
             .output
             .absoluteString
 
-        let link = "https://swift.org/package-manager/"
+        let link = "Package.swift"
 
         let mdImage = Markdown.image(
             imgAltText,
@@ -319,7 +319,7 @@ extension TextFileSection
             .output
             .absoluteString
 
-        let link = "https://developer.apple.com/swift/"
+        let link = "https://swift.org"
 
         let mdImage = Markdown.image(
             imgAltText,
