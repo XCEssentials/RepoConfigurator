@@ -66,6 +66,9 @@ extension CocoaPods
         fileprivate
         enum PerPlatformSettings {}
 
+        fileprivate
+        enum TestSubSpec {}
+
         // MARK: Instance level members
 
         public
@@ -80,6 +83,7 @@ extension CocoaPods.Podspec
 {
     static
     func standard(
+        specVar: String = Defaults.specVariable,
         product: Product,
         company: Company,
         initialVersion: VersionString = Defaults.initialVersionString,
@@ -94,10 +98,6 @@ extension CocoaPods.Podspec
         customEntries: String...
         ) -> CocoaPods.Podspec
     {
-        let specVar = Defaults.specVariable
-
-        //---
-        
         let result = IndentedTextBuffer()
 
         //---
@@ -148,6 +148,8 @@ extension CocoaPods.Podspec
 
     static
     func withSubSpecs(
+        specVar: String = Defaults.specVariable,
+        subSpecVar: String = Defaults.subSpecVariable,
         product: Product,
         company: Company,
         initialVersion: VersionString = Defaults.initialVersionString,
@@ -162,14 +164,16 @@ extension CocoaPods.Podspec
                 settigns: [String]
             )]
         )],
+        testSubSpecs: [(
+            name: String,
+            perPlatfromSettings: [(
+                deploymentTarget: DeploymentTarget?,
+                settigns: [String]
+            )]
+        )] = [],
         customEntries: String...
         ) -> CocoaPods.Podspec
     {
-        let specVar = Defaults.specVariable
-        let subSpecVar = Defaults.subSpecVariable
-
-        //---
-
         let result = IndentedTextBuffer()
 
         //---
@@ -195,6 +199,16 @@ extension CocoaPods.Podspec
             result <<< subSpecs.map{
 
                 TextFileSection<SubSpec>(
+                    parentSpecVar: specVar,
+                    specName: $0.name,
+                    specVar: subSpecVar,
+                    perPlatfromSettings: $0.perPlatfromSettings
+                )
+            }
+
+            result <<< testSubSpecs.map{
+
+                TextFileSection<TestSubSpec>(
                     parentSpecVar: specVar,
                     specName: $0.name,
                     specVar: subSpecVar,
@@ -248,6 +262,8 @@ extension TextFileSection
 
             //---
 
+            // https://guides.cocoapods.org/syntax/podspec.html#group_root_specification
+
             let s = specVar // swiftlint:disable:this identifier_name
 
             //swiftlint:disable line_length
@@ -296,6 +312,57 @@ extension TextFileSection
 fileprivate
 extension TextFileSection
     where
+    Context == CocoaPods.Podspec.PerPlatformSettings
+{
+    init(
+        specVar: String,
+        deploymentTarget: DeploymentTarget?,
+        settigns: [String]
+        )
+    {
+        contentGetter = {
+
+            indentation in
+
+            //---
+
+            let result: IndentedTextBuffer = .init(with: indentation)
+
+            //---
+
+            // https://guides.cocoapods.org/syntax/podspec.html#group_multi_platform_support
+
+            let platfromId = deploymentTarget.map{ $0.platform }
+            let platfromPrefix = platfromId.map{ "\($0.cocoaPodsId)." }
+            let prefix = "\(specVar).\(platfromPrefix ?? "")"
+
+            result <<< """
+
+                # === \(platfromId.map{ "\($0.rawValue)" } ?? "All platforms")
+
+                """
+
+            result <<< deploymentTarget.map{ """
+                \(prefix)deployment_target = '\($0.minimumVersion)'
+
+                """
+            }
+
+            result <<< settigns.map{ """
+                \(prefix)\($0)
+                """
+            }
+
+            //---
+
+            return result.content
+        }
+    }
+}
+
+fileprivate
+extension TextFileSection
+    where
     Context == CocoaPods.Podspec.SubSpec
 {
     init(
@@ -318,6 +385,8 @@ extension TextFileSection
 
             //---
 
+            // https://guides.cocoapods.org/syntax/podspec.html#subspec
+
             result <<< """
                 \(parentSpecVar).subspec '\(specName)' do |\(specVar)|
 
@@ -337,7 +406,7 @@ extension TextFileSection
 
             result <<< """
 
-                end # subSpec '\(specName)'
+                end # subspec '\(specName)'
                 """
 
             //---
@@ -350,12 +419,16 @@ extension TextFileSection
 fileprivate
 extension TextFileSection
     where
-    Context == CocoaPods.Podspec.PerPlatformSettings
+    Context == CocoaPods.Podspec.TestSubSpec
 {
     init(
+        parentSpecVar: String,
+        specName: String,
         specVar: String,
-        deploymentTarget: DeploymentTarget?,
-        settigns: [String]
+        perPlatfromSettings: [(
+            deploymentTarget: DeploymentTarget?,
+            settigns: [String]
+        )]
         )
     {
         contentGetter = {
@@ -368,26 +441,29 @@ extension TextFileSection
 
             //---
 
-            let platfromId = deploymentTarget.map{ $0.platform }
-            let platfromPrefix = platfromId.map{ "\($0.cocoaPodsId)." }
-            let prefix = "\(specVar).\(platfromPrefix ?? "")"
+            // https://guides.cocoapods.org/syntax/podspec.html#test_spec
+
+            result <<< """
+                \(parentSpecVar).test_spec '\(specName)' do |\(specVar)|
+
+                """
+
+            indentation.nest{
+
+                result <<< perPlatfromSettings.map{
+
+                    TextFileSection<CocoaPods.Podspec.PerPlatformSettings>(
+                        specVar: specVar,
+                        deploymentTarget: $0.deploymentTarget,
+                        settigns: $0.settigns
+                    )
+                }
+            }
 
             result <<< """
 
-                # === \(platfromId.map{ "\($0.rawValue)" } ?? "All platforms")
-
+                end # test_spec '\(specName)'
                 """
-
-            result <<< deploymentTarget.map{ """
-                \(prefix)deployment_target = '\($0.minimumVersion)'
-
-                """
-            }
-
-            result <<< settigns.map{ """
-                \(prefix)\($0)
-                """
-            }
 
             //---
 
