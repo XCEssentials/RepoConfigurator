@@ -100,19 +100,21 @@ extension SwiftLint
                 setXCEDefaults: setXCEDefaults,
                 include
             ),
-            .excluded(
-                setXCEDefaults: setXCEDefaults,
-                exclude
-            ),
             .rulesOptions(
                 setXCEDefaults: setXCEDefaults,
                 rulesOptions
             )
         ]
 
-        //---
+        sections <<< (exclude.isEmpty).mapIf(false){
 
-        sections += otherEntries.map{
+            .excluded(
+                setXCEDefaults: setXCEDefaults,
+                exclude
+            )
+        }
+
+        sections <<< otherEntries.map{
 
             .custom($0)
         }

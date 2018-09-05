@@ -76,6 +76,24 @@ extension CocoaPods
     }
 }
 
+// MARK: - Helpers
+
+public
+extension CocoaPods.Podspec
+{
+    static
+    func readCurrentVersion(
+        fromSpecAtPath path: String
+        ) -> String
+    {
+        //
+
+        //---
+
+        return ""
+    }
+}
+
 // MARK: - Presets
 
 public
@@ -86,7 +104,7 @@ extension CocoaPods.Podspec
         specVar: String = Defaults.specVariable,
         product: Product,
         company: Company,
-        initialVersion: VersionString = Defaults.initialVersionString,
+        version: VersionString = Defaults.initialVersionString,
         license: License,
         authors: [Author],
         cocoapodsVersion: VersionString? = Defaults.cocoapodsVersion,
@@ -113,7 +131,7 @@ extension CocoaPods.Podspec
                 specVar: specVar,
                 product: product,
                 company: company,
-                initialVersion: initialVersion,
+                version: version,
                 license: license,
                 authors: authors,
                 cocoapodsVersion: cocoapodsVersion,
@@ -139,6 +157,7 @@ extension CocoaPods.Podspec
         result <<< """
 
             end # spec
+
             """
 
         //---
@@ -152,7 +171,7 @@ extension CocoaPods.Podspec
         subSpecVar: String = Defaults.subSpecVariable,
         product: Product,
         company: Company,
-        initialVersion: VersionString = Defaults.initialVersionString,
+        version: VersionString = Defaults.initialVersionString,
         license: License,
         authors: [Author],
         cocoapodsVersion: VersionString? = Defaults.cocoapodsVersion,
@@ -189,7 +208,7 @@ extension CocoaPods.Podspec
                 specVar: specVar,
                 product: product,
                 company: company,
-                initialVersion: initialVersion,
+                version: version,
                 license: license,
                 authors: authors,
                 cocoapodsVersion: cocoapodsVersion,
@@ -226,6 +245,7 @@ extension CocoaPods.Podspec
         result <<< """
 
             end # spec
+
             """
 
         //---
@@ -245,7 +265,7 @@ extension TextFileSection
         specVar: String,
         product: CocoaPods.Podspec.Product,
         company: CocoaPods.Podspec.Company,
-        initialVersion: VersionString = Defaults.initialVersionString,
+        version: VersionString = Defaults.initialVersionString,
         license: CocoaPods.Podspec.License,
         authors: [CocoaPods.Podspec.Author],
         cocoapodsVersion: VersionString? = Defaults.cocoapodsVersion,
@@ -271,7 +291,7 @@ extension TextFileSection
             result <<< """
                 \(s).name          = '\(company.prefix)\(product.name)'
                 \(s).summary       = '\(product.summary)'
-                \(s).version       = '\(initialVersion)'
+                \(s).version       = '\(version)'
                 \(s).homepage      = 'https://\(company.name).github.io/\(product.name)'
 
                 \(s).source        = { :git => 'https://github.com/\(company.name)/\(product.name).git', :tag => \(s).version }
