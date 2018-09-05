@@ -139,6 +139,7 @@ extension CocoaPods.Podspec
         result <<< """
 
             end # spec
+            
             """
 
         //---
@@ -226,6 +227,7 @@ extension CocoaPods.Podspec
         result <<< """
 
             end # spec
+
             """
 
         //---
