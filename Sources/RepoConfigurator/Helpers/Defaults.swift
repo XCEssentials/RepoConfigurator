@@ -53,6 +53,10 @@ enum Defaults
 
     public
     static
+    let subSpecVariable = "ss"
+
+    public
+    static
     let pathToInfoPlistsFolder = "Info"
 
     public

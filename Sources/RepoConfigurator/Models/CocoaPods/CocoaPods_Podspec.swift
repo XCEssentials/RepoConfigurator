@@ -61,7 +61,13 @@ extension CocoaPods
         enum GeneralSettings {}
 
         fileprivate
+        enum SubSpec {}
+
+        fileprivate
         enum PerPlatformSettings {}
+
+        fileprivate
+        enum TestSubSpec {}
 
         // MARK: Instance level members
 
@@ -88,7 +94,8 @@ extension CocoaPods.Podspec
         otherSettings: [(
             deploymentTarget: DeploymentTarget?,
             settigns: [String]
-        )]
+        )],
+        customEntries: String...
         ) -> CocoaPods.Podspec
     {
         let result = IndentedTextBuffer()
@@ -102,7 +109,7 @@ extension CocoaPods.Podspec
 
         result.indentation.nest{
 
-            result <<< TextFileSection<GeneralSettings>.generalSettings(
+            result <<< TextFileSection<GeneralSettings>(
                 specVar: specVar,
                 product: product,
                 company: company,
@@ -115,11 +122,17 @@ extension CocoaPods.Podspec
 
             result <<< otherSettings.map{
 
-                TextFileSection<PerPlatformSettings>.perPlatformSettings(
+                TextFileSection<PerPlatformSettings>(
                     specVar: specVar,
                     deploymentTarget: $0.deploymentTarget,
                     settigns: $0.settigns
                 )
+            }
+
+            result <<< customEntries.map{ """
+
+                \($0)
+                """
             }
         }
 
@@ -133,10 +146,92 @@ extension CocoaPods.Podspec
         return .init(fileContent: result.content)
     }
 
-    // TODO: implement later!
-    //static
-    //func withSubSpecs()
-    //{}
+    static
+    func withSubSpecs(
+        specVar: String = Defaults.specVariable,
+        subSpecVar: String = Defaults.subSpecVariable,
+        product: Product,
+        company: Company,
+        initialVersion: VersionString = Defaults.initialVersionString,
+        license: License,
+        authors: [Author],
+        cocoapodsVersion: VersionString? = Defaults.cocoapodsVersion,
+        swiftVersion: VersionString? = Defaults.swiftVersion,
+        subSpecs: [(
+            name: String,
+            perPlatfromSettings: [(
+                deploymentTarget: DeploymentTarget?,
+                settigns: [String]
+            )]
+        )],
+        testSubSpecs: [(
+            name: String,
+            perPlatfromSettings: [(
+                deploymentTarget: DeploymentTarget?,
+                settigns: [String]
+            )]
+        )] = [],
+        customEntries: String...
+        ) -> CocoaPods.Podspec
+    {
+        let result = IndentedTextBuffer()
+
+        //---
+
+        result <<< """
+            Pod::Spec.new do |\(specVar)|
+
+            """
+
+        result.indentation.nest{
+
+            result <<< TextFileSection<GeneralSettings>(
+                specVar: specVar,
+                product: product,
+                company: company,
+                initialVersion: initialVersion,
+                license: license,
+                authors: authors,
+                cocoapodsVersion: cocoapodsVersion,
+                swiftVersion: swiftVersion
+            )
+
+            result <<< subSpecs.map{
+
+                TextFileSection<SubSpec>(
+                    parentSpecVar: specVar,
+                    specName: $0.name,
+                    specVar: subSpecVar,
+                    perPlatfromSettings: $0.perPlatfromSettings
+                )
+            }
+
+            result <<< testSubSpecs.map{
+
+                TextFileSection<TestSubSpec>(
+                    parentSpecVar: specVar,
+                    specName: $0.name,
+                    specVar: subSpecVar,
+                    perPlatfromSettings: $0.perPlatfromSettings
+                )
+            }
+
+            result <<< customEntries.map{ """
+
+                \($0)
+                """
+            }
+        }
+
+        result <<< """
+
+            end # spec
+            """
+
+        //---
+
+        return .init(fileContent: result.content)
+    }
 }
 
 // MARK: - Content rendering
@@ -146,9 +241,8 @@ extension TextFileSection
     where
     Context == CocoaPods.Podspec.GeneralSettings
 {
-    static
-    func generalSettings(
-        specVar: String = Defaults.specVariable,
+    init(
+        specVar: String,
         product: CocoaPods.Podspec.Product,
         company: CocoaPods.Podspec.Company,
         initialVersion: VersionString = Defaults.initialVersionString,
@@ -156,9 +250,9 @@ extension TextFileSection
         authors: [CocoaPods.Podspec.Author],
         cocoapodsVersion: VersionString? = Defaults.cocoapodsVersion,
         swiftVersion: VersionString? = Defaults.swiftVersion
-        ) -> TextFileSection<Context>
+        )
     {
-        return .init{
+        contentGetter = {
 
             indentation in
 
@@ -167,6 +261,8 @@ extension TextFileSection
             let result: IndentedTextBuffer = .init(with: indentation)
 
             //---
+
+            // https://guides.cocoapods.org/syntax/podspec.html#group_root_specification
 
             let s = specVar // swiftlint:disable:this identifier_name
 
@@ -218,14 +314,13 @@ extension TextFileSection
     where
     Context == CocoaPods.Podspec.PerPlatformSettings
 {
-    static
-    func perPlatformSettings(
-        specVar: String = Defaults.specVariable,
+    init(
+        specVar: String,
         deploymentTarget: DeploymentTarget?,
         settigns: [String]
-        ) -> TextFileSection<Context>
+        )
     {
-        return .init{
+        contentGetter = {
 
             indentation in
 
@@ -234,6 +329,8 @@ extension TextFileSection
             let result: IndentedTextBuffer = .init(with: indentation)
 
             //---
+
+            // https://guides.cocoapods.org/syntax/podspec.html#group_multi_platform_support
 
             let platfromId = deploymentTarget.map{ $0.platform }
             let platfromPrefix = platfromId.map{ "\($0.cocoaPodsId)." }
@@ -255,6 +352,118 @@ extension TextFileSection
                 \(prefix)\($0)
                 """
             }
+
+            //---
+
+            return result.content
+        }
+    }
+}
+
+fileprivate
+extension TextFileSection
+    where
+    Context == CocoaPods.Podspec.SubSpec
+{
+    init(
+        parentSpecVar: String,
+        specName: String,
+        specVar: String,
+        perPlatfromSettings: [(
+            deploymentTarget: DeploymentTarget?,
+            settigns: [String]
+        )]
+        )
+    {
+        contentGetter = {
+
+            indentation in
+
+            //---
+
+            let result: IndentedTextBuffer = .init(with: indentation)
+
+            //---
+
+            // https://guides.cocoapods.org/syntax/podspec.html#subspec
+
+            result <<< """
+                \(parentSpecVar).subspec '\(specName)' do |\(specVar)|
+
+                """
+
+            indentation.nest{
+
+                result <<< perPlatfromSettings.map{
+
+                    TextFileSection<CocoaPods.Podspec.PerPlatformSettings>(
+                        specVar: specVar,
+                        deploymentTarget: $0.deploymentTarget,
+                        settigns: $0.settigns
+                    )
+                }
+            }
+
+            result <<< """
+
+                end # subspec '\(specName)'
+                """
+
+            //---
+
+            return result.content
+        }
+    }
+}
+
+fileprivate
+extension TextFileSection
+    where
+    Context == CocoaPods.Podspec.TestSubSpec
+{
+    init(
+        parentSpecVar: String,
+        specName: String,
+        specVar: String,
+        perPlatfromSettings: [(
+            deploymentTarget: DeploymentTarget?,
+            settigns: [String]
+        )]
+        )
+    {
+        contentGetter = {
+
+            indentation in
+
+            //---
+
+            let result: IndentedTextBuffer = .init(with: indentation)
+
+            //---
+
+            // https://guides.cocoapods.org/syntax/podspec.html#test_spec
+
+            result <<< """
+                \(parentSpecVar).test_spec '\(specName)' do |\(specVar)|
+
+                """
+
+            indentation.nest{
+
+                result <<< perPlatfromSettings.map{
+
+                    TextFileSection<CocoaPods.Podspec.PerPlatformSettings>(
+                        specVar: specVar,
+                        deploymentTarget: $0.deploymentTarget,
+                        settigns: $0.settigns
+                    )
+                }
+            }
+
+            result <<< """
+
+                end # test_spec '\(specName)'
+                """
 
             //---
 
