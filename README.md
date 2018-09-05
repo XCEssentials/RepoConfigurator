@@ -1,8 +1,8 @@
-[![GitHub License](https://img.shields.io/github/license/XCEssentials/RepoConfigurator.svg?longCache=true)](https://github.com/XCEssentials/RepoConfigurator/blob/master/LICENSE)
+[![GitHub License](https://img.shields.io/github/license/XCEssentials/RepoConfigurator.svg?longCache=true)](LICENSE)
 [![GitHub Tag](https://img.shields.io/github/tag/XCEssentials/RepoConfigurator.svg?longCache=true)](https://github.com/XCEssentials/RepoConfigurator/tags)
 [![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-brightgreen.svg?longCache=true)](https://github.com/Carthage/Carthage)
-[![Swift Package Manager Compatible](https://img.shields.io/badge/SPM-compatible-brightgreen.svg?longCache=true)](https://swift.org/package-manager/)
-[![Written in Swift](https://img.shields.io/badge/Swift-4.2-orange.svg?longCache=true)](https://developer.apple.com/swift/)
+[![Swift Package Manager Compatible](https://img.shields.io/badge/SPM-compatible-brightgreen.svg?longCache=true)](Package.swift)
+[![Written in Swift](https://img.shields.io/badge/Swift-4.2-orange.svg?longCache=true)](https://swift.org)
 
 # RepoConfigurator
 
