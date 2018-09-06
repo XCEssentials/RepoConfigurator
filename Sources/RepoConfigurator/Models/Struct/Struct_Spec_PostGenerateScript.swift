@@ -53,9 +53,9 @@ extension Struct.Spec
             targetFolder: String,
             removeSpacesAtEOL: Bool = true,
             removeRepeatingEmptyLines: Bool = true
-            ) throws -> PendingTextFile<PostGenerateScript>
+            ) -> PendingTextFile<PostGenerateScript>
         {
-            return try prepare(
+            return prepare(
                 name: type(of: self).defaultFileName,
                 targetFolder: targetFolder,
                 removeSpacesAtEOL: removeSpacesAtEOL,
