@@ -45,6 +45,14 @@ extension TextFile
     }
 }
 
+// MARK: - Text File Error
+
+public
+enum TextFileError: Error
+{
+    case invalidTargetLocation
+}
+
 // MARK: - ARBITRARY Named Text File
 
 public
@@ -55,15 +63,27 @@ extension ArbitraryNamedTextFile
 {
     func prepare(
         name: String,
-        targetFolder: URL,
+        targetFolder: String,
         removeSpacesAtEOL: Bool = true,
         removeRepeatingEmptyLines: Bool = true
-        ) -> RawTextFile<Self>
+        ) throws -> RawTextFile<Self>
     {
+        guard
+            var targetLocation = URL(string: targetFolder),
+            targetLocation.isFileURL
+        else
+        {
+            throw TextFileError.invalidTargetLocation
+        }
+
+        targetLocation = targetLocation
+            .appendingPathComponent(name, isDirectory: false)
+
+        //---
+
         return RawTextFile(
             model: self,
-            name: name,
-            targetFolder: targetFolder,
+            targetLocation: targetLocation,
             shouldRemoveSpacesAtEOL: removeSpacesAtEOL,
             shouldRemoveRepeatingEmptyLines: removeRepeatingEmptyLines
         )
@@ -103,15 +123,26 @@ extension FixedNameTextFile
     }
 
     func prepare(
-        targetFolder: URL,
+        targetFolder: String,
         removeSpacesAtEOL: Bool = true,
         removeRepeatingEmptyLines: Bool = true
-        ) -> RawTextFile<Self>
+        ) throws -> RawTextFile<Self>
     {
+        guard
+            var targetLocation = URL(string: targetFolder)
+        else
+        {
+            throw TextFileError.invalidTargetLocation
+        }
+
+        targetLocation = targetLocation
+            .appendingPathComponent(fileName, isDirectory: false)
+
+        //---
+
         return RawTextFile(
             model: self,
-            name: type(of: self).fileName,
-            targetFolder: targetFolder,
+            targetLocation: targetLocation,
             shouldRemoveSpacesAtEOL: removeSpacesAtEOL,
             shouldRemoveRepeatingEmptyLines: removeRepeatingEmptyLines
         )

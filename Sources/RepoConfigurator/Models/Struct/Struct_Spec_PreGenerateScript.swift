@@ -51,12 +51,12 @@ extension Struct.Spec
 
         public
         func prepareWithDefaultName(
-            targetFolder: URL,
+            targetFolder: String,
             removeSpacesAtEOL: Bool = true,
             removeRepeatingEmptyLines: Bool = true
-            ) -> RawTextFile<PreGenerateScript>
+            ) throws -> RawTextFile<PreGenerateScript>
         {
-            return prepare(
+            return try prepare(
                 name: type(of: self).defaultFileName,
                 targetFolder: targetFolder,
                 removeSpacesAtEOL: removeSpacesAtEOL,

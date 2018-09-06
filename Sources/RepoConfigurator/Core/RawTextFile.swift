@@ -45,17 +45,23 @@ struct RawTextFile<T: TextFile>
     public
     let model: T
 
+    /**
+     Desired full path to file in file system.
+     */
     public
-    let name: String
-
-    public
-    let targetFolder: URL
+    let targetLocation: URL
 
     public
     let shouldRemoveSpacesAtEOL: Bool
 
     public
     let shouldRemoveRepeatingEmptyLines: Bool
+
+    public
+    var name: String
+    {
+        return targetLocation.lastPathComponent
+    }
 
     //---
 
@@ -85,13 +91,6 @@ struct RawTextFile<T: TextFile>
         return result
     }
 
-    public
-    var fullFileName: URL
-    {
-        return targetFolder
-            .appendingPathComponent(name, isDirectory: false)
-    }
-
     //---
 
     public
@@ -101,7 +100,7 @@ struct RawTextFile<T: TextFile>
     {
         // lets makre sure folders up to this file exists
 
-        let pathToFolder = fullFileName
+        let pathToFolder = targetLocation
             .deletingLastPathComponent()
             .path
 
@@ -123,10 +122,10 @@ struct RawTextFile<T: TextFile>
 
         if
             (ifFileExists == .override) ||
-            !FileManager.default.fileExists(atPath: fullFileName.path)
+            !FileManager.default.fileExists(atPath: targetLocation.path)
         {
             try content.write(
-                to: fullFileName,
+                to: targetLocation,
                 atomically: true,
                 encoding: .utf8
             )
