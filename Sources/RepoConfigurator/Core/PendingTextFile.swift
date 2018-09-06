@@ -34,12 +34,6 @@ struct PendingTextFile<T: TextFile>
     // MARK: Type level members
 
     public
-    enum WritingFileError: Error
-    {
-        case invalidPath
-    }
-
-    public
     enum IfFileExistsWritePolicy
     {
         case doNotWrite
@@ -98,15 +92,9 @@ struct PendingTextFile<T: TextFile>
         ifFileExists: IfFileExistsWritePolicy = .override
         ) throws -> Bool
     {
-        guard
-            let targetLocation = URL
-                .init(string: folder)?
-                .appendingPathComponent(name, isDirectory: false),
-            targetLocation.isFileURL
-        else
-        {
-            throw WritingFileError.invalidPath
-        }
+        let targetLocation = URL
+            .init(fileURLWithPath: folder)
+            .appendingPathComponent(name, isDirectory: false)
 
         //---
 

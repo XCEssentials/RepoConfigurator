@@ -1,3 +1,5 @@
+import Files
+
 import XCERepoConfigurator
 
 //---
@@ -8,27 +10,34 @@ let projectName = productName
 
 let swiftVersion = "4.2"
 
-let repoFolder = PathPrefix
-    .iCloudDrive
-    .appendingPathComponent(
-        "Dev/\(companyName)"
+let repoFolder = try! Folder
+    .iCloudDrive!
+    .subfolder(
+        named: "Dev"
     )
-    .appendingPathComponent(
-        productName
+    .subfolder(
+        named: companyName
+    )
+    .subfolder(
+        named: productName
     )
 
-let configResourcesFolder = repoFolder
-    .appendingPathComponent(
-        "\(productName).playground/Resources"
+let baseReadMe = try! repoFolder
+    .subfolder(
+        named: "Docs"
+    )
+    .file(
+        named: "BaseReadMe.md"
     )
 
 let authorName = "Maxim Khatskevich"
 
 let depTarget: DeploymentTarget = (.macOS, "10.13")
 
-let fastlaneFolder = repoFolder
-    .appendingPathComponent(
-        Defaults.pathToFastlaneFolder
+let fastlaneFolderPath = repoFolder
+    .path
+    .appending(
+        "\(Defaults.pathToFastlaneFolder)"
     )
 
 //---
@@ -50,12 +59,10 @@ let readme = try ReadMe
                 version: swiftVersion
             )
         ],
-        ExternalFile.load(
-            from: configResourcesFolder.appendingPathComponent("BaseReadMe.md")
-        )
+        baseReadMe.readAsString()
     )
     .prepare(
-        targetFolder: repoFolder,
+        targetFolder: repoFolder.path,
         removeRepeatingEmptyLines: false
     )
 
@@ -63,13 +70,13 @@ let gitignore = Git
     .RepoIgnore
     .framework()
     .prepare(
-        targetFolder: repoFolder
+        targetFolder: repoFolder.path
     )
 
 let swiftLint = SwiftLint
     .standard()
     .prepare(
-        targetFolder: repoFolder
+        targetFolder: repoFolder.path
     )
 
 let license = License
@@ -78,7 +85,7 @@ let license = License
         copyrightEntity: authorName
     )
     .prepare(
-        targetFolder: repoFolder
+        targetFolder: repoFolder.path
     )
 
 let fastfile = Fastlane
@@ -93,31 +100,38 @@ let fastfile = Fastlane
         ]
     )
     .prepare(
-        targetFolder: fastlaneFolder
+        targetFolder: fastlaneFolderPath
     )
 
 let gitHubPagesConfig = GitHub
     .PagesConfig()
     .prepare(
-        targetFolder: repoFolder
+        targetFolder: repoFolder.path
     )
 
 // MARK: - Actually write repo configuration files
 
-try? readme
-    .writeToFileSystem()
+do
+{
+    try readme
+        .writeToFileSystem()
 
-try? gitignore
-    .writeToFileSystem()
+    try gitignore
+        .writeToFileSystem()
 
-try? swiftLint
-    .writeToFileSystem()
+    try swiftLint
+        .writeToFileSystem()
 
-try? license
-    .writeToFileSystem()
+    try license
+        .writeToFileSystem()
 
-try? fastfile
-    .writeToFileSystem()
+    try fastfile
+        .writeToFileSystem()
 
-try? gitHubPagesConfig
-    .writeToFileSystem()
+    try gitHubPagesConfig
+        .writeToFileSystem()
+}
+catch
+{
+    print(error)
+}

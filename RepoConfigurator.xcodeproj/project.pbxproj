@@ -12,7 +12,6 @@
 		9403C25F21303A270019995A /* ReadMe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9403C25E21303A270019995A /* ReadMe.swift */; };
 		9403C261213043CA0019995A /* Shields.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9403C260213043CA0019995A /* Shields.swift */; };
 		9403C2642130729E0019995A /* Markdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9403C2632130729E0019995A /* Markdown.swift */; };
-		9403C266213092660019995A /* ExternalFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9403C265213092660019995A /* ExternalFile.swift */; };
 		940F10112124A26F00554520 /* Dictionary+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940F10102124A26F00554520 /* Dictionary+Helpers.swift */; };
 		940F10172124BA2100554520 /* Xcode_BuildSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940F10162124BA2100554520 /* Xcode_BuildSettings.swift */; };
 		940F10192124BAA200554520 /* Xcode_Project_BuildSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940F10182124BAA200554520 /* Xcode_Project_BuildSettings.swift */; };
@@ -95,7 +94,6 @@
 		9403C25E21303A270019995A /* ReadMe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadMe.swift; sourceTree = "<group>"; };
 		9403C260213043CA0019995A /* Shields.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shields.swift; sourceTree = "<group>"; };
 		9403C2632130729E0019995A /* Markdown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Markdown.swift; sourceTree = "<group>"; };
-		9403C265213092660019995A /* ExternalFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalFile.swift; sourceTree = "<group>"; };
 		940F10102124A26F00554520 /* Dictionary+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+Helpers.swift"; sourceTree = "<group>"; };
 		940F10162124BA2100554520 /* Xcode_BuildSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Xcode_BuildSettings.swift; sourceTree = "<group>"; };
 		940F10182124BAA200554520 /* Xcode_Project_BuildSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Xcode_Project_BuildSettings.swift; sourceTree = "<group>"; };
@@ -262,7 +260,6 @@
 			isa = PBXGroup;
 			children = (
 				9424AB0E211754C100262B79 /* DeploymentTarget.swift */,
-				9403C265213092660019995A /* ExternalFile.swift */,
 				9424AB082117542200262B79 /* Indentation.swift */,
 				94DECE512118C99F0026F148 /* IndentedText.swift */,
 				9417FE0821288B9000DE18DA /* IndentedTextBuffer.swift */,
@@ -699,7 +696,6 @@
 				9424AB0F211754C100262B79 /* DeploymentTarget.swift in Sources */,
 				9424AB0D211754B200262B79 /* DeviceFamily.swift in Sources */,
 				940F10112124A26F00554520 /* Dictionary+Helpers.swift in Sources */,
-				9403C266213092660019995A /* ExternalFile.swift in Sources */,
 				94C4F9CB211665ED00CFB1DC /* Fastlane.swift in Sources */,
 				94C4F9CD2116660900CFB1DC /* Fastlane_Fastfile.swift in Sources */,
 				941CFFFB2115A78C00326181 /* Git.swift in Sources */,
