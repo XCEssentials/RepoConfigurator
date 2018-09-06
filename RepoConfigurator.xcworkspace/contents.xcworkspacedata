@@ -7,4 +7,7 @@
    <FileRef
       location = "group:RepoConfigurator.playground">
    </FileRef>
+   <FileRef
+      location = "group:Carthage/Checkouts/Files/Files.xcodeproj">
+   </FileRef>
 </Workspace>
