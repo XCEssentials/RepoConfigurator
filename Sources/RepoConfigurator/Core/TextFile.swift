@@ -26,16 +26,6 @@
 
 import Foundation
 
-// MARK: - Text File Piece
-
-public
-protocol TextFilePiece
-{
-    func asIndentedText(
-        with indentation: Indentation
-        ) -> IndentedText
-}
-
 // MARK: - Text File
 
 public
