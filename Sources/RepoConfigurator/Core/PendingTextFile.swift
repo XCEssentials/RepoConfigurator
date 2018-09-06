@@ -29,9 +29,15 @@ import Foundation
 //---
 
 public
-struct RawTextFile<T: TextFile>
+struct PendingTextFile<T: TextFile>
 {
     // MARK: Type level members
+
+    public
+    enum WritingFileError: Error
+    {
+        case invalidPath
+    }
 
     public
     enum IfFileExistsWritePolicy
@@ -45,23 +51,17 @@ struct RawTextFile<T: TextFile>
     public
     let model: T
 
-    /**
-     Desired full path to file in file system.
-     */
     public
-    let targetLocation: URL
+    let name: String
+
+    public
+    let folder: String
 
     public
     let shouldRemoveSpacesAtEOL: Bool
 
     public
     let shouldRemoveRepeatingEmptyLines: Bool
-
-    public
-    var name: String
-    {
-        return targetLocation.lastPathComponent
-    }
 
     //---
 
@@ -98,24 +98,14 @@ struct RawTextFile<T: TextFile>
         ifFileExists: IfFileExistsWritePolicy = .override
         ) throws -> Bool
     {
-        // lets makre sure folders up to this file exists
-
-        let pathToFolder = targetLocation
-            .deletingLastPathComponent()
-            .path
-
-        if
-            !FileManager
-                .default
-                .fileExists(atPath: pathToFolder)
+        guard
+            let targetLocation = URL
+                .init(string: folder)?
+                .appendingPathComponent(name, isDirectory: false),
+            targetLocation.isFileURL
+        else
         {
-            try FileManager
-                .default
-                .createDirectory(
-                    atPath: pathToFolder,
-                    withIntermediateDirectories: true,
-                    attributes: nil
-                )
+            throw WritingFileError.invalidPath
         }
 
         //---

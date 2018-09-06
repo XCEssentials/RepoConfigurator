@@ -53,7 +53,7 @@ extension Struct.Spec
             targetFolder: String,
             removeSpacesAtEOL: Bool = true,
             removeRepeatingEmptyLines: Bool = true
-            ) throws -> RawTextFile<PostGenerateScript>
+            ) throws -> PendingTextFile<PostGenerateScript>
         {
             return try prepare(
                 name: type(of: self).defaultFileName,

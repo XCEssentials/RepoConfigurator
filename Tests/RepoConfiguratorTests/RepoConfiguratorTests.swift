@@ -8,6 +8,8 @@
 
 import XCTest
 
+import Files
+
 // @testable
 #if XCODE
 
@@ -34,7 +36,7 @@ class RepoConfiguratorTests: XCTestCase
     lazy
     var currentBundle: Bundle = .init(for: type(of: self))
 
-    let targetFolder = URL.init(fileURLWithPath: "") // doesn't matter
+    let targetFolder = Folder.root // doesn't matter
 }
 
 //---
@@ -87,7 +89,7 @@ extension RepoConfiguratorTests
                 ]
             )
             .prepare(
-                targetFolder: targetFolder
+                targetFolder: targetFolder.path
             )
 
         //---

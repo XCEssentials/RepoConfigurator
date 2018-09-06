@@ -45,14 +45,6 @@ extension TextFile
     }
 }
 
-// MARK: - Text File Error
-
-public
-enum TextFileError: Error
-{
-    case invalidTargetLocation
-}
-
 // MARK: - ARBITRARY Named Text File
 
 public
@@ -66,24 +58,12 @@ extension ArbitraryNamedTextFile
         targetFolder: String,
         removeSpacesAtEOL: Bool = true,
         removeRepeatingEmptyLines: Bool = true
-        ) throws -> RawTextFile<Self>
+        ) -> PendingTextFile<Self>
     {
-        guard
-            var targetLocation = URL(string: targetFolder),
-            targetLocation.isFileURL
-        else
-        {
-            throw TextFileError.invalidTargetLocation
-        }
-
-        targetLocation = targetLocation
-            .appendingPathComponent(name, isDirectory: false)
-
-        //---
-
-        return RawTextFile(
+        return PendingTextFile(
             model: self,
-            targetLocation: targetLocation,
+            name: name,
+            folder: targetFolder,
             shouldRemoveSpacesAtEOL: removeSpacesAtEOL,
             shouldRemoveRepeatingEmptyLines: removeRepeatingEmptyLines
         )
@@ -126,23 +106,12 @@ extension FixedNameTextFile
         targetFolder: String,
         removeSpacesAtEOL: Bool = true,
         removeRepeatingEmptyLines: Bool = true
-        ) throws -> RawTextFile<Self>
+        ) -> PendingTextFile<Self>
     {
-        guard
-            var targetLocation = URL(string: targetFolder)
-        else
-        {
-            throw TextFileError.invalidTargetLocation
-        }
-
-        targetLocation = targetLocation
-            .appendingPathComponent(fileName, isDirectory: false)
-
-        //---
-
-        return RawTextFile(
+        return PendingTextFile(
             model: self,
-            targetLocation: targetLocation,
+            name: fileName,
+            folder: targetFolder,
             shouldRemoveSpacesAtEOL: removeSpacesAtEOL,
             shouldRemoveRepeatingEmptyLines: removeRepeatingEmptyLines
         )

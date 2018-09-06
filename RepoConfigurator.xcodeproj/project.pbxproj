@@ -35,15 +35,16 @@
 		94245732211B025C00A05876 /* CocoaPods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94245731211B025C00A05876 /* CocoaPods.swift */; };
 		94245734211B034400A05876 /* CocoaPods_Podfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94245733211B034400A05876 /* CocoaPods_Podfile.swift */; };
 		94245736211B3EE200A05876 /* CocoaPods_Podspec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94245735211B3EE200A05876 /* CocoaPods_Podspec.swift */; };
-		9424573A211B8FE400A05876 /* RawTextFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94245739211B8FE400A05876 /* RawTextFile.swift */; };
+		9424573A211B8FE400A05876 /* PendingTextFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94245739211B8FE400A05876 /* PendingTextFile.swift */; };
 		9424573C211B9EE500A05876 /* Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9424573B211B9EE500A05876 /* Defaults.swift */; };
 		9424AB092117542200262B79 /* Indentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9424AB082117542200262B79 /* Indentation.swift */; };
 		9424AB0B2117549500262B79 /* KeyValuePair.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9424AB0A2117549500262B79 /* KeyValuePair.swift */; };
 		9424AB0D211754B200262B79 /* DeviceFamily.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9424AB0C211754B200262B79 /* DeviceFamily.swift */; };
 		9424AB0F211754C100262B79 /* DeploymentTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9424AB0E211754C100262B79 /* DeploymentTarget.swift */; };
 		9424AB11211754FE00262B79 /* OSIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9424AB10211754FE00262B79 /* OSIdentifier.swift */; };
-		9424AB132117552100262B79 /* PathPrefix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9424AB122117552100262B79 /* PathPrefix.swift */; };
+		9424AB132117552100262B79 /* Folder+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9424AB122117552100262B79 /* Folder+Helpers.swift */; };
 		943261852138884800764E92 /* Xcodeproj.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943261842138884800764E92 /* Xcodeproj.swift */; };
+		9432E72A2141C576004C6E3B /* Files.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9432E7292141C576004C6E3B /* Files.framework */; };
 		94511D872121D21400AB4CD0 /* CustomTextFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94511D862121D21400AB4CD0 /* CustomTextFile.swift */; };
 		94511D892122020800AB4CD0 /* Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94511D882122020800AB4CD0 /* Operators.swift */; };
 		9459C779211C5F800041C38B /* YesNoStringLiteralsForXcode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9459C778211C5F800041C38B /* YesNoStringLiteralsForXcode.swift */; };
@@ -118,15 +119,16 @@
 		94245731211B025C00A05876 /* CocoaPods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CocoaPods.swift; sourceTree = "<group>"; };
 		94245733211B034400A05876 /* CocoaPods_Podfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CocoaPods_Podfile.swift; sourceTree = "<group>"; };
 		94245735211B3EE200A05876 /* CocoaPods_Podspec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CocoaPods_Podspec.swift; sourceTree = "<group>"; };
-		94245739211B8FE400A05876 /* RawTextFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RawTextFile.swift; sourceTree = "<group>"; };
+		94245739211B8FE400A05876 /* PendingTextFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendingTextFile.swift; sourceTree = "<group>"; };
 		9424573B211B9EE500A05876 /* Defaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Defaults.swift; sourceTree = "<group>"; };
 		9424AB082117542200262B79 /* Indentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Indentation.swift; sourceTree = "<group>"; };
 		9424AB0A2117549500262B79 /* KeyValuePair.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyValuePair.swift; sourceTree = "<group>"; };
 		9424AB0C211754B200262B79 /* DeviceFamily.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceFamily.swift; sourceTree = "<group>"; };
 		9424AB0E211754C100262B79 /* DeploymentTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeploymentTarget.swift; sourceTree = "<group>"; };
 		9424AB10211754FE00262B79 /* OSIdentifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSIdentifier.swift; sourceTree = "<group>"; };
-		9424AB122117552100262B79 /* PathPrefix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathPrefix.swift; sourceTree = "<group>"; };
+		9424AB122117552100262B79 /* Folder+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Folder+Helpers.swift"; sourceTree = "<group>"; };
 		943261842138884800764E92 /* Xcodeproj.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Xcodeproj.swift; sourceTree = "<group>"; };
+		9432E7292141C576004C6E3B /* Files.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Files.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		94511D862121D21400AB4CD0 /* CustomTextFile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTextFile.swift; sourceTree = "<group>"; };
 		94511D882122020800AB4CD0 /* Operators.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Operators.swift; sourceTree = "<group>"; };
 		9459C778211C5F800041C38B /* YesNoStringLiteralsForXcode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YesNoStringLiteralsForXcode.swift; sourceTree = "<group>"; };
@@ -215,6 +217,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9432E72A2141C576004C6E3B /* Files.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -267,7 +270,7 @@
 				94511D882122020800AB4CD0 /* Operators.swift */,
 				9424AB10211754FE00262B79 /* OSIdentifier.swift */,
 				94C9D8B5212E1551000CCADB /* OSKind.swift */,
-				94245739211B8FE400A05876 /* RawTextFile.swift */,
+				94245739211B8FE400A05876 /* PendingTextFile.swift */,
 				941CFFDC2115220600326181 /* RepoConfigurator.h */,
 				941CFFF3211591E900326181 /* TextFile.swift */,
 				945BFC6D2141B557009DD437 /* TextFilePiece.swift */,
@@ -530,7 +533,7 @@
 				9424AB0C211754B200262B79 /* DeviceFamily.swift */,
 				940F10102124A26F00554520 /* Dictionary+Helpers.swift */,
 				9403C2632130729E0019995A /* Markdown.swift */,
-				9424AB122117552100262B79 /* PathPrefix.swift */,
+				9424AB122117552100262B79 /* Folder+Helpers.swift */,
 				94F1D8DD2125A3DE0051AD3D /* String+Helpers.swift */,
 				94DECE4D21188B4B0026F148 /* String+TextFilePiece.swift */,
 				941CFFDD2115220600326181 /* Versions.swift */,
@@ -551,6 +554,7 @@
 		A270F6B0C53210622D202770 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9432E7292141C576004C6E3B /* Files.framework */,
 				4E1F4DEB6F7DBC42C29FF945 /* Pods_RepoConfigurator.framework */,
 			);
 			name = Frameworks;
@@ -713,8 +717,8 @@
 				94511D892122020800AB4CD0 /* Operators.swift in Sources */,
 				9424AB11211754FE00262B79 /* OSIdentifier.swift in Sources */,
 				94C9D8B6212E1551000CCADB /* OSKind.swift in Sources */,
-				9424AB132117552100262B79 /* PathPrefix.swift in Sources */,
-				9424573A211B8FE400A05876 /* RawTextFile.swift in Sources */,
+				9424AB132117552100262B79 /* Folder+Helpers.swift in Sources */,
+				9424573A211B8FE400A05876 /* PendingTextFile.swift in Sources */,
 				9403C25F21303A270019995A /* ReadMe.swift in Sources */,
 				9403C261213043CA0019995A /* Shields.swift in Sources */,
 				94F1D8DE2125A3DE0051AD3D /* String+Helpers.swift in Sources */,
