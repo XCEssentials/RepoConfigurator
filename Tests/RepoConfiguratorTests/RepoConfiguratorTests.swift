@@ -59,12 +59,6 @@ extension RepoConfiguratorTests
               - Sources
               - Tests
 
-            excluded: # paths to ignore during linting. Takes precedence over `included`.
-              - Resources
-              - Carthage
-              - Pods
-              - Templates
-
             # rules options:
 
             line_length:
@@ -76,18 +70,21 @@ extension RepoConfiguratorTests
             statement_position:
               # https://github.com/realm/SwiftLint/issues/1181#issuecomment-272445593
               statement_mode: uncuddled_else
+
+            excluded: # paths to ignore during linting. Takes precedence over `included`.
+              - Resources
+              - Carthage
+              - Pods
+              - Templates
             """
 
         //---
 
         let model = SwiftLint
-            .init(
-                .disabledRules(),
-                .included(),
-                .excluded([
+            .standard(
+                exclude: [
                     "Templates"
-                ]),
-                .rulesOptions()
+                ]
             )
             .prepare(
                 targetFolder: targetFolder
