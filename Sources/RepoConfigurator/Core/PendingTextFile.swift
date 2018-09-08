@@ -38,6 +38,15 @@ struct PendingTextFile<T: TextFile>
     {
         case doNotWrite
         case override
+
+        //---
+
+        public
+        static
+        var skip: IfFileExistsWritePolicy
+        {
+            return .doNotWrite
+        }
     }
 
     // MARK: Instance level members
