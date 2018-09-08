@@ -6,6 +6,9 @@ import XCERepoConfigurator
 
 let companyName = "XCEssentials"
 let productName = "RepoConfigurator"
+let shortProductDescription = """
+    Generate repo config files using Swift and Xcode playgrounds.
+    """
 let projectName = productName
 
 let swiftVersion = "4.2"
@@ -20,14 +23,6 @@ let repoFolder = try! Folder
     )
     .subfolder(
         named: productName
-    )
-
-let baseReadMe = try! repoFolder
-    .subfolder(
-        named: "Docs"
-    )
-    .file(
-        named: "BaseReadMe.md"
     )
 
 let authorName = "Maxim Khatskevich"
@@ -59,7 +54,13 @@ let readme = try ReadMe
                 version: swiftVersion
             )
         ],
-        baseReadMe.readAsString()
+        """
+
+        # \(productName)
+
+        \(shortProductDescription)
+        
+        """
     )
     .prepare(
         targetFolder: repoFolder.path,
@@ -114,7 +115,7 @@ let gitHubPagesConfig = GitHub
 do
 {
     try readme
-        .writeToFileSystem()
+        .writeToFileSystem(ifFileExists: .skip)
 
     try gitignore
         .writeToFileSystem()
