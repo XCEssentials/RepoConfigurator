@@ -96,6 +96,7 @@ struct PendingTextFile<T: TextFile>
 
     //---
 
+    @discardableResult
     public
     func writeToFileSystem(
         ifFileExists: IfFileExistsWritePolicy = .override
