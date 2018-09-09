@@ -8,15 +8,13 @@
 
 import XCTest
 
-import Files
-
 // @testable
 import XCERepoConfigurator
 
 //---
 
 final
-class RepoConfiguratorTests: XCTestCase
+class Main: XCTestCase
 {
     static
     var allTests = [
@@ -28,12 +26,12 @@ class RepoConfiguratorTests: XCTestCase
     lazy
     var currentBundle: Bundle = .init(for: type(of: self))
 
-    let targetFolder = Folder.root // doesn't matter
+    let targetFolderPath = "/" // doesn't matter
 }
 
 //---
 
-extension RepoConfiguratorTests
+extension Main
 {
     func testSwiftLint()
     {
@@ -81,7 +79,7 @@ extension RepoConfiguratorTests
                 ]
             )
             .prepare(
-                targetFolder: targetFolder.path
+                targetFolder: targetFolderPath
             )
 
         //---
