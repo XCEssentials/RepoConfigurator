@@ -1,6 +1,13 @@
+import Foundation
+
 import Files
 
 import XCERepoConfigurator
+
+//---
+
+print("\n")
+print("--- BEGIN of '\(Bundle.main.executableURL?.pathComponents.last ?? "?")' script ---")
 
 //---
 
@@ -56,7 +63,7 @@ print("✅ Fastlane folder: ./\(fastlaneFolder.name)")
 
 do
 {
-    print("Write '\(ReadMe.fileName)'")
+    print("Writing '\(ReadMe.fileName)'...")
 
     let readMe = try ReadMe
         .openSourceProduct(
@@ -97,7 +104,7 @@ do
 
     //---
 
-    print("Write '\(Git.RepoIgnore.fileName)'")
+    print("Writing '\(Git.RepoIgnore.fileName)'...")
 
     try Git
         .RepoIgnore
@@ -109,7 +116,7 @@ do
 
     //---
 
-    print("Write '\(SwiftLint.fileName)'")
+    print("Writing '\(SwiftLint.fileName)'...")
 
     try SwiftLint
         .standard()
@@ -120,7 +127,7 @@ do
 
     //---
 
-    print("Write '\(License.MIT.fileName)'")
+    print("Writing '\(License.MIT.fileName)'...")
 
     try License
         .MIT(
@@ -134,7 +141,7 @@ do
 
     //---
 
-    print("Write '\(Fastlane.Fastfile.fileName)'")
+    print("Writing '\(Fastlane.Fastfile.fileName)'...")
 
     try Fastlane
         .Fastfile
@@ -154,7 +161,7 @@ do
 
     //---
 
-    print("Write '\(GitHub.PagesConfig.fileName)'")
+    print("Writing '\(GitHub.PagesConfig.fileName)'...")
 
     try GitHub
         .PagesConfig()
@@ -167,3 +174,7 @@ catch
 {
     print(error)
 }
+
+//---
+
+print("--- END of '\(Bundle.main.executableURL?.pathComponents.last ?? "?")' script ---")
