@@ -11,15 +11,7 @@ import XCTest
 import Files
 
 // @testable
-#if XCODE
-
 import XCERepoConfigurator
-
-#else
-
-import RepoConfigurator // in SPM env "product_name" == "target_name"
-
-#endif
 
 //---
 
