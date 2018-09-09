@@ -131,3 +131,4 @@ fastlane/test_output
 #
 #
 #
+*.xcodeproj

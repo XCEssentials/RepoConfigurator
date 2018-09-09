@@ -108,7 +108,11 @@ do
 
     try Git
         .RepoIgnore
-        .framework()
+        .framework(
+            otherEntries: [
+                "*.xcodeproj"
+            ]
+        )
         .prepare(
             targetFolder: repoFolder.path
         )
