@@ -27,7 +27,8 @@
 extension Fastlane
 {
     public
-    struct Fastfile: FixedNameTextFile
+    final
+    class Fastfile: FixedNameTextFile
     {
         // MARK: Type level members
 
@@ -49,8 +50,19 @@ extension Fastlane
 
         // MARK: Instance level members
 
+        private
+        var buffer: IndentedTextBuffer = .init()
+
         public
-        let fileContent: IndentedText
+        var fileContent: IndentedText
+        {
+            return buffer.content
+        }
+
+        // MARK: Initializers
+
+        public
+        init() {}
     }
 }
 
@@ -59,26 +71,6 @@ extension Fastlane
 public
 extension Fastlane.Fastfile
 {
-    public
-    static
-    func custom(
-        predefinedSections: [TextFileSection<Fastlane.Fastfile>] = [],
-        otherEntries: [String] = []
-        ) -> Fastlane.Fastfile
-    {
-        let result = IndentedTextBuffer()
-
-        //---
-
-        result <<< predefinedSections
-
-        result <<< otherEntries
-
-        //---
-
-        return .init(fileContent: result.content)
-    }
-
     public
     static
     func app(
@@ -106,19 +98,19 @@ extension Fastlane.Fastfile
 
         //---
 
-        let sections: [TextFileSection<Fastlane.Fastfile>] = [
-
+        let result = self
+            .init()
             .defaultHeader(
                 optOutUsage: optOutUsage,
                 autoUpdateFastlane: autoUpdateFastlane,
                 minimumFastlaneVersion: minimumFastlaneVersion
-            ),
+            )
             .beforeRelease(
                 ensureGitBranch: releaseBranches,
                 projectName: projectName,
                 getCurrentVersionFromTarget: currentVersionTargetName,
                 cocoaPodsModuleName: nil // N/A, it's an app!
-            ),
+            )
             .regenerateProject(
                 projectName: projectName,
                 getCurrentVersionFromTarget: currentVersionTargetName,
@@ -127,7 +119,7 @@ extension Fastlane.Fastfile
                 sourceryTargets: sourceryTargets,
                 swiftLintGlobalTargets: swiftLintGlobalTargets,
                 swiftLintPodsTargets: swiftLintPodsTargets
-            ),
+            )
             .generateProject(
                 projectName: projectName,
                 usesCocoapods: usesCocoapods,
@@ -135,7 +127,7 @@ extension Fastlane.Fastfile
                 sourceryTargets: sourceryTargets,
                 swiftLintGlobalTargets: swiftLintGlobalTargets,
                 swiftLintPodsTargets: swiftLintPodsTargets
-            ),
+            )
             .archiveBeta(
                 productName: productName,
                 projectName: projectName,
@@ -143,21 +135,15 @@ extension Fastlane.Fastfile
                 exportMethod: stagingExportMethod,
                 archivesExportPath: archivesExportPath
             )
-        ]
+
+        otherEntries.forEach{
+
+            _ = result.custom($0)
+        }
 
         //---
 
-        let result = IndentedTextBuffer()
-
-        //---
-
-        result <<< sections
-
-        result <<< otherEntries
-
-        //---
-
-        return .init(fileContent: result.content)
+        return result
     }
 
     public
@@ -184,19 +170,19 @@ extension Fastlane.Fastfile
 
         //---
 
-        let sections: [TextFileSection<Fastlane.Fastfile>] = [
-
+        let result = self
+            .init()
             .defaultHeader(
                 optOutUsage: optOutUsage,
                 autoUpdateFastlane: autoUpdateFastlane,
                 minimumFastlaneVersion: minimumFastlaneVersion
-            ),
+            )
             .beforeRelease(
                 ensureGitBranch: releaseBranches,
                 projectName: projectName,
                 getCurrentVersionFromTarget: currentVersionTargetName,
                 cocoaPodsModuleName: cocoaPodsModuleName
-            ),
+            )
             .regenerateProject(
                 projectName: projectName,
                 getCurrentVersionFromTarget: currentVersionTargetName,
@@ -205,7 +191,7 @@ extension Fastlane.Fastfile
                 sourceryTargets: sourceryTargets,
                 swiftLintGlobalTargets: swiftLintGlobalTargets,
                 swiftLintPodsTargets: swiftLintPodsTargets
-            ),
+            )
             .generateProject(
                 projectName: projectName,
                 usesCocoapods: usesCocoapods,
@@ -214,223 +200,190 @@ extension Fastlane.Fastfile
                 swiftLintGlobalTargets: swiftLintGlobalTargets,
                 swiftLintPodsTargets: swiftLintPodsTargets
             )
-        ]
+
+        otherEntries.forEach{
+
+            _ = result.custom($0)
+        }
 
         //---
 
-        let result = IndentedTextBuffer()
-
-        //---
-
-        result <<< sections
-
-        result <<< otherEntries
-
-        //---
-
-        return .init(fileContent: result.content)
+        return result
     }
 }
 
 // MARK: - Content rendering
 
 public
-extension TextFileSection
-    where
-    Context == Fastlane.Fastfile
+extension Fastlane.Fastfile
 {
-    static
     func defaultHeader(
         optOutUsage: Bool = false,
         autoUpdateFastlane: Bool = false,
         minimumFastlaneVersion: VersionString = Defaults.minimumFastlaneVersion
-        ) -> TextFileSection<Context>
+        ) -> Fastlane.Fastfile
     {
-        return .init{
+        //swiftlint:disable line_length
 
-            indentation in
+        buffer <<< """
+            # Customise this file, documentation can be found here:
+            # https://github.com/KrauseFx/fastlane/tree/master/docs
+            # All available actions: https://github.com/KrauseFx/fastlane/blob/master/docs/Actions.md
+            # can also be listed using the `fastlane actions` command
 
-            //---
+            # Change the syntax highlighting to Ruby
+            # All lines starting with a # are ignored when running `fastlane`
 
-            let result: IndentedTextBuffer = .init(with: indentation)
+            # More information about multiple platforms in fastlane: https://github.com/KrauseFx/fastlane/blob/master/docs/Platforms.md
+            # All available actions: https://github.com/KrauseFx/fastlane/blob/master/docs/Actions.md
 
-            //---
+            # By default, fastlane will send which actions are used
+            # No personal data is shared, more information on https://github.com/fastlane/enhancer
+            # Uncomment the following line to opt out
+            \(optOutUsage ? "" : "# ")opt_out_usage
 
-            //swiftlint:disable line_length
+            # If you want to automatically update fastlane if a new version is available:
+            \(autoUpdateFastlane ? "" : "# ")update_fastlane
 
-            result <<< """
-                # Customise this file, documentation can be found here:
-                # https://github.com/KrauseFx/fastlane/tree/master/docs
-                # All available actions: https://github.com/KrauseFx/fastlane/blob/master/docs/Actions.md
-                # can also be listed using the `fastlane actions` command
+            # This is the minimum version number required.
+            # Update this, if you use features of a newer version
+            fastlane_version '\(minimumFastlaneVersion)'
 
-                # Change the syntax highlighting to Ruby
-                # All lines starting with a # are ignored when running `fastlane`
+            """
 
-                # More information about multiple platforms in fastlane: https://github.com/KrauseFx/fastlane/blob/master/docs/Platforms.md
-                # All available actions: https://github.com/KrauseFx/fastlane/blob/master/docs/Actions.md
+        //swiftlint:enable line_length
 
-                # By default, fastlane will send which actions are used
-                # No personal data is shared, more information on https://github.com/fastlane/enhancer
-                # Uncomment the following line to opt out
-                \(optOutUsage ? "" : "# ")opt_out_usage
+        //---
 
-                # If you want to automatically update fastlane if a new version is available:
-                \(autoUpdateFastlane ? "" : "# ")update_fastlane
-
-                # This is the minimum version number required.
-                # Update this, if you use features of a newer version
-                fastlane_version '\(minimumFastlaneVersion)'
-
-                """
-
-            //swiftlint:enable line_length
-
-            //---
-
-            return result.content
-        }
+        return self
     }
 
-    static
     func beforeRelease(
         ensureGitBranch: String? = Defaults.releaseGitBranchesRegEx,
         projectName: String,
         getCurrentVersionFromTarget targetName: String? = nil,
         cocoaPodsModuleName: String? // pass 'nil' if should not maintain podspec file
-        ) -> TextFileSection<Context>
+        ) -> Fastlane.Fastfile
     {
         let laneName = #function.split(separator: "(").first!
 
         //---
 
-        return .init{
+        buffer <<< """
 
-            indentation in
+            lane :\(laneName) do
+            """
 
-            //---
+        buffer.indentation.nest{
 
-            let result: IndentedTextBuffer = .init(with: indentation)
+            buffer <<< ensureGitBranch.map{ """
 
-            //---
-
-            result <<< """
-
-                lane :\(laneName) do
+                ensure_git_branch(
+                    branch: '\($0)'
+                )
                 """
-
-            indentation.nest{
-
-                result <<< ensureGitBranch.map{ """
-
-                    ensure_git_branch(
-                        branch: '\($0)'
-                    )
-                    """
-                }
-
-                result <<< """
-
-                    ensure_git_status_clean
-                    """
-
-                result <<< (cocoaPodsModuleName != nil).mapIf(true){ """
-
-                    # ===
-
-                    pod_lib_lint(
-                        allow_warnings: true,
-                        quick: true
-                    )
-                    """
-                }
-
-                result <<< """
-
-                    # === Remember current version number
-
-                    versionNumber = get_version_number(
-                        xcodeproj: '\(projectName).xcodeproj',
-                        target: '\(targetName ?? projectName)'
-                    )
-
-                    puts 'Current VERSION number: ' + versionNumber
-
-                    # === Infer new version number
-
-                    defaultNewVersion = git_branch.split('/').last
-
-                    # === Define new version number
-
-                    useInferredNEWVersionNumber = prompt(
-                        text: 'Proceed with inferred NEW version number (' + defaultNewVersion + ')?',
-                        boolean: true
-                    )
-
-                    if useInferredNEWVersionNumber
-
-                        newVersionNumber = defaultNewVersion
-
-                    else
-
-                        newVersionNumber = prompt(
-                            text: 'New VERSION number:'
-                        )
-
-                    end
-
-                    # === Apply NEW version number and increment build number
-
-                    increment_version_number(
-                        xcodeproj: '\(projectName).xcodeproj',
-                        version_number: newVersionNumber
-                    )
-
-                    increment_build_number(
-                        xcodeproj: '\(projectName).xcodeproj'
-                    )
-
-                    # ===
-
-                    newBuildNumber = get_build_number(
-                        xcodeproj: '\(projectName).xcodeproj'
-                    )
-
-                    commit_version_bump( # it will fail if more than version bump
-                        xcodeproj: '\(projectName).xcodeproj',
-                        message: 'Version Bump to ' + newVersionNumber + ' (' + newBuildNumber + ')'
-                    )
-                    """
-
-                result <<< cocoaPodsModuleName.map{ """
-
-                    # ===
-
-                    version_bump_podspec(
-                        path: './\($0).podspec',
-                        version_number: newVersionNumber
-                    )
-
-                    git_commit(
-                        path: './\($0).podspec',
-                        message: 'Version Bump to ' + newVersionNumber + ' in Podspec file'
-                    )
-                    """
-                }
             }
 
-            result <<< """
+            buffer <<< """
 
-                end # lane :\(laneName)
+                ensure_git_status_clean
                 """
 
-            //---
+            buffer <<< (cocoaPodsModuleName != nil).mapIf(true){ """
 
-            return result.content
+                # ===
+
+                pod_lib_lint(
+                    allow_warnings: true,
+                    quick: true
+                )
+                """
+            }
+
+            buffer <<< """
+
+                # === Remember current version number
+
+                versionNumber = get_version_number(
+                    xcodeproj: '\(projectName).xcodeproj',
+                    target: '\(targetName ?? projectName)'
+                )
+
+                puts 'Current VERSION number: ' + versionNumber
+
+                # === Infer new version number
+
+                defaultNewVersion = git_branch.split('/').last
+
+                # === Define new version number
+
+                useInferredNEWVersionNumber = prompt(
+                    text: 'Proceed with inferred NEW version number (' + defaultNewVersion + ')?',
+                    boolean: true
+                )
+
+                if useInferredNEWVersionNumber
+
+                    newVersionNumber = defaultNewVersion
+
+                else
+
+                    newVersionNumber = prompt(
+                        text: 'New VERSION number:'
+                    )
+
+                end
+
+                # === Apply NEW version number and increment build number
+
+                increment_version_number(
+                    xcodeproj: '\(projectName).xcodeproj',
+                    version_number: newVersionNumber
+                )
+
+                increment_build_number(
+                    xcodeproj: '\(projectName).xcodeproj'
+                )
+
+                # ===
+
+                newBuildNumber = get_build_number(
+                    xcodeproj: '\(projectName).xcodeproj'
+                )
+
+                commit_version_bump( # it will fail if more than version bump
+                    xcodeproj: '\(projectName).xcodeproj',
+                    message: 'Version Bump to ' + newVersionNumber + ' (' + newBuildNumber + ')'
+                )
+                """
+
+            buffer <<< cocoaPodsModuleName.map{ """
+
+                # ===
+
+                version_bump_podspec(
+                    path: './\($0).podspec',
+                    version_number: newVersionNumber
+                )
+
+                git_commit(
+                    path: './\($0).podspec',
+                    message: 'Version Bump to ' + newVersionNumber + ' in Podspec file'
+                )
+                """
+            }
         }
+
+        buffer <<< """
+
+            end # lane :\(laneName)
+            """
+
+        //---
+
+        return self
     }
 
-    static
     func regenerateProject(
         projectName: String,
         getCurrentVersionFromTarget targetName: String? = nil,
@@ -439,114 +392,102 @@ extension TextFileSection
         sourceryTargets: [String] = [],
         swiftLintGlobalTargets: [String]? = nil,
         swiftLintPodsTargets: [String] = []
-        ) -> TextFileSection<Context>
+        ) -> Fastlane.Fastfile
     {
         let laneName = #function.split(separator: "(").first!
         let swiftLintGlobalTargets = swiftLintGlobalTargets ?? [projectName]
 
         //---
 
-        return .init{
+        buffer <<< """
 
-            indentation in
+            lane :\(laneName) do
 
-            //---
+            """
 
-            let result: IndentedTextBuffer = .init(with: indentation)
+        buffer.indentation.nest{
 
-            //---
+            buffer <<< """
+                # === Remember current version and build numbers
 
-            result <<< """
+                versionNumber = get_version_number(
+                    xcodeproj: '\(projectName).xcodeproj',
+                    target: '\(targetName ?? projectName)'
+                )
 
-                lane :\(laneName) do
+                buildNumber = get_build_number(
+                    xcodeproj: '\(projectName).xcodeproj'
+                )
 
+                # === Remove completely current project file/package
+
+                # default initial location for any command
+                # is inside 'Fastlane' folder
+
+                sh 'cd ./.. && rm -r ./\(projectName).xcodeproj'
+
+                # === Regenerate project
+
+                # default initial location for any command
+                # is inside 'Fastlane' folder
+
+                sh 'cd ./.. && struct generate\(usesCocoapods ? " && pod install" : "")'
+
+                # === Set proper current version and build numbers
+
+                increment_version_number(
+                    xcodeproj: '\(projectName).xcodeproj',
+                    version_number: versionNumber
+                )
+
+                increment_build_number(
+                    xcodeproj: '\(projectName).xcodeproj',
+                    build_number: buildNumber
+                )
+
+                # === Sort all project entries
+
+                # default initial location for any command
+                # is inside 'Fastlane' folder
+
+                sh 'cd ./.. && xcodeproj sort "\(projectName).xcodeproj"'
                 """
 
-            indentation.nest{
+            buffer <<< type(of: self).swiftGenBuildPhase(
+                with: buffer.indentation,
+                projectName: projectName,
+                targetNames: swiftGenTargets
+            )
 
-                result <<< """
-                    # === Remember current version and build numbers
+            buffer <<< type(of: self).sourceryBuildPhase(
+                with: buffer.indentation,
+                projectName: projectName,
+                targetNames: sourceryTargets
+            )
 
-                    versionNumber = get_version_number(
-                        xcodeproj: '\(projectName).xcodeproj',
-                        target: '\(targetName ?? projectName)'
-                    )
+            buffer <<< type(of: self).swiftLintGlobalBuildPhase(
+                with: buffer.indentation,
+                projectName: projectName,
+                targetNames: swiftLintGlobalTargets
+            )
 
-                    buildNumber = get_build_number(
-                        xcodeproj: '\(projectName).xcodeproj'
-                    )
-
-                    # === Remove completely current project file/package
-
-                    # default initial location for any command
-                    # is inside 'Fastlane' folder
-
-                    sh 'cd ./.. && rm -r ./\(projectName).xcodeproj'
-
-                    # === Regenerate project
-
-                    # default initial location for any command
-                    # is inside 'Fastlane' folder
-
-                    sh 'cd ./.. && struct generate\(usesCocoapods ? " && pod install" : "")'
-
-                    # === Set proper current version and build numbers
-
-                    increment_version_number(
-                        xcodeproj: '\(projectName).xcodeproj',
-                        version_number: versionNumber
-                    )
-
-                    increment_build_number(
-                        xcodeproj: '\(projectName).xcodeproj',
-                        build_number: buildNumber
-                    )
-
-                    # === Sort all project entries
-
-                    # default initial location for any command
-                    # is inside 'Fastlane' folder
-
-                    sh 'cd ./.. && xcodeproj sort "\(projectName).xcodeproj"'
-                    """
-
-                result <<< swiftGenBuildPhase(
-                    with: indentation,
-                    projectName: projectName,
-                    targetNames: swiftGenTargets
-                )
-
-                result <<< sourceryBuildPhase(
-                    with: indentation,
-                    projectName: projectName,
-                    targetNames: sourceryTargets
-                )
-
-                result <<< swiftLintGlobalBuildPhase(
-                    with: indentation,
-                    projectName: projectName,
-                    targetNames: swiftLintGlobalTargets
-                )
-
-                result <<< swiftLintPodsBuildPhase(
-                    with: indentation,
-                    projectName: projectName,
-                    targetNames: swiftLintPodsTargets
-                )
-            }
-
-            result <<< """
-
-                end # lane :\(laneName)
-                """
-
-            //---
-
-            return result.content
+            buffer <<< type(of: self).swiftLintPodsBuildPhase(
+                with: buffer.indentation,
+                projectName: projectName,
+                targetNames: swiftLintPodsTargets
+            )
         }
+
+        buffer <<< """
+
+            end # lane :\(laneName)
+            """
+
+        //---
+
+        return self
     }
 
-    static
     func generateProject(
         projectName: String,
         usesCocoapods: Bool = true,
@@ -554,104 +495,92 @@ extension TextFileSection
         sourceryTargets: [String] = [],
         swiftLintGlobalTargets: [String]? = nil,
         swiftLintPodsTargets: [String] = []
-        ) -> TextFileSection<Context>
+        ) -> Fastlane.Fastfile
     {
         let laneName = #function.split(separator: "(").first!
         let swiftLintGlobalTargets = swiftLintGlobalTargets ?? [projectName]
 
         //---
 
-        return .init{
+        buffer <<< """
 
-            indentation in
+            lane :generateProject do
 
-            //---
+            """
 
-            let result: IndentedTextBuffer = .init(with: indentation)
+        buffer.indentation.nest{
 
-            //---
+            buffer <<< """
+                # === Generate project from scratch
 
-            result <<< """
+                # default initial location for any command
+                # is inside 'Fastlane' folder
 
-                lane :generateProject do
+                sh 'cd ./.. && struct generate\(usesCocoapods ? " && pod update" : "")'
 
+                # === Set proper build number
+
+                # NOTE: proper version number is stored in the Info files
+
+                newBuildNumber = prompt(
+                    text: 'Desired BUILD number:'
+                )
+
+                increment_build_number(
+                    xcodeproj: '\(projectName).xcodeproj',
+                    build_number: newBuildNumber
+                )
+
+                # === Sort all project entries
+
+                # default initial location for any command
+                # is inside 'Fastlane' folder
+
+                sh 'cd ./.. && xcodeproj sort "\(projectName).xcodeproj"'
                 """
 
-            indentation.nest{
+            buffer <<< type(of: self).swiftGenBuildPhase(
+                with: buffer.indentation,
+                projectName: projectName,
+                targetNames: swiftGenTargets
+            )
 
-                result <<< """
-                    # === Generate project from scratch
+            buffer <<< type(of: self).sourceryBuildPhase(
+                with: buffer.indentation,
+                projectName: projectName,
+                targetNames: sourceryTargets
+            )
 
-                    # default initial location for any command
-                    # is inside 'Fastlane' folder
+            buffer <<< type(of: self).swiftLintGlobalBuildPhase(
+                with: buffer.indentation,
+                projectName: projectName,
+                targetNames: swiftLintGlobalTargets
+            )
 
-                    sh 'cd ./.. && struct generate\(usesCocoapods ? " && pod update" : "")'
-
-                    # === Set proper build number
-
-                    # NOTE: proper version number is stored in the Info files
-
-                    newBuildNumber = prompt(
-                        text: 'Desired BUILD number:'
-                    )
-
-                    increment_build_number(
-                        xcodeproj: '\(projectName).xcodeproj',
-                        build_number: newBuildNumber
-                    )
-
-                    # === Sort all project entries
-
-                    # default initial location for any command
-                    # is inside 'Fastlane' folder
-
-                    sh 'cd ./.. && xcodeproj sort "\(projectName).xcodeproj"'
-                    """
-
-                result <<< swiftGenBuildPhase(
-                    with: indentation,
-                    projectName: projectName,
-                    targetNames: swiftGenTargets
-                )
-
-                result <<< sourceryBuildPhase(
-                    with: indentation,
-                    projectName: projectName,
-                    targetNames: sourceryTargets
-                )
-
-                result <<< swiftLintGlobalBuildPhase(
-                    with: indentation,
-                    projectName: projectName,
-                    targetNames: swiftLintGlobalTargets
-                )
-
-                result <<< swiftLintPodsBuildPhase(
-                    with: indentation,
-                    projectName: projectName,
-                    targetNames: swiftLintPodsTargets
-                )
-            }
-
-            result <<< """
-
-                end # lane :\(laneName)
-                """
-
-            //---
-
-            return result.content
+            buffer <<< type(of: self).swiftLintPodsBuildPhase(
+                with: buffer.indentation,
+                projectName: projectName,
+                targetNames: swiftLintPodsTargets
+            )
         }
+
+        buffer <<< """
+
+            end # lane :\(laneName)
+            """
+
+        //---
+
+        return self
     }
 
-    static
     func archiveBeta(
         productName: String,
         projectName: String? = nil, // 'productName' will be used if 'nil'
         schemeName: String? = nil, // 'productName' will be used if 'nil'
         exportMethod: Fastlane.Fastfile.ArchiveExportMethod = Defaults.stagingExportMethod,
         archivesExportPath: String = Defaults.archivesExportPath
-        ) -> TextFileSection<Context>
+        ) -> Fastlane.Fastfile
     {
         let laneName = #function.split(separator: "(").first!
         let projectName = projectName ?? productName
@@ -659,88 +588,95 @@ extension TextFileSection
 
         //---
 
-        return .init{
+        //swiftlint:disable line_length
 
-            indentation in
+        buffer <<< """
 
-            //swiftlint:disable line_length
+            lane :\(laneName) do
 
-            return """
+                ensure_git_status_clean
 
-                lane :\(laneName) do
+                # === Set basic parameters
 
-                    ensure_git_status_clean
+                buildNumber = get_build_number(
+                    xcodeproj: '\(projectName).xcodeproj'
+                )
 
-                    # === Set basic parameters
+                versionNumber = get_version_number(
+                    xcodeproj: '\(projectName).xcodeproj'
+                )
 
-                    buildNumber = get_build_number(
-                        xcodeproj: '\(projectName).xcodeproj'
+                puts 'Attempt to use SCHEME: \(schemeName)'
+
+                # === Check if target version number is eligible for this line
+
+                # project must be on version number 'X.Y.Z-beta.*'
+
+                if (!(versionNumber.include? 'dirty') && (versionNumber.include? 'beta'))
+
+                    # git status is clean at this point
+
+                    # === main part
+
+                    # seems to be allowed to run this lane
+
+                    gym(
+                        scheme: '\(schemeName)',
+                        export_method: '\(exportMethod.rawValue)',
+                        output_name: '\(productName)_' + versionNumber + '_' + buildNumber + '.ipa',
+                        output_directory: '\(archivesExportPath)'
                     )
 
-                    versionNumber = get_version_number(
-                        xcodeproj: '\(projectName).xcodeproj'
+                    # === mark dirty
+
+                    # puts 'NOTE: Mark project version as dirty now.'
+
+                    newVersionNumber = versionNumber + '+dirty'
+                    newBuildNumber = buildNumber
+
+                    increment_version_number(
+                        xcodeproj: '\(projectName).xcodeproj',
+                        version_number: newVersionNumber
                     )
 
-                    puts 'Attempt to use SCHEME: \(schemeName)'
+                    # only set 'dirty' mark in 'versionNumber'!
 
-                    # === Check if target version number is eligible for this line
+                    commit_version_bump(
+                        xcodeproj: '\(projectName).xcodeproj',
+                        message: 'Version Bump to ' + newVersionNumber + ' (' + newBuildNumber + ')'
+                    )
 
-                    # project must be on version number 'X.Y.Z-beta.*'
+                else
 
-                    if (!(versionNumber.include? 'dirty') && (versionNumber.include? 'beta'))
+                    puts 'ERROR: This VERSION (' + versionNumber + ') of the app can NOT be archived using this lane.'
+                    puts 'NOTE: this lane is for beta (STAGING) builds ONLY.'
 
-                        # git status is clean at this point
+                end
 
-                        # === main part
+            end # lane :\(laneName)
+            """
 
-                        # seems to be allowed to run this lane
+        //swiftlint:enable line_length
 
-                        gym(
-                            scheme: '\(schemeName)',
-                            export_method: '\(exportMethod.rawValue)',
-                            output_name: '\(productName)_' + versionNumber + '_' + buildNumber + '.ipa',
-                            output_directory: '\(archivesExportPath)'
-                        )
+        //---
 
-                        # === mark dirty
+        return self
+    }
 
-                        # puts 'NOTE: Mark project version as dirty now.'
+    func custom(
+        _ customEntry: String
+        ) -> Fastlane.Fastfile
+    {
+        buffer <<< customEntry
 
-                        newVersionNumber = versionNumber + '+dirty'
-                        newBuildNumber = buildNumber
+        //---
 
-                        increment_version_number(
-                            xcodeproj: '\(projectName).xcodeproj',
-                            version_number: newVersionNumber
-                        )
-
-                        # only set 'dirty' mark in 'versionNumber'!
-
-                        commit_version_bump(
-                            xcodeproj: '\(projectName).xcodeproj',
-                            message: 'Version Bump to ' + newVersionNumber + ' (' + newBuildNumber + ')'
-                        )
-
-                    else
-
-                        puts 'ERROR: This VERSION (' + versionNumber + ') of the app can NOT be archived using this lane.'
-                        puts 'NOTE: this lane is for beta (STAGING) builds ONLY.'
-
-                    end
-
-                end # lane :\(laneName)
-                """
-                .asIndentedText(with: indentation)
-
-            //swiftlint:enable line_length
-        }
+        return self
     }
 }
 
 fileprivate
-extension TextFileSection
-    where
-    Context == Fastlane.Fastfile
+extension Fastlane.Fastfile
 {
     static
     func swiftGenBuildPhase(

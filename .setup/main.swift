@@ -146,15 +146,11 @@ do
     print("Writing '\(Fastlane.Fastfile.fileName)'")
 
     try Fastlane
-        .Fastfile
-        .custom(
-            predefinedSections: [
-                .defaultHeader(),
-                .beforeRelease(
-                    projectName: projectName,
-                    cocoaPodsModuleName: nil
-                )
-            ]
+        .Fastfile()
+        .defaultHeader()
+        .beforeRelease(
+            projectName: projectName,
+            cocoaPodsModuleName: nil
         )
         .prepare(
             targetFolder: fastlaneFolder.path
