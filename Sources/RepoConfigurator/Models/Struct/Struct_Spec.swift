@@ -56,7 +56,7 @@ extension Struct
             //---
 
             let result: IndentedTextBuffer = .init(
-                with: Defaults.singleLevelOfIndentationForYAMLFiles
+                with: Defaults.YAMLIndentation
             )
 
             //---

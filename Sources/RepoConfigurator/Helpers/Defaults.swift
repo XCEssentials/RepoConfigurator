@@ -101,11 +101,11 @@ enum Defaults
 
     public
     static
-    let standardSingleLevelOfIndentation: String = .init(repeating: " ", count: 4)
+    let standardIndentation: String = .init(repeating: " ", count: 4)
 
     public
     static
-    let singleLevelOfIndentationForYAMLFiles: String = .init(repeating: " ", count: 2)
+    let YAMLIndentation: String = .init(repeating: " ", count: 2)
 
     public
     static

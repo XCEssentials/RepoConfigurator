@@ -126,7 +126,7 @@ class Indentation: Equatable
 
     public
     init(
-        _ singleLevel: String = Defaults.standardSingleLevelOfIndentation
+        _ singleLevel: String = Defaults.standardIndentation
         )
     {
         self.singleLevel = singleLevel
