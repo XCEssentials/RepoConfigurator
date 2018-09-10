@@ -65,23 +65,21 @@ do
 {
     print("Writing '\(ReadMe.fileName)'...")
 
-    let readMe = try ReadMe
-        .openSourceProduct(
-            header: [
-                .gitHubLicenseBadge(
-                    account: companyName,
-                    repo: productName
-                ),
-                .gitHubTagBadge(
-                    account: companyName,
-                    repo: productName
-                ),
-                .carthageCompatibleBadge(),
-                .swiftPMCompatibleBadge(),
-                .writtenInSwiftBadge(
-                    version: swiftVersion
-                )
-            ],
+    let readMe = try ReadMe()
+        .addGitHubLicenseBadge(
+            account: companyName,
+            repo: productName
+        )
+        .addGitHubTagBadge(
+            account: companyName,
+            repo: productName
+        )
+        .addCarthageCompatibleBadge()
+        .addSwiftPMCompatibleBadge()
+        .addWrittenInSwiftBadge(
+            version: swiftVersion
+        )
+        .add(
             """
 
             # \(productName)
