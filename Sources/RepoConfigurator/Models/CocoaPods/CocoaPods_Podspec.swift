@@ -28,7 +28,8 @@ public
 extension CocoaPods
 {
     public
-    struct Podspec: ArbitraryNamedTextFile
+    final
+    class Podspec: ArbitraryNamedTextFile
     {
         // MARK: Type level members
 
@@ -57,40 +58,91 @@ extension CocoaPods
             email: String
         )
 
-        fileprivate
-        enum GeneralSettings {}
+        public
+        struct PerPlatformSettings
+        {
+            private
+            let specVar: String
 
-        fileprivate
-        enum SubSpec {}
+            private
+            let buffer: IndentedTextBuffer
 
-        fileprivate
-        enum PerPlatformSettings {}
+            //internal
+            init(
+                specVar: String,
+                buffer: IndentedTextBuffer
+                )
+            {
+                self.specVar = specVar
+                self.buffer = buffer
+            }
+        }
 
-        fileprivate
-        enum TestSubSpec {}
+        public
+        struct SubSpecs
+        {
+            private
+            let parentSpecVar: String
+
+            private
+            let specVar: String
+
+            private
+            let buffer: IndentedTextBuffer
+
+            //internal
+            init(
+                parentSpecVar: String,
+                specVar: String,
+                buffer: IndentedTextBuffer
+                )
+            {
+                self.parentSpecVar = parentSpecVar
+                self.specVar = specVar
+                self.buffer = buffer
+            }
+        }
+
+        public
+        struct TestSubSpecs
+        {
+            private
+            let parentSpecVar: String
+
+            private
+            let specVar: String
+
+            private
+            let buffer: IndentedTextBuffer
+
+            //internal
+            init(
+                parentSpecVar: String,
+                specVar: String,
+                buffer: IndentedTextBuffer
+                )
+            {
+                self.parentSpecVar = parentSpecVar
+                self.specVar = specVar
+                self.buffer = buffer
+            }
+        }
 
         // MARK: Instance level members
 
+        private
+        var buffer: IndentedTextBuffer = .init()
+
         public
-        let fileContent: IndentedText
-    }
-}
+        var fileContent: IndentedText
+        {
+            return buffer.content
+        }
 
-// MARK: - Helpers
+        // MARK: Initializers
 
-public
-extension CocoaPods.Podspec
-{
-    static
-    func readCurrentVersion(
-        fromSpecAtPath path: String
-        ) -> String
-    {
-        //
-
-        //---
-
-        return ""
+        //internal
+        init() {}
     }
 }
 
@@ -109,25 +161,22 @@ extension CocoaPods.Podspec
         authors: [Author],
         cocoapodsVersion: VersionString? = Defaults.cocoapodsVersion,
         swiftVersion: VersionString? = Defaults.swiftVersion,
-        otherSettings: [(
-            deploymentTarget: DeploymentTarget?,
-            settigns: [String]
-        )],
+        perPlatformSettings: (PerPlatformSettings) -> Void,
         customEntries: String...
         ) -> CocoaPods.Podspec
     {
-        let result = IndentedTextBuffer()
+        let result: CocoaPods.Podspec = .init()
 
         //---
 
-        result <<< """
+        result.buffer <<< """
             Pod::Spec.new do |\(specVar)|
 
             """
 
-        result.indentation.nest{
+        result.buffer.indentation.nest{
 
-            result <<< TextFileSection<GeneralSettings>(
+            result.generalSettings(
                 specVar: specVar,
                 product: product,
                 company: company,
@@ -138,31 +187,29 @@ extension CocoaPods.Podspec
                 swiftVersion: swiftVersion
             )
 
-            result <<< otherSettings.map{
-
-                TextFileSection<PerPlatformSettings>(
+            perPlatformSettings(
+                PerPlatformSettings(
                     specVar: specVar,
-                    deploymentTarget: $0.deploymentTarget,
-                    settigns: $0.settigns
+                    buffer: result.buffer
                 )
-            }
+            )
 
-            result <<< customEntries.map{ """
+            result.buffer <<< customEntries.map{ """
 
                 \($0)
                 """
             }
         }
 
-        result <<< """
+        result.buffer <<< """
 
-            end # spec
+            end # spec \(specVar)
 
             """
 
         //---
 
-        return .init(fileContent: result.content)
+        return result
     }
 
     static
@@ -176,35 +223,23 @@ extension CocoaPods.Podspec
         authors: [Author],
         cocoapodsVersion: VersionString? = Defaults.cocoapodsVersion,
         swiftVersion: VersionString? = Defaults.swiftVersion,
-        subSpecs: [(
-            name: String,
-            perPlatfromSettings: [(
-                deploymentTarget: DeploymentTarget?,
-                settigns: [String]
-            )]
-        )],
-        testSubSpecs: [(
-            name: String,
-            perPlatfromSettings: [(
-                deploymentTarget: DeploymentTarget?,
-                settigns: [String]
-            )]
-        )] = [],
+        subSpecs: (SubSpecs) -> Void,
+        testSubSpecs: (TestSubSpecs) -> Void = { _ in },
         customEntries: String...
         ) -> CocoaPods.Podspec
     {
-        let result = IndentedTextBuffer()
+        let result: CocoaPods.Podspec = .init()
 
         //---
 
-        result <<< """
+        result.buffer <<< """
             Pod::Spec.new do |\(specVar)|
 
             """
 
-        result.indentation.nest{
+        result.buffer.indentation.nest{
 
-            result <<< TextFileSection<GeneralSettings>(
+            result.generalSettings(
                 specVar: specVar,
                 product: product,
                 company: company,
@@ -215,53 +250,47 @@ extension CocoaPods.Podspec
                 swiftVersion: swiftVersion
             )
 
-            result <<< subSpecs.map{
-
-                TextFileSection<SubSpec>(
+            subSpecs(
+                SubSpecs(
                     parentSpecVar: specVar,
-                    specName: $0.name,
                     specVar: subSpecVar,
-                    perPlatfromSettings: $0.perPlatfromSettings
+                    buffer: result.buffer
                 )
-            }
+            )
 
-            result <<< testSubSpecs.map{
-
-                TextFileSection<TestSubSpec>(
+            testSubSpecs(
+                TestSubSpecs(
                     parentSpecVar: specVar,
-                    specName: $0.name,
                     specVar: subSpecVar,
-                    perPlatfromSettings: $0.perPlatfromSettings
+                    buffer: result.buffer
                 )
-            }
+            )
 
-            result <<< customEntries.map{ """
+            result.buffer <<< customEntries.map{ """
 
                 \($0)
                 """
             }
         }
 
-        result <<< """
+        result.buffer <<< """
 
-            end # spec
+            end # spec \(specVar)
 
             """
 
         //---
 
-        return .init(fileContent: result.content)
+        return result
     }
 }
 
 // MARK: - Content rendering
 
 fileprivate
-extension TextFileSection
-    where
-    Context == CocoaPods.Podspec.GeneralSettings
+extension CocoaPods.Podspec
 {
-    init(
+    func generalSettings(
         specVar: String,
         product: CocoaPods.Podspec.Product,
         company: CocoaPods.Podspec.Company,
@@ -272,222 +301,145 @@ extension TextFileSection
         swiftVersion: VersionString? = Defaults.swiftVersion
         )
     {
-        contentGetter = {
+        // https://guides.cocoapods.org/syntax/podspec.html#group_root_specification
 
-            indentation in
+        let s = specVar // swiftlint:disable:this identifier_name
 
-            //---
+        //swiftlint:disable line_length
 
-            let result: IndentedTextBuffer = .init(with: indentation)
+        buffer <<< """
+            \(s).name          = '\(company.prefix)\(product.name)'
+            \(s).summary       = '\(product.summary)'
+            \(s).version       = '\(version)'
+            \(s).homepage      = 'https://\(company.name).github.io/\(product.name)'
 
-            //---
+            \(s).source        = { :git => 'https://github.com/\(company.name)/\(product.name).git', :tag => \(s).version }
 
-            // https://guides.cocoapods.org/syntax/podspec.html#group_root_specification
+            \(s).requires_arc  = true
 
-            let s = specVar // swiftlint:disable:this identifier_name
+            \(s).license       = { :type => '\(license.type)', :file => '\(license.fileName)' }
 
-            //swiftlint:disable line_length
+            \(s).authors = {
+            """
 
-            result <<< """
-                \(s).name          = '\(company.prefix)\(product.name)'
-                \(s).summary       = '\(product.summary)'
-                \(s).version       = '\(version)'
-                \(s).homepage      = 'https://\(company.name).github.io/\(product.name)'
+        //swiftlint:enable line_length
 
-                \(s).source        = { :git => 'https://github.com/\(company.name)/\(product.name).git', :tag => \(s).version }
+        buffer.indentation.nest{
 
-                \(s).requires_arc  = true
-
-                \(s).license       = { :type => '\(license.type)', :file => '\(license.fileName)' }
-
-                \(s).authors = {
+            buffer <<< authors.map{ """
+                '\($0.name)' => '\($0.email)'
                 """
-
-            //swiftlint:enable line_length
-
-            indentation.nest{
-
-                result <<< authors.map{ """
-                    '\($0.name)' => '\($0.email)'
-                    """
-                }
             }
+        }
 
-            result <<< """
-                } # authors
+        buffer <<< """
+            } # authors
 
-                \(swiftVersion.map{ "\(s).swift_version = '\($0)'" } ?? "")
+            \(swiftVersion.map{ "\(s).swift_version = '\($0)'" } ?? "")
 
-                \(cocoapodsVersion.map{ "\(s).cocoapods_version = '>= \($0)'" } ?? "")
+            \(cocoapodsVersion.map{ "\(s).cocoapods_version = '>= \($0)'" } ?? "")
 
-                """
+            """
+    }
+}
 
-            //---
+public
+extension CocoaPods.Podspec.PerPlatformSettings
+{
+    func settings(
+        for deploymentTarget: DeploymentTarget?,
+        _ settigns: String...
+        )
+    {
+        // https://guides.cocoapods.org/syntax/podspec.html#group_multi_platform_support
 
-            return result.content
+        let platfromId = deploymentTarget.map{ $0.platform }
+        let platfromPrefix = platfromId.map{ "\($0.cocoaPodsId)." }
+        let prefix = "\(specVar).\(platfromPrefix ?? "")"
+
+        buffer <<< """
+
+            # === \(platfromId.map{ "\($0.rawValue)" } ?? "All platforms")
+
+            """
+
+        buffer <<< deploymentTarget.map{ """
+            \(prefix)deployment_target = '\($0.minimumVersion)'
+
+            """
+        }
+
+        // might be a list of single lines,
+        // one nultiline strings,
+        // or a combination of single and multilines,
+        // so lets flatten this out
+        buffer <<< settigns.flatMap{ $0.split(separator: "\n") }.map{ """
+            \(prefix)\($0)
+            """
         }
     }
 }
 
-fileprivate
-extension TextFileSection
-    where
-    Context == CocoaPods.Podspec.PerPlatformSettings
+public
+extension CocoaPods.Podspec.SubSpecs
 {
-    init(
-        specVar: String,
-        deploymentTarget: DeploymentTarget?,
-        settigns: [String]
+    func subSpec(
+        _ specName: String,
+        perPlatformSettings: (CocoaPods.Podspec.PerPlatformSettings) -> Void
         )
     {
-        contentGetter = {
+        // https://guides.cocoapods.org/syntax/podspec.html#subspec
 
-            indentation in
+        buffer <<< """
+            \(parentSpecVar).subspec '\(specName)' do |\(specVar)|
 
-            //---
+            """
 
-            let result: IndentedTextBuffer = .init(with: indentation)
+        buffer.indentation.nest{
 
-            //---
-
-            // https://guides.cocoapods.org/syntax/podspec.html#group_multi_platform_support
-
-            let platfromId = deploymentTarget.map{ $0.platform }
-            let platfromPrefix = platfromId.map{ "\($0.cocoaPodsId)." }
-            let prefix = "\(specVar).\(platfromPrefix ?? "")"
-
-            result <<< """
-
-                # === \(platfromId.map{ "\($0.rawValue)" } ?? "All platforms")
-
-                """
-
-            result <<< deploymentTarget.map{ """
-                \(prefix)deployment_target = '\($0.minimumVersion)'
-
-                """
-            }
-
-            result <<< settigns.map{ """
-                \(prefix)\($0)
-                """
-            }
-
-            //---
-
-            return result.content
+            perPlatformSettings(
+                CocoaPods.Podspec.PerPlatformSettings(
+                    specVar: specVar,
+                    buffer: buffer
+                )
+            )
         }
+
+        buffer <<< """
+
+            end # subspec '\(specName)'
+            """
     }
 }
 
-fileprivate
-extension TextFileSection
-    where
-    Context == CocoaPods.Podspec.SubSpec
+public
+extension CocoaPods.Podspec.TestSubSpecs
 {
-    init(
-        parentSpecVar: String,
-        specName: String,
-        specVar: String,
-        perPlatfromSettings: [(
-            deploymentTarget: DeploymentTarget?,
-            settigns: [String]
-        )]
+    func testSubSpec(
+        _ specName: String,
+        perPlatformSettings: (CocoaPods.Podspec.PerPlatformSettings) -> Void
         )
     {
-        contentGetter = {
+        // https://guides.cocoapods.org/syntax/podspec.html#test_spec
 
-            indentation in
+        buffer <<< """
+            \(parentSpecVar).test_spec '\(specName)' do |\(specVar)|
 
-            //---
+            """
 
-            let result: IndentedTextBuffer = .init(with: indentation)
+        buffer.indentation.nest{
 
-            //---
-
-            // https://guides.cocoapods.org/syntax/podspec.html#subspec
-
-            result <<< """
-                \(parentSpecVar).subspec '\(specName)' do |\(specVar)|
-
-                """
-
-            indentation.nest{
-
-                result <<< perPlatfromSettings.map{
-
-                    TextFileSection<CocoaPods.Podspec.PerPlatformSettings>(
-                        specVar: specVar,
-                        deploymentTarget: $0.deploymentTarget,
-                        settigns: $0.settigns
-                    )
-                }
-            }
-
-            result <<< """
-
-                end # subspec '\(specName)'
-                """
-
-            //---
-
-            return result.content
+            perPlatformSettings(
+                CocoaPods.Podspec.PerPlatformSettings(
+                    specVar: specVar,
+                    buffer: buffer
+                )
+            )
         }
-    }
-}
 
-fileprivate
-extension TextFileSection
-    where
-    Context == CocoaPods.Podspec.TestSubSpec
-{
-    init(
-        parentSpecVar: String,
-        specName: String,
-        specVar: String,
-        perPlatfromSettings: [(
-            deploymentTarget: DeploymentTarget?,
-            settigns: [String]
-        )]
-        )
-    {
-        contentGetter = {
+        buffer <<< """
 
-            indentation in
-
-            //---
-
-            let result: IndentedTextBuffer = .init(with: indentation)
-
-            //---
-
-            // https://guides.cocoapods.org/syntax/podspec.html#test_spec
-
-            result <<< """
-                \(parentSpecVar).test_spec '\(specName)' do |\(specVar)|
-
-                """
-
-            indentation.nest{
-
-                result <<< perPlatfromSettings.map{
-
-                    TextFileSection<CocoaPods.Podspec.PerPlatformSettings>(
-                        specVar: specVar,
-                        deploymentTarget: $0.deploymentTarget,
-                        settigns: $0.settigns
-                    )
-                }
-            }
-
-            result <<< """
-
-                end # test_spec '\(specName)'
-                """
-
-            //---
-
-            return result.content
-        }
+            end # test_spec '\(specName)'
+            """
     }
 }
