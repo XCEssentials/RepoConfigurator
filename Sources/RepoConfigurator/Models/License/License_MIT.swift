@@ -32,7 +32,8 @@ public
 extension License
 {
     public
-    struct MIT: WidelyUsedLicense
+    final
+    class MIT: WidelyUsedLicense
     {
         // MARK: Instance level members
 
