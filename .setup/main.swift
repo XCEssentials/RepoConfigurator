@@ -63,7 +63,7 @@ print("✅ Fastlane folder: ./\(fastlaneFolder.name)")
 
 do
 {
-    print("Writing '\(ReadMe.fileName)'...")
+    print("Writing '\(ReadMe.fileName)'")
 
     let readMe = try ReadMe()
         .addGitHubLicenseBadge(
@@ -102,7 +102,7 @@ do
 
     //---
 
-    print("Writing '\(Git.RepoIgnore.fileName)'...")
+    print("Writing '\(Git.RepoIgnore.fileName)'")
 
     try Git
         .RepoIgnore
@@ -118,7 +118,7 @@ do
 
     //---
 
-    print("Writing '\(SwiftLint.fileName)'...")
+    print("Writing '\(SwiftLint.fileName)'")
 
     try SwiftLint
         .standard()
@@ -129,7 +129,7 @@ do
 
     //---
 
-    print("Writing '\(License.MIT.fileName)'...")
+    print("Writing '\(License.MIT.fileName)'")
 
     try License
         .MIT(
@@ -143,7 +143,7 @@ do
 
     //---
 
-    print("Writing '\(Fastlane.Fastfile.fileName)'...")
+    print("Writing '\(Fastlane.Fastfile.fileName)'")
 
     try Fastlane
         .Fastfile
@@ -163,7 +163,7 @@ do
 
     //---
 
-    print("Writing '\(GitHub.PagesConfig.fileName)'...")
+    print("Writing '\(GitHub.PagesConfig.fileName)'")
 
     try GitHub
         .PagesConfig()
