@@ -40,19 +40,17 @@ extension Xcode.Project
         var targetsByName: [String: Target] = [:]
 
         public
-        func targets(
-            _ items: Target...
+        func target(
+            _ name: String,
+            configure: (Target) -> Void
             )
         {
-            items.forEach{
-
-                targetsByName[$0.name] = $0
-            }
+            targetsByName[name] = Target(name, configure)
         }
-
+        
         // MARK: Initializers
 
-        public
+        //internal
         init(
             _ name: String,
             _ configure: ((Xcode.Project.Variant) -> Void)?
