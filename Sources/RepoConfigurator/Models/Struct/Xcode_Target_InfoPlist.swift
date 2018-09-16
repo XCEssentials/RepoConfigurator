@@ -41,10 +41,31 @@ extension Xcode.Target
             case tests = "BNDL"
         }
 
+        fileprivate
+        struct Sections
+        {
+            private
+            let buffer: IndentedTextBuffer
+            
+            fileprivate
+            init(
+                buffer: IndentedTextBuffer
+                )
+            {
+                self.buffer = buffer
+            }
+        }
+
         // MARK: Instance level members
 
+        private
+        var buffer = IndentedTextBuffer()
+        
         public
-        let fileContent: IndentedText
+        var fileContent: IndentedText
+        {
+            return buffer.content
+        }
 
         // MARK: Initializers
 
@@ -57,35 +78,31 @@ extension Xcode.Target
             _ otherEntries: String...
             )
         {
-            let result = IndentedTextBuffer()
-
+            let sections = Sections(buffer: buffer)
+            
             //---
-
-            typealias Section = TextFileSection<Xcode.Target.InfoPlist>
-
-            result <<< [
-
-                Section.header(),
-                Section.basic(
-                    packageType: packageType,
-                    initialVersionString: initialVersionString,
-                    initialBuildNumber: initialBuildNumber
-                )
-            ]
-
+            
+            sections.header()
+            
+            sections.basic(
+                packageType: packageType,
+                initialVersionString: initialVersionString,
+                initialBuildNumber: initialBuildNumber
+            )
+            
             switch preset
             {
             case .some(.iOS) where packageType == .app:
-                result <<< Section.iOSApp()
+                sections.iOSApp()
 
             case .some(.macOS(let year, let entity)) where packageType == .app:
-                result <<< Section.macOSApp(
+                sections.macOSApp(
                     copyrightYear: year,
                     copyrightEntity: entity
                 )
 
             case .some(.macOS(let year, let entity)) where packageType == .framework:
-                result <<< Section.macOSFramework(
+                sections.macOSFramework(
                     copyrightYear: year,
                     copyrightEntity: entity
                 )
@@ -94,13 +111,9 @@ extension Xcode.Target
                 break
             }
 
-            result <<< otherEntries
+            buffer <<< otherEntries
 
-            result <<< Section.footer()
-
-            //---
-
-            fileContent = result.content
+            sections.footer()
         }
     }
 }
@@ -137,32 +150,26 @@ extension Xcode.Target.InfoPlist
 
 // MARK: - Content rendering
 
-extension TextFileSection
-    where
-    Context == Xcode.Target.InfoPlist
+fileprivate
+extension Xcode.Target.InfoPlist.Sections
 {
-    static
-    func header(
-        ) -> TextFileSection<Context>
+    func header()
     {
-        return .init{ """
+        buffer <<< """
             <?xml version="1.0" encoding="UTF-8"?>
             <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
             <plist version="1.0">
             <dict>
             """
-            .asIndentedText(with: $0)
-        }
     }
 
-    static
     func basic(
         packageType: Xcode.Target.InfoPlist.PackageType,
         initialVersionString: VersionString = Defaults.initialVersionString,
         initialBuildNumber: BuildNumber = Defaults.initialBuildNumber
-        ) -> TextFileSection<Context>
+        )
     {
-        return .init{ """
+        buffer <<< """
 
             <key>CFBundleDevelopmentRegion</key>
             <string>$(DEVELOPMENT_LANGUAGE)</string>
@@ -181,15 +188,11 @@ extension TextFileSection
             <key>CFBundleVersion</key>
             <string>\(initialBuildNumber)</string>
             """
-            .asIndentedText(with: $0)
-        }
     }
 
-    static
-    func iOSApp(
-        ) -> TextFileSection<Context>
+    func iOSApp()
     {
-        return .init{ """
+        buffer <<< """
 
             <key>LSRequiresIPhoneOS</key>
             <true/>
@@ -204,17 +207,14 @@ extension TextFileSection
             <string>UIInterfaceOrientationPortrait</string>
             </array>
             """
-            .asIndentedText(with: $0)
-        }
     }
 
-    static
     func macOSApp(
         copyrightYear: UInt = Defaults.copyrightYear,
         copyrightEntity: String
-        ) -> TextFileSection<Context>
+        )
     {
-        return .init{ """
+        buffer <<< """
 
             <key>CFBundleIconFile</key>
             <string></string>
@@ -227,50 +227,38 @@ extension TextFileSection
             <key>NSPrincipalClass</key>
             <string>NSApplication</string>
             """
-            .asIndentedText(with: $0)
-        }
     }
 
-    static
     func macOSFramework(
         copyrightYear: UInt = Defaults.copyrightYear,
         copyrightEntity: String
-        ) -> TextFileSection<Context>
+        )
     {
-        return .init{ """
+        buffer <<< """
 
             <key>NSHumanReadableCopyright</key>
             <string>Copyright © \(copyrightYear) \(copyrightEntity). All rights reserved.</string>
             <key>NSPrincipalClass</key>
             <string></string>
             """
-            .asIndentedText(with: $0)
-        }
     }
 
-    static
     func custom(
         _ customEntry: String
-        ) -> TextFileSection<Context>
+        )
     {
-        return .init{ """
+        buffer <<< """
 
             \(customEntry)
             """
-            .asIndentedText(with: $0)
-        }
     }
 
-    static
-    func footer(
-        ) -> TextFileSection<Context>
+    func footer()
     {
-        return .init{ """
+        buffer <<< """
 
             </dict>
             </plist>
             """
-            .asIndentedText(with: $0)
-        }
     }
 }
