@@ -9,20 +9,12 @@
 import XCTest
 
 // @testable
-#if XCODE
-
 import XCERepoConfigurator
-
-#else
-
-import RepoConfigurator // in SPM env "product_name" == "target_name"
-
-#endif
 
 //---
 
 final
-class RepoConfiguratorTests: XCTestCase
+class Main: XCTestCase
 {
     static
     var allTests = [
@@ -34,12 +26,12 @@ class RepoConfiguratorTests: XCTestCase
     lazy
     var currentBundle: Bundle = .init(for: type(of: self))
 
-    let targetFolder = URL.init(fileURLWithPath: "") // doesn't matter
+    let targetFolderPath = "/" // doesn't matter
 }
 
 //---
 
-extension RepoConfiguratorTests
+extension Main
 {
     func testSwiftLint()
     {
@@ -59,12 +51,6 @@ extension RepoConfiguratorTests
               - Sources
               - Tests
 
-            excluded: # paths to ignore during linting. Takes precedence over `included`.
-              - Resources
-              - Carthage
-              - Pods
-              - Templates
-
             # rules options:
 
             line_length:
@@ -76,21 +62,24 @@ extension RepoConfiguratorTests
             statement_position:
               # https://github.com/realm/SwiftLint/issues/1181#issuecomment-272445593
               statement_mode: uncuddled_else
+
+            excluded: # paths to ignore during linting. Takes precedence over `included`.
+              - Resources
+              - Carthage
+              - Pods
+              - Templates
             """
 
         //---
 
         let model = SwiftLint
-            .init(
-                .disabledRules(),
-                .included(),
-                .excluded([
+            .standard(
+                exclude: [
                     "Templates"
-                ]),
-                .rulesOptions()
+                ]
             )
             .prepare(
-                targetFolder: targetFolder
+                targetFolder: targetFolderPath
             )
 
         //---

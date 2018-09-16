@@ -24,69 +24,12 @@
 
  */
 
-import Foundation
-
-//---
+// MARK: - Text File Piece
 
 public
-class ExternalFile
+protocol TextFilePiece
 {
-    // MARK: Type level members
-
-    public
-    enum Errors: Error
-    {
-        case resourceNotFound
-    }
-
-    private
-    static
-    var currentBundle: Bundle
-    {
-        return .init(for: self)
-    }
-
-    // MARK: Initializers
-
-    private
-    init() {}
-}
-
-//---
-
-public
-extension ExternalFile
-{
-    static
-    func load(
-        from source: URL
-        ) throws -> String
-    {
-        return try String(contentsOf: source)
-    }
-
-    static
-    func loadFromResource(
-        named resourceName: String,
-        withExtension resourceExtension: String,
-        encoding: String.Encoding = .utf8
-        ) throws -> String
-    {
-        guard
-            let source = currentBundle.url(
-                forResource: resourceName,
-                withExtension: resourceExtension
-            )
-        else
-        {
-            throw Errors.resourceNotFound
-        }
-
-        //---
-
-        return try String(
-            contentsOf: source,
-            encoding: encoding
-        )
-    }
+    func asIndentedText(
+        with indentation: Indentation
+        ) -> IndentedText
 }

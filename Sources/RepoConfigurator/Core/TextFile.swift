@@ -26,16 +26,6 @@
 
 import Foundation
 
-// MARK: - Text File Piece
-
-public
-protocol TextFilePiece
-{
-    func asIndentedText(
-        with indentation: Indentation
-        ) -> IndentedText
-}
-
 // MARK: - Text File
 
 public
@@ -65,15 +55,15 @@ extension ArbitraryNamedTextFile
 {
     func prepare(
         name: String,
-        targetFolder: URL,
+        targetFolder: String,
         removeSpacesAtEOL: Bool = true,
         removeRepeatingEmptyLines: Bool = true
-        ) -> RawTextFile<Self>
+        ) -> PendingTextFile<Self>
     {
-        return RawTextFile(
+        return PendingTextFile(
             model: self,
             name: name,
-            targetFolder: targetFolder,
+            folder: targetFolder,
             shouldRemoveSpacesAtEOL: removeSpacesAtEOL,
             shouldRemoveRepeatingEmptyLines: removeRepeatingEmptyLines
         )
@@ -113,15 +103,15 @@ extension FixedNameTextFile
     }
 
     func prepare(
-        targetFolder: URL,
+        targetFolder: String,
         removeSpacesAtEOL: Bool = true,
         removeRepeatingEmptyLines: Bool = true
-        ) -> RawTextFile<Self>
+        ) -> PendingTextFile<Self>
     {
-        return RawTextFile(
+        return PendingTextFile(
             model: self,
-            name: type(of: self).fileName,
-            targetFolder: targetFolder,
+            name: fileName,
+            folder: targetFolder,
             shouldRemoveSpacesAtEOL: removeSpacesAtEOL,
             shouldRemoveRepeatingEmptyLines: removeRepeatingEmptyLines
         )

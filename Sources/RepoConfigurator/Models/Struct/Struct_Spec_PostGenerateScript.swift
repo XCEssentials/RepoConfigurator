@@ -49,11 +49,33 @@ extension Struct.Spec
         let defaultFileName = "struct-post-generate.rb"
 
         public
+        struct Sections
+        {
+            private
+            let xcodeprojVar: String
+            
+            private
+            let buffer: IndentedTextBuffer
+
+            //internal
+            init(
+                xcodeprojVar: String,
+                buffer: IndentedTextBuffer
+                )
+            {
+                self.xcodeprojVar = xcodeprojVar
+                self.buffer = buffer
+            }
+        }
+
+        // MARK: Instance level members
+
+        public
         func prepareWithDefaultName(
-            targetFolder: URL,
+            targetFolder: String,
             removeSpacesAtEOL: Bool = true,
             removeRepeatingEmptyLines: Bool = true
-            ) -> RawTextFile<PostGenerateScript>
+            ) -> PendingTextFile<PostGenerateScript>
         {
             return prepare(
                 name: type(of: self).defaultFileName,
@@ -63,10 +85,14 @@ extension Struct.Spec
             )
         }
 
-        // MARK: Instance level members
+        private
+        var buffer = IndentedTextBuffer()
 
         public
-        let fileContent: IndentedText
+        var fileContent: IndentedText
+        {
+            return buffer.content
+        }
 
         // MARK: Initializers
 
@@ -74,14 +100,10 @@ extension Struct.Spec
         init(
             specVar spec: String = defaultSpecVar,
             xcodeprojVar xcodeproj: String = defaultXcodeprojVar,
-            _ sections: TextFileSection<Struct.Spec.PostGenerateScript>...
+            sections: (Sections) -> Void
             )
         {
-            let result = IndentedTextBuffer()
-
-            //---
-
-            result <<< """
+            buffer <<< """
                 # post-generate Struct script
                 # https://github.com/lyptt/struct/wiki/Spec-format:-v2.0#lifecycle-hooks
 
@@ -89,19 +111,20 @@ extension Struct.Spec
 
                 """
 
-            result.indentation.nest{
+            buffer.indentation.nest{
 
-                result <<< sections
+                sections(
+                    Sections(
+                        xcodeprojVar: xcodeproj,
+                        buffer: buffer
+                    )
+                )
             }
 
-            result <<< """
+            buffer <<< """
 
                 end
                 """
-
-            //---
-
-            self.fileContent = result.content
         }
     }
 }
@@ -109,9 +132,7 @@ extension Struct.Spec
 // MARK: - Content rendering
 
 public
-extension TextFileSection
-    where
-    Context == Struct.Spec.PostGenerateScript
+extension Struct.Spec.PostGenerateScript.Sections
 {
     /**
      Allows to set 'PRODUCT_NAME' build setting of certain targets to
@@ -121,97 +142,70 @@ extension TextFileSection
      cross-platform frameworks when target names reflect specific platforms, while
      module name should be the same across all platforms.
      */
-    static
     func inheritedModuleName(
-        xcodeprojVar xcodeproj: String = Struct.Spec.PostGenerateScript.defaultXcodeprojVar,
         productTypes: [Xcodeproj.ProductType]
-        ) -> TextFileSection<Context>
+        )
     {
-        return .init{
+        //swiftlint:disable line_length
 
-            indentation in
+        buffer <<< """
+            # === Targets to inherit module name from project ===
+            
+            # https://www.rubydoc.info/github/CocoaPods/Xcodeproj/Xcodeproj/Project
+            # https://github.com/CocoaPods/Xcodeproj/blob/master/spec/project/object/native_target_spec.rb
+            # https://github.com/CocoaPods/Xcodeproj/blob/c6c1c86459720e5dfbe406eb613a2d2de1607ee2/lib/xcodeproj/constants.rb#L125
 
-            //---
+            \(xcodeprojVar)
+            """
 
-            let result = IndentedTextBuffer(with: indentation)
+        //swiftlint:enable line_length
 
-            //---
+        buffer.indentation.nest{
 
-            //swiftlint:disable line_length
+            buffer <<< """
+                .targets
+                .select{ |t| \(productTypes.map{ $0.rawValue }).include?(t.product_type) }
+                .each{ |t|
 
-            result <<< """
-                # https://www.rubydoc.info/github/CocoaPods/Xcodeproj/Xcodeproj/Project
-                # https://github.com/CocoaPods/Xcodeproj/blob/master/spec/project/object/native_target_spec.rb
-                # https://github.com/CocoaPods/Xcodeproj/blob/c6c1c86459720e5dfbe406eb613a2d2de1607ee2/lib/xcodeproj/constants.rb#L125
-
-                \(xcodeproj)
                 """
 
-            //swiftlint:enable line_length
+            buffer.indentation.nest{
 
-            indentation.nest{
-
-                result <<< """
-                    .targets
-                    .select{ |t| \(productTypes.map{ $0.rawValue }).include?(t.product_type) }
-                    .each{ |t|
+                buffer <<< """
+                    t.build_configurations.each do |config|
 
                     """
 
-                indentation.nest{
+                buffer.indentation.nest{
 
-                    result <<< """
-                        t.build_configurations.each do |config|
-
-                        """
-
-                    indentation.nest{
-
-                        result <<< """
-                            config.build_settings['PRODUCT_NAME'] = '$(inherited)'
-                            """
-                    }
-
-                    result <<< """
-                        end
+                    buffer <<< """
+                        config.build_settings['PRODUCT_NAME'] = '$(inherited)'
                         """
                 }
 
-                result <<< """
-                    }
+                buffer <<< """
+                    end
                     """
             }
 
-            result <<< """
-
-                \(xcodeproj).save()
+            buffer <<< """
+                }
                 """
-
-            //---
-
-            return result.content
         }
+
+        buffer <<< """
+
+            \(xcodeprojVar).save()
+            """
     }
 
-    static
     func custom(
         _ content: String
-        ) -> TextFileSection<Context>
+        )
     {
-        return .init{
+        buffer <<< """
 
-            let result = IndentedTextBuffer(with: $0)
-
-            //---
-
-            result <<< """
-
-                \(content)
-                """
-
-            //---
-
-            return result.content
-        }
+            \(content)
+            """
     }
 }

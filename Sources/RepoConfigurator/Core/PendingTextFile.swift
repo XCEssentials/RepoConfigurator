@@ -29,7 +29,7 @@ import Foundation
 //---
 
 public
-struct RawTextFile<T: TextFile>
+struct PendingTextFile<T: TextFile>
 {
     // MARK: Type level members
 
@@ -38,6 +38,15 @@ struct RawTextFile<T: TextFile>
     {
         case doNotWrite
         case override
+
+        //---
+
+        public
+        static
+        var skip: IfFileExistsWritePolicy
+        {
+            return .doNotWrite
+        }
     }
 
     // MARK: Instance level members
@@ -49,7 +58,7 @@ struct RawTextFile<T: TextFile>
     let name: String
 
     public
-    let targetFolder: URL
+    let folder: String
 
     public
     let shouldRemoveSpacesAtEOL: Bool
@@ -85,48 +94,26 @@ struct RawTextFile<T: TextFile>
         return result
     }
 
-    public
-    var fullFileName: URL
-    {
-        return targetFolder
-            .appendingPathComponent(name, isDirectory: false)
-    }
-
     //---
 
+    @discardableResult
     public
     func writeToFileSystem(
         ifFileExists: IfFileExistsWritePolicy = .override
         ) throws -> Bool
     {
-        // lets makre sure folders up to this file exists
-
-        let pathToFolder = fullFileName
-            .deletingLastPathComponent()
-            .path
-
-        if
-            !FileManager
-                .default
-                .fileExists(atPath: pathToFolder)
-        {
-            try FileManager
-                .default
-                .createDirectory(
-                    atPath: pathToFolder,
-                    withIntermediateDirectories: true,
-                    attributes: nil
-                )
-        }
+        let targetLocation = URL
+            .init(fileURLWithPath: folder)
+            .appendingPathComponent(name, isDirectory: false)
 
         //---
 
         if
             (ifFileExists == .override) ||
-            !FileManager.default.fileExists(atPath: fullFileName.path)
+            !FileManager.default.fileExists(atPath: targetLocation.path)
         {
             try content.write(
-                to: fullFileName,
+                to: targetLocation,
                 atomically: true,
                 encoding: .utf8
             )

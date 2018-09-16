@@ -26,29 +26,33 @@
 
 import Foundation
 
+import Files
+
 //---
 
 public
-enum PathPrefix
+extension Folder
 {
     public
     static
-    let root = URL(fileURLWithPath: "/")
-
-    @available(OSX 10.12, *)
-    public
-    static
-    let userHomeDir = FileManager
-        .default
-        .homeDirectoryForCurrentUser
+    var root: Folder
+    {
+        return try! Folder(path: "/") //swiftlint:disable:this force_try
+    }
 
     public
     static
-    let iCloudDrive = try! FileManager //swiftlint:disable:this force_try
-        .default
-        .url(for: .libraryDirectory,
-             in: .userDomainMask,
-             appropriateFor: nil,
-             create: false)
-        .appendingPathComponent("Mobile Documents/com~apple~CloudDocs")
+    var iCloudDrive: Folder?
+    {
+        return try? Folder(
+            path: FileManager
+                .default
+                .url(for: .libraryDirectory,
+                     in: .userDomainMask,
+                     appropriateFor: nil,
+                     create: false)
+                .appendingPathComponent("Mobile Documents/com~apple~CloudDocs")
+                .path
+        )
+    }
 }

@@ -29,7 +29,8 @@ import Foundation
 //---
 
 public
-struct ReadMe: FixedNameTextFile
+final
+class ReadMe: FixedNameTextFile
 {
     // MARK: Type level members
 
@@ -39,48 +40,32 @@ struct ReadMe: FixedNameTextFile
 
     // MARK: Instance level members
 
+    private
+    var buffer: IndentedTextBuffer = .init()
+
     public
-    let fileContent: IndentedText
-}
-
-// MARK: - Presets
-
-public
-extension ReadMe
-{
-    static
-    func openSourceProduct(
-        header: [TextFileSection<ReadMe>],
-        _ content: String?...
-        ) -> ReadMe
+    var fileContent: IndentedText
     {
-        let result = IndentedTextBuffer()
-
-        //---
-
-        result <<< header
-        result <<< content.compactMap{ $0 }
-
-        //---
-
-        return .init(fileContent: result.content)
+        return buffer.content
     }
+
+    // MARK: Initializers
+
+    public
+    init() {}
 }
 
 // MARK: - Content rendering
 
 public
-extension TextFileSection
-    where
-    Context == ReadMe
+extension ReadMe
 {
-    static
-    func gitHubLicenseBadge(
+    func addGitHubLicenseBadge(
         account: String,
         repo: String,
         link: String? = nil,
         _ parameters: Shields.Parameters = .parameters()
-        ) throws -> TextFileSection<Context>
+        ) throws -> ReadMe
     {
         let imgAltText = "GitHub License"
 
@@ -109,16 +94,19 @@ extension TextFileSection
 
         //---
 
-        return .init(contentGetter: result.asIndentedText)
+        buffer <<< result
+
+        //---
+
+        return self
     }
 
-    static
-    func gitHubTagBadge(
+    func addGitHubTagBadge(
         account: String,
         repo: String,
         link: String? = nil,
         _ parameters: Shields.Parameters = .parameters()
-        ) throws -> TextFileSection<Context>
+        ) throws -> ReadMe
     {
         let imgAltText = "GitHub Tag"
 
@@ -147,15 +135,18 @@ extension TextFileSection
 
         //---
 
-        return .init(contentGetter: result.asIndentedText)
+        buffer <<< result
+
+        //---
+
+        return self
     }
 
-    static
-    func cocoaPodsVersionBadge(
+    func addCocoaPodsVersionBadge(
         podName: String,
         link: String? = nil,
         _ parameters: Shields.Parameters = .parameters()
-        ) throws -> TextFileSection<Context>
+        ) throws -> ReadMe
     {
         let imgAltText = "CocoaPods Version"
 
@@ -184,15 +175,18 @@ extension TextFileSection
 
         //---
 
-        return .init(contentGetter: result.asIndentedText)
+        buffer <<< result
+
+        //---
+
+        return self
     }
 
-    static
-    func cocoaPodsPlatformsBadge(
+    func addCocoaPodsPlatformsBadge(
         podName: String,
         link: String? = nil,
         _ parameters: Shields.Parameters = .parameters()
-        ) throws -> TextFileSection<Context>
+        ) throws -> ReadMe
     {
         let imgAltText = "CocoaPods Platforms"
 
@@ -221,15 +215,18 @@ extension TextFileSection
 
         //---
 
-        return .init(contentGetter: result.asIndentedText)
+        buffer <<< result
+
+        //---
+
+        return self
     }
 
-    static
-    func carthageCompatibleBadge(
+    func addCarthageCompatibleBadge(
         status: String = "compatible",
         color: String = "brightgreen",
         _ parameters: Shields.Parameters = .parameters()
-        ) throws -> TextFileSection<Context>
+        ) throws -> ReadMe
     {
         let imgAltText = "Carthage Compatible"
 
@@ -259,15 +256,18 @@ extension TextFileSection
 
         //---
 
-        return .init(contentGetter: result.asIndentedText)
+        buffer <<< result
+
+        //---
+
+        return self
     }
 
-    static
-    func swiftPMCompatibleBadge(
+    func addSwiftPMCompatibleBadge(
         status: String = "compatible",
         color: String = "brightgreen",
         _ parameters: Shields.Parameters = .parameters()
-        ) throws -> TextFileSection<Context>
+        ) throws -> ReadMe
     {
         let imgAltText = "Swift Package Manager Compatible"
 
@@ -297,14 +297,17 @@ extension TextFileSection
 
         //---
 
-        return .init(contentGetter: result.asIndentedText)
+        buffer <<< result
+
+        //---
+
+        return self
     }
 
-    static
-    func writtenInSwiftBadge(
+    func addWrittenInSwiftBadge(
         version swiftVersionNumber: String = Defaults.swiftVersion,
         _ parameters: Shields.Parameters = .parameters()
-        ) throws -> TextFileSection<Context>
+        ) throws -> ReadMe
     {
         let imgAltText = "Written in Swift"
 
@@ -334,18 +337,21 @@ extension TextFileSection
 
         //---
 
-        return .init(contentGetter: result.asIndentedText)
+        buffer <<< result
+
+        //---
+
+        return self
     }
 
-    static
-    func staticShieldsBadge(
+    func addStaticShieldsBadge(
         _ subject: String,
         status: String,
         color: String,
         _ parameters: Shields.Parameters = .parameters(),
         title: String,
         link: String
-        ) throws -> TextFileSection<Context>
+        ) throws -> ReadMe
     {
         let linkToBadge = try Shields
             .Badge
@@ -371,28 +377,41 @@ extension TextFileSection
 
         //---
 
-        return .init(contentGetter: result.asIndentedText)
+        buffer <<< result
+
+        //---
+
+        return self
     }
 
-    static
-    func newLine(
-        ) -> TextFileSection<Context>
+    func addNewLine(
+        ) -> ReadMe
     {
-        return .init(contentGetter: "\n".asIndentedText)
+        buffer <<< "\n"
+
+        //---
+
+        return self
     }
 
-    static
-    func emptyLine(
-        ) -> TextFileSection<Context>
+    func addEmptyLine(
+        ) -> ReadMe
     {
-        return .init(contentGetter: "\n\n".asIndentedText)
+        buffer <<< "\n\n"
+
+        //---
+
+        return self
     }
 
-    static
-    func custom(
+    func add(
         _ content: String
-        ) -> TextFileSection<Context>
+        ) -> ReadMe
     {
-        return .init(contentGetter: content.asIndentedText)
+        buffer <<< content
+
+        //---
+
+        return self
     }
 }

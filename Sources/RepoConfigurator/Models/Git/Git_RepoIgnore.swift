@@ -27,7 +27,8 @@
 extension Git
 {
     public
-    struct RepoIgnore: FixedNameTextFile
+    final
+    class RepoIgnore: FixedNameTextFile
     {
         // MARK: Type level members
 
@@ -37,8 +38,19 @@ extension Git
 
         // MARK: Instance level members
 
+        private
+        var buffer: IndentedTextBuffer = .init()
+
         public
-        let fileContent: IndentedText
+        var fileContent: IndentedText
+        {
+            return buffer.content
+        }
+
+        // MARK: Initializers
+
+        public
+        init() {}
     }
 }
 
@@ -55,30 +67,24 @@ extension Git.RepoIgnore
         otherEntries: [String] = []
         ) -> Git.RepoIgnore
     {
-        let sections: [TextFileSection<Git.RepoIgnore>] = [
+        let result = Git
+            .RepoIgnore()
+            .addMacOSSection()
+            .addCocoaSection()
+            .addSwiftPackageManagerSection(ignoreSources: ignoreDependenciesSources)
+            .addCocoaPodsSection(ignoreSources: ignoreDependenciesSources)
+            .addCarthageSection(ignoreSources: ignoreDependenciesSources)
+            .addFastlaneSection()
+            .addArchivesExportPathSection(archivesExportPath)
 
-            .macOS(),
-            .cocoa(),
-            .swiftPackageManager(ignoreSources: ignoreDependenciesSources),
-            .cocoaPods(ignoreSources: ignoreDependenciesSources),
-            .carthage(ignoreSources: ignoreDependenciesSources),
-            .fastlane(),
-            .archivesExportPath(archivesExportPath)
-        ]
+        otherEntries.forEach{
 
-        //---
-
-        let result = IndentedTextBuffer()
-
-        //---
-
-        result <<< sections
-
-        result <<< otherEntries
+            _ = result.add($0)
+        }
 
         //---
 
-        return .init(fileContent: result.content)
+        return result
     }
 
     public
@@ -88,44 +94,35 @@ extension Git.RepoIgnore
         otherEntries: [String] = []
         ) -> Git.RepoIgnore
     {
-        let sections: [TextFileSection<Git.RepoIgnore>] = [
+        let result = Git
+            .RepoIgnore()
+            .addMacOSSection()
+            .addCocoaSection()
+            .addSwiftPackageManagerSection(ignoreSources: ignoreDependenciesSources)
+            .addCocoaPodsSection(ignoreSources: ignoreDependenciesSources)
+            .addCarthageSection(ignoreSources: ignoreDependenciesSources)
+            .addFastlaneSection()
 
-            .macOS(),
-            .cocoa(),
-            .swiftPackageManager(ignoreSources: ignoreDependenciesSources),
-            .cocoaPods(ignoreSources: ignoreDependenciesSources),
-            .carthage(ignoreSources: ignoreDependenciesSources),
-            .fastlane()
-        ]
+        otherEntries.forEach{
 
-        //---
-
-        let result = IndentedTextBuffer()
-
-        //---
-
-        result <<< sections
-
-        result <<< otherEntries
+            _ = result.add($0)
+        }
 
         //---
 
-        return .init(fileContent: result.content)
+        return result
     }
 }
 
 // MARK: - Content rendering
 
-fileprivate
-extension TextFileSection
-    where
-    Context == Git.RepoIgnore
+public
+extension Git.RepoIgnore
 {
-    static
-    func macOS(
-        ) -> TextFileSection<Context>
+    func addMacOSSection(
+        ) -> Git.RepoIgnore
     {
-        return .init{ """
+        buffer <<< """
 
             # ==========
             ### macOS ###
@@ -162,15 +159,16 @@ extension TextFileSection
             #
             #
             """
-            .asIndentedText(with: $0)
-        }
+
+        //---
+
+        return self
     }
 
-    static
-    func cocoa(
-        ) -> TextFileSection<Context>
+    func addCocoaSection(
+        ) -> Git.RepoIgnore
     {
-        return .init{ """
+        buffer <<<  """
 
             # ==========
             ### Cocoa ###
@@ -213,16 +211,17 @@ extension TextFileSection
             #
             #
             """
-            .asIndentedText(with: $0)
-        }
+
+        //---
+
+        return self
     }
 
-    static
-    func swiftPackageManager(
+    func addSwiftPackageManagerSection(
         ignoreSources: Bool
-        ) -> TextFileSection<Context>
+        ) -> Git.RepoIgnore
     {
-        return .init{ """
+        buffer <<< """
 
             # ==========
             ### Swift Package Manager ###
@@ -237,16 +236,17 @@ extension TextFileSection
             #
             #
             """
-            .asIndentedText(with: $0)
-        }
+
+        //---
+
+        return self
     }
 
-    static
-    func cocoaPods(
+    func addCocoaPodsSection(
         ignoreSources: Bool
-        ) -> TextFileSection<Context>
+        ) -> Git.RepoIgnore
     {
-        return .init{ """
+        buffer <<< """
 
             # ==========
             ### CocoaPods ###
@@ -262,16 +262,17 @@ extension TextFileSection
             #
             #
             """
-            .asIndentedText(with: $0)
-        }
+
+        //---
+
+        return self
     }
 
-    static
-    func carthage(
+    func addCarthageSection(
         ignoreSources: Bool
-        ) -> TextFileSection<Context>
+        ) -> Git.RepoIgnore
     {
-        return .init{ """
+        buffer <<< """
 
             # ==========
             ### Carthage ###
@@ -285,15 +286,16 @@ extension TextFileSection
             #
             #
             """
-            .asIndentedText(with: $0)
-        }
+
+        //---
+
+        return self
     }
 
-    static
-    func fastlane(
-        ) -> TextFileSection<Context>
+    func addFastlaneSection(
+        ) -> Git.RepoIgnore
     {
-        return .init{ """
+        buffer <<< """
 
             # ==========
             ### Fastlane ###
@@ -313,16 +315,17 @@ extension TextFileSection
             #
             #
             """
-            .asIndentedText(with: $0)
-        }
+
+        //---
+
+        return self
     }
 
-    static
-    func archivesExportPath(
+    func addArchivesExportPathSection(
         _ archivesExportPath: String
-        ) -> TextFileSection<Context>
+        ) -> Git.RepoIgnore
     {
-        return .init{ """
+        buffer <<< """
 
             # ==========
             ### Archives Export Path (for apps only) ###
@@ -335,16 +338,17 @@ extension TextFileSection
             #
             #
             """
-            .asIndentedText(with: $0)
-        }
+
+        //---
+
+        return self
     }
 
-    static
-    func custom(
+    func add(
         _ customEntry: String
-        ) -> TextFileSection<Context>
+        ) -> Git.RepoIgnore
     {
-        return .init{ """
+        buffer <<< """
 
             # ==========
             ### Custom repo-specific ###
@@ -357,7 +361,9 @@ extension TextFileSection
             #
             #
             """
-            .asIndentedText(with: $0)
-        }
+
+        //---
+
+        return self
     }
 }

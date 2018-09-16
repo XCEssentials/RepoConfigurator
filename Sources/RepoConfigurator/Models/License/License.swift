@@ -25,4 +25,4 @@
  */
 
 public
-struct License {}
+enum License {}

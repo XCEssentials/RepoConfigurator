@@ -6,22 +6,14 @@ import PackageDescription
 let package = Package(
     name: "XCERepoConfigurator",
     products: [
-        .library(name: "XCERepoConfigurator", targets: ["RepoConfigurator"])
+        .library(name: "XCERepoConfigurator", targets: ["XCERepoConfigurator"]),
+    ],
+    dependencies: [
+        .package(url: "https://github.com/JohnSundell/Files", from: "2.2.1"),
     ],
     targets: [
-        .target(
-            name: "RepoConfigurator",
-            dependencies: [
-                // none
-            ],
-            path: "./Sources/RepoConfigurator"
-        ),
-        .testTarget(
-            name: "RepoConfiguratorTests",
-            dependencies: [
-                "RepoConfigurator"
-            ]
-        )
+        .target(name: "XCERepoConfigurator", dependencies: ["Files"], path: "./Sources/RepoConfigurator"),
+        .testTarget(name: "RepoConfiguratorTests", dependencies: ["XCERepoConfigurator"]),
     ],
     swiftLanguageVersions: [.v4, .v4_2]
 )
