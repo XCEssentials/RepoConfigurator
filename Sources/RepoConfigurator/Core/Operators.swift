@@ -174,35 +174,3 @@ func <<< (
         receiver.append($0)
     }
 }
-
-// MARK: - IndentedTextBuffer <<<
-
-//internal
-func <<< <T>(
-    receiver: inout [TextFileSection<T>],
-    input: TextFileSection<T>
-    )
-{
-    receiver.append(input)
-}
-
-//internal
-func <<< <T>(
-    receiver: inout [TextFileSection<T>],
-    input: TextFileSection<T>?
-    )
-{
-    input.map{
-
-        receiver.append($0)
-    }
-}
-
-//internal
-func <<< <T>(
-    receiver: inout [TextFileSection<T>],
-    input: [TextFileSection<T>]
-    )
-{
-    receiver.append(contentsOf: input)
-}
