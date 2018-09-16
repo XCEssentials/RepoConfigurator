@@ -28,15 +28,25 @@ public
 extension CocoaPods
 {
     public
-    struct Podfile: FixedNameTextFile
+    final
+    class Podfile: FixedNameTextFile
     {
         // MARK: Type level members
 
         public
-        enum Target {}
+        struct UnitTestTargets
+        {
+            private
+            let buffer: IndentedTextBuffer
 
-        public
-        enum UnitTestTarget {}
+            //internal
+            init(
+                with buffer: IndentedTextBuffer
+                )
+            {
+                self.buffer = buffer
+            }
+        }
 
         public
         enum InheritanceMode: String
@@ -48,33 +58,31 @@ extension CocoaPods
         
         // MARK: Instance level members
 
+        private
+        var buffer: IndentedTextBuffer = .init()
+
         public
-        let fileContent: IndentedText
+        var fileContent: IndentedText
+        {
+            return buffer.content
+        }
 
         // MARK: Initializers
 
         public
         init(
-            workspaceName: String,
-            targets: [TextFileSection<Target>],
-            otherGlobalEntries: [String] = []
+            workspaceName: String
+//            targets: [TextFileSection<Target>],
+//            otherGlobalEntries: [String] = []
             )
         {
-            let result = IndentedTextBuffer()
-
-            //---
-
-            result <<< """
+            buffer <<< """
                 workspace '\(workspaceName)'
                 """
 
-            result <<< targets
-
-            result <<< otherGlobalEntries
-
-            //---
-
-            fileContent = result.content
+//            result <<< targets
+//
+//            result <<< otherGlobalEntries
         }
     }
 }
@@ -82,11 +90,8 @@ extension CocoaPods
 // MARK: - Content rendering
 
 public
-extension TextFileSection
-    where
-    Context == CocoaPods.Podfile.Target
+extension CocoaPods.Podfile
 {
-    static
     func target(
         _ targetName: String,
         projectName: String? = nil,
@@ -94,117 +99,100 @@ extension TextFileSection
         usesSwift: Bool = true, // adds 'use_frameworks!'
         includePodsFromPodspec: Bool = false,
         pods: [String],
-        tests: TextFileSection<CocoaPods.Podfile.UnitTestTarget>...
-        ) -> TextFileSection<Context>
+        tests: (CocoaPods.Podfile.UnitTestTargets) -> Void = { _ in }
+        ) -> CocoaPods.Podfile
     {
-        return .init{
+        buffer <<< """
 
-            indentation in
+            target '\(targetName)' do
 
-            //---
+            """
 
-            let result: IndentedTextBuffer = .init(with: indentation)
+        buffer.indentation.nest{
 
-            //---
+            buffer <<< """
+                project '\(projectName ?? targetName)'
+                platform :\(deploymentTarget.platform.cocoaPodsId), '\(deploymentTarget.minimumVersion)'
 
-            result <<< """
-
-                target '\(targetName)' do
+                # Comment the next line if you're not using Swift
+                # and don't want to use dynamic frameworks
+                \(usesSwift ? "" : "# ")use_frameworks!
 
                 """
 
-            indentation.nest{
+            buffer <<< includePodsFromPodspec.mapIf(true){ """
+                \(Defaults.podsFromSpec)
 
-                result <<< """
-                    project '\(projectName ?? targetName)'
-                    platform :\(deploymentTarget.platform.cocoaPodsId), '\(deploymentTarget.minimumVersion)'
-
-                    # Comment the next line if you're not using Swift
-                    # and don't want to use dynamic frameworks
-                    \(usesSwift ? "" : "# ")use_frameworks!
-
-                    """
-
-                result <<< includePodsFromPodspec.mapIf(true){ """
-                    \(Defaults.podsFromSpec)
-
-                    """
-                }
-
-                result <<< pods.map{ """
-                    \($0)
-                    """
-                }
-
-                result <<< tests.map{
-
-                    $0.contentGetter(indentation)
-                }
+                """
             }
 
-            // end target
-            result <<< """
-
-                end
+            buffer <<< pods.map{ """
+                \($0)
                 """
+            }
 
-            //---
-
-            return result.content
+            tests(
+                UnitTestTargets(
+                    with: buffer
+                )
+            )
         }
+
+        // end target
+        buffer <<< """
+
+            end
+            """
+
+        //---
+
+        return self
+    }
+
+    func custom(
+        _ customEntry: String
+        ) -> CocoaPods.Podfile
+    {
+        buffer <<< customEntry
+
+        //---
+
+        return self
     }
 }
 
 public
-extension TextFileSection
-    where
-    Context == CocoaPods.Podfile.UnitTestTarget
+extension CocoaPods.Podfile.UnitTestTargets
 {
-    static
     func unitTestTarget(
         _ name: String,
         inherit inheritanceMode: CocoaPods.Podfile.InheritanceMode? = .searchPaths,
         _ pods: String...
-        ) -> TextFileSection<Context>
+        )
     {
-        return .init{
+        buffer <<< """
 
-            indentation in
+            target '\(name)' do
 
-            //---
+            """
 
-            let result: IndentedTextBuffer = .init(with: indentation)
+        buffer.indentation.nest{
 
-            //---
-
-            result <<< """
-
-                target '\(name)' do
+            buffer <<< inheritanceMode.map{ """
+                inherit! :\($0.rawValue)
 
                 """
-
-            indentation.nest{
-
-                result <<< inheritanceMode.map{ """
-                    inherit! :\($0.rawValue)
-
-                    """
-                }
-
-                result <<< pods.map{ """
-                    \($0)
-                    """
-                }
             }
 
-            result <<< """
-
-                end
+            buffer <<< pods.map{ """
+                \($0)
                 """
-
-            //---
-
-            return result.content
+            }
         }
+
+        buffer <<< """
+
+            end
+            """
     }
 }

@@ -58,18 +58,25 @@ extension Xcode
         var schemesByName: [String: Xcode.Scheme] = [:]
 
         public
-        func schemes(
-            _ items: Xcode.Scheme...
+        func scheme(
+            named name: String,
+            configure: @escaping (Scheme.Sections) -> Void
             )
         {
-            items.forEach{
-
-                schemesByName[$0.name] = $0
-            }
+            schemesByName[name] = Scheme(named: name, configure)
         }
-
-        public
+        
+        public private(set)
         var variants: [Xcode.Project.Variant] = []
+        
+        public
+        func variant(
+            _ name: String,
+            _ configure: @escaping (Xcode.Project.Variant) -> Void = { _ in }
+            )
+        {
+            variants.append(.init(name, configure))
+        }
 
         /**
          https://github.com/lyptt/struct/wiki/Spec-format:-v2.0#lifecycle-hooks

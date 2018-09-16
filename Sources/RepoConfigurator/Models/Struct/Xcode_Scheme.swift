@@ -31,7 +31,8 @@ extension Xcode
      https://github.com/lyptt/struct/wiki/Spec-format%3A-v2.0#schemes
      */
     public
-    struct Scheme
+    final
+    class Scheme
     {
         // MARK: Type level members
 
@@ -43,25 +44,36 @@ extension Xcode
             testing: Bool,
             analyzing: Bool
         )
+        
+        public
+        struct Sections
+        {
+            private
+            let buffer: IndentedTextBuffer
+            
+            //internal
+            init(
+                buffer: IndentedTextBuffer
+                )
+            {
+                self.buffer = buffer
+            }
+        }
 
         // MARK: Instance level members
-
-        public
-        let name: String
 
         public
         let contentGetter: (Indentation) -> IndentedText
 
         // MARK: Initializers
 
-        public
-        static
-        func scheme(
+        //internal
+        init(
             named name: String,
-            _ sections: TextFileSection<Xcode.Scheme>...
-            ) -> Scheme
+            _ sections: @escaping (Sections) -> Void
+            )
         {
-            return .init(name: name){
+            self.contentGetter = {
 
                 let result = IndentedTextBuffer(with: $0)
 
@@ -71,9 +83,13 @@ extension Xcode
                     \(name):
                     """
 
-                $0.nest{
+                result.indentation.nest{
 
-                    result <<< sections
+                    sections(
+                        Sections(
+                            buffer: result
+                        )
+                    )
                 }
 
                 //---
@@ -87,228 +103,154 @@ extension Xcode
 // MARK: - Content rendering
 
 public
-extension TextFileSection
-    where
-    Context == Xcode.Scheme
+extension Xcode.Scheme.Sections
 {
-    static
     func build(
         parallel: Bool = true,
         buildImplicit: Bool = true,
         targets: [String: Xcode.Scheme.BuildOptions]
-        ) -> TextFileSection<Context>
+        )
     {
-        return .init{
+        buffer <<< """
+            build:
+            """
 
-            indentation in
+        buffer.indentation.nest{
 
-            //---
-
-            let result = IndentedTextBuffer(with: indentation)
-
-            //---
-
-            result <<< """
-                build:
+            buffer <<< """
+                parallel: \(parallel)
+                build_implicit: \(buildImplicit)
+                targets:
                 """
 
-            indentation.nest{
+            buffer.indentation.nest{
 
-                result <<< """
-                    parallel: \(parallel)
-                    build_implicit: \(buildImplicit)
-                    targets:
+                buffer <<< targets.map{ """
+                    \($0.key):
+                      archiving_enabled: \($0.value.archiving)
+                      running_enabled: \($0.value.running)
+                      profiling_enabled: \($0.value.profiling)
+                      testing_enabled: \($0.value.testing)
+                      analyzing_enabled: \($0.value.analyzing)
                     """
-
-                indentation.nest{
-
-                    result <<< targets.map{ """
-                        \($0.key):
-                          archiving_enabled: \($0.value.archiving)
-                          running_enabled: \($0.value.running)
-                          profiling_enabled: \($0.value.profiling)
-                          testing_enabled: \($0.value.testing)
-                          analyzing_enabled: \($0.value.analyzing)
-                        """
-                    }
                 }
             }
-
-            //---
-
-            return result.content
         }
     }
 
-    static
     func test(
         configuration: Xcode.BuildConfiguration = .debug,
         targets: [String],
         inheritLaunchArguments: Bool = true,
         codeCoverage: Bool = true,
         environment: [String: String] = ["OS_ACTIVITY_MODE": "disable"]
-        ) -> TextFileSection<Context>
+        )
     {
-        return .init{
+        buffer <<< """
+            test:
+            """
 
-            indentation in
+        buffer.indentation.nest{
 
-            //---
-
-            let result = IndentedTextBuffer(with: indentation)
-
-            //---
-
-            result <<< """
-                test:
+            buffer <<< """
+                # build_configuration is available from Spec 2.1.0
+                build_configuration: \(configuration)
+                inherit_launch_arguments: \(inheritLaunchArguments)
+                code_coverage_enabled: \(codeCoverage)
+                targets:
                 """
 
-            indentation.nest{
-
-                result <<< """
-                    # build_configuration is available from Spec 2.1.0
-                    build_configuration: \(configuration)
-                    inherit_launch_arguments: \(inheritLaunchArguments)
-                    code_coverage_enabled: \(codeCoverage)
-                    targets:
-                    """
-
-                result <<< targets.map{ """
-                    - \($0)
-                    """
-                }
-
-                result <<< """
-                    environment:
-                    """
-
-                indentation.nest{
-
-                    result <<< environment.map{ """
-                        \($0.key): \($0.value)
-                        """
-                    }
-                }
+            buffer <<< targets.map{ """
+                - \($0)
+                """
             }
 
-            //---
+            buffer <<< """
+                environment:
+                """
 
-            return result.content
+            buffer.indentation.nest{
+
+                buffer <<< environment.map{ """
+                    \($0.key): \($0.value)
+                    """
+                }
+            }
         }
     }
 
-    static
     func run(
         configuration: Xcode.BuildConfiguration = .debug,
         simulateLocation: Bool = true,
         target: String,
         arguments: [String] = [],
         environment: [String: String] = ["OS_ACTIVITY_MODE": "disable"]
-        ) -> TextFileSection<Context>
+        )
     {
-        return .init{
+        buffer <<< """
+            launch:
+            """
 
-            indentation in
+        buffer.indentation.nest{
 
-            //---
-
-            let result = IndentedTextBuffer(with: indentation)
-
-            //---
-
-            result <<< """
-                launch:
+            buffer <<< """
+                # build_configuration is available from Spec 2.1.0
+                build_configuration: \(configuration)
+                simulate_location: \(simulateLocation)
+                target: \(target)
+                arguments: \(arguments.joined(separator: " "))
+                environment:
                 """
 
-            indentation.nest{
+            buffer.indentation.nest{
 
-                result <<< """
-                    # build_configuration is available from Spec 2.1.0
-                    build_configuration: \(configuration)
-                    simulate_location: \(simulateLocation)
-                    target: \(target)
-                    arguments: \(arguments.joined(separator: " "))
-                    environment:
+                buffer <<< environment.map{ """
+                    \($0.key): \($0.value)
                     """
-
-                indentation.nest{
-
-                    result <<< environment.map{ """
-                        \($0.key): \($0.value)
-                        """
-                    }
                 }
             }
-
-            //---
-
-            return result.content
         }
     }
 
-    static
     func profile(
         target: String,
         inheritEnvironment: Bool = true,
         configuration: Xcode.BuildConfiguration = .debug
-        ) -> TextFileSection<Context>
+        )
     {
-        return .init{
+        buffer <<< """
+            profile:
+            """
 
-            let result = IndentedTextBuffer(with: $0)
+        buffer.indentation.nest{
 
-            //---
-
-            result <<< """
-                profile:
+            buffer <<< """
+                target: iOSTest
+                  inherit_environment: \(inheritEnvironment)
+                  # build_configuration is available from Spec 2.1.0
+                  build_configuration: \(configuration)
                 """
-
-            $0.nest{
-
-                result <<< """
-                    target: iOSTest
-                      inherit_environment: \(inheritEnvironment)
-                      # build_configuration is available from Spec 2.1.0
-                      build_configuration: \(configuration)
-                    """
-            }
-
-            //---
-
-            return result.content
         }
     }
 
-    static
     func archive(
         name: String,
         reveal: Bool = false,
         configuration: Xcode.BuildConfiguration = .release
-        ) -> TextFileSection<Context>
+        )
     {
-        return .init{
+        buffer <<< """
+            archive:
+            """
 
-            let result = IndentedTextBuffer(with: $0)
+        buffer.indentation.nest{
 
-            //---
-
-            result <<< """
-                archive:
+            buffer <<< """
+                name: \(name).xcarchive
+                reveal: \(reveal)
+                # build_configuration is available from Spec 2.1.0
+                build_configuration: \(configuration)
                 """
-
-            $0.nest{
-
-                result <<< """
-                    name: \(name).xcarchive
-                    reveal: \(reveal)
-                    # build_configuration is available from Spec 2.1.0
-                    build_configuration: \(configuration)
-                    """
-            }
-
-            //---
-
-            return result.content
         }
     }
 }
