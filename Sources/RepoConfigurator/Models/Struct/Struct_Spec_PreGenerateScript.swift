@@ -44,10 +44,22 @@ extension Struct.Spec
         static
         let defaultFileName = "struct-pre-generate.rb"
 
-        // MARK: Instance level members
-
         public
-        let fileContent: IndentedText
+        struct Sections
+        {
+            private
+            let buffer: IndentedTextBuffer
+            
+            //internal
+            init(
+                buffer: IndentedTextBuffer
+                )
+            {
+                self.buffer = buffer
+            }
+        }
+
+        // MARK: Instance level members
 
         public
         func prepareWithDefaultName(
@@ -64,19 +76,24 @@ extension Struct.Spec
             )
         }
 
+        private
+        var buffer = IndentedTextBuffer()
+        
+        public
+        var fileContent: IndentedText
+        {
+            return buffer.content
+        }
+
         // MARK: Initializers
 
         public
         init(
             specVar spec: String = defaultSpecVar,
-            _ sections: TextFileSection<Struct.Spec.PreGenerateScript>...
+            _ sections: (Sections) -> Void
             )
         {
-            let result = IndentedTextBuffer()
-
-            //---
-
-            result <<< """
+            buffer <<< """
                 # pre-generate Struct script
                 # https://github.com/lyptt/struct/wiki/Spec-format:-v2.0#lifecycle-hooks
 
@@ -84,19 +101,19 @@ extension Struct.Spec
 
                 """
 
-            result.indentation.nest{
+            buffer.indentation.nest{
 
-                result <<< sections
+                sections(
+                    Sections(
+                        buffer: buffer
+                    )
+                )
             }
 
-            result <<< """
+            buffer <<< """
 
                 end
                 """
-
-            //---
-
-            self.fileContent = result.content
         }
     }
 }
@@ -104,30 +121,16 @@ extension Struct.Spec
 // MARK: - Content rendering
 
 public
-extension TextFileSection
-    where
-    Context == Struct.Spec.PreGenerateScript
+extension Struct.Spec.PreGenerateScript.Sections
 {
-    static
     func custom(
         _ content: String
-        ) -> TextFileSection<Context>
+        )
     {
-        return .init{
+        buffer <<< """
 
-            let result = IndentedTextBuffer(with: $0)
-
-            //---
-
-            result <<< """
-
-                \(content)
-                """
-
-            //---
-
-            return result.content
-        }
+            \(content)
+            """
     }
 }
 

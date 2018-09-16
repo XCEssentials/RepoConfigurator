@@ -28,7 +28,8 @@ public
 extension Struct
 {
     public
-    struct Spec: FixedNameTextFile
+    final
+    class Spec: FixedNameTextFile
     {
         // MARK: Type level members
 
@@ -38,8 +39,16 @@ extension Struct
 
         // MARK: Instance level members
 
+        private
+        var buffer: IndentedTextBuffer = .init(
+            with: Defaults.YAMLIndentation
+        )
+
         public
-        let fileContent: IndentedText
+        var fileContent: IndentedText
+        {
+            return buffer.content
+        }
 
         // MARK: Initializers
 
@@ -55,17 +64,7 @@ extension Struct
 
             //---
 
-            let result: IndentedTextBuffer = .init(
-                with: Defaults.YAMLIndentation
-            )
-
-            //---
-
-            result <<< model
-
-            //---
-
-            self.fileContent = result.content
+            buffer <<< model
         }
     }
 }
