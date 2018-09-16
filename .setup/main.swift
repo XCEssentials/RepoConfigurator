@@ -7,7 +7,7 @@ import XCERepoConfigurator
 //---
 
 print("\n")
-print("--- BEGIN of '\(Bundle.main.executableURL?.pathComponents.last ?? "?")' script ---")
+print("--- BEGIN of '\(Executable.name!)' script ---")
 
 //---
 
@@ -159,4 +159,4 @@ catch
 
 //---
 
-print("--- END of '\(Bundle.main.executableURL?.pathComponents.last ?? "?")' script ---")
+print("--- END of '\(Executable.name!)' script ---")
