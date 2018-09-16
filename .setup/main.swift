@@ -143,22 +143,6 @@ do
 
     //---
 
-    print("Writing '\(Fastlane.Fastfile.fileName)'")
-
-    try Fastlane
-        .Fastfile()
-        .defaultHeader()
-        .beforeRelease(
-            projectName: projectName,
-            cocoaPodsModuleName: nil
-        )
-        .prepare(
-            targetFolder: fastlaneFolder.path
-        )
-        .writeToFileSystem()
-
-    //---
-
     print("Writing '\(GitHub.PagesConfig.fileName)'")
 
     try GitHub
