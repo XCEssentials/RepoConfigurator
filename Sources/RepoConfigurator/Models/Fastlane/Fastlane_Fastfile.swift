@@ -258,6 +258,22 @@ extension Fastlane.Fastfile
         return self
     }
 
+    func require(
+        _ gems: String...
+        ) -> Fastlane.Fastfile
+    {
+        buffer <<< gems.joined(separator: "\n").split(separator: "\n").map{ """
+            fastlane_require '\($0)'
+            """
+        }
+     
+        buffer <<< "\n"
+        
+        //---
+        
+        return self
+    }
+    
     func beforeRelease(
         ensureGitBranch: String? = Defaults.releaseGitBranchesRegEx,
         projectName: String,
