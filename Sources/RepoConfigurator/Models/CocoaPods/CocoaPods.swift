@@ -32,6 +32,7 @@ enum CocoaPods {}
 public
 extension WidelyUsedLicense
 {
+    static
     var cocoaPodsLicenseSummary: CocoaPods.Podspec.License
     {
         return (
