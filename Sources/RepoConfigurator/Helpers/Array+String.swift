@@ -31,6 +31,6 @@ extension Array
 {
     var asMultiLine: String
     {
-        return flatMap{ $0.split(separator: "\n") }.asMultiLine
+        return flatMap{ $0.split(separator: "\n") }.joined(separator: "\n")
     }
 }
