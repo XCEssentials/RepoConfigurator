@@ -401,6 +401,7 @@ extension Fastlane.Fastfile
     }
 
     func regenerateProject(
+        requireDependencies: Bool = false, // does not work properly yet
         projectName: String,
         getCurrentVersionFromTarget targetName: String? = nil,
         usesCocoapods: Bool = true,
@@ -414,11 +415,15 @@ extension Fastlane.Fastfile
 
         //---
 
-        _ = require(
-            "struct",
-            "cocoapods",
-            "xcodeproj"
-        )
+        if
+            requireDependencies
+        {
+            _ = require(
+                "struct",
+                "cocoapods",
+                "xcodeproj"
+            )
+        }
         
         //---
 
@@ -506,6 +511,7 @@ extension Fastlane.Fastfile
     }
 
     func generateProject(
+        requireDependencies: Bool = false, // does not work properly yet
         projectName: String,
         usesCocoapods: Bool = true,
         swiftGenTargets: [String] = [],
@@ -518,11 +524,15 @@ extension Fastlane.Fastfile
 
         //---
         
-        _ = require(
-            "struct",
-            "cocoapods",
-            "xcodeproj"
-        )
+        if
+            requireDependencies
+        {
+            _ = require(
+                "struct",
+                "cocoapods",
+                "xcodeproj"
+            )
+        }
         
         //---
 
