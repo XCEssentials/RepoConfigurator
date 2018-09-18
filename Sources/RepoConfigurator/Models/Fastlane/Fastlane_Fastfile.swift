@@ -264,7 +264,7 @@ extension Fastlane.Fastfile
         _ gems: String...
         ) -> Fastlane.Fastfile
     {
-        gems.asMultiLine
+        gems.joined(separator: "\n")
             .split(separator: "\n")
             .map{ "fastlane_require '\($0)'" }
             .forEach{ requiredGems.insert($0) }
