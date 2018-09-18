@@ -51,12 +51,20 @@ extension Fastlane
         // MARK: Instance level members
 
         private
-        var buffer: IndentedTextBuffer = .init()
+        var header: IndentedTextBuffer = .init()
+        
+        private
+        var requiredGems: Set<String> = []
+
+        private
+        var main: IndentedTextBuffer = .init()
 
         public
         var fileContent: IndentedText
         {
-            return buffer.content
+            return header.content
+                + requiredGems.sorted().asIndentedText(with: .init())
+                + main.content
         }
 
         // MARK: Initializers
@@ -225,7 +233,7 @@ extension Fastlane.Fastfile
     {
         //swiftlint:disable line_length
 
-        buffer <<< """
+        header <<< """
             # Customise this file, documentation can be found here:
             # https://github.com/KrauseFx/fastlane/tree/master/docs
             # All available actions: https://github.com/KrauseFx/fastlane/blob/master/docs/Actions.md
@@ -258,6 +266,20 @@ extension Fastlane.Fastfile
         return self
     }
 
+    func require(
+        _ gems: String...
+        ) -> Fastlane.Fastfile
+    {
+        gems.joined(separator: "\n")
+            .split(separator: "\n")
+            .map{ "fastlane_require '\($0)'" }
+            .forEach{ requiredGems.insert($0) }
+     
+        //---
+        
+        return self
+    }
+    
     func beforeRelease(
         ensureGitBranch: String? = Defaults.releaseGitBranchesRegEx,
         projectName: String,
@@ -269,14 +291,14 @@ extension Fastlane.Fastfile
 
         //---
 
-        buffer <<< """
+        main <<< """
 
             lane :\(laneName) do
             """
 
-        buffer.indentation.nest{
+        main.indentation.nest{
 
-            buffer <<< ensureGitBranch.map{ """
+            main <<< ensureGitBranch.map{ """
 
                 ensure_git_branch(
                     branch: '\($0)'
@@ -284,12 +306,12 @@ extension Fastlane.Fastfile
                 """
             }
 
-            buffer <<< """
+            main <<< """
 
                 ensure_git_status_clean
                 """
 
-            buffer <<< (cocoaPodsModuleName != nil).mapIf(true){ """
+            main <<< (cocoaPodsModuleName != nil).mapIf(true){ """
 
                 # ===
 
@@ -300,7 +322,7 @@ extension Fastlane.Fastfile
                 """
             }
 
-            buffer <<< """
+            main <<< """
 
                 # === Remember current version number
 
@@ -357,7 +379,7 @@ extension Fastlane.Fastfile
                 )
                 """
 
-            buffer <<< cocoaPodsModuleName.map{ """
+            main <<< cocoaPodsModuleName.map{ """
 
                 # ===
 
@@ -374,7 +396,7 @@ extension Fastlane.Fastfile
             }
         }
 
-        buffer <<< """
+        main <<< """
 
             end # lane :\(laneName)
             """
@@ -399,15 +421,23 @@ extension Fastlane.Fastfile
 
         //---
 
-        buffer <<< """
+        _ = require(
+            "struct",
+            "cocoapods",
+            "xcodeproj"
+        )
+        
+        //---
+
+        main <<< """
 
             lane :\(laneName) do
 
             """
 
-        buffer.indentation.nest{
+        main.indentation.nest{
 
-            buffer <<< """
+            main <<< """
                 # === Remember current version and build numbers
 
                 versionNumber = get_version_number(
@@ -453,32 +483,32 @@ extension Fastlane.Fastfile
                 sh 'cd ./.. && xcodeproj sort "\(projectName).xcodeproj"'
                 """
 
-            buffer <<< type(of: self).swiftGenBuildPhase(
-                with: buffer.indentation,
+            main <<< type(of: self).swiftGenBuildPhase(
+                with: main.indentation,
                 projectName: projectName,
                 targetNames: swiftGenTargets
             )
 
-            buffer <<< type(of: self).sourceryBuildPhase(
-                with: buffer.indentation,
+            main <<< type(of: self).sourceryBuildPhase(
+                with: main.indentation,
                 projectName: projectName,
                 targetNames: sourceryTargets
             )
 
-            buffer <<< type(of: self).swiftLintGlobalBuildPhase(
-                with: buffer.indentation,
+            main <<< type(of: self).swiftLintGlobalBuildPhase(
+                with: main.indentation,
                 projectName: projectName,
                 targetNames: swiftLintGlobalTargets
             )
 
-            buffer <<< type(of: self).swiftLintPodsBuildPhase(
-                with: buffer.indentation,
+            main <<< type(of: self).swiftLintPodsBuildPhase(
+                with: main.indentation,
                 projectName: projectName,
                 targetNames: swiftLintPodsTargets
             )
         }
 
-        buffer <<< """
+        main <<< """
 
             end # lane :\(laneName)
             """
@@ -501,16 +531,24 @@ extension Fastlane.Fastfile
         let swiftLintGlobalTargets = swiftLintGlobalTargets ?? [projectName]
 
         //---
+        
+        _ = require(
+            "struct",
+            "cocoapods",
+            "xcodeproj"
+        )
+        
+        //---
 
-        buffer <<< """
+        main <<< """
 
             lane :generateProject do
 
             """
 
-        buffer.indentation.nest{
+        main.indentation.nest{
 
-            buffer <<< """
+            main <<< """
                 # === Generate project from scratch
 
                 # default initial location for any command
@@ -539,32 +577,32 @@ extension Fastlane.Fastfile
                 sh 'cd ./.. && xcodeproj sort "\(projectName).xcodeproj"'
                 """
 
-            buffer <<< type(of: self).swiftGenBuildPhase(
-                with: buffer.indentation,
+            main <<< type(of: self).swiftGenBuildPhase(
+                with: main.indentation,
                 projectName: projectName,
                 targetNames: swiftGenTargets
             )
 
-            buffer <<< type(of: self).sourceryBuildPhase(
-                with: buffer.indentation,
+            main <<< type(of: self).sourceryBuildPhase(
+                with: main.indentation,
                 projectName: projectName,
                 targetNames: sourceryTargets
             )
 
-            buffer <<< type(of: self).swiftLintGlobalBuildPhase(
-                with: buffer.indentation,
+            main <<< type(of: self).swiftLintGlobalBuildPhase(
+                with: main.indentation,
                 projectName: projectName,
                 targetNames: swiftLintGlobalTargets
             )
 
-            buffer <<< type(of: self).swiftLintPodsBuildPhase(
-                with: buffer.indentation,
+            main <<< type(of: self).swiftLintPodsBuildPhase(
+                with: main.indentation,
                 projectName: projectName,
                 targetNames: swiftLintPodsTargets
             )
         }
 
-        buffer <<< """
+        main <<< """
 
             end # lane :\(laneName)
             """
@@ -590,7 +628,7 @@ extension Fastlane.Fastfile
 
         //swiftlint:disable line_length
 
-        buffer <<< """
+        main <<< """
 
             lane :\(laneName) do
 
@@ -667,7 +705,7 @@ extension Fastlane.Fastfile
         _ customEntry: String
         ) -> Fastlane.Fastfile
     {
-        buffer <<< customEntry
+        main <<< customEntry
 
         //---
 
