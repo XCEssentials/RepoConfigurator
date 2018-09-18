@@ -92,8 +92,7 @@ extension Fastlane.Fastfile
         usesCocoapods: Bool = true,
         swiftGenTargets: [String] = [],
         sourceryTargets: [String] = [],
-        swiftLintGlobalTargets: [String]? = nil,
-        swiftLintPodsTargets: [String] = [],
+        swiftLintTargets: [String]? = nil,
         stagingSchemeName: String? = nil,
         stagingExportMethod: ArchiveExportMethod = Defaults.stagingExportMethod,
         archivesExportPath: String = Defaults.archivesExportPath,
@@ -101,7 +100,7 @@ extension Fastlane.Fastfile
         ) -> Fastlane.Fastfile
     {
         let projectName = projectName ?? productName
-        let swiftLintGlobalTargets = swiftLintGlobalTargets ?? [projectName]
+        let swiftLintTargets = swiftLintTargets ?? [projectName]
         let stagingSchemeName = stagingSchemeName ?? productName
 
         //---
@@ -125,16 +124,14 @@ extension Fastlane.Fastfile
                 usesCocoapods: usesCocoapods,
                 swiftGenTargets: swiftGenTargets,
                 sourceryTargets: sourceryTargets,
-                swiftLintGlobalTargets: swiftLintGlobalTargets,
-                swiftLintPodsTargets: swiftLintPodsTargets
+                swiftLintTargets: swiftLintTargets
             )
             .generateProject(
                 projectName: projectName,
                 usesCocoapods: usesCocoapods,
                 swiftGenTargets: swiftGenTargets,
                 sourceryTargets: sourceryTargets,
-                swiftLintGlobalTargets: swiftLintGlobalTargets,
-                swiftLintPodsTargets: swiftLintPodsTargets
+                swiftLintTargets: swiftLintTargets
             )
             .archiveBeta(
                 productName: productName,
@@ -168,13 +165,12 @@ extension Fastlane.Fastfile
         usesCocoapods: Bool = true,
         swiftGenTargets: [String] = [],
         sourceryTargets: [String] = [],
-        swiftLintGlobalTargets: [String]? = nil,
-        swiftLintPodsTargets: [String] = [],
+        swiftLintTargets: [String]? = nil,
         otherEntries: [String] = []
         ) -> Fastlane.Fastfile
     {
         let projectName = projectName ?? productName
-        let swiftLintGlobalTargets = swiftLintGlobalTargets ?? [projectName]
+        let swiftLintTargets = swiftLintTargets ?? [projectName]
 
         //---
 
@@ -197,16 +193,14 @@ extension Fastlane.Fastfile
                 usesCocoapods: usesCocoapods,
                 swiftGenTargets: swiftGenTargets,
                 sourceryTargets: sourceryTargets,
-                swiftLintGlobalTargets: swiftLintGlobalTargets,
-                swiftLintPodsTargets: swiftLintPodsTargets
+                swiftLintTargets: swiftLintTargets
             )
             .generateProject(
                 projectName: projectName,
                 usesCocoapods: usesCocoapods,
                 swiftGenTargets: swiftGenTargets,
                 sourceryTargets: sourceryTargets,
-                swiftLintGlobalTargets: swiftLintGlobalTargets,
-                swiftLintPodsTargets: swiftLintPodsTargets
+                swiftLintTargets: swiftLintTargets
             )
 
         otherEntries.forEach{
@@ -412,12 +406,11 @@ extension Fastlane.Fastfile
         usesCocoapods: Bool = true,
         swiftGenTargets: [String] = [],
         sourceryTargets: [String] = [],
-        swiftLintGlobalTargets: [String]? = nil,
-        swiftLintPodsTargets: [String] = []
+        swiftLintTargets: [String]? = nil
         ) -> Fastlane.Fastfile
     {
         let laneName = #function.split(separator: "(").first!
-        let swiftLintGlobalTargets = swiftLintGlobalTargets ?? [projectName]
+        let swiftLintTargets = swiftLintTargets ?? [projectName]
 
         //---
 
@@ -495,16 +488,10 @@ extension Fastlane.Fastfile
                 targetNames: sourceryTargets
             )
 
-            main <<< type(of: self).swiftLintGlobalBuildPhase(
+            main <<< type(of: self).swiftLintBuildPhase(
                 with: main.indentation,
                 projectName: projectName,
-                targetNames: swiftLintGlobalTargets
-            )
-
-            main <<< type(of: self).swiftLintPodsBuildPhase(
-                with: main.indentation,
-                projectName: projectName,
-                targetNames: swiftLintPodsTargets
+                targetNames: swiftLintTargets
             )
         }
 
@@ -523,12 +510,11 @@ extension Fastlane.Fastfile
         usesCocoapods: Bool = true,
         swiftGenTargets: [String] = [],
         sourceryTargets: [String] = [],
-        swiftLintGlobalTargets: [String]? = nil,
-        swiftLintPodsTargets: [String] = []
+        swiftLintTargets: [String]? = nil
         ) -> Fastlane.Fastfile
     {
         let laneName = #function.split(separator: "(").first!
-        let swiftLintGlobalTargets = swiftLintGlobalTargets ?? [projectName]
+        let swiftLintTargets = swiftLintTargets ?? [projectName]
 
         //---
         
@@ -589,16 +575,10 @@ extension Fastlane.Fastfile
                 targetNames: sourceryTargets
             )
 
-            main <<< type(of: self).swiftLintGlobalBuildPhase(
+            main <<< type(of: self).swiftLintBuildPhase(
                 with: main.indentation,
                 projectName: projectName,
-                targetNames: swiftLintGlobalTargets
-            )
-
-            main <<< type(of: self).swiftLintPodsBuildPhase(
-                with: main.indentation,
-                projectName: projectName,
-                targetNames: swiftLintPodsTargets
+                targetNames: swiftLintTargets
             )
         }
 
@@ -816,60 +796,7 @@ extension Fastlane.Fastfile
     }
 
     static
-    func swiftLintGlobalBuildPhase(
-        with indentation: Indentation,
-        projectName: String,
-        targetNames: [String]
-        ) -> IndentedText
-    {
-        guard
-            !targetNames.isEmpty
-        else
-        {
-            return []
-        }
-
-        //---
-
-        let scriptName = "SwiftLintGlobal"
-        let targetNames = targetNames.map{ "'\($0)'" }.joined(separator: ", ")
-
-        //---
-
-        return """
-
-            # === Add BUILD PHASE script '\(scriptName)'
-
-            # remember, we are in ./fastlane/ folder now...
-            fullProjFilePath = Dir.pwd + '/../\(projectName).xcodeproj'
-
-            project = Xcodeproj::Project.open(fullProjFilePath)
-
-            project
-                .targets
-                .select{ |t| [\(targetNames)].include?(t.name) }
-                .each{ |t|
-
-                    thePhase = t.new_shell_script_build_phase('\(scriptName)')
-                    thePhase.shell_script = 'if which swiftlint >/dev/null; then
-                        swiftlint
-                    else
-                        echo "warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint"
-                    fi'
-                    # thePhase.run_only_for_deployment_postprocessing = '1'
-
-                    t.build_phases.delete(thePhase)
-                    t.build_phases.unshift(thePhase)
-
-                }
-
-            project.save()
-            """
-            .asIndentedText(with: indentation)
-    }
-
-    static
-    func swiftLintPodsBuildPhase(
+    func swiftLintBuildPhase(
         with indentation: Indentation,
         projectName: String,
         targetNames: [String]
