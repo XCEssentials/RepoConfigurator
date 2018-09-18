@@ -54,7 +54,7 @@ extension Bundler
 
             result <<< basicFastlane.mapIf(true){ """
 
-                gem "fastlane"
+                gem 'fastlane'
                 """
             }
 
