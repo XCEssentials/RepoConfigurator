@@ -58,8 +58,7 @@ extension Bundler
                 """
             }
 
-            result <<< otherEntries.map{ """
-
+            result <<< otherEntries.asMultiLine.split(separator: "\n").map{ """
                 \($0)
                 """
             }

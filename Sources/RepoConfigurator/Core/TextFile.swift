@@ -41,7 +41,7 @@ extension TextFile
     {
         return fileContent
             .map{ "\($0)\($1)" }
-            .joined(separator: "\n")
+            .asMultiLine
     }
 }
 
