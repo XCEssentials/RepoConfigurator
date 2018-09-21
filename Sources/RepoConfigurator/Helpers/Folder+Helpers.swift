@@ -33,14 +33,12 @@ import Files
 public
 extension Folder
 {
-    public
     static
     var root: Folder
     {
         return try! Folder(path: "/") //swiftlint:disable:this force_try
     }
 
-    public
     static
     var iCloudDrive: Folder?
     {
