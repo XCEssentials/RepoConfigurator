@@ -33,14 +33,12 @@ import Files
 public
 extension Folder
 {
-    public
     static
     var root: Folder
     {
         return try! Folder(path: "/") //swiftlint:disable:this force_try
     }
 
-    public
     static
     var iCloudDrive: Folder?
     {
@@ -54,5 +52,34 @@ extension Folder
                 .appendingPathComponent("Mobile Documents/com~apple~CloudDocs")
                 .path
         )
+    }
+    
+    var isGitRepoRoot: Bool
+    {
+        return containsSubfolder(named: ".git")
+    }
+    
+    static
+    var currentRepoRoot: Folder?
+    {
+        var maybeResult: Folder? = .current
+        
+        //---
+        
+        repeat
+        {
+            switch maybeResult
+            {
+            case let .some(folder) where folder.isGitRepoRoot:
+                return folder
+                
+            case let .some(folder) where !folder.isGitRepoRoot:
+                maybeResult = folder.parent
+                
+            default:
+                return nil
+            }
+        }
+        while true
     }
 }
