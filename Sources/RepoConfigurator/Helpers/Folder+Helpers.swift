@@ -55,4 +55,33 @@ extension Folder
                 .path
         )
     }
+    
+    var isGitRepoRoot: Bool
+    {
+        return containsSubfolder(named: ".git")
+    }
+    
+    static
+    var currentRepoRoot: Folder?
+    {
+        var maybeResult: Folder? = .current
+        
+        //---
+        
+        repeat
+        {
+            switch maybeResult
+            {
+            case let .some(folder) where folder.isGitRepoRoot:
+                return folder
+                
+            case let .some(folder) where !folder.isGitRepoRoot:
+                maybeResult = folder.parent
+                
+            default:
+                return nil
+            }
+        }
+        while true
+    }
 }
