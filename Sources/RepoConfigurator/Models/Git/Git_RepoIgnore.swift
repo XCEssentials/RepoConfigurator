@@ -64,7 +64,7 @@ extension Git.RepoIgnore
     func app(
         ignoreDependenciesSources: Bool = false,
         archivesExportPath: String = Defaults.archivesExportPath,
-        otherEntries: [String] = []
+        otherEntries: String...
         ) -> Git.RepoIgnore
     {
         let result = Git
@@ -77,10 +77,11 @@ extension Git.RepoIgnore
             .addFastlaneSection()
             .addArchivesExportPathSection(archivesExportPath)
 
-        otherEntries.forEach{
-
-            _ = result.add($0)
-        }
+        _ = result.add(
+            otherEntries.joined(
+                separator: "\n"
+            )
+        )
 
         //---
 
@@ -91,7 +92,7 @@ extension Git.RepoIgnore
     static
     func framework(
         ignoreDependenciesSources: Bool = true,
-        otherEntries: [String] = []
+        otherEntries: String...
         ) -> Git.RepoIgnore
     {
         let result = Git
@@ -103,10 +104,11 @@ extension Git.RepoIgnore
             .addCarthageSection(ignoreSources: ignoreDependenciesSources)
             .addFastlaneSection()
 
-        otherEntries.forEach{
-
-            _ = result.add($0)
-        }
+        _ = result.add(
+            otherEntries.joined(
+                separator: "\n"
+            )
+        )
 
         //---
 
