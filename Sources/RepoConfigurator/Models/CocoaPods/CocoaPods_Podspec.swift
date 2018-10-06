@@ -34,6 +34,10 @@ extension CocoaPods
         // MARK: Type level members
 
         public
+        static
+        let `extension`: String = "podspec"
+        
+        public
         typealias Product = (
             name: String,
             summary: String
