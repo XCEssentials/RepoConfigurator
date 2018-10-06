@@ -63,9 +63,8 @@ extension Read.CocoaPods
         
         //---
         
-        guard
+        if
             podspecs.count > 1
-        else
         {
             throw Error
                 .multiplePodspecsFoundInFolder(folderPath: targetFolder.path)
