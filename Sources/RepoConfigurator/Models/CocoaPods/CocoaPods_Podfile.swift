@@ -29,7 +29,7 @@ extension CocoaPods
 {
     public
     final
-    class Podfile: FixedNameTextFile
+    class Podfile: FixedNameTextFileAuto
     {
         // MARK: Type level members
 

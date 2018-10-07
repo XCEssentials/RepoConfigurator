@@ -58,6 +58,10 @@ extension FastlaneTests
         XCTAssert(Fastlane.Fastfile.fileName == expectedName)
         XCTAssert(Fastlane.Fastfile.ForApp.fileName == expectedName)
         XCTAssert(Fastlane.Fastfile.ForLibrary.fileName == expectedName)
+        
+        XCTAssert(Fastlane.Fastfile().prepare(targetFolder: "").name == expectedName)
+        XCTAssert(Fastlane.Fastfile.ForApp().prepare(targetFolder: "").name == expectedName)
+        XCTAssert(Fastlane.Fastfile.ForLibrary().prepare(targetFolder: "").name == expectedName)
     }
     
     func testDefaultHeader()
