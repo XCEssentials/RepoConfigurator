@@ -30,7 +30,14 @@ extension Fastlane
     class Fastfile: FixedNameTextFile
     {
         // MARK: Type level members
-
+        
+        public
+        static
+        var fileName: String
+        {
+            return Fastfile.intrinsicFileName
+        }
+        
         /**
          Method used to export the archive.
          Valid values are: app-store, ad-hoc, package, enterprise, development, developer-id.

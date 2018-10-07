@@ -33,17 +33,7 @@ extension Fastlane.Fastfile
 {
     public
     final
-    class ForLibrary: Fastlane.Fastfile
-    {
-        // MARK: Type level members
-        
-        public
-        static
-        var fileName: String
-        {
-            return Fastlane.Fastfile.fileName
-        }
-    }
+    class ForLibrary: Fastlane.Fastfile {}
 }
 
 //---

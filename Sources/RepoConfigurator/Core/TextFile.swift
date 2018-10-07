@@ -83,7 +83,7 @@ public
 extension FixedNameTextFile
 {
     static
-    var fileName: String
+    var intrinsicFileName: String
     {
         // by default return intrinsic file name type based on type name
 
@@ -94,9 +94,9 @@ extension FixedNameTextFile
             )
             .first
             ??
-        ""
+            ""
     }
-
+    
     func prepare(
         targetFolder: String,
         removeSpacesAtEOL: Bool = true,
@@ -110,5 +110,24 @@ extension FixedNameTextFile
             shouldRemoveSpacesAtEOL: removeSpacesAtEOL,
             shouldRemoveRepeatingEmptyLines: removeRepeatingEmptyLines
         )
+    }
+}
+
+//---
+
+public
+protocol FixedNameTextFileAuto: FixedNameTextFile {}
+
+//---
+
+public
+extension FixedNameTextFileAuto
+{
+    static
+    var fileName: String
+    {
+        // by default return intrinsic file name type based on type name
+
+        return intrinsicFileName
     }
 }
