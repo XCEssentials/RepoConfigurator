@@ -97,11 +97,6 @@ extension FixedNameTextFile
         ""
     }
 
-    var fileName: String
-    {
-        return Self.fileName
-    }
-
     func prepare(
         targetFolder: String,
         removeSpacesAtEOL: Bool = true,
@@ -110,7 +105,7 @@ extension FixedNameTextFile
     {
         return PendingTextFile(
             model: self,
-            name: fileName,
+            name: type(of: self).fileName,
             folder: targetFolder,
             shouldRemoveSpacesAtEOL: removeSpacesAtEOL,
             shouldRemoveRepeatingEmptyLines: removeRepeatingEmptyLines
