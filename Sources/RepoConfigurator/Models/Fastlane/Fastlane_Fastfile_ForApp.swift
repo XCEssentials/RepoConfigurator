@@ -37,7 +37,7 @@ extension Fastlane.Fastfile
         static
         var fileName: String
         {
-            return super.fileName
+            return Fastlane.Fastfile.fileName
         }
     }
 }
