@@ -268,6 +268,13 @@ extension CocoaPods.Podspec
                 )
             )
 
+            result.buffer.appendNewLine()
+            
+            result.buffer <<< """
+                # === SUBSPECS ===
+
+                """
+
             subSpecs(
                 SubSpecs(
                     parentSpecVar: specVar,
