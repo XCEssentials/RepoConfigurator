@@ -42,7 +42,7 @@ class IndentedTextBuffer
     {
         content += moreContent
     }
-
+    
     public
     func append(
         _ newPiece: TextFilePiece
@@ -51,6 +51,12 @@ class IndentedTextBuffer
         content += newPiece.asIndentedText(with: indentation)
     }
 
+    public
+    func appendNewLine()
+    {
+        append("")
+    }
+    
 //    public
 //    func append(
 //        _ newPieces: [TextFilePiece]
