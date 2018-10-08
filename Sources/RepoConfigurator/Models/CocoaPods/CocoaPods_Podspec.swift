@@ -342,7 +342,6 @@ extension CocoaPods.Podspec
             \(swiftVersion.map{ "\(s).swift_version = '\($0)'" } ?? "")
 
             \(cocoapodsVersion.map{ "\(s).cocoapods_version = '>= \($0)'" } ?? "")
-
             """
     }
 }
@@ -394,6 +393,8 @@ extension CocoaPods.Podspec.SubSpecs
     {
         // https://guides.cocoapods.org/syntax/podspec.html#subspec
 
+        buffer.appendNewLine()
+        
         buffer <<< """
             \(parentSpecVar).subspec '\(specName)' do |\(specVar)|
 
@@ -426,6 +427,8 @@ extension CocoaPods.Podspec.TestSubSpecs
     {
         // https://guides.cocoapods.org/syntax/podspec.html#test_spec
 
+        buffer.appendNewLine()
+        
         buffer <<< """
             \(parentSpecVar).test_spec '\(specName)' do |\(specVar)|
 
