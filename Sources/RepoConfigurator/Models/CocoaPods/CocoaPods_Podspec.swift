@@ -399,7 +399,7 @@ extension CocoaPods.Podspec.PerPlatformSettings
         // one nultiline strings,
         // or a combination of single and multilines,
         // so lets flatten this out
-        buffer <<< settigns.flatMap{ $0.split(separator: "\n") }.map{ """
+        buffer <<< settigns.map{ """
             \(prefix)\($0)
             """
         }
@@ -429,7 +429,7 @@ extension CocoaPods.Podspec.PerPlatformSettings
         // one nultiline strings,
         // or a combination of single and multilines,
         // so lets flatten this out
-        buffer <<< settigns.flatMap{ $0.split(separator: "\n") }.map{ """
+        buffer <<< settigns.map{ """
             \(prefix)\($0)
             """
         }
@@ -457,7 +457,7 @@ extension CocoaPods.Podspec.PerPlatformSettings
         // one nultiline strings,
         // or a combination of single and multilines,
         // so lets flatten this out
-        buffer <<< settigns.flatMap{ $0.split(separator: "\n") }.map{ """
+        buffer <<< settigns.map{ """
             \(prefix)\($0)
             """
         }
