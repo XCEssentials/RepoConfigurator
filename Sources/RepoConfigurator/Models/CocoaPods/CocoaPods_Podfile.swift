@@ -72,17 +72,11 @@ extension CocoaPods
         public
         init(
             workspaceName: String
-//            targets: [TextFileSection<Target>],
-//            otherGlobalEntries: [String] = []
             )
         {
             buffer <<< """
                 workspace '\(workspaceName)'
                 """
-
-//            result <<< targets
-//
-//            result <<< otherGlobalEntries
         }
     }
 }
@@ -167,7 +161,7 @@ extension CocoaPods.Podfile.UnitTestTargets
     func unitTestTarget(
         _ name: String,
         inherit inheritanceMode: CocoaPods.Podfile.InheritanceMode? = .searchPaths,
-        _ pods: String...
+        pods: [String]
         )
     {
         buffer <<< """

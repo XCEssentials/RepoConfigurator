@@ -172,7 +172,7 @@ extension CocoaPods.Podspec
         cocoapodsVersion: VersionString? = Defaults.cocoapodsVersion,
         swiftVersion: VersionString? = Defaults.swiftVersion,
         perPlatformSettings: (PerPlatformSettings) -> Void,
-        customEntries: String...
+        customEntries: [String] = []
         ) -> CocoaPods.Podspec
     {
         let result: CocoaPods.Podspec = .init()
@@ -236,7 +236,7 @@ extension CocoaPods.Podspec
         perPlatformSettings: (PerPlatformSettings) -> Void,
         subSpecs: (SubSpecs) -> Void,
         testSubSpecs: (TestSubSpecs) -> Void = { _ in },
-        customEntries: String...
+        customEntries: [String] = []
         ) -> CocoaPods.Podspec
     {
         let result: CocoaPods.Podspec = .init()

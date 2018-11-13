@@ -64,7 +64,7 @@ extension Git.RepoIgnore
     func app(
         ignoreDependenciesSources: Bool = false,
         archivesExportPath: String = Defaults.archivesExportPath,
-        otherEntries: String...
+        otherEntries: [String] = []
         ) -> Git.RepoIgnore
     {
         let result = Git
@@ -92,7 +92,7 @@ extension Git.RepoIgnore
     static
     func framework(
         ignoreDependenciesSources: Bool = true,
-        otherEntries: String...
+        otherEntries: [String] = []
         ) -> Git.RepoIgnore
     {
         let result = Git
