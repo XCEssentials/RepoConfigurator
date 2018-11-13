@@ -61,6 +61,9 @@ extension Fastlane
         
         private
         var requiredGems: Set<String> = []
+        
+        private
+        let enableRequiredGems: Bool
 
         //internal
         var main: IndentedTextBuffer = .init()
@@ -69,14 +72,19 @@ extension Fastlane
         var fileContent: IndentedText
         {
             return header.content
-                + requiredGems.sorted().asIndentedText(with: .init())
+                + (enableRequiredGems ? requiredGems.sorted().asIndentedText(with: .init()) : [])
                 + main.content
         }
 
         // MARK: Initializers
 
         public
-        init() {}
+        init(
+            enableRequiredGems: Bool = false // does not work properly yet
+            )
+        {
+            self.enableRequiredGems = enableRequiredGems
+        }
     }
 }
 
@@ -174,5 +182,159 @@ extension Fastlane.Fastfile
         //---
         
         return self
+    }
+}
+
+// MARK: - Internal helpers
+
+// internal
+extension Fastlane.Fastfile
+{
+    static
+    func swiftGenBuildPhase(
+        with indentation: Indentation,
+        projectName: String,
+        targetNames: [String]
+        ) -> IndentedText
+    {
+        guard
+            !targetNames.isEmpty
+        else
+        {
+            return []
+        }
+
+        //---
+
+        let scriptName = "SwiftGen"
+        let targetNames = targetNames.map{ "'\($0)'" }.joined(separator: ", ")
+
+        //---
+
+        return """
+
+            # === Add BUILD PHASE script '\(scriptName)'
+
+            # remember, we are in ./fastlane/ folder now...
+            fullProjFilePath = Dir.pwd + '/../\(projectName).xcodeproj'
+
+            project = Xcodeproj::Project.open(fullProjFilePath)
+
+            project
+                .targets
+                .select{ |t| [\(targetNames)].include?(t.name) }
+                .each{ |t|
+
+                    thePhase = t.new_shell_script_build_phase('\(scriptName)')
+                    thePhase.shell_script = '"$PODS_ROOT/SwiftGen/bin/swiftgen" config run --config ".swiftgen.yml"'
+                    # thePhase.run_only_for_deployment_postprocessing = '1'
+
+                    # now lets put the newly added phase before sources compilation phase
+                    t.build_phases.delete(thePhase)
+                    t.build_phases.unshift(thePhase)
+                }
+
+            project.save()
+            """
+            .asIndentedText(with: indentation)
+    }
+
+    static
+    func sourceryBuildPhase(
+        with indentation: Indentation,
+        projectName: String,
+        targetNames: [String]
+        ) -> IndentedText
+    {
+        guard
+            !targetNames.isEmpty
+        else
+        {
+            return []
+        }
+
+        //---
+
+        let scriptName = "Sourcery"
+        let targetNames = targetNames.map{ "'\($0)'" }.joined(separator: ", ")
+
+        //---
+
+        return """
+
+            # === Add BUILD PHASE script '\(scriptName)'
+
+            # remember, we are in ./fastlane/ folder now...
+            fullProjFilePath = Dir.pwd + '/../\(projectName).xcodeproj'
+
+            project = Xcodeproj::Project.open(fullProjFilePath)
+
+            project
+                .targets
+                .select{ |t| [\(targetNames)].include?(t.name) }
+                .each{ |t|
+
+                    thePhase = t.new_shell_script_build_phase('\(scriptName)')
+                    thePhase.shell_script = '"$PODS_ROOT/Sourcery/bin/sourcery" --prune'
+                    # thePhase.run_only_for_deployment_postprocessing = '1'
+
+                    # now lets put the newly added phase before sources compilation phase
+                    t.build_phases.delete(thePhase)
+                    t.build_phases.unshift(thePhase)
+
+                }
+
+            project.save()
+            """
+            .asIndentedText(with: indentation)
+    }
+
+    static
+    func swiftLintBuildPhase(
+        with indentation: Indentation,
+        projectName: String,
+        targetNames: [String]
+        ) -> IndentedText
+    {
+        guard
+            !targetNames.isEmpty
+        else
+        {
+            return []
+        }
+
+        //---
+
+        let scriptName = "SwiftLintPods"
+        let targetNames = targetNames.map{ "'\($0)'" }.joined(separator: ", ")
+
+        //---
+
+        return """
+
+            # === Add BUILD PHASE script '\(scriptName)'
+
+            # remember, we are in ./fastlane/ folder now...
+            fullProjFilePath = Dir.pwd + '/../\(projectName).xcodeproj'
+
+            project = Xcodeproj::Project.open(fullProjFilePath)
+
+            project
+                .targets
+                .select{ |t| [\(targetNames)].include?(t.name) }
+                .each{ |t|
+
+                    thePhase = t.new_shell_script_build_phase('\(scriptName)')
+                    thePhase.shell_script = '"${PODS_ROOT}/SwiftLint/swiftlint"'
+                    # thePhase.run_only_for_deployment_postprocessing = '1'
+
+                    t.build_phases.delete(thePhase)
+                    t.build_phases.unshift(thePhase)
+
+                }
+
+            project.save()
+            """
+            .asIndentedText(with: indentation)
     }
 }
