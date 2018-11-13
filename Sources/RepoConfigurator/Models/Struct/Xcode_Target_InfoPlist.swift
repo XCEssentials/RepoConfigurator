@@ -75,7 +75,7 @@ extension Xcode.Target
             initialVersionString: VersionString = Defaults.initialVersionString,
             initialBuildNumber: BuildNumber = Defaults.initialBuildNumber,
             preset: Preset?,
-            _ otherEntries: String...
+            otherEntries: [String] = []
             )
         {
             let sections = Sections(buffer: buffer)
