@@ -46,7 +46,7 @@ extension GitHub
         public
         init(
             themeName: String = "jekyll-theme-cayman",
-            otherEntries: String...
+            otherEntries: [String] = []
             )
         {
             let result = IndentedTextBuffer()

@@ -37,7 +37,9 @@ extension Xcode
         var regulars: [String] = []
         
         public
-        func regular(_ paths: String...)
+        func regular(
+            _ paths: String...
+            )
         {
             regulars.append(contentsOf: paths)
         }
@@ -46,7 +48,9 @@ extension Xcode
         var beforeBuilds: [String] = []
         
         public
-        func beforeBuild(_ paths: String...)
+        func beforeBuild(
+            _ paths: String...
+            )
         {
             beforeBuilds.append(contentsOf: paths)
         }
@@ -55,7 +59,9 @@ extension Xcode
         var afterBuilds: [String] = []
         
         public
-        func afterBuild(_ paths: String...)
+        func afterBuild(
+            _ paths: String...
+            )
         {
             afterBuilds.append(contentsOf: paths)
         }
