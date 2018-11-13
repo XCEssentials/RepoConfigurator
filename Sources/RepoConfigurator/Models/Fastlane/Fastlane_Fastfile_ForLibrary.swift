@@ -42,8 +42,10 @@ public
 extension Fastlane.Fastfile.ForLibrary
 {
     func beforeRelease(
+        beginningEntries: [String] = [],
         ensureGitBranch: String? = Defaults.releaseGitBranchesRegEx,
-        cocoaPodsModuleName: String? // pass 'nil' if should not maintain podspec file
+        cocoaPodsModuleName: String?, // pass 'nil' if should not maintain podspec file
+        endingEntries: [String] = []
         ) -> Self
     {
         let laneName = #function.split(separator: "(").first!
@@ -57,6 +59,14 @@ extension Fastlane.Fastfile.ForLibrary
 
         main.indentation.nest{
 
+            main <<< beginningEntries
+            
+            main <<< beginningEntries.isEmpty.mapIf(false){ """
+                
+                # ===
+                """
+            }
+            
             main <<< ensureGitBranch.map{ """
 
                 ensure_git_branch(
@@ -117,6 +127,15 @@ extension Fastlane.Fastfile.ForLibrary
                 )
                 """
             }
+            
+            main <<< endingEntries.isEmpty.mapIf(false){ """
+                
+                # ===
+                
+                """
+            }
+            
+            main <<< endingEntries
         }
 
         main <<< """
@@ -134,8 +153,12 @@ extension Fastlane.Fastfile.ForLibrary
      folder, using 'cocoapods' and 'cocoapods-generate'.
      */
     func generateProjectViaCP(
+        beginningEntries: [String] = [],
         requireDependencies: Bool = false, // does not work properly yet
-        targetPath: Path = Path("Xcode")
+        callCocoaPods: CocoaPods.CallMethod, // enforce explicit configuration!
+        targetPath: Path = Path("Xcode"),
+        extraGenParams: [String] = [],
+        endingEntries: [String] = []
         ) -> Self
     {
         let laneName = #function.split(separator: "(").first!
@@ -157,18 +180,39 @@ extension Fastlane.Fastfile.ForLibrary
 
             lane :\(laneName) do
             """
+        
+        main.appendNewLine()
 
         main.indentation.nest{
 
-            main <<< """
+            main <<< beginningEntries
+            
+            main.appendNewLine()
 
+            let genParams = extraGenParams + [
+            
+                """
+                --gen-directory="\(targetPath.rawValue)"
+                """
+            ]
+            
+            main <<< """
                 # === Regenerate project
                 
                 # default initial location for any command
                 # is inside 'Fastlane' folder
 
-                sh 'cd ./.. && pod gen --gen-directory="\(targetPath.rawValue)"'
+                sh 'cd ./.. && \(callCocoaPods.rawValue) gen \(genParams.joined(separator: " "))'
                 """
+            
+            main <<< endingEntries.isEmpty.mapIf(false){ """
+                
+                # ===
+                
+                """
+            }
+            
+            main <<< endingEntries
         }
 
         main <<< """

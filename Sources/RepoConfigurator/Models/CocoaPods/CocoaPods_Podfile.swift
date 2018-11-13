@@ -71,12 +71,13 @@ extension CocoaPods
 
         public
         init(
-            workspaceName: String
+            workspaceName: String? = nil
             )
         {
-            buffer <<< """
-                workspace '\(workspaceName)'
+            buffer <<< workspaceName.map{ """
+                workspace '\($0)'
                 """
+            }
         }
     }
 }

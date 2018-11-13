@@ -25,7 +25,15 @@
  */
 
 public
-enum CocoaPods {}
+enum CocoaPods
+{
+    public
+    enum CallMethod: String
+    {
+        case directly = "pod"
+        case viaBundler = "bundle exec pod"
+    }
+}
 
 //---
 

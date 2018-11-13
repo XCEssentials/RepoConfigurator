@@ -448,11 +448,6 @@ extension CocoaPods.Podspec.PerPlatformSettings
 
         buffer.appendNewLine()
         
-        buffer <<< """
-            # === \("All platforms")
-
-            """
-
         // might be a list of single lines,
         // one nultiline strings,
         // or a combination of single and multilines,
