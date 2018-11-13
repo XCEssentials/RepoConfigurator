@@ -94,7 +94,8 @@ extension CocoaPods.Podfile
         usesSwift: Bool = true, // adds 'use_frameworks!'
         includePodsFromPodspec: Bool = false,
         pods: [String],
-        tests: (CocoaPods.Podfile.UnitTestTargets) -> Void = { _ in }
+        tests: (CocoaPods.Podfile.UnitTestTargets) -> Void = { _ in },
+        otherEntries: [String] = []
         ) -> CocoaPods.Podfile
     {
         buffer <<< """
@@ -131,6 +132,10 @@ extension CocoaPods.Podfile
                     with: buffer
                 )
             )
+            
+            otherEntries.isEmpty ? () : buffer.appendNewLine()
+            
+            buffer <<< otherEntries
         }
 
         // end target
@@ -162,7 +167,8 @@ extension CocoaPods.Podfile.UnitTestTargets
     func unitTestTarget(
         _ name: String,
         inherit inheritanceMode: CocoaPods.Podfile.InheritanceMode? = .searchPaths,
-        pods: [String]
+        pods: [String],
+        otherEntries: [String] = []
         )
     {
         buffer <<< """
@@ -183,6 +189,10 @@ extension CocoaPods.Podfile.UnitTestTargets
                 \($0)
                 """
             }
+            
+            otherEntries.isEmpty ? () : buffer.appendNewLine()
+            
+            buffer <<< otherEntries
         }
 
         buffer <<< """
