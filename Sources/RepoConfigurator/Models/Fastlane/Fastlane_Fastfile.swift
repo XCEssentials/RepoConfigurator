@@ -168,6 +168,8 @@ extension Fastlane.Fastfile
 
             lane :\(laneName) do
             """
+        
+        main.appendNewLine()
 
         main.indentation.nest{
 
