@@ -61,10 +61,6 @@ extension SwiftLintTests
               - function_body_length
               - file_length
 
-            included: # paths to include during linting. `--path` is ignored if present.
-              - Sources
-              - Tests
-
             # rules options:
 
             line_length:
