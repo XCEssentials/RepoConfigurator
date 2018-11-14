@@ -204,7 +204,8 @@ extension Fastlane.Fastfile
         
         case swiftLint(
             projectName: String,
-            targetNames: [String]
+            targetNames: [String],
+            params: [String]
         )
     }
 }
@@ -232,10 +233,11 @@ extension Fastlane.Fastfile
                     targetNames: targetNames
                 )
                 
-            case .swiftLint(let projectName, let targetNames):
+            case .swiftLint(let projectName, let targetNames, let params):
                 swiftLintBuildPhase(
                     projectName: projectName,
-                    targetNames: targetNames
+                    targetNames: targetNames,
+                    params: params
                 )
             }
         }
@@ -374,7 +376,8 @@ extension Fastlane.Fastfile
 
     func swiftLintBuildPhase(
         projectName: String,
-        targetNames: [String]
+        targetNames: [String],
+        params: [String]
         )
     {
         guard
@@ -418,6 +421,10 @@ extension Fastlane.Fastfile
         
         main.appendNewLine()
         
+        let theScript = """
+            "${PODS_ROOT}/SwiftLint/swiftlint" \(params.joined(separator: " "))
+            """
+        
         main <<< """
             project
                 .targets
@@ -425,7 +432,7 @@ extension Fastlane.Fastfile
                 .each{ |t|
 
                     thePhase = t.new_shell_script_build_phase('\(scriptName)')
-                    thePhase.shell_script = '"${PODS_ROOT}/SwiftLint/swiftlint"'
+                    thePhase.shell_script = '\(theScript)'
                     # thePhase.run_only_for_deployment_postprocessing = '1'
 
                     t.build_phases.delete(thePhase)

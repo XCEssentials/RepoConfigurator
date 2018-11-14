@@ -139,6 +139,7 @@ extension Fastlane.Fastfile.ForApp
         projectName: String,
         getCurrentVersionFromTarget targetName: String? = nil,
         usesCocoapods: Bool = true,
+        // TODO: Use [ExtraScriptBuildPhase] instead!
         swiftGenTargets: [String] = [],
         sourceryTargets: [String] = [],
         swiftLintTargets: [String]? = nil
@@ -223,7 +224,8 @@ extension Fastlane.Fastfile.ForApp
 
             swiftLintBuildPhase(
                 projectName: projectName,
-                targetNames: swiftLintTargets
+                targetNames: swiftLintTargets,
+                params: []
             )
         }
 
@@ -240,6 +242,7 @@ extension Fastlane.Fastfile.ForApp
     func generateProject(
         projectName: String,
         usesCocoapods: Bool = true,
+        // TODO: Use [ExtraScriptBuildPhase] instead!
         swiftGenTargets: [String] = [],
         sourceryTargets: [String] = [],
         swiftLintTargets: [String]? = nil
@@ -307,7 +310,8 @@ extension Fastlane.Fastfile.ForApp
 
             swiftLintBuildPhase(
                 projectName: projectName,
-                targetNames: swiftLintTargets
+                targetNames: swiftLintTargets,
+                params: []
             )
         }
 
