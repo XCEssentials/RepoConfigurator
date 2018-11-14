@@ -191,7 +191,9 @@ extension FastlaneTests
         let model = Fastlane
             .Fastfile
             .ForLibrary()
-            .generateProjectViaCP()
+            .generateProjectViaCP(
+                callCocoaPods: .directly
+            )
             .prepare(
                 targetFolder: targetFolderPath
             )
