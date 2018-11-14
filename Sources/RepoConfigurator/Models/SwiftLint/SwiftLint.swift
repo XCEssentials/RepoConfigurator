@@ -91,7 +91,6 @@ extension SwiftLint
                 disabledRules
             )
             .addIncluded(
-                setXCEDefaults: setXCEDefaults,
                 include
             )
             .addRulesOptions(
@@ -161,10 +160,18 @@ extension SwiftLint
     }
 
     func addIncluded(
-        setXCEDefaults: Bool = true,
-        _ otherInclude: [String] = []
+        _ paths: [String] = []
         ) -> SwiftLint
     {
+        guard
+            !paths.isEmpty
+        else
+        {
+            return self
+        }
+        
+        //---
+        
         buffer <<< """
 
             included: # paths to include during linting. `--path` is ignored if present.
@@ -172,13 +179,7 @@ extension SwiftLint
 
         buffer.indentation.nest{
 
-            buffer <<< setXCEDefaults.mapIf(true){ """
-                - Sources
-                - Tests
-                """
-            }
-
-            buffer <<< otherInclude.map{ """
+            buffer <<< paths.map{ """
                 - \($0)
                 """
             }
