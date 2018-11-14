@@ -260,13 +260,22 @@ extension Fastlane.Fastfile
 
         //---
 
+        main.appendNewLine()
+        
         main <<< """
-
             # === Add BUILD PHASE script '\(scriptName)'
-
+            """
+        
+        main.appendNewLine()
+        
+        main <<< """
             # remember, we are in ./fastlane/ folder now...
             fullProjFilePath = Dir.pwd + '/../\(projectName).xcodeproj'
+            """
 
+        main.appendNewLine()
+        
+        main <<< """
             # https://github.com/fastlane/fastlane/issues/7944#issuecomment-274232674
             begin
                 project = Xcodeproj::Project.open(fullProjFilePath)
@@ -274,7 +283,11 @@ extension Fastlane.Fastfile
                 UI.error ex
                 UI.user_error!("Failed to open project: " + fullProjFilePath)
             end
-            
+            """
+        
+        main.appendNewLine()
+        
+        main <<< """
             project
                 .targets
                 .select{ |t| [\(targetNames)].include?(t.name) }
@@ -312,13 +325,22 @@ extension Fastlane.Fastfile
 
         //---
 
+        main.appendNewLine()
+        
         main <<< """
-
             # === Add BUILD PHASE script '\(scriptName)'
-
+            """
+        
+        main.appendNewLine()
+        
+        main <<< """
             # remember, we are in ./fastlane/ folder now...
             fullProjFilePath = Dir.pwd + '/../\(projectName).xcodeproj'
-
+            """
+        
+        main.appendNewLine()
+        
+        main <<< """
             # https://github.com/fastlane/fastlane/issues/7944#issuecomment-274232674
             begin
                 project = Xcodeproj::Project.open(fullProjFilePath)
@@ -326,7 +348,11 @@ extension Fastlane.Fastfile
                 UI.error ex
                 UI.user_error!("Failed to open project: " + fullProjFilePath)
             end
+            """
         
+        main.appendNewLine()
+        
+        main <<< """
             project
                 .targets
                 .select{ |t| [\(targetNames)].include?(t.name) }
@@ -365,13 +391,22 @@ extension Fastlane.Fastfile
 
         //---
 
+        main.appendNewLine()
+        
         main <<< """
-
             # === Add BUILD PHASE script '\(scriptName)'
-
+            """
+        
+        main.appendNewLine()
+        
+        main <<< """
             # remember, we are in ./fastlane/ folder now...
             fullProjFilePath = Dir.pwd + '/../\(projectName).xcodeproj'
+            """
 
+        main.appendNewLine()
+        
+        main <<< """
             # https://github.com/fastlane/fastlane/issues/7944#issuecomment-274232674
             begin
                 project = Xcodeproj::Project.open(fullProjFilePath)
@@ -379,7 +414,11 @@ extension Fastlane.Fastfile
                 UI.error ex
                 UI.user_error!("Failed to open project: " + fullProjFilePath)
             end
+            """
         
+        main.appendNewLine()
+        
+        main <<< """
             project
                 .targets
                 .select{ |t| [\(targetNames)].include?(t.name) }
