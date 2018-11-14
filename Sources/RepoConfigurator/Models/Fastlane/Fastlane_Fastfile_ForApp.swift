@@ -38,9 +38,11 @@ public
 extension Fastlane.Fastfile.ForApp
 {
     func beforeRelease(
+        beginningEntries: [String] = [],
         ensureGitBranch: String? = Defaults.releaseGitBranchesRegEx,
         projectName: String,
-        getCurrentVersionFromTarget targetName: String? = nil
+        getCurrentVersionFromTarget targetName: String? = nil,
+        endingEntries: [String] = []
         ) -> Self
     {
         let laneName = #function.split(separator: "(").first!
@@ -54,6 +56,14 @@ extension Fastlane.Fastfile.ForApp
 
         main.indentation.nest{
 
+            main <<< beginningEntries
+            
+            main <<< beginningEntries.isEmpty.mapIf(false){ """
+                
+                # ===
+                """
+            }
+            
             main <<< ensureGitBranch.map{ """
 
                 ensure_git_branch(
@@ -123,6 +133,15 @@ extension Fastlane.Fastfile.ForApp
                     message: 'Version Bump to ' + newVersionNumber + ' (' + newBuildNumber + ')'
                 )
                 """
+            
+            main <<< endingEntries.isEmpty.mapIf(false){ """
+                
+                # ===
+                
+                """
+            }
+            
+            main <<< endingEntries
         }
 
         main <<< """
