@@ -154,10 +154,10 @@ extension Fastlane.Fastfile.ForLibrary
      */
     func generateProjectViaCP(
         beginningEntries: [String] = [],
-        requireDependencies: Bool = false, // does not work properly yet
         callCocoaPods: CocoaPods.CallMethod, // enforce explicit configuration!
         targetPath: Path = Path("Xcode"),
         extraGenParams: [String] = [],
+        extraScriptBuildPhases: [ExtraScriptBuildPhase] = [],
         endingEntries: [String] = []
         ) -> Self
     {
@@ -165,14 +165,10 @@ extension Fastlane.Fastfile.ForLibrary
 
         //---
 
-        if
-            requireDependencies
-        {
-            _ = require(
-                "cocoapods",
-                "cocoapods-generate"
-            )
-        }
+        _ = require(
+            "cocoapods",
+            "cocoapods-generate"
+        )
         
         //---
 
@@ -204,6 +200,8 @@ extension Fastlane.Fastfile.ForLibrary
 
                 sh 'cd ./.. && \(callCocoaPods.rawValue) gen \(genParams.joined(separator: " "))'
                 """
+            
+            processExtraScriptBuildPhases(extraScriptBuildPhases)
             
             main <<< endingEntries.isEmpty.mapIf(false){ """
                 
