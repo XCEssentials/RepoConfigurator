@@ -267,8 +267,14 @@ extension Fastlane.Fastfile
             # remember, we are in ./fastlane/ folder now...
             fullProjFilePath = Dir.pwd + '/../\(projectName).xcodeproj'
 
-            project = Xcodeproj::Project.open(fullProjFilePath)
-
+            # https://github.com/fastlane/fastlane/issues/7944#issuecomment-274232674
+            begin
+                project = Xcodeproj::Project.open(fullProjFilePath)
+            rescue => ex
+                UI.error ex
+                UI.user_error!("Failed to open project: " + fullProjFilePath)
+            end
+            
             project
                 .targets
                 .select{ |t| [\(targetNames)].include?(t.name) }
@@ -313,8 +319,14 @@ extension Fastlane.Fastfile
             # remember, we are in ./fastlane/ folder now...
             fullProjFilePath = Dir.pwd + '/../\(projectName).xcodeproj'
 
-            project = Xcodeproj::Project.open(fullProjFilePath)
-
+            # https://github.com/fastlane/fastlane/issues/7944#issuecomment-274232674
+            begin
+                project = Xcodeproj::Project.open(fullProjFilePath)
+            rescue => ex
+                UI.error ex
+                UI.user_error!("Failed to open project: " + fullProjFilePath)
+            end
+        
             project
                 .targets
                 .select{ |t| [\(targetNames)].include?(t.name) }
@@ -360,8 +372,14 @@ extension Fastlane.Fastfile
             # remember, we are in ./fastlane/ folder now...
             fullProjFilePath = Dir.pwd + '/../\(projectName).xcodeproj'
 
-            project = Xcodeproj::Project.open(fullProjFilePath)
-
+            # https://github.com/fastlane/fastlane/issues/7944#issuecomment-274232674
+            begin
+                project = Xcodeproj::Project.open(fullProjFilePath)
+            rescue => ex
+                UI.error ex
+                UI.user_error!("Failed to open project: " + fullProjFilePath)
+            end
+        
             project
                 .targets
                 .select{ |t| [\(targetNames)].include?(t.name) }
