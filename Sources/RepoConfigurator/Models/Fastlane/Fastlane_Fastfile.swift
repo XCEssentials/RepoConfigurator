@@ -187,21 +187,70 @@ extension Fastlane.Fastfile
 
 // MARK: - Internal helpers
 
+public
+extension Fastlane.Fastfile
+{
+    enum ExtraScriptBuildPhase
+    {
+        case swiftGen(
+            projectName: String,
+            targetNames: [String]
+        )
+        
+        case sourcery(
+            projectName: String,
+            targetNames: [String]
+        )
+        
+        case swiftLint(
+            projectName: String,
+            targetNames: [String]
+        )
+    }
+}
+
 // internal
 extension Fastlane.Fastfile
 {
-    static
+    func processExtraScriptBuildPhases(
+        _ config: [ExtraScriptBuildPhase]
+        )
+    {
+        for item in config
+        {
+            switch item
+            {
+            case .swiftGen(let projectName, let targetNames):
+                swiftGenBuildPhase(
+                    projectName: projectName,
+                    targetNames: targetNames
+                )
+                
+            case .sourcery(let projectName, let targetNames):
+                sourceryBuildPhase(
+                    projectName: projectName,
+                    targetNames: targetNames
+                )
+                
+            case .swiftLint(let projectName, let targetNames):
+                swiftLintBuildPhase(
+                    projectName: projectName,
+                    targetNames: targetNames
+                )
+            }
+        }
+    }
+    
     func swiftGenBuildPhase(
-        with indentation: Indentation,
         projectName: String,
         targetNames: [String]
-        ) -> IndentedText
+        )
     {
         guard
             !targetNames.isEmpty
         else
         {
-            return []
+            return
         }
 
         //---
@@ -211,7 +260,7 @@ extension Fastlane.Fastfile
 
         //---
 
-        return """
+        main <<< """
 
             # === Add BUILD PHASE script '\(scriptName)'
 
@@ -236,21 +285,18 @@ extension Fastlane.Fastfile
 
             project.save()
             """
-            .asIndentedText(with: indentation)
     }
 
-    static
     func sourceryBuildPhase(
-        with indentation: Indentation,
         projectName: String,
         targetNames: [String]
-        ) -> IndentedText
+        )
     {
         guard
             !targetNames.isEmpty
         else
         {
-            return []
+            return
         }
 
         //---
@@ -260,7 +306,7 @@ extension Fastlane.Fastfile
 
         //---
 
-        return """
+        main <<< """
 
             # === Add BUILD PHASE script '\(scriptName)'
 
@@ -286,21 +332,18 @@ extension Fastlane.Fastfile
 
             project.save()
             """
-            .asIndentedText(with: indentation)
     }
 
-    static
     func swiftLintBuildPhase(
-        with indentation: Indentation,
         projectName: String,
         targetNames: [String]
-        ) -> IndentedText
+        )
     {
         guard
             !targetNames.isEmpty
         else
         {
-            return []
+            return
         }
 
         //---
@@ -310,7 +353,7 @@ extension Fastlane.Fastfile
 
         //---
 
-        return """
+        main <<< """
 
             # === Add BUILD PHASE script '\(scriptName)'
 
@@ -335,6 +378,5 @@ extension Fastlane.Fastfile
 
             project.save()
             """
-            .asIndentedText(with: indentation)
     }
 }

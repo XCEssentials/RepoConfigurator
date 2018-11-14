@@ -211,20 +211,17 @@ extension Fastlane.Fastfile.ForApp
                 sh 'cd ./.. && xcodeproj sort "\(projectName).xcodeproj"'
                 """
 
-            main <<< type(of: self).swiftGenBuildPhase(
-                with: main.indentation,
+            swiftGenBuildPhase(
                 projectName: projectName,
                 targetNames: swiftGenTargets
             )
 
-            main <<< type(of: self).sourceryBuildPhase(
-                with: main.indentation,
+            sourceryBuildPhase(
                 projectName: projectName,
                 targetNames: sourceryTargets
             )
 
-            main <<< type(of: self).swiftLintBuildPhase(
-                with: main.indentation,
+            swiftLintBuildPhase(
                 projectName: projectName,
                 targetNames: swiftLintTargets
             )
@@ -298,20 +295,17 @@ extension Fastlane.Fastfile.ForApp
                 sh 'cd ./.. && xcodeproj sort "\(projectName).xcodeproj"'
                 """
 
-            main <<< type(of: self).swiftGenBuildPhase(
-                with: main.indentation,
+            swiftGenBuildPhase(
                 projectName: projectName,
                 targetNames: swiftGenTargets
             )
 
-            main <<< type(of: self).sourceryBuildPhase(
-                with: main.indentation,
+            sourceryBuildPhase(
                 projectName: projectName,
                 targetNames: sourceryTargets
             )
 
-            main <<< type(of: self).swiftLintBuildPhase(
-                with: main.indentation,
+            swiftLintBuildPhase(
                 projectName: projectName,
                 targetNames: swiftLintTargets
             )
