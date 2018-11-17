@@ -34,7 +34,22 @@ extension CocoaPods
         // MARK: Type level members
 
         public
-        struct UnitTestTargets
+        struct AbstractTargetContext
+        {
+            private
+            let buffer: IndentedTextBuffer
+            
+            //internal
+            init(
+                with buffer: IndentedTextBuffer
+                )
+            {
+                self.buffer = buffer
+            }
+        }
+        
+        public
+        struct ConcreteTargetContext
         {
             private
             let buffer: IndentedTextBuffer
@@ -87,6 +102,30 @@ extension CocoaPods
 public
 extension CocoaPods.Podfile
 {
+    func abstractTarget(
+        _ targetName: String,
+        includePodsFromPodspec: Bool = false,
+        pods: [String],
+        nestedTargets: (CocoaPods.Podfile.AbstractTargetContext) -> Void = { _ in }
+        ) -> CocoaPods.Podfile
+    {
+        CocoaPods
+            .Podfile
+            .AbstractTargetContext(
+                with: buffer
+            )
+            .abstractTarget(
+                targetName,
+                includePodsFromPodspec: includePodsFromPodspec,
+                pods: pods,
+                nestedTargets: nestedTargets
+            )
+        
+        //---
+        
+        return self
+    }
+    
     func target(
         _ targetName: String,
         projectName: String? = nil,
@@ -94,9 +133,96 @@ extension CocoaPods.Podfile
         usesSwift: Bool = true, // adds 'use_frameworks!'
         includePodsFromPodspec: Bool = false,
         pods: [String],
-        tests: (CocoaPods.Podfile.UnitTestTargets) -> Void = { _ in },
+        tests: (CocoaPods.Podfile.ConcreteTargetContext) -> Void = { _ in },
         otherEntries: [String] = []
         ) -> CocoaPods.Podfile
+    {
+        CocoaPods
+            .Podfile
+            .AbstractTargetContext(
+                with: buffer
+            )
+            .target(
+                targetName,
+                projectName: projectName,
+                deploymentTarget: deploymentTarget,
+                usesSwift: usesSwift,
+                includePodsFromPodspec: includePodsFromPodspec,
+                pods: pods,
+                tests: tests,
+                otherEntries: otherEntries
+            )
+
+        //---
+
+        return self
+    }
+
+    func custom(
+        _ customEntry: String
+        ) -> CocoaPods.Podfile
+    {
+        buffer <<< customEntry
+
+        //---
+
+        return self
+    }
+}
+
+public
+extension CocoaPods.Podfile.AbstractTargetContext
+{
+    func abstractTarget(
+        _ targetName: String,
+        includePodsFromPodspec: Bool = false,
+        pods: [String],
+        nestedTargets: (CocoaPods.Podfile.AbstractTargetContext) -> Void = { _ in }
+        )
+    {
+        buffer <<< """
+
+            abstract_target '\(targetName)' do
+
+            """
+
+        buffer.indentation.nest{
+
+            buffer <<< includePodsFromPodspec.mapIf(true){ """
+                \(Defaults.podsFromSpec)
+
+                """
+            }
+
+            buffer <<< pods.map{ """
+                \($0)
+                """
+            }
+
+            nestedTargets(
+                CocoaPods.Podfile.AbstractTargetContext(
+                    with: buffer
+                )
+            )
+        }
+
+        // end target
+        buffer <<< """
+
+            end
+            """
+    }
+    
+    func target(
+        _ targetName: String,
+        projectName: String? = nil,
+        deploymentTarget: DeploymentTarget,
+        usesSwift: Bool = true, // adds 'use_frameworks!'
+        includePodsFromPodspec: Bool = false,
+        pods: [String],
+        tests: (CocoaPods.Podfile.ConcreteTargetContext) -> Void = { _ in },
+        otherEntries: [String] = []
+        )
     {
         buffer <<< """
 
@@ -128,7 +254,7 @@ extension CocoaPods.Podfile
             }
 
             tests(
-                UnitTestTargets(
+                CocoaPods.Podfile.ConcreteTargetContext(
                     with: buffer
                 )
             )
@@ -143,26 +269,11 @@ extension CocoaPods.Podfile
 
             end
             """
-
-        //---
-
-        return self
-    }
-
-    func custom(
-        _ customEntry: String
-        ) -> CocoaPods.Podfile
-    {
-        buffer <<< customEntry
-
-        //---
-
-        return self
     }
 }
 
 public
-extension CocoaPods.Podfile.UnitTestTargets
+extension CocoaPods.Podfile.ConcreteTargetContext
 {
     func unitTestTarget(
         _ name: String,
