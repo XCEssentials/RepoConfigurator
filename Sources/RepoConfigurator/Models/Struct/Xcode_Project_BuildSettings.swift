@@ -52,13 +52,8 @@ extension Xcode.Project.BuildSettings: TextFilePiece
 
         //---
 
-        guard
-            !base.isEmpty ||
-            !overrides.isEmpty
-        else
-        {
-            return []
-        }
+        // render configurations explicitly EVEN
+        // if there is no overrides, due to a bug in Struct 3.1.2
 
         //---
 
