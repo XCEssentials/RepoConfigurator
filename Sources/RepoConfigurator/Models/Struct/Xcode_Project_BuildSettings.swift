@@ -88,13 +88,13 @@ extension Xcode.Project.BuildSettings: TextFilePiece
 
         //---
 
+        result <<< """
+            \(configuration):
+            """
+        
         if
             let externalConfig = externalConfig[configuration]
         {
-            result <<< """
-                \(configuration):
-                """
-
             indentation.nest{
 
                 // https://github.com/lyptt/struct/wiki/Spec-format:-v2.0#xcconfig-references
@@ -112,10 +112,6 @@ extension Xcode.Project.BuildSettings: TextFilePiece
             let combinedSettings = Optional(base.overriding(with: self[configuration])),
             !combinedSettings.isEmpty
         {
-            result <<< """
-                \(configuration):
-                """
-
             indentation.nest{
 
                 // https://github.com/lyptt/struct/wiki/Spec-format:-v2.0#overrides
