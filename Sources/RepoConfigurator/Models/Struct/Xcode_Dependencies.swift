@@ -143,8 +143,10 @@ extension Xcode.Dependencies: TextFilePiece
             """
         }
 
+        // NO prefix at all for other targets from the same project!
+        // https://github.com/lyptt/struct/wiki/Spec-format:-v2.0#references
         result <<< otherTargets.map{"""
-            - location: \($0)
+            - \($0)
             """
         }
 
