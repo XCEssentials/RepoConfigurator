@@ -161,14 +161,11 @@ extension Fastlane.Fastfile.ForApp
         callCocoapods: GemCallMethod? = .viaBundler, // nil if not using pods!
         callXcodeproj: GemCallMethod = .viaBundler,
         // TODO: Use [ExtraScriptBuildPhase] instead!
-        swiftGenTargets: [String] = [],
-        sourceryTargets: [String] = [],
-        swiftLintTargets: [String]? = nil,
+        extraScriptBuildPhases: [ExtraScriptBuildPhase] = [],
         endingEntries: [String] = []
         ) -> Self
     {
         let laneName = #function.split(separator: "(").first!
-        let swiftLintTargets = swiftLintTargets ?? [projectName]
 
         //---
         
@@ -228,21 +225,7 @@ extension Fastlane.Fastfile.ForApp
                 sh 'cd ./.. && \(Xcodeproj.call(callXcodeproj)) sort "\(projectName).xcodeproj"'
                 """
 
-            swiftGenBuildPhase(
-                projectName: projectName,
-                targetNames: swiftGenTargets
-            )
-
-            sourceryBuildPhase(
-                projectName: projectName,
-                targetNames: sourceryTargets
-            )
-
-            swiftLintBuildPhase(
-                projectName: projectName,
-                targetNames: swiftLintTargets,
-                params: []
-            )
+            processExtraScriptBuildPhases(extraScriptBuildPhases)
             
             main <<< endingEntries.isEmpty.mapIf(false){ """
                 
@@ -272,14 +255,11 @@ extension Fastlane.Fastfile.ForApp
         callCocoapods: GemCallMethod? = .viaBundler, // nil if not using pods!
         callXcodeproj: GemCallMethod = .viaBundler,
         // TODO: Use [ExtraScriptBuildPhase] instead!
-        swiftGenTargets: [String] = [],
-        sourceryTargets: [String] = [],
-        swiftLintTargets: [String]? = nil,
+        extraScriptBuildPhases: [ExtraScriptBuildPhase] = [],
         endingEntries: [String] = []
         ) -> Self
     {
         let laneName = #function.split(separator: "(").first!
-        let swiftLintTargets = swiftLintTargets ?? [projectName]
 
         //---
 
@@ -356,21 +336,7 @@ extension Fastlane.Fastfile.ForApp
                 sh 'cd ./.. && \(Xcodeproj.call(callXcodeproj)) sort "\(projectName).xcodeproj"'
                 """
 
-            swiftGenBuildPhase(
-                projectName: projectName,
-                targetNames: swiftGenTargets
-            )
-
-            sourceryBuildPhase(
-                projectName: projectName,
-                targetNames: sourceryTargets
-            )
-
-            swiftLintBuildPhase(
-                projectName: projectName,
-                targetNames: swiftLintTargets,
-                params: []
-            )
+            processExtraScriptBuildPhases(extraScriptBuildPhases)
             
             main <<< endingEntries.isEmpty.mapIf(false){ """
                 
