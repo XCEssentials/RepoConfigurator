@@ -155,13 +155,15 @@ extension Fastlane.Fastfile.ForApp
     }
 
     func regenerateProject(
+        beginningEntries: [String] = [],
         projectName: String,
         getCurrentVersionFromTarget targetName: String? = nil,
         usesCocoapods: Bool = true,
         // TODO: Use [ExtraScriptBuildPhase] instead!
         swiftGenTargets: [String] = [],
         sourceryTargets: [String] = [],
-        swiftLintTargets: [String]? = nil
+        swiftLintTargets: [String]? = nil,
+        endingEntries: [String] = []
         ) -> Self
     {
         let laneName = #function.split(separator: "(").first!
@@ -185,6 +187,15 @@ extension Fastlane.Fastfile.ForApp
 
         main.indentation.nest{
 
+            main <<< beginningEntries
+            
+            main <<< beginningEntries.isEmpty.mapIf(false){ """
+                
+                # ===
+                
+                """
+            }
+            
             main <<< """
                 # === Remember current version and build numbers
 
@@ -246,6 +257,15 @@ extension Fastlane.Fastfile.ForApp
                 targetNames: swiftLintTargets,
                 params: []
             )
+            
+            main <<< endingEntries.isEmpty.mapIf(false){ """
+                
+                # ===
+                
+                """
+            }
+            
+            main <<< endingEntries
         }
 
         main <<< """
@@ -259,12 +279,14 @@ extension Fastlane.Fastfile.ForApp
     }
 
     func generateProject(
+        beginningEntries: [String] = [],
         projectName: String,
         usesCocoapods: Bool = true,
         // TODO: Use [ExtraScriptBuildPhase] instead!
         swiftGenTargets: [String] = [],
         sourceryTargets: [String] = [],
-        swiftLintTargets: [String]? = nil
+        swiftLintTargets: [String]? = nil,
+        endingEntries: [String] = []
         ) -> Self
     {
         let laneName = #function.split(separator: "(").first!
@@ -288,6 +310,15 @@ extension Fastlane.Fastfile.ForApp
 
         main.indentation.nest{
 
+            main <<< beginningEntries
+            
+            main <<< beginningEntries.isEmpty.mapIf(false){ """
+                
+                # ===
+                
+                """
+            }
+            
             main <<< """
                 # === Generate project from scratch
 
@@ -332,6 +363,15 @@ extension Fastlane.Fastfile.ForApp
                 targetNames: swiftLintTargets,
                 params: []
             )
+            
+            main <<< endingEntries.isEmpty.mapIf(false){ """
+                
+                # ===
+                
+                """
+            }
+            
+            main <<< endingEntries
         }
 
         main <<< """
