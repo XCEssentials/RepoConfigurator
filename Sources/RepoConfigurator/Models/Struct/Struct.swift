@@ -25,4 +25,9 @@
  */
 
 public
-enum Struct {}
+enum Struct: Gem
+{
+    public
+    static
+    let name: String = "struct"
+}

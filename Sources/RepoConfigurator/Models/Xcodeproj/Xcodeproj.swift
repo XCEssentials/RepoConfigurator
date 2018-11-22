@@ -28,7 +28,12 @@
  https://github.com/CocoaPods/Xcodeproj
  */
 public
-enum Xcodeproj {} // scope
+enum Xcodeproj: Gem
+{
+    public
+    static
+    let name: String = "xcodeproj"
+}
 
 //---
 

@@ -154,11 +154,12 @@ extension Fastlane.Fastfile.ForApp
         return self
     }
 
-    func regenerateProject(
+    func generateProject(
         beginningEntries: [String] = [],
         projectName: String,
-        getCurrentVersionFromTarget targetName: String? = nil,
-        usesCocoapods: Bool = true,
+        callStruct: GemCallMethod = .viaBundler,
+        callCocoapods: GemCallMethod? = .viaBundler, // nil if not using pods!
+        callXcodeproj: GemCallMethod = .viaBundler,
         // TODO: Use [ExtraScriptBuildPhase] instead!
         swiftGenTargets: [String] = [],
         sourceryTargets: [String] = [],
@@ -170,18 +171,18 @@ extension Fastlane.Fastfile.ForApp
         let swiftLintTargets = swiftLintTargets ?? [projectName]
 
         //---
-
+        
         _ = require(
-            "struct",
-            "cocoapods",
-            "xcodeproj"
+            Struct.name,
+            CocoaPods.name,
+            Xcodeproj.name
         )
         
         //---
 
         main <<< """
 
-            lane :\(laneName) do
+            lane :generateProject do
 
             """
 
@@ -196,42 +197,27 @@ extension Fastlane.Fastfile.ForApp
                 """
             }
             
+            let pods = callCocoapods.map{ " && \(CocoaPods.call($0)) update" } ?? ""
+            
             main <<< """
-                # === Remember current version and build numbers
-
-                versionNumber = get_version_number(
-                    xcodeproj: '\(projectName).xcodeproj',
-                    target: '\(targetName ?? projectName)'
-                )
-
-                buildNumber = get_build_number(
-                    xcodeproj: '\(projectName).xcodeproj'
-                )
-
-                # === Remove completely current project file/package
+                # === Generate project from scratch
 
                 # default initial location for any command
                 # is inside 'Fastlane' folder
 
-                sh 'cd ./.. && rm -r ./\(projectName).xcodeproj'
+                sh 'cd ./.. && \(Struct.call(callStruct)) generate\(pods)'
 
-                # === Regenerate project
+                # === Set proper build number
 
-                # default initial location for any command
-                # is inside 'Fastlane' folder
+                # NOTE: proper version number is stored in the Info files
 
-                sh 'cd ./.. && struct generate\(usesCocoapods ? " && pod install" : "")'
-
-                # === Set proper current version and build numbers
-
-                increment_version_number(
-                    xcodeproj: '\(projectName).xcodeproj',
-                    version_number: versionNumber
+                newBuildNumber = prompt(
+                    text: 'Desired BUILD number:'
                 )
 
                 increment_build_number(
                     xcodeproj: '\(projectName).xcodeproj',
-                    build_number: buildNumber
+                    build_number: newBuildNumber
                 )
 
                 # === Sort all project entries
@@ -239,7 +225,7 @@ extension Fastlane.Fastfile.ForApp
                 # default initial location for any command
                 # is inside 'Fastlane' folder
 
-                sh 'cd ./.. && xcodeproj sort "\(projectName).xcodeproj"'
+                sh 'cd ./.. && \(Xcodeproj.call(callXcodeproj)) sort "\(projectName).xcodeproj"'
                 """
 
             swiftGenBuildPhase(
@@ -278,10 +264,13 @@ extension Fastlane.Fastfile.ForApp
         return self
     }
 
-    func generateProject(
+    func regenerateProject(
         beginningEntries: [String] = [],
         projectName: String,
-        usesCocoapods: Bool = true,
+        getCurrentVersionFromTarget targetName: String? = nil,
+        callStruct: GemCallMethod = .viaBundler,
+        callCocoapods: GemCallMethod? = .viaBundler, // nil if not using pods!
+        callXcodeproj: GemCallMethod = .viaBundler,
         // TODO: Use [ExtraScriptBuildPhase] instead!
         swiftGenTargets: [String] = [],
         sourceryTargets: [String] = [],
@@ -293,18 +282,18 @@ extension Fastlane.Fastfile.ForApp
         let swiftLintTargets = swiftLintTargets ?? [projectName]
 
         //---
-        
+
         _ = require(
-            "struct",
-            "cocoapods",
-            "xcodeproj"
+            Struct.name,
+            CocoaPods.name,
+            Xcodeproj.name
         )
         
         //---
 
         main <<< """
 
-            lane :generateProject do
+            lane :\(laneName) do
 
             """
 
@@ -319,25 +308,44 @@ extension Fastlane.Fastfile.ForApp
                 """
             }
             
+            let pods = callCocoapods.map{ " && \(CocoaPods.call($0)) install" } ?? ""
+            
             main <<< """
-                # === Generate project from scratch
+                # === Remember current version and build numbers
+
+                versionNumber = get_version_number(
+                    xcodeproj: '\(projectName).xcodeproj',
+                    target: '\(targetName ?? projectName)'
+                )
+
+                buildNumber = get_build_number(
+                    xcodeproj: '\(projectName).xcodeproj'
+                )
+
+                # === Remove completely current project file/package
 
                 # default initial location for any command
                 # is inside 'Fastlane' folder
 
-                sh 'cd ./.. && struct generate\(usesCocoapods ? " && pod update" : "")'
+                sh 'cd ./.. && rm -r ./\(projectName).xcodeproj'
 
-                # === Set proper build number
+                # === Regenerate project
 
-                # NOTE: proper version number is stored in the Info files
+                # default initial location for any command
+                # is inside 'Fastlane' folder
 
-                newBuildNumber = prompt(
-                    text: 'Desired BUILD number:'
+                sh 'cd ./.. && \(Struct.call(callStruct)) generate\(pods)'
+
+                # === Set proper current version and build numbers
+
+                increment_version_number(
+                    xcodeproj: '\(projectName).xcodeproj',
+                    version_number: versionNumber
                 )
 
                 increment_build_number(
                     xcodeproj: '\(projectName).xcodeproj',
-                    build_number: newBuildNumber
+                    build_number: buildNumber
                 )
 
                 # === Sort all project entries
@@ -345,7 +353,7 @@ extension Fastlane.Fastfile.ForApp
                 # default initial location for any command
                 # is inside 'Fastlane' folder
 
-                sh 'cd ./.. && xcodeproj sort "\(projectName).xcodeproj"'
+                sh 'cd ./.. && \(Xcodeproj.call(callXcodeproj)) sort "\(projectName).xcodeproj"'
                 """
 
             swiftGenBuildPhase(

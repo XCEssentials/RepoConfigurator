@@ -28,4 +28,9 @@
  https://bundler.io/
  */
 public
-enum Bundler {}
+enum Bundler
+{
+    public
+    static
+    let execPrefix = "bundle exec "
+}
