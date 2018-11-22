@@ -46,12 +46,28 @@ extension Xcode
             includes.append(contentsOf: paths)
         }
 
+        public
+        func include(
+            _ paths: [String]
+            )
+        {
+            includes.append(contentsOf: paths)
+        }
+
         public private(set)
         var excludes: [String] = []
 
         public
         func exclude(
             _ patterns: String...
+            )
+        {
+            excludes.append(contentsOf: patterns)
+        }
+
+        public
+        func exclude(
+            _ patterns: [String]
             )
         {
             excludes.append(contentsOf: patterns)
@@ -66,6 +82,14 @@ extension Xcode
         public
         func i18nResource(
             _ paths: String...
+            )
+        {
+            i18nResources.append(contentsOf: paths)
+        }
+
+        public
+        func i18nResource(
+            _ paths: [String]
             )
         {
             i18nResources.append(contentsOf: paths)
