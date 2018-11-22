@@ -154,27 +154,119 @@ extension Fastlane.Fastfile.ForApp
         return self
     }
 
-    func regenerateProject(
+    func generateProject(
         beginningEntries: [String] = [],
         projectName: String,
-        getCurrentVersionFromTarget targetName: String? = nil,
-        usesCocoapods: Bool = true,
+        callStruct: GemCallMethod = .viaBundler,
+        callCocoapods: GemCallMethod? = .viaBundler, // nil if not using pods!
+        callXcodeproj: GemCallMethod = .viaBundler,
         // TODO: Use [ExtraScriptBuildPhase] instead!
-        swiftGenTargets: [String] = [],
-        sourceryTargets: [String] = [],
-        swiftLintTargets: [String]? = nil,
+        extraScriptBuildPhases: [ExtraScriptBuildPhase] = [],
         endingEntries: [String] = []
         ) -> Self
     {
         let laneName = #function.split(separator: "(").first!
-        let swiftLintTargets = swiftLintTargets ?? [projectName]
+
+        //---
+        
+        _ = require(
+            Struct.name,
+            CocoaPods.name,
+            Xcodeproj.name
+        )
+        
+        //---
+
+        main <<< """
+
+            lane :generateProject do
+
+            """
+
+        main.indentation.nest{
+
+            main <<< beginningEntries
+            
+            main <<< beginningEntries.isEmpty.mapIf(false){ """
+                
+                # ===
+                
+                """
+            }
+            
+            let pods = callCocoapods.map{ " && \(CocoaPods.call($0)) update" } ?? ""
+            
+            main <<< """
+                # === Generate project from scratch
+
+                # default initial location for any command
+                # is inside 'Fastlane' folder
+
+                sh 'cd ./.. && \(Struct.call(callStruct)) generate\(pods)'
+
+                # === Set proper build number
+
+                # NOTE: proper version number is stored in the Info files
+
+                newBuildNumber = prompt(
+                    text: 'Desired BUILD number:'
+                )
+
+                increment_build_number(
+                    xcodeproj: '\(projectName).xcodeproj',
+                    build_number: newBuildNumber
+                )
+
+                # === Sort all project entries
+
+                # default initial location for any command
+                # is inside 'Fastlane' folder
+
+                sh 'cd ./.. && \(Xcodeproj.call(callXcodeproj)) sort "\(projectName).xcodeproj"'
+                """
+
+            processExtraScriptBuildPhases(extraScriptBuildPhases)
+            
+            main <<< endingEntries.isEmpty.mapIf(false){ """
+                
+                # ===
+                
+                """
+            }
+            
+            main <<< endingEntries
+        }
+
+        main <<< """
+
+            end # lane :\(laneName)
+            """
+
+        //---
+
+        return self
+    }
+
+    func regenerateProject(
+        beginningEntries: [String] = [],
+        projectName: String,
+        getCurrentVersionFromTarget targetName: String? = nil,
+        callStruct: GemCallMethod = .viaBundler,
+        callCocoapods: GemCallMethod? = .viaBundler, // nil if not using pods!
+        callXcodeproj: GemCallMethod = .viaBundler,
+        // TODO: Use [ExtraScriptBuildPhase] instead!
+        extraScriptBuildPhases: [ExtraScriptBuildPhase] = [],
+        endingEntries: [String] = []
+        ) -> Self
+    {
+        let laneName = #function.split(separator: "(").first!
 
         //---
 
         _ = require(
-            "struct",
-            "cocoapods",
-            "xcodeproj"
+            Struct.name,
+            CocoaPods.name,
+            Xcodeproj.name
         )
         
         //---
@@ -195,6 +287,8 @@ extension Fastlane.Fastfile.ForApp
                 
                 """
             }
+            
+            let pods = callCocoapods.map{ " && \(CocoaPods.call($0)) install" } ?? ""
             
             main <<< """
                 # === Remember current version and build numbers
@@ -220,7 +314,7 @@ extension Fastlane.Fastfile.ForApp
                 # default initial location for any command
                 # is inside 'Fastlane' folder
 
-                sh 'cd ./.. && struct generate\(usesCocoapods ? " && pod install" : "")'
+                sh 'cd ./.. && \(Struct.call(callStruct)) generate\(pods)'
 
                 # === Set proper current version and build numbers
 
@@ -239,130 +333,10 @@ extension Fastlane.Fastfile.ForApp
                 # default initial location for any command
                 # is inside 'Fastlane' folder
 
-                sh 'cd ./.. && xcodeproj sort "\(projectName).xcodeproj"'
+                sh 'cd ./.. && \(Xcodeproj.call(callXcodeproj)) sort "\(projectName).xcodeproj"'
                 """
 
-            swiftGenBuildPhase(
-                projectName: projectName,
-                targetNames: swiftGenTargets
-            )
-
-            sourceryBuildPhase(
-                projectName: projectName,
-                targetNames: sourceryTargets
-            )
-
-            swiftLintBuildPhase(
-                projectName: projectName,
-                targetNames: swiftLintTargets,
-                params: []
-            )
-            
-            main <<< endingEntries.isEmpty.mapIf(false){ """
-                
-                # ===
-                
-                """
-            }
-            
-            main <<< endingEntries
-        }
-
-        main <<< """
-
-            end # lane :\(laneName)
-            """
-
-        //---
-
-        return self
-    }
-
-    func generateProject(
-        beginningEntries: [String] = [],
-        projectName: String,
-        usesCocoapods: Bool = true,
-        // TODO: Use [ExtraScriptBuildPhase] instead!
-        swiftGenTargets: [String] = [],
-        sourceryTargets: [String] = [],
-        swiftLintTargets: [String]? = nil,
-        endingEntries: [String] = []
-        ) -> Self
-    {
-        let laneName = #function.split(separator: "(").first!
-        let swiftLintTargets = swiftLintTargets ?? [projectName]
-
-        //---
-        
-        _ = require(
-            "struct",
-            "cocoapods",
-            "xcodeproj"
-        )
-        
-        //---
-
-        main <<< """
-
-            lane :generateProject do
-
-            """
-
-        main.indentation.nest{
-
-            main <<< beginningEntries
-            
-            main <<< beginningEntries.isEmpty.mapIf(false){ """
-                
-                # ===
-                
-                """
-            }
-            
-            main <<< """
-                # === Generate project from scratch
-
-                # default initial location for any command
-                # is inside 'Fastlane' folder
-
-                sh 'cd ./.. && struct generate\(usesCocoapods ? " && pod update" : "")'
-
-                # === Set proper build number
-
-                # NOTE: proper version number is stored in the Info files
-
-                newBuildNumber = prompt(
-                    text: 'Desired BUILD number:'
-                )
-
-                increment_build_number(
-                    xcodeproj: '\(projectName).xcodeproj',
-                    build_number: newBuildNumber
-                )
-
-                # === Sort all project entries
-
-                # default initial location for any command
-                # is inside 'Fastlane' folder
-
-                sh 'cd ./.. && xcodeproj sort "\(projectName).xcodeproj"'
-                """
-
-            swiftGenBuildPhase(
-                projectName: projectName,
-                targetNames: swiftGenTargets
-            )
-
-            sourceryBuildPhase(
-                projectName: projectName,
-                targetNames: sourceryTargets
-            )
-
-            swiftLintBuildPhase(
-                projectName: projectName,
-                targetNames: swiftLintTargets,
-                params: []
-            )
+            processExtraScriptBuildPhases(extraScriptBuildPhases)
             
             main <<< endingEntries.isEmpty.mapIf(false){ """
                 

@@ -52,7 +52,7 @@ extension Read.CocoaPods
     static
     func currentPodVersion(
         fromFolder targetFolder: Folder? = nil,
-        callFastlane: Fastlane.CallMethod
+        callFastlane: GemCallMethod
         ) throws -> VersionString
     {
         let targetFolder = targetFolder ?? .current
@@ -89,7 +89,7 @@ extension Read.CocoaPods
     static
     func currentPodVersion(
         fromPath podspec: Path,
-        callFastlane: Fastlane.CallMethod
+        callFastlane: GemCallMethod
         ) throws -> VersionString
     {
         // ensure the file extension is set and correct
@@ -109,7 +109,7 @@ extension Read.CocoaPods
     static
     func currentVersion(
         fromFile podspec: Files.File,
-        callFastlane: Fastlane.CallMethod
+        callFastlane: GemCallMethod
         ) throws -> VersionString
     {
         // NOTE: depends on https://fastlane.tools/
@@ -122,7 +122,7 @@ extension Read.CocoaPods
         
         return try shellOut(
             to: """
-            \(callFastlane.rawValue) run version_get_podspec path:"\(podspec.path)" \
+            \(Fastlane.call(callFastlane)) run version_get_podspec path:"\(podspec.path)" \
             | grep "Result:" \
             | find-versions
             """

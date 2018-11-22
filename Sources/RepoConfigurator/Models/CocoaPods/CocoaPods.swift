@@ -25,14 +25,11 @@
  */
 
 public
-enum CocoaPods
+enum CocoaPods: Gem
 {
     public
-    enum CallMethod: String
-    {
-        case directly = "pod"
-        case viaBundler = "bundle exec pod"
-    }
+    static
+    let name: String = "pod"
 }
 
 //---

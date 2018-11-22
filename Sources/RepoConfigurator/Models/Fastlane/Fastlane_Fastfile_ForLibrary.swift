@@ -154,7 +154,7 @@ extension Fastlane.Fastfile.ForLibrary
      */
     func generateProjectViaCP(
         beginningEntries: [String] = [],
-        callCocoaPods: CocoaPods.CallMethod, // enforce explicit configuration!
+        callCocoaPods: GemCallMethod, // enforce explicit configuration!
         targetPath: Path = Path("Xcode"),
         extraGenParams: [String] = [],
         extraScriptBuildPhases: [ExtraScriptBuildPhase] = [],
@@ -198,7 +198,7 @@ extension Fastlane.Fastfile.ForLibrary
                 # default initial location for any command
                 # is inside 'Fastlane' folder
 
-                sh 'cd ./.. && \(callCocoaPods.rawValue) gen \(genParams.joined(separator: " "))'
+                sh 'cd ./.. && \(CocoaPods.call(callCocoaPods)) gen \(genParams.joined(separator: " "))'
                 """
             
             processExtraScriptBuildPhases(extraScriptBuildPhases)
