@@ -24,60 +24,29 @@
  
  */
 
-import FileKit
-
-//---
-
+public
+extension Spec
+{
+    enum Company {}
+}
 
 public
-extension Path
+extension Spec.Company
 {
-    var isGitRepoRoot: Bool
-    {
-        return children().contains{
-            
-            $0.isDirectory && ($0.components.last == ".git")
-        }
-    }
-    
     static
-    var currentRepoRoot: Path?
-    {
-        var maybeResult: Path? = .current
-        
+    var name: String = {
+
+        let result = Spec.LocalRepo.context
+        print("✅ Company name: \(result)")
+
         //---
-        
-        repeat
-        {
-            switch maybeResult
-            {
-            case let .some(path):
-                if
-                    path.isGitRepoRoot
-                {
-                    return path
-                }
-                else
-                {
-                    maybeResult = path.parent // and keep looking...
-                }
-                
-            default:
-                return nil
-            }
-        }
-        while true
-    }
+
+        return result
+    }()
+
+    static
+    var bundleIdPrefix: String?
+
+    static
+    var developmentTeamId: String?
 }
-
-//---
-
-extension Path: ExpressibleByArrayLiteral
-{
-    public
-    init(arrayLiteral elements: String...)
-    {
-        self.init(elements.joined(separator: Path.separator))
-    }
-}
-

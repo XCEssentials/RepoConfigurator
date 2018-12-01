@@ -28,56 +28,36 @@ import FileKit
 
 //---
 
+public
+extension Spec
+{
+    enum Locations {}
+}
 
 public
-extension Path
+extension Spec.Locations
 {
-    var isGitRepoRoot: Bool
+    static
+    var info: Path
     {
-        return children().contains{
-            
-            $0.isDirectory && ($0.components.last == ".git")
-        }
+        return [#function.capitalized]
     }
     
     static
-    var currentRepoRoot: Path?
+    var sources: Path
     {
-        var maybeResult: Path? = .current
-        
-        //---
-        
-        repeat
-        {
-            switch maybeResult
-            {
-            case let .some(path):
-                if
-                    path.isGitRepoRoot
-                {
-                    return path
-                }
-                else
-                {
-                    maybeResult = path.parent // and keep looking...
-                }
-                
-            default:
-                return nil
-            }
-        }
-        while true
+        return [#function.capitalized]
+    }
+    
+    static
+    var fastlane: Path
+    {
+        return [#function] // NOTE: NOT capitalized!!!
+    }
+    
+    static
+    var scripts: Path
+    {
+        return [#function.capitalized]
     }
 }
-
-//---
-
-extension Path: ExpressibleByArrayLiteral
-{
-    public
-    init(arrayLiteral elements: String...)
-    {
-        self.init(elements.joined(separator: Path.separator))
-    }
-}
-

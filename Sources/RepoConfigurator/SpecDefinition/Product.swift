@@ -24,60 +24,38 @@
  
  */
 
-import FileKit
+import Foundation
 
 //---
-
 
 public
-extension Path
+extension Spec
 {
-    var isGitRepoRoot: Bool
-    {
-        return children().contains{
-            
-            $0.isDirectory && ($0.components.last == ".git")
-        }
-    }
-    
+    enum Product {}
+}
+
+public
+extension Spec.Product
+{
     static
-    var currentRepoRoot: Path?
-    {
-        var maybeResult: Path? = .current
-        
+    var copyrightYear = UInt(
+        Calendar
+            .current
+            .component(.year, from: Date())
+    )
+
+    static
+    var name: String = {
+
+        let result = Spec.LocalRepo.name
+
+        print("✅ Product name (without company prefix): \(result)")
+
         //---
-        
-        repeat
-        {
-            switch maybeResult
-            {
-            case let .some(path):
-                if
-                    path.isGitRepoRoot
-                {
-                    return path
-                }
-                else
-                {
-                    maybeResult = path.parent // and keep looking...
-                }
-                
-            default:
-                return nil
-            }
-        }
-        while true
-    }
+
+        return result
+    }()
+
+    static
+    var supportedPlatforms: [OSIdentifier: VersionString] = [:]
 }
-
-//---
-
-extension Path: ExpressibleByArrayLiteral
-{
-    public
-    init(arrayLiteral elements: String...)
-    {
-        self.init(elements.joined(separator: Path.separator))
-    }
-}
-

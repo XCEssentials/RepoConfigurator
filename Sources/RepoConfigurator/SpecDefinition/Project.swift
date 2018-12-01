@@ -24,60 +24,46 @@
  
  */
 
-import FileKit
+public
+extension Spec
+{
+    enum Project {}
+}
 
 //---
-
 
 public
-extension Path
+extension Spec.Project
 {
-    var isGitRepoRoot: Bool
-    {
-        return children().contains{
-            
-            $0.isDirectory && ($0.components.last == ".git")
-        }
-    }
+    static
+    var name = Spec.Product.name
     
     static
-    var currentRepoRoot: Path?
+    func targets(
+        _ layer: Spec.Target.Layer? = nil,
+        _ kind: Spec.Target.Kind? = nil,
+        _ platform: OSIdentifier? = nil,
+        file: StaticString = #file,
+        line: UInt = #line
+        ) -> [Spec.Target]
     {
-        var maybeResult: Path? = .current
-        
+        var result: [Spec.Target] = []
+
         //---
-        
-        repeat
+
+        for l in (layer.map{ [$0] } ?? Spec.Target.Layer.allCases)
         {
-            switch maybeResult
+            for k in (kind.map{ [$0] } ?? Spec.Target.Kind.allCases)
             {
-            case let .some(path):
-                if
-                    path.isGitRepoRoot
+                for p in (platform.map{ [$0] } ?? Array(Spec.Product.supportedPlatforms.keys))
                 {
-                    return path
+                    result += [.init(l, k, p, file: file, line: line)]
                 }
-                else
-                {
-                    maybeResult = path.parent // and keep looking...
-                }
-                
-            default:
-                return nil
             }
         }
-        while true
+
+        //---
+
+        return result
     }
 }
-
-//---
-
-extension Path: ExpressibleByArrayLiteral
-{
-    public
-    init(arrayLiteral elements: String...)
-    {
-        self.init(elements.joined(separator: Path.separator))
-    }
-}
-

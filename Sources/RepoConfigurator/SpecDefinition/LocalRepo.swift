@@ -28,56 +28,61 @@ import FileKit
 
 //---
 
+public
+extension Spec
+{
+    enum LocalRepo {}
+}
 
 public
-extension Path
+extension Spec.LocalRepo
 {
-    var isGitRepoRoot: Bool
-    {
-        return children().contains{
-            
-            $0.isDirectory && ($0.components.last == ".git")
-        }
-    }
-    
     static
-    var currentRepoRoot: Path?
-    {
-        var maybeResult: Path? = .current
-        
-        //---
-        
-        repeat
+    var location: Path = {
+        if
+            let result = Path.currentRepoRoot
         {
-            switch maybeResult
-            {
-            case let .some(path):
-                if
-                    path.isGitRepoRoot
-                {
-                    return path
-                }
-                else
-                {
-                    maybeResult = path.parent // and keep looking...
-                }
-                
-            default:
-                return nil
-            }
+            print("✅ Repo folder: \(result.rawValue)")
+
+            //---
+
+            return result
         }
-        while true
-    }
+        else
+        {
+            preconditionFailure("❌ Expected to be inside a git repo folder!")
+        }
+    }()
+
+    static
+    var context: String = {
+        
+        let result = location.parent.fileName
+
+        if
+            result.isEmpty
+        {
+            preconditionFailure("❌ Expected to be one level deep from a company-named folder!")
+        }
+        else
+        {
+            print("✅ Repo context: \(result)")
+
+            //---
+
+            return result
+        }
+    }()
+
+    static
+    var name: String = {
+        
+        let result = location.fileName
+
+        print("✅ Repo name: \(result)")
+
+        //---
+
+        return result
+    }()
 }
-
-//---
-
-extension Path: ExpressibleByArrayLiteral
-{
-    public
-    init(arrayLiteral elements: String...)
-    {
-        self.init(elements.joined(separator: Path.separator))
-    }
-}
-

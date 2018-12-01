@@ -24,60 +24,29 @@
  
  */
 
-import FileKit
+public
+extension Spec
+{
+    enum RemoteRepo {}
+}
 
 //---
-
 
 public
-extension Path
+extension Spec.RemoteRepo
 {
-    var isGitRepoRoot: Bool
-    {
-        return children().contains{
-            
-            $0.isDirectory && ($0.components.last == ".git")
-        }
-    }
+    static
+    var serverAddress = "https://github.com"
+
+    static
+    var accountName: String?
+
+    static
+    var name = Spec.LocalRepo.name
     
     static
-    var currentRepoRoot: Path?
+    var fullRepoAddress: String
     {
-        var maybeResult: Path? = .current
-        
-        //---
-        
-        repeat
-        {
-            switch maybeResult
-            {
-            case let .some(path):
-                if
-                    path.isGitRepoRoot
-                {
-                    return path
-                }
-                else
-                {
-                    maybeResult = path.parent // and keep looking...
-                }
-                
-            default:
-                return nil
-            }
-        }
-        while true
+        return "\(serverAddress)/\(accountName.require())/\(name).git"
     }
 }
-
-//---
-
-extension Path: ExpressibleByArrayLiteral
-{
-    public
-    init(arrayLiteral elements: String...)
-    {
-        self.init(elements.joined(separator: Path.separator))
-    }
-}
-
