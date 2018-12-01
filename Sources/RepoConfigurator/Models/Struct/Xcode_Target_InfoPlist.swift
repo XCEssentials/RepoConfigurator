@@ -141,7 +141,7 @@ extension Xcode.Target.InfoPlist
             ) -> Preset
         {
             return .macOS(
-                copyrightYear: Defaults.copyrightYear,
+                copyrightYear: Spec.Product.copyrightYear,
                 copyrightEntity: copyrightEntity
             )
         }
@@ -210,7 +210,7 @@ extension Xcode.Target.InfoPlist.Sections
     }
 
     func macOSApp(
-        copyrightYear: UInt = Defaults.copyrightYear,
+        copyrightYear: UInt = Spec.Product.copyrightYear,
         copyrightEntity: String
         )
     {
@@ -230,7 +230,7 @@ extension Xcode.Target.InfoPlist.Sections
     }
 
     func macOSFramework(
-        copyrightYear: UInt = Defaults.copyrightYear,
+        copyrightYear: UInt = Spec.Product.copyrightYear,
         copyrightEntity: String
         )
     {
