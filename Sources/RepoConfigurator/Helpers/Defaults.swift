@@ -41,14 +41,6 @@ enum Defaults
 
     public
     static
-    var copyrightYear: UInt
-    {
-        // current year
-        return UInt(Calendar.current.component(.year, from: Date()))
-    }
-
-    public
-    static
     let specVariable = "s"
 
     public
@@ -57,23 +49,11 @@ enum Defaults
 
     public
     static
-    let pathToInfoPlistsFolder = "Info"
-
-    public
-    static
-    let pathToSourcesFolder = "Sources"
-
-    public
-    static
     let tstSuffix = "Tests"
 
     public
     static
     let podsFromSpec = "podspec"
-
-    public
-    static
-    let pathToFastlaneFolder = "fastlane" // in LOWER case!
 
     public
     static
@@ -93,10 +73,6 @@ enum Defaults
 
     public
     static
-    let swiftVersion: VersionString = "4.2" // TODO: define dynamically???
-
-    public
-    static
     let releaseGitBranchesRegEx: String = "(release/*|hotfix/*)" // Git-Flow
 
     public
@@ -110,8 +86,4 @@ enum Defaults
     public
     static
     let licenseFileName = "LICENSE"
-
-    public
-    static
-    let scriptsFolderPath = "Scripts"
 }
