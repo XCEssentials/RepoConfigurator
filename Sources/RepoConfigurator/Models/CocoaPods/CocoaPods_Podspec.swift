@@ -55,6 +55,26 @@ extension CocoaPods
     }
 }
 
+// MARK: - Convenience helpers
+
+public
+extension CocoaPods.Podspec
+{
+    func prepare(
+        targetFolder: String = Spec.LocalRepo.location.rawValue,
+        removeSpacesAtEOL: Bool = true,
+        removeRepeatingEmptyLines: Bool = true
+        ) -> PendingTextFile<CocoaPods.Podspec>
+    {
+        return prepare(
+            name: Spec.CocoaPod.podspecLocation.rawValue,
+            targetFolder: targetFolder,
+            removeSpacesAtEOL: removeSpacesAtEOL,
+            removeRepeatingEmptyLines: removeRepeatingEmptyLines
+        )
+    }
+}
+
 // MARK: - Related types
 
 public
