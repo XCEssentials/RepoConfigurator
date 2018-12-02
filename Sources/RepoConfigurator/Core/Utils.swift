@@ -24,46 +24,18 @@
  
  */
 
-import FileKit
-
-//---
-
 public
-extension Spec
+enum Utils
 {
-    enum Locations {}
-}
-
-public
-extension Spec.Locations
-{
+    public
     static
-    var info: Path
+    func symLinkCmd(
+        _ source: String,
+        _ destination: String
+        ) -> String
     {
-        return [#function.capitalized]
-    }
-    
-    static
-    var sources: Path
-    {
-        return [#function.capitalized]
-    }
-    
-    static
-    var fastlane: Path
-    {
-        return [#function] // NOTE: NOT capitalized!!!
-    }
-    
-    static
-    var scripts: Path
-    {
-        return [#function.capitalized]
-    }
-    
-    static
-    var linterCfg: Path // SwiftLint
-    {
-        return [SwiftLint.fileName]
+        return """
+            ln -sf "\(source)" "\(destination)"
+            """
     }
 }
