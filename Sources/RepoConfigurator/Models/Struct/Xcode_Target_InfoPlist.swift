@@ -118,6 +118,76 @@ extension Xcode.Target
     }
 }
 
+// MARK: - Convenience helpers
+
+public
+extension Xcode.Target.InfoPlist
+{
+    static
+    func prepare(
+        for target: Spec.Target,
+        initialVersionString: VersionString = Defaults.initialVersionString,
+        initialBuildNumber: BuildNumber = Defaults.initialBuildNumber,
+        otherEntries: [String] = [],
+        targetFolder: String = Spec.LocalRepo.location.rawValue,
+        removeSpacesAtEOL: Bool = true,
+        removeRepeatingEmptyLines: Bool = true
+        ) -> PendingTextFile<Xcode.Target.InfoPlist>
+    {
+        guard
+            Array(Spec.Product.supportedPlatforms.keys)
+                .contains(target.deploymentTarget.platform)
+        else
+        {
+            fatalError("❌ Attempt to generate info file for unsupported platform \(target.deploymentTarget.platform)!")
+        }
+    
+        //---
+    
+        let packageType: PackageType = (
+            target.kind == .main ?
+                (target.layer.isExecutable ? .app : .framework) :
+                .tests
+        )
+    
+        //---
+    
+        let preset: Xcode.Target.InfoPlist.Preset?
+    
+        switch target.deploymentTarget.platform
+        {
+        case .iOS:
+            preset = .iOS
+            
+        case .macOS:
+            preset = .macOS(
+                copyrightYear: Spec.Product.copyrightYear,
+                copyrightEntity: Spec.Company.name
+            )
+            
+        default:
+            preset = nil
+        }
+    
+        //---
+    
+        return self
+            .init(
+                for: packageType,
+                initialVersionString: initialVersionString,
+                initialBuildNumber: initialBuildNumber,
+                preset: preset,
+                otherEntries: otherEntries
+            )
+            .prepare(
+                name: target.infoPlistLocation.rawValue,
+                targetFolder: targetFolder,
+                removeSpacesAtEOL: removeSpacesAtEOL,
+                removeRepeatingEmptyLines: removeRepeatingEmptyLines
+            )
+    }
+}
+
 // MARK: - Presets
 
 public
