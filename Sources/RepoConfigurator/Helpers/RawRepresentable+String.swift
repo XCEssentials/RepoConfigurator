@@ -1,3 +1,4 @@
+public
 extension RawRepresentable
     where
     RawValue == String
