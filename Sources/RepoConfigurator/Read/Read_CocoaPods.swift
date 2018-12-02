@@ -43,43 +43,21 @@ extension Read.CocoaPods
 {
     enum Error: Swift.Error
     {
-        case multiplePodspecsFoundInFolder(path: String)
-        case noPodspecsFoundInFolder(path: String)
-        case invalidPodspec(path: String)
+        case podspecNotFound(expectedPath: String)
     }
     
     static
     func currentVersion(
-        fromLocation location: Path = Spec.LocalRepo.location,
         callFastlane method: GemCallMethod
         ) throws -> VersionString
     {
-        let podspecs = location.find(
-            searchDepth: 0,
-            condition: { $0.pathExtension == CocoaPods.Podspec.extension }
-        )
-        
-        //---
-        
-        if
-            podspecs.count > 1
-        {
-            throw Error.multiplePodspecsFoundInFolder(path: location.rawValue)
-        }
+        let podspecFile = Spec.LocalRepo.location + Spec.CocoaPod.podspecLocation
         
         guard
-            let podspecFile = podspecs.first
+            podspecFile.exists
         else
         {
-            throw Error.noPodspecsFoundInFolder(path: location.rawValue)
-        }
-    
-        guard
-            (podspecFile.fileName == Spec.CocoaPod.fullName ) &&
-            (podspecFile.pathExtension == CocoaPods.Podspec.extension )
-        else
-        {
-            throw Error.invalidPodspec(path: podspecFile.rawValue)
+            throw Error.podspecNotFound(expectedPath: podspecFile.rawValue)
         }
         
         //---
