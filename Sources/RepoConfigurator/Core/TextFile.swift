@@ -55,7 +55,7 @@ extension ArbitraryNamedTextFile
 {
     func prepare(
         name: String,
-        targetFolder: String,
+        targetFolder: String = Spec.LocalRepo.location.rawValue,
         removeSpacesAtEOL: Bool = true,
         removeRepeatingEmptyLines: Bool = true
         ) -> PendingTextFile<Self>
@@ -98,7 +98,7 @@ extension FixedNameTextFile
     }
     
     func prepare(
-        targetFolder: String,
+        targetFolder: String = Spec.LocalRepo.location.rawValue,
         removeSpacesAtEOL: Bool = true,
         removeRepeatingEmptyLines: Bool = true
         ) -> PendingTextFile<Self>
