@@ -99,6 +99,12 @@ extension Spec.CocoaPod
     {
         return [fullName + ".podspec"]
     }
+    
+    static
+    var generatedXcodeProjectLocation: Path // WITHOUT extension!
+    {
+        return xcodeArtifactsLocation + fullName + "Pods"
+    }
 }
 
 // MARK: - SupSpecs
@@ -113,9 +119,21 @@ extension PodSubSpecs
 {
     var sourcesLocation: Path
     {
-        return Spec.Locations.sources
-            + self.title
+        return Spec.Locations.sources + self.title
+    }
+    
+    var sourcesPattern: String
+    {
+        return (
+            sourcesLocation
             + "**"
             + "*.swift"
+            )
+            .rawValue
+    }
+    
+    var linterCfgLocation: Path // for symlink !
+    {
+        return sourcesLocation + SwiftLint.fileName
     }
 }
