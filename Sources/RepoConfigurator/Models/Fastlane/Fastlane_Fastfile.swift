@@ -24,6 +24,10 @@
 
  */
 
+import FileKit
+
+//---
+
 extension Fastlane
 {
     public
@@ -35,7 +39,7 @@ extension Fastlane
         static
         var fileName: String
         {
-            return Fastfile.intrinsicFileName
+            return (Spec.Locations.fastlane + Fastfile.intrinsicFileName).rawValue
         }
         
         /**
