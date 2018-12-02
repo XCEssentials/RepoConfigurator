@@ -2,7 +2,6 @@ public
 extension Optional
 {
     func require(
-        function: String = #function,
         file: StaticString = #file,
         line: UInt = #line
         ) -> Wrapped
