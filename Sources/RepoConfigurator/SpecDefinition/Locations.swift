@@ -60,4 +60,10 @@ extension Spec.Locations
     {
         return [#function.capitalized]
     }
+    
+    static
+    var linterCfg: Path // SwiftLint
+    {
+        return [SwiftLint.fileName]
+    }
 }
