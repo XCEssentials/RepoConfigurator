@@ -25,7 +25,6 @@
  */
 
 import FileKit
-import Files
 import ShellOut
 
 //---
@@ -44,85 +43,56 @@ extension Read.CocoaPods
 {
     enum Error: Swift.Error
     {
-        case multiplePodspecsFoundInFolder(folderPath: String)
-        case noPodspecsFoundInFolder(folderPath: String)
-        case notFound(filePath: String)
+        case multiplePodspecsFoundInFolder(path: String)
+        case noPodspecsFoundInFolder(path: String)
+        case invalidPodspec(path: String)
     }
     
     static
-    func currentPodVersion(
-        fromFolder targetFolder: Folder? = nil,
-        callFastlane: GemCallMethod
+    func currentVersion(
+        fromLocation location: Path = Spec.LocalRepo.location,
+        callFastlane method: GemCallMethod
         ) throws -> VersionString
     {
-        let targetFolder = targetFolder ?? .current
-        
-        let podspecs = targetFolder
-            .files
-            .filter({ $0.extension == CocoaPods.Podspec.extension })
+        let podspecs = location.find(
+            searchDepth: 0,
+            condition: { $0.pathExtension == CocoaPods.Podspec.extension }
+        )
         
         //---
         
         if
             podspecs.count > 1
         {
-            throw Error
-                .multiplePodspecsFoundInFolder(folderPath: targetFolder.path)
+            throw Error.multiplePodspecsFoundInFolder(path: location.rawValue)
         }
         
         guard
-            let result = podspecs.first
+            let podspecFile = podspecs.first
         else
         {
-            throw Error
-                .noPodspecsFoundInFolder(folderPath: targetFolder.path)
+            throw Error.noPodspecsFoundInFolder(path: location.rawValue)
+        }
+    
+        guard
+            (podspecFile.fileName == Spec.CocoaPod.fullName ) &&
+            (podspecFile.pathExtension == CocoaPods.Podspec.extension )
+        else
+        {
+            throw Error.invalidPodspec(path: podspecFile.rawValue)
         }
         
         //---
         
-        return try currentVersion(
-            fromFile: result,
-            callFastlane: callFastlane
-        )
-    }
-    
-    static
-    func currentPodVersion(
-        fromPath podspec: Path,
-        callFastlane: GemCallMethod
-        ) throws -> VersionString
-    {
-        // ensure the file extension is set and correct
-        
-        var podspec = podspec
-        podspec.pathExtension = CocoaPods.Podspec.extension
-        
-        //---
-        
-        return try currentVersion(
-            fromFile: .init(path: podspec.rawValue),
-            callFastlane: callFastlane
-        )
-    }
-    
-    private
-    static
-    func currentVersion(
-        fromFile podspec: Files.File,
-        callFastlane: GemCallMethod
-        ) throws -> VersionString
-    {
         // NOTE: depends on https://fastlane.tools/
         
         // NOTE: depends on https://github.com/sindresorhus/find-versions-cli
         // run before first time usage:
         // try shellOut(to: "npm install --global find-versions-cli")
         
-        //---
-        
         return try shellOut(
             to: """
-            \(Fastlane.call(callFastlane)) run version_get_podspec path:"\(podspec.path)" \
+            \(Fastlane.call(method)) run version_get_podspec path:"\(podspecFile.rawValue)" \
             | grep "Result:" \
             | find-versions
             """

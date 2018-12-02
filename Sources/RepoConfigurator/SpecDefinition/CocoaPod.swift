@@ -97,7 +97,7 @@ extension Spec.CocoaPod
     static
     var podspecLocation: Path
     {
-        return [fullName + ".podspec"]
+        return [fullName + "." + CocoaPods.Podspec.extension]
     }
     
     static
