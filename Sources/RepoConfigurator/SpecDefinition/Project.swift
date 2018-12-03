@@ -55,7 +55,7 @@ extension Spec.Project
         {
             for k in (kind.map{ [$0] } ?? Spec.Target.Kind.allCases)
             {
-                for p in (platform.map{ [$0] } ?? Array(Spec.Product.supportedPlatforms.keys))
+                for p in (platform.map{ [$0] } ?? Array(Spec.Product.deploymentTargets.keys))
                 {
                     result += [.init(l, k, p, file: file, line: line)]
                 }

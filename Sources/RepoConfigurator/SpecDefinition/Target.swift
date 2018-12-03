@@ -54,7 +54,7 @@ extension Spec
             )
         {
             guard
-                let minimumPlatformVersion = Spec.Product.supportedPlatforms[platform]
+                let minimumPlatformVersion = Spec.Product.deploymentTargets[platform]
             else
             {
                 fatalError(

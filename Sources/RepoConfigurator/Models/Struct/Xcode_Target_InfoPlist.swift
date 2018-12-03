@@ -135,7 +135,7 @@ extension Xcode.Target.InfoPlist
         ) -> PendingTextFile<Xcode.Target.InfoPlist>
     {
         guard
-            Array(Spec.Product.supportedPlatforms.keys)
+            Array(Spec.Product.deploymentTargets.keys)
                 .contains(target.deploymentTarget.platform)
         else
         {
