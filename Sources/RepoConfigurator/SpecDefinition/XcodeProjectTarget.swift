@@ -48,12 +48,12 @@ extension XcodeProjectTarget
 {
     var productName: String
     {
-        return Spec.Product.name + name
+        return Spec.Product.name + "$(TARGET_NAME)"
     }
     
     var bundleId: String
     {
-        return Spec.Company.bundleIdPrefix.require() + "." + productName
+        return Spec.Company.bundleIdPrefix.require() + "." + "$(PRODUCT_NAME)"
     }
     
     var provisioningProfiles: [Xcode.Project.ProvisioningProfileKind : String]
