@@ -37,33 +37,4 @@ extension Spec.Project
 {
     static
     var name = Spec.Product.name
-    
-    static
-    func targets(
-        _ layer: Spec.Target.Layer? = nil,
-        _ kind: Spec.Target.Kind? = nil,
-        _ platform: OSIdentifier? = nil,
-        file: StaticString = #file,
-        line: UInt = #line
-        ) -> [Spec.Target]
-    {
-        var result: [Spec.Target] = []
-
-        //---
-
-        for l in (layer.map{ [$0] } ?? Spec.Target.Layer.allCases)
-        {
-            for k in (kind.map{ [$0] } ?? Spec.Target.Kind.allCases)
-            {
-                for p in (platform.map{ [$0] } ?? Array(Spec.Product.deploymentTargets.keys))
-                {
-                    result += [.init(l, k, p, file: file, line: line)]
-                }
-            }
-        }
-
-        //---
-
-        return result
-    }
 }
