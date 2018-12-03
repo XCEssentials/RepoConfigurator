@@ -5,6 +5,7 @@ extension RawRepresentable
 {
     var title: String
     {
-        return rawValue.capitalized
+        return (rawValue.first.map(String.init)?.uppercased() ?? "")
+            + rawValue.dropFirst()
     }
 }

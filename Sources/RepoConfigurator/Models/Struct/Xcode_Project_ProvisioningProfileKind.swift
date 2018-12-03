@@ -25,16 +25,14 @@
  */
 
 public
-extension Spec
+extension Xcode.Project
 {
-    enum Project {}
-}
-
-//---
-
-public
-extension Spec.Project
-{
-    static
-    var name = Spec.Product.name
+    enum ProvisioningProfileKind: String, CaseIterable
+    {
+        case dev
+        case adHoc
+        case appStore
+        
+        // more TBA...
+    }
 }
