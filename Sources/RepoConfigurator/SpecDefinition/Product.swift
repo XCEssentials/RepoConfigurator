@@ -57,5 +57,5 @@ extension Spec.Product
     }()
 
     static
-    var supportedPlatforms: [OSIdentifier: VersionString] = [:]
+    var deploymentTargets: [OSIdentifier: VersionString] = [:]
 }

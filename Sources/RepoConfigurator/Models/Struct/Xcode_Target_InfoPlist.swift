@@ -124,8 +124,8 @@ public
 extension Xcode.Target.InfoPlist
 {
     static
-    func prepare(
-        for target: Spec.Target,
+    func prepare<T: XcodeProjectTarget>(
+        for target: T,
         initialVersionString: VersionString = Defaults.initialVersionString,
         initialBuildNumber: BuildNumber = Defaults.initialBuildNumber,
         otherEntries: [String] = [],
@@ -135,20 +135,12 @@ extension Xcode.Target.InfoPlist
         ) -> PendingTextFile<Xcode.Target.InfoPlist>
     {
         guard
-            Array(Spec.Product.supportedPlatforms.keys)
+            Array(Spec.Product.deploymentTargets.keys)
                 .contains(target.deploymentTarget.platform)
         else
         {
             fatalError("❌ Attempt to generate info file for unsupported platform \(target.deploymentTarget.platform)!")
         }
-    
-        //---
-    
-        let packageType: PackageType = (
-            target.kind == .main ?
-                (target.layer.isExecutable ? .app : .framework) :
-                .tests
-        )
     
         //---
     
@@ -173,7 +165,7 @@ extension Xcode.Target.InfoPlist
     
         return self
             .init(
-                for: packageType,
+                for: target.packageType,
                 initialVersionString: initialVersionString,
                 initialBuildNumber: initialBuildNumber,
                 preset: preset,
