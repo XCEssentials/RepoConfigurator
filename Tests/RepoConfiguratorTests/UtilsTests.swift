@@ -24,78 +24,43 @@
  
  */
 
+import XCTest
+
 import FileKit
+
+// @testable
+import XCERepoConfigurator
 
 //---
 
-public
-enum Utils
+final
+class UtilsTests: XCTestCase
 {
-    public
-    static
-    func symLinkCmd(
-        _ source: String,
-        _ destination: String
-        ) -> String
-    {
-        return """
-            ln -sf "\(source)" "\(destination)"
-            """
-    }
+    // MARK: Type level members
     
-    public
-    enum PathManipulationError: Error
-    {
-        case pathsDontHaveCommonAncestor
-    }
-    
-    public
     static
-    func removePrefix(
-        _ prefix: Path,
-        from path: Path
-        ) throws -> Path
-    {
-        guard
-            path.commonAncestor(prefix) == prefix
-        else
-        {
-            throw PathManipulationError.pathsDontHaveCommonAncestor
-        }
-        
-        let pathComponents = path.absolute.components
-        
-        //---
-        
-        return Path(
-            String(
-                pathComponents[ prefix.absolute.components.endIndex ..< pathComponents.endIndex ]
-                    .map{ $0.rawValue }
-                    .joined(separator: Path.separator)
-            )
-        )
-    }
+    var allTests = [
+        ("testPathManipulations", testPathManipulations)
+    ]
+    
 }
 
 //---
 
-//internal
-extension Utils
+extension UtilsTests
 {
-    static
-    func mutate<T>(
-        _ value: T,
-        _ body: (inout T) -> Void
-        ) -> T
+    func testPathManipulations()
     {
-        var tmp = value
+        let prefixPath = Path("/some/absolute/path")
+        let filePath = prefixPath + "nested" + "folder" + "file.txt"
+        
+        let expectedRelativePath: String = "nested/folder/file.txt"
         
         //---
         
-        body(&tmp)
-        
-        //---
-        
-        return tmp
+        XCTAssertEqual(
+            try! Utils.removePrefix(prefixPath, from: filePath).rawValue,
+            expectedRelativePath
+        )
     }
 }
