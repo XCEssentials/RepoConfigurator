@@ -122,20 +122,20 @@ struct PendingTextFile<T: TextFile>
                     encoding: .utf8
                 )
                 
-                print("📄 Written file: \(location.url.absoluteString)")
+                print("📄 Written file: \(location)")
                 
                 return true
             }
             else
             {
-                print("⏭ SKIPPED file: \(location.url.absoluteString)")
+                print("⏭ SKIPPED file: \(location)")
                 
                 return false
             }
         }
         catch
         {
-            print("❌ Failed to write file: \(location.url.absoluteString).")
+            print("❌ Failed to write file: \(location).")
             
             throw error
         }
