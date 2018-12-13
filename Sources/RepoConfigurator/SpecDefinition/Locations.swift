@@ -64,6 +64,6 @@ extension Spec.Locations
     static
     var linterCfg: Path // SwiftLint
     {
-        return [SwiftLint.fileName]
+        return SwiftLint.relativeLocation
     }
 }

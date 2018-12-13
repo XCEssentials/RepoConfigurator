@@ -53,7 +53,18 @@ extension XcodeProjectTarget
     
     var bundleId: String
     {
-        return Spec.Company.bundleIdPrefix.require() + "." + "$(PRODUCT_NAME)"
+        guard
+            let bundleIdPrefix = Spec.Company.bundleIdPrefix
+        else
+        {
+            fatalError(
+                "❌ Failed to construct '\(#function)' because 'bundleIdPrefix' is empty!"
+            )
+        }
+        
+        //---
+        
+        return bundleIdPrefix + "." + "$(PRODUCT_NAME)"
     }
     
     var provisioningProfiles: [Xcode.ProvisioningProfileKind : String]

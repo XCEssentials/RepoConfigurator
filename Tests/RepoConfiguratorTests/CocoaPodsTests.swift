@@ -26,13 +26,30 @@
 
 import XCTest
 
-import FileKit
+// @testable
+import XCERepoConfigurator
 
 //---
 
-class FileModelTestsContext: XCTestCase
+final
+class CocoaPodsTests: XCTestCase
 {
-    // MARK: Instance level members
+    // MARK: Type level members
     
-    let someLocation: Path = .root // doesn't matter
+    static
+    var allTests = [
+        ("testGemNames", testGemNames)
+    ]
+    
+}
+
+//---
+
+extension CocoaPodsTests
+{
+    func testGemNames()
+    {
+        XCTAssertEqual(CocoaPods.gemName, "cocoapods")
+        XCTAssertEqual(CocoaPods.gemCallName, "pod")
+    }
 }

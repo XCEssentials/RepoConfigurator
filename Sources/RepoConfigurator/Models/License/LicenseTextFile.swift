@@ -24,6 +24,10 @@
 
  */
 
+import FileKit
+
+//---
+
 public
 protocol LicenseTextFile: FixedNameTextFile {}
 
@@ -33,8 +37,8 @@ public
 extension LicenseTextFile
 {
     static
-    var fileName: String
+    var relativeLocation: Path
     {
-        return Defaults.licenseFileName
+        return [Defaults.licenseFileName]
     }
 }

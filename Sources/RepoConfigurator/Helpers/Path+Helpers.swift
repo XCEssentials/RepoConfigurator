@@ -24,6 +24,8 @@
  
  */
 
+import Foundation
+
 import FileKit
 
 //---
@@ -32,6 +34,37 @@ import FileKit
 public
 extension Path
 {
+    static
+    var iCloudDrive: Path?
+    {
+        guard
+            let userLibraryDir: URL = try? FileManager.default.url(
+                for: .libraryDirectory,
+                in: .userDomainMask,
+                appropriateFor: nil,
+                create: false
+            )
+        else
+        {
+            return nil
+        }
+        
+        //---
+        
+        guard
+            let resultPrefix = Path(url: userLibraryDir)
+        else
+        {
+            return nil
+        }
+        
+        //---
+        
+        return resultPrefix
+            + "Mobile Documents"
+            + "com~apple~CloudDocs"
+    }
+    
     var isGitRepoRoot: Bool
     {
         return children().contains{

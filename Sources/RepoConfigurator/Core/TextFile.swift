@@ -26,6 +26,8 @@
 
 import Foundation
 
+import FileKit
+
 // MARK: - Text File
 
 public
@@ -54,16 +56,29 @@ public
 extension ArbitraryNamedTextFile
 {
     func prepare(
-        name: String,
-        targetFolder: String = Spec.LocalRepo.location.rawValue,
+        relativeLocation: Path,
+        absolutePrefixLocation: Path = Spec.LocalRepo.location,
         removeSpacesAtEOL: Bool = true,
         removeRepeatingEmptyLines: Bool = true
         ) -> PendingTextFile<Self>
     {
         return PendingTextFile(
             model: self,
-            name: name,
-            folder: targetFolder,
+            location: absolutePrefixLocation + relativeLocation,
+            shouldRemoveSpacesAtEOL: removeSpacesAtEOL,
+            shouldRemoveRepeatingEmptyLines: removeRepeatingEmptyLines
+        )
+    }
+    
+    func prepare(
+        absoluteLocation: Path,
+        removeSpacesAtEOL: Bool = true,
+        removeRepeatingEmptyLines: Bool = true
+        ) -> PendingTextFile<Self>
+    {
+        return PendingTextFile(
+            model: self,
+            location: absoluteLocation,
             shouldRemoveSpacesAtEOL: removeSpacesAtEOL,
             shouldRemoveRepeatingEmptyLines: removeRepeatingEmptyLines
         )
@@ -76,7 +91,7 @@ public
 protocol FixedNameTextFile: TextFile
 {
     static
-    var fileName: String { get }
+    var relativeLocation: Path { get }
 }
 
 public
@@ -98,15 +113,14 @@ extension FixedNameTextFile
     }
     
     func prepare(
-        targetFolder: String = Spec.LocalRepo.location.rawValue,
+        absolutePrefixLocation: Path = Spec.LocalRepo.location,
         removeSpacesAtEOL: Bool = true,
         removeRepeatingEmptyLines: Bool = true
         ) -> PendingTextFile<Self>
     {
         return PendingTextFile(
             model: self,
-            name: type(of: self).fileName,
-            folder: targetFolder,
+            location: absolutePrefixLocation + type(of: self).relativeLocation,
             shouldRemoveSpacesAtEOL: removeSpacesAtEOL,
             shouldRemoveRepeatingEmptyLines: removeRepeatingEmptyLines
         )
@@ -124,10 +138,10 @@ public
 extension FixedNameTextFileAuto
 {
     static
-    var fileName: String
+    var relativeLocation: Path
     {
         // by default return intrinsic file name type based on type name
 
-        return intrinsicFileName
+        return [intrinsicFileName]
     }
 }

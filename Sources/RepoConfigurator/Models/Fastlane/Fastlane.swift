@@ -24,14 +24,13 @@
 
  */
 
+import Foundation
+
+//---
+
 /**
  Fastlane CL tool.
  https://fastlane.tools/
  */
 public
-enum Fastlane: Gem
-{
-    public
-    static
-    let name: String = "fastlane"
-}
+enum Fastlane: Gem {}
