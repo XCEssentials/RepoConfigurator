@@ -44,12 +44,17 @@ extension Fastlane.Fastfile.ForLibrary
     func beforeRelease(
         beginningEntries: [String] = [],
         ensureGitBranch: String? = Defaults.releaseGitBranchesRegEx,
-        cocoaPodsModuleName: String?, // pass 'nil' if should not maintain podspec file
+        podSpec: Path? = Spec.CocoaPod.podspecLocation, // pass 'nil' if shouldn't support CocoaPods
         endingEntries: [String] = []
         ) -> Self
     {
         let laneName = #function.split(separator: "(").first!
 
+        let podSpec = Utils.mutate(podSpec){
+            
+            $0?.pathExtension = CocoaPods.Podspec.extension // just in case!
+        }
+        
         //---
 
         main <<< """
@@ -80,7 +85,7 @@ extension Fastlane.Fastfile.ForLibrary
                 ensure_git_status_clean
                 """
 
-            main <<< (cocoaPodsModuleName != nil).mapIf(true){ """
+            main <<< (podSpec != nil).mapIf(true){ """
 
                 # ===
 
@@ -91,12 +96,12 @@ extension Fastlane.Fastfile.ForLibrary
                 """
             }
 
-            main <<< cocoaPodsModuleName.map{ """
+            main <<< podSpec.map{ """
 
                 # === Remember current version number
 
                 versionNumber = version_get_podspec(
-                    path: '\($0).podspec'
+                    path: '\($0)'
                 )
                 
                 puts 'Current VERSION number: ' + versionNumber
@@ -112,17 +117,17 @@ extension Fastlane.Fastfile.ForLibrary
                 puts 'New VERSION number: ' + newVersionNumber
                 """
 
-            main <<< cocoaPodsModuleName.map{ """
+            main <<< podSpec.map{ """
 
-                # ===
+                # === Bump version number & commit changes
 
                 version_bump_podspec(
-                    path: '\($0).podspec',
+                    path: '\($0)',
                     version_number: newVersionNumber
                 )
-
+                
                 git_commit(
-                    path: '\($0).podspec',
+                    path: '\($0)',
                     message: 'Version Bump to ' + newVersionNumber + ' in Podspec file'
                 )
                 """
@@ -166,8 +171,8 @@ extension Fastlane.Fastfile.ForLibrary
         //---
 
         _ = require(
-            "cocoapods",
-            "cocoapods-generate"
+            CocoaPods.name,
+            CocoaPods.Generate.name
         )
         
         //---
@@ -185,12 +190,27 @@ extension Fastlane.Fastfile.ForLibrary
             
             main.appendNewLine()
 
-            let genParams = extraGenParams + [
+            let cleanupCmd = [
+                
+                    targetPath
+                ]
+                .map{ """
+                    rm -rf "\($0)"
+                    """
+                }
+                .map{ """
+                     && \($0)
+                    """
+                }
+                .joined()
             
-                """
-                --gen-directory="\(targetPath.rawValue)"
-                """
-            ]
+            let genParams = (extraGenParams + [
+                
+                    """
+                    --gen-directory="\(targetPath)"
+                    """
+                ])
+                .joined(separator: " ")
             
             main <<< """
                 # === Regenerate project
@@ -198,7 +218,7 @@ extension Fastlane.Fastfile.ForLibrary
                 # default initial location for any command
                 # is inside 'Fastlane' folder
 
-                sh 'cd ./.. && \(CocoaPods.call(callCocoaPods)) gen \(genParams.joined(separator: " "))'
+                sh 'cd ./..\(cleanupCmd) && \(CocoaPods.call(callCocoaPods)) \(CocoaPods.Generate.callName) \(genParams)'
                 """
             
             processExtraScriptBuildPhases(extraScriptBuildPhases)
@@ -227,12 +247,14 @@ extension Fastlane.Fastfile.ForLibrary
      Depends on SwiftPM and Ice.
      https://github.com/jakeheis/Ice
      */
-    func generateProjectViaIce() -> Self
+    func generateProjectViaIce(
+        derivedPaths: [Path] = [[".build"], Spec.Project.location]
+        ) -> Self
     {
         let laneName = #function.split(separator: "(").first!
 
         //---
-
+        
         main <<< """
 
             lane :\(laneName) do
@@ -240,6 +262,17 @@ extension Fastlane.Fastfile.ForLibrary
 
         main.indentation.nest{
 
+            let cleanupCmd = derivedPaths
+                .map{ """
+                    rm -rf "\($0)"
+                    """
+                 }
+                .map{ """
+                     && \($0)
+                    """
+                }
+                .joined()
+            
             main <<< """
 
                 # === Regenerate project
@@ -247,7 +280,7 @@ extension Fastlane.Fastfile.ForLibrary
                 # default initial location for any command
                 # is inside 'Fastlane' folder
 
-                sh 'cd ./.. && ice xc'
+                sh 'cd ./..\(cleanupCmd) && ice xc'
                 """
         }
 

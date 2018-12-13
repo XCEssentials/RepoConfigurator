@@ -48,16 +48,17 @@ extension Read.CocoaPods
     
     static
     func currentVersion(
+        from podspec: Path = Spec.CocoaPod.podspecLocation,
         callFastlane method: GemCallMethod
         ) throws -> VersionString
     {
-        let podspecFile = Spec.LocalRepo.location + Spec.CocoaPod.podspecLocation
+        let podspec = Spec.LocalRepo.location + podspec
         
         guard
-            podspecFile.exists
+            podspec.exists
         else
         {
-            throw Error.podspecNotFound(expectedPath: podspecFile.rawValue)
+            throw Error.podspecNotFound(expectedPath: podspec.rawValue)
         }
         
         //---
@@ -70,7 +71,7 @@ extension Read.CocoaPods
         
         return try shellOut(
             to: """
-            \(Fastlane.call(method)) run version_get_podspec path:"\(podspecFile.rawValue)" \
+            \(Fastlane.call(method)) run version_get_podspec path:"\(podspec.rawValue)" \
             | grep "Result:" \
             | find-versions
             """

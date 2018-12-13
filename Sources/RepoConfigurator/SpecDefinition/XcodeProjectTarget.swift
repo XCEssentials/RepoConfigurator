@@ -35,10 +35,10 @@ protocol XcodeProjectTarget: RawRepresentable, CaseIterable
     var name: String { get }
     var productName: String { get }
     var bundleId: String { get }
-    var provisioningProfiles: [Xcode.Project.ProvisioningProfileKind : String] { get }
+    var provisioningProfiles: [Xcode.ProvisioningProfileKind : String] { get }
     var sourcesLocations: [Path] { get }
     var infoPlistLocation: Path { get }
-    var packageType: Xcode.Target.InfoPlist.PackageType { get }
+    var packageType: Xcode.InfoPlist.PackageType { get }
 }
 
 //---
@@ -56,7 +56,7 @@ extension XcodeProjectTarget
         return Spec.Company.bundleIdPrefix.require() + "." + "$(PRODUCT_NAME)"
     }
     
-    var provisioningProfiles: [Xcode.Project.ProvisioningProfileKind : String]
+    var provisioningProfiles: [Xcode.ProvisioningProfileKind : String]
     {
         return [:]
     }

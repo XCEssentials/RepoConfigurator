@@ -53,7 +53,7 @@ extension FastlaneTests
 {
     func testFileNames()
     {
-        let expectedName = "Fastfile"
+        let expectedName = "fastlane/Fastfile"
         
         XCTAssert(Fastlane.Fastfile.fileName == expectedName)
         XCTAssert(Fastlane.Fastfile.ForApp.fileName == expectedName)
@@ -139,7 +139,7 @@ extension FastlaneTests
 
                 puts 'New VERSION number: ' + newVersionNumber
 
-                # ===
+                # === Bump version number & commit changes
 
                 version_bump_podspec(
                     path: '\(cocoaPodsModuleName).podspec',
@@ -160,7 +160,7 @@ extension FastlaneTests
             .Fastfile
             .ForLibrary()
             .beforeRelease(
-                cocoaPodsModuleName: cocoaPodsModuleName
+                podSpec: [cocoaPodsModuleName]
             )
             .prepare(
                 targetFolder: targetFolderPath
@@ -181,7 +181,7 @@ extension FastlaneTests
                 # default initial location for any command
                 # is inside 'Fastlane' folder
             
-                sh 'cd ./.. && pod gen --gen-directory="Xcode"'
+                sh 'cd ./.. && rm -rf "Xcode" && pod gen --gen-directory="Xcode"'
             
             end # lane :generateProjectViaCP
             """
@@ -213,7 +213,7 @@ extension FastlaneTests
                 # default initial location for any command
                 # is inside 'Fastlane' folder
             
-                sh 'cd ./.. && ice xc'
+                sh 'cd ./.. && rm -rf ".build" && ice xc'
             
             end # lane :generateProjectViaIce
             """
@@ -223,7 +223,9 @@ extension FastlaneTests
         let model = Fastlane
             .Fastfile
             .ForLibrary()
-            .generateProjectViaIce()
+            .generateProjectViaIce(
+                derivedPaths: [[".build"]]
+            )
             .prepare(
                 targetFolder: targetFolderPath
             )

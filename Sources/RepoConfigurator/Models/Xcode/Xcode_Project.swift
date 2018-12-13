@@ -25,14 +25,13 @@
  */
 
 public
-extension Xcode.Project
+extension Xcode
 {
-    enum ProvisioningProfileKind: String, CaseIterable
+    public
+    enum Project
     {
-        case dev
-        case adHoc
-        case appStore
-        
-        // more TBA...
+        public
+        static
+        let `extension`: String = "xcodeproj"
     }
 }

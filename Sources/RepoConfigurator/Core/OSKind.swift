@@ -25,54 +25,18 @@
  */
 
 public
-protocol OSKind
-{
-    static
-    var structId: String { get }
-}
+protocol OSKind {}
 
 //---
 
 public
-enum Mobile: OSKind
-{
-    public
-    static
-    var structId: String
-    {
-        return "ios"
-    }
-}
+enum Mobile: OSKind {}
 
 public
-enum Desktop: OSKind
-{
-    public
-    static
-    var structId: String
-    {
-        return "mac"
-    }
-}
+enum Desktop: OSKind {}
 
 public
-enum Watch: OSKind
-{
-    public
-    static
-    var structId: String
-    {
-        return "watch"
-    }
-}
+enum Watch: OSKind {}
 
 public
-enum TV: OSKind //swiftlint:disable:this type_name
-{
-    public
-    static
-    var structId: String
-    {
-        return "tv"
-    }
-}
+enum TV: OSKind {} //swiftlint:disable:this type_name

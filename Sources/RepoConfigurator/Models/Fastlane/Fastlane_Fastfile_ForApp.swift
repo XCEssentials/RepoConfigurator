@@ -24,6 +24,10 @@
  
  */
 
+import FileKit
+
+//---
+
 public
 extension Fastlane.Fastfile
 {
@@ -40,13 +44,33 @@ extension Fastlane.Fastfile.ForApp
     func beforeRelease(
         beginningEntries: [String] = [],
         ensureGitBranch: String? = Defaults.releaseGitBranchesRegEx,
-        projectName: String,
-        getCurrentVersionFromTarget targetName: String? = nil,
+        project: Path = Spec.Project.location,
+        masterPodSpec: Path = Spec.CocoaPod.podspecLocation,
+        otherPodSpecs: [Path] = [],
         endingEntries: [String] = []
         ) -> Self
     {
         let laneName = #function.split(separator: "(").first!
-
+        
+        let project = Utils.mutate(project){
+            
+            $0.pathExtension = Xcode.Project.extension // just in case!
+        }
+        
+        let masterPodSpec = Utils.mutate(masterPodSpec){
+            
+            $0.pathExtension = CocoaPods.Podspec.extension // just in case!
+        }
+        
+        let allPodspecs: [Path] = [masterPodSpec] + otherPodSpecs.map{
+            
+            Utils.mutate($0){
+                
+                $0.pathExtension = CocoaPods.Podspec.extension // just in case!
+            }
+            
+        }
+        
         //---
 
         main <<< """
@@ -59,40 +83,40 @@ extension Fastlane.Fastfile.ForApp
             main <<< beginningEntries
             
             main <<< beginningEntries.isEmpty.mapIf(false){ """
-                
+
                 # ===
                 """
             }
             
             main <<< ensureGitBranch.map{ """
-
+                
                 ensure_git_branch(
                     branch: '\($0)'
                 )
                 """
             }
 
-            main <<< """
-
+            main <<< { """
+                
                 ensure_git_status_clean
                 """
+            }()
 
-            main <<< """
+            main <<< { """
+                
+                # === Read current version number
 
-                # === Remember current version number
-
-                versionNumber = get_version_number(
-                    xcodeproj: '\(projectName).xcodeproj',
-                    target: '\(targetName ?? projectName)'
+                versionNumber = version_get_podspec(
+                    path: '\(masterPodSpec)'
                 )
-
+                
                 puts 'Current VERSION number: ' + versionNumber
-
+                
                 # === Infer new version number
 
                 defaultNewVersion = git_branch.split('/').last
 
-                # === Define new version number
+                # === Define new version & build number
 
                 useInferredNEWVersionNumber = prompt(
                     text: 'Proceed with inferred NEW version number (' + defaultNewVersion + ')?',
@@ -110,122 +134,44 @@ extension Fastlane.Fastfile.ForApp
                     )
 
                 end
+                
+                newBuildNumber = number_of_commits
 
-                # === Apply NEW version number and increment build number
+                # === Apply NEW version & build number
 
                 increment_version_number(
-                    xcodeproj: '\(projectName).xcodeproj',
+                    xcodeproj: '\(project)',
                     version_number: newVersionNumber
                 )
 
                 increment_build_number(
-                    xcodeproj: '\(projectName).xcodeproj'
-                )
-
-                # ===
-
-                newBuildNumber = get_build_number(
-                    xcodeproj: '\(projectName).xcodeproj'
-                )
-
-                commit_version_bump( # it will fail if more than version bump
-                    xcodeproj: '\(projectName).xcodeproj',
-                    message: 'Version Bump to ' + newVersionNumber + ' (' + newBuildNumber + ')'
-                )
-                """
-            
-            main <<< endingEntries.isEmpty.mapIf(false){ """
-                
-                # ===
-                
-                """
-            }
-            
-            main <<< endingEntries
-        }
-
-        main <<< """
-
-            end # lane :\(laneName)
-            """
-
-        //---
-
-        return self
-    }
-
-    func generateProject(
-        beginningEntries: [String] = [],
-        projectName: String,
-        callStruct: GemCallMethod = .viaBundler,
-        callCocoapods: GemCallMethod? = .viaBundler, // nil if not using pods!
-        callXcodeproj: GemCallMethod = .viaBundler,
-        // TODO: Use [ExtraScriptBuildPhase] instead!
-        extraScriptBuildPhases: [ExtraScriptBuildPhase] = [],
-        endingEntries: [String] = []
-        ) -> Self
-    {
-        let laneName = #function.split(separator: "(").first!
-
-        //---
-        
-        _ = require(
-            Struct.name,
-            CocoaPods.name,
-            Xcodeproj.name
-        )
-        
-        //---
-
-        main <<< """
-
-            lane :generateProject do
-
-            """
-
-        main.indentation.nest{
-
-            main <<< beginningEntries
-            
-            main <<< beginningEntries.isEmpty.mapIf(false){ """
-                
-                # ===
-                
-                """
-            }
-            
-            let pods = callCocoapods.map{ " && \(CocoaPods.call($0)) update" } ?? ""
-            
-            main <<< """
-                # === Generate project from scratch
-
-                # default initial location for any command
-                # is inside 'Fastlane' folder
-
-                sh 'cd ./.. && \(Struct.call(callStruct)) generate\(pods)'
-
-                # === Set proper build number
-
-                # NOTE: proper version number is stored in the Info files
-
-                newBuildNumber = prompt(
-                    text: 'Desired BUILD number:'
-                )
-
-                increment_build_number(
-                    xcodeproj: '\(projectName).xcodeproj',
+                    xcodeproj: '\(project)',
                     build_number: newBuildNumber
                 )
-
-                # === Sort all project entries
-
-                # default initial location for any command
-                # is inside 'Fastlane' folder
-
-                sh 'cd ./.. && \(Xcodeproj.call(callXcodeproj)) sort "\(projectName).xcodeproj"'
+                
                 """
+            }()
+            
+            main <<< allPodspecs.map{ """
+                
+                version_bump_podspec(
+                    path: '\($0)',
+                    version_number: newVersionNumber
+                )
+                """
+            }
+            
+            main <<< { """
 
-            processExtraScriptBuildPhases(extraScriptBuildPhases)
+                # ===
+
+                commit_version_bump(
+                    message: 'Version Bump to ' + newVersionNumber + ' (' + newBuildNumber + ')',
+                    xcodeproj: '\(project)',
+                    include: \(allPodspecs)
+                )
+                """
+            }()
             
             main <<< endingEntries.isEmpty.mapIf(false){ """
                 
@@ -247,24 +193,24 @@ extension Fastlane.Fastfile.ForApp
         return self
     }
 
-    func regenerateProject(
+    func reconfigureProject(
         beginningEntries: [String] = [],
-        projectName: String,
-        getCurrentVersionFromTarget targetName: String? = nil,
-        callStruct: GemCallMethod = .viaBundler,
-        callCocoapods: GemCallMethod? = .viaBundler, // nil if not using pods!
-        callXcodeproj: GemCallMethod = .viaBundler,
-        // TODO: Use [ExtraScriptBuildPhase] instead!
+        project: Path = Spec.Project.location,
+        callGems: GemCallMethod = .viaBundler,
         extraScriptBuildPhases: [ExtraScriptBuildPhase] = [],
         endingEntries: [String] = []
         ) -> Self
     {
         let laneName = #function.split(separator: "(").first!
-
+        
+        let project = Utils.mutate(project){
+            
+            $0.pathExtension = Xcode.Project.extension // just in case!
+        }
+        
         //---
 
         _ = require(
-            Struct.name,
             CocoaPods.name,
             Xcodeproj.name
         )
@@ -284,57 +230,26 @@ extension Fastlane.Fastfile.ForApp
             main <<< beginningEntries.isEmpty.mapIf(false){ """
                 
                 # ===
-                
                 """
             }
             
-            let pods = callCocoapods.map{ " && \(CocoaPods.call($0)) install" } ?? ""
-            
-            main <<< """
-                # === Remember current version and build numbers
-
-                versionNumber = get_version_number(
-                    xcodeproj: '\(projectName).xcodeproj',
-                    target: '\(targetName ?? projectName)'
-                )
-
-                buildNumber = get_build_number(
-                    xcodeproj: '\(projectName).xcodeproj'
-                )
-
-                # === Remove completely current project file/package
+            main <<< { """
+                
+                # === Re-integrate dependencies
 
                 # default initial location for any command
                 # is inside 'Fastlane' folder
 
-                sh 'cd ./.. && rm -r ./\(projectName).xcodeproj'
-
-                # === Regenerate project
-
-                # default initial location for any command
-                # is inside 'Fastlane' folder
-
-                sh 'cd ./.. && \(Struct.call(callStruct)) generate\(pods)'
-
-                # === Set proper current version and build numbers
-
-                increment_version_number(
-                    xcodeproj: '\(projectName).xcodeproj',
-                    version_number: versionNumber
-                )
-
-                increment_build_number(
-                    xcodeproj: '\(projectName).xcodeproj',
-                    build_number: buildNumber
-                )
+                sh 'cd ./.. && \(CocoaPods.call(callGems)) install'
 
                 # === Sort all project entries
 
                 # default initial location for any command
                 # is inside 'Fastlane' folder
 
-                sh 'cd ./.. && \(Xcodeproj.call(callXcodeproj)) sort "\(projectName).xcodeproj"'
+                sh 'cd ./.. && \(Xcodeproj.call(callGems)) sort "\(project)"'
                 """
+            }()
 
             processExtraScriptBuildPhases(extraScriptBuildPhases)
             
@@ -360,14 +275,19 @@ extension Fastlane.Fastfile.ForApp
 
     func archiveBeta(
         productName: String,
-        projectName: String? = nil, // 'productName' will be used if 'nil'
+        project: Path = Spec.Project.location,
         schemeName: String? = nil, // 'productName' will be used if 'nil'
         exportMethod: Fastlane.Fastfile.ArchiveExportMethod = Defaults.stagingExportMethod,
         archivesExportPath: String = Defaults.archivesExportPath
         ) -> Self
     {
         let laneName = #function.split(separator: "(").first!
-        let projectName = projectName ?? productName
+        
+        let project = Utils.mutate(project){
+            
+            $0.pathExtension = Xcode.Project.extension // just in case!
+        }
+        
         let schemeName = schemeName ?? productName
 
         //---
@@ -383,11 +303,11 @@ extension Fastlane.Fastfile.ForApp
                 # === Set basic parameters
 
                 buildNumber = get_build_number(
-                    xcodeproj: '\(projectName).xcodeproj'
+                    xcodeproj: '\(project)'
                 )
 
                 versionNumber = get_version_number(
-                    xcodeproj: '\(projectName).xcodeproj'
+                    xcodeproj: '\(project)'
                 )
 
                 puts 'Attempt to use SCHEME: \(schemeName)'
@@ -406,7 +326,7 @@ extension Fastlane.Fastfile.ForApp
 
                     gym(
                         scheme: '\(schemeName)',
-                        export_method: '\(exportMethod.rawValue)',
+                        export_method: '\(exportMethod)',
                         output_name: '\(productName)_' + versionNumber + '_' + buildNumber + '.ipa',
                         output_directory: '\(archivesExportPath)'
                     )
@@ -416,18 +336,17 @@ extension Fastlane.Fastfile.ForApp
                     # puts 'NOTE: Mark project version as dirty now.'
 
                     newVersionNumber = versionNumber + '+dirty'
-                    newBuildNumber = buildNumber
 
                     increment_version_number(
-                        xcodeproj: '\(projectName).xcodeproj',
+                        xcodeproj: '\(project)',
                         version_number: newVersionNumber
                     )
 
                     # only set 'dirty' mark in 'versionNumber'!
 
                     commit_version_bump(
-                        xcodeproj: '\(projectName).xcodeproj',
-                        message: 'Version Bump to ' + newVersionNumber + ' (' + newBuildNumber + ')'
+                        xcodeproj: '\(project)',
+                        message: 'Version Bump to ' + newVersionNumber + ' (' + buildNumber + ')'
                     )
 
                 else
