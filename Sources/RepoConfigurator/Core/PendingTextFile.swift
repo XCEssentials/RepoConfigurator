@@ -119,11 +119,15 @@ struct PendingTextFile<T: TextFile>
                 atomically: true,
                 encoding: .utf8
             )
-
+            
+            print("📄 Written file: \(location.url.absoluteString)")
+            
             return true
         }
         else
         {
+            print("❌ Failed to write file: \(location.url.absoluteString)")
+            
             return false
         }
     }
