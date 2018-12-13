@@ -39,3 +39,26 @@ enum Utils
             """
     }
 }
+
+//---
+
+//internal
+extension Utils
+{
+    static
+    func mutate<T>(
+        _ value: T,
+        _ body: (inout T) -> Void
+        ) -> T
+    {
+        var tmp = value
+        
+        //---
+        
+        body(&tmp)
+        
+        //---
+        
+        return tmp
+    }
+}

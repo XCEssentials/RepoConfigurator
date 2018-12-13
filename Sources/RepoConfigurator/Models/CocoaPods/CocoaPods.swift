@@ -24,12 +24,20 @@
 
  */
 
+import Foundation
+
+//---
+
 public
 enum CocoaPods: Gem
 {
     public
     static
-    let name: String = "pod"
+    let name = String(describing: CocoaPods.self).lowercased()
+    
+    public
+    static
+    let callName: String = "pod"
 }
 
 //---

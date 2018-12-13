@@ -28,7 +28,20 @@ public
 protocol Gem
 {
     static
-    var name: String { get }
+    var name: String { get } // for Gemfile, require, etc.
+    
+    static
+    var callName: String { get } // how to call in command line, script, etc.
+}
+
+public
+extension Gem
+{
+    static
+    var callName: String
+    {
+        return name
+    }
 }
 
 public
@@ -42,10 +55,10 @@ extension Gem
         switch method
         {
         case .directly:
-            return name
+            return callName
             
         case .viaBundler:
-            return Bundler.execPrefix + name
+            return Bundler.execPrefix + callName
         }
     }
 }

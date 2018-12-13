@@ -24,6 +24,10 @@
  
  */
 
+import FileKit
+
+//---
+
 public
 extension Spec
 {
@@ -37,4 +41,16 @@ extension Spec.Project
 {
     static
     var name = Spec.Product.name
+}
+
+//---
+
+public
+extension Spec.Project
+{
+    static
+    var location: Path
+    {
+        return [name + "." + Xcode.Project.extension]
+    }
 }
