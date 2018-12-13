@@ -99,9 +99,16 @@ struct PendingTextFile<T: TextFile>
     public
     func writeToFileSystem(
         createIntermediateDirectories: Bool = true,
-        ifFileExists: IfFileExistsWritePolicy = .override
+        ifFileExists: IfFileExistsWritePolicy = .override,
+        reportingPrefixLocation: Path? = Spec.LocalRepo.location
         ) throws -> Bool
     {
+        let locationForReporting: Path = reportingPrefixLocation
+            .flatMap{ try? Utils.removePrefix($0, from: location) }
+            ?? location
+        
+        //---
+        
         do
         {
             try location
@@ -122,20 +129,20 @@ struct PendingTextFile<T: TextFile>
                     encoding: .utf8
                 )
                 
-                print("📄 Written file: \(location)")
+                print("📄 Written file: \(locationForReporting)")
                 
                 return true
             }
             else
             {
-                print("⏭ SKIPPED file: \(location)")
+                print("⏭ SKIPPED file: \(locationForReporting)")
                 
                 return false
             }
         }
         catch
         {
-            print("❌ Failed to write file: \(location).")
+            print("❌ Failed to write file: \(locationForReporting).")
             
             throw error
         }
