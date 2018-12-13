@@ -50,6 +50,11 @@ extension Fastlane.Fastfile.ForLibrary
     {
         let laneName = #function.split(separator: "(").first!
 
+        let podSpec = Utils.mutate(podSpec){
+            
+            $0?.pathExtension = CocoaPods.Podspec.extension // just in case!
+        }
+        
         //---
 
         main <<< """
@@ -190,11 +195,13 @@ extension Fastlane.Fastfile.ForLibrary
                     targetPath
                 ]
                 .map{ """
-                    
                     rm -rf "\($0)"
                     """
                 }
-                .map{ " && \($0)" }
+                .map{ """
+                     && \($0)
+                    """
+                }
                 .joined()
             
             let genParams = (extraGenParams + [
@@ -240,7 +247,9 @@ extension Fastlane.Fastfile.ForLibrary
      Depends on SwiftPM and Ice.
      https://github.com/jakeheis/Ice
      */
-    func generateProjectViaIce() -> Self
+    func generateProjectViaIce(
+        derivedPaths: [Path] = [[".build"], Spec.Project.location]
+        ) -> Self
     {
         let laneName = #function.split(separator: "(").first!
 
@@ -253,17 +262,15 @@ extension Fastlane.Fastfile.ForLibrary
 
         main.indentation.nest{
 
-            let cleanupCmd = [
-                
-                    [".build"],
-                    Spec.Project.location
-                ]
+            let cleanupCmd = derivedPaths
                 .map{ """
-                    
                     rm -rf "\($0)"
                     """
                  }
-                .map{ " && \($0)" }
+                .map{ """
+                     && \($0)
+                    """
+                }
                 .joined()
             
             main <<< """
