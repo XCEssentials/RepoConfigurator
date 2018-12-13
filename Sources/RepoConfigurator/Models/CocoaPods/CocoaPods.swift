@@ -33,11 +33,7 @@ enum CocoaPods: Gem
 {
     public
     static
-    let name = String(describing: CocoaPods.self).lowercased()
-    
-    public
-    static
-    let callName: String = "pod"
+    let gemCallName: String = "pod"
 }
 
 //---
@@ -50,7 +46,7 @@ extension WidelyUsedLicense
     {
         return (
             type: licenseType,
-            fileName
+            relativeLocation.rawValue
         )
     }
 }

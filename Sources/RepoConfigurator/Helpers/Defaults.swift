@@ -26,6 +26,8 @@
 
 import Foundation
 
+import FileKit
+
 //---
 
 public
@@ -65,7 +67,7 @@ enum Defaults
 
     public
     static
-    let archivesExportPath = ".archives"
+    let archivesExportLocation: Path = [".archives"]
 
     public
     static

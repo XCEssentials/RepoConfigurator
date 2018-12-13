@@ -24,6 +24,10 @@
 
  */
 
+import FileKit
+
+//---
+
 public
 extension Xcode
 {
@@ -129,7 +133,7 @@ extension Xcode.InfoPlist
         initialVersionString: VersionString = Defaults.initialVersionString,
         initialBuildNumber: BuildNumber = Defaults.initialBuildNumber,
         otherEntries: [String] = [],
-        targetFolder: String = Spec.LocalRepo.location.rawValue,
+        absolutePrefixLocation: Path = Spec.LocalRepo.location,
         removeSpacesAtEOL: Bool = true,
         removeRepeatingEmptyLines: Bool = true
         ) -> PendingTextFile<Xcode.InfoPlist>
@@ -172,8 +176,8 @@ extension Xcode.InfoPlist
                 otherEntries: otherEntries
             )
             .prepare(
-                name: target.infoPlistLocation.rawValue,
-                targetFolder: targetFolder,
+                relativeLocation: target.infoPlistLocation,
+                absolutePrefixLocation: absolutePrefixLocation,
                 removeSpacesAtEOL: removeSpacesAtEOL,
                 removeRepeatingEmptyLines: removeRepeatingEmptyLines
             )

@@ -41,5 +41,7 @@ enum DeviceFamily
         public
         static
         let pad   = "2"  // iPad
+        
+        // TODO: add other devices here!
     }
 }

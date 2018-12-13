@@ -89,7 +89,7 @@ extension SwiftLintTests
                 ]
             )
             .prepare(
-                targetFolder: targetFolderPath
+                absolutePrefixLocation: someLocation
             )
 
         //---

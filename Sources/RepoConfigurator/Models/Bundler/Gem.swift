@@ -24,23 +24,33 @@
  
  */
 
+import Foundation
+
+//---
+
 public
 protocol Gem
 {
     static
-    var name: String { get } // for Gemfile, require, etc.
+    var gemName: String { get } // for Gemfile, require, etc.
     
     static
-    var callName: String { get } // how to call in command line, script, etc.
+    var gemCallName: String { get } // how to call in command line, script, etc.
 }
 
 public
 extension Gem
 {
     static
-    var callName: String
+    var gemName: String
     {
-        return name
+        return String(describing: self).lowercased()
+    }
+    
+    static
+    var gemCallName: String
+    {
+        return gemName
     }
 }
 
@@ -55,10 +65,10 @@ extension Gem
         switch method
         {
         case .directly:
-            return callName
+            return gemCallName
             
         case .viaBundler:
-            return Bundler.execPrefix + callName
+            return Bundler.execPrefix + gemCallName
         }
     }
 }

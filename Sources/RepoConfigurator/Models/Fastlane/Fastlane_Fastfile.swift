@@ -37,9 +37,9 @@ extension Fastlane
         
         public
         static
-        var fileName: String
+        var relativeLocation: Path
         {
-            return (Spec.Locations.fastlane + Fastfile.intrinsicFileName).rawValue
+            return Spec.Locations.fastlane + Fastfile.intrinsicFileName
         }
         
         /**

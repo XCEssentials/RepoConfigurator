@@ -26,6 +26,8 @@
 
 import Foundation
 
+import FileKit
+
 //---
 
 public
@@ -55,10 +57,7 @@ struct PendingTextFile<T: TextFile>
     let model: T
 
     public
-    let name: String
-
-    public
-    let folder: String
+    let location: Path
 
     public
     let shouldRemoveSpacesAtEOL: Bool
@@ -99,21 +98,24 @@ struct PendingTextFile<T: TextFile>
     @discardableResult
     public
     func writeToFileSystem(
+        createIntermediateDirectories: Bool = true,
         ifFileExists: IfFileExistsWritePolicy = .override
         ) throws -> Bool
     {
-        let targetLocation = URL
-            .init(fileURLWithPath: folder)
-            .appendingPathComponent(name, isDirectory: false)
-
+        try location
+            .parent
+            .createDirectory(
+                withIntermediateDirectories: createIntermediateDirectories
+            )
+        
         //---
-
+        
         if
             (ifFileExists == .override) ||
-            !FileManager.default.fileExists(atPath: targetLocation.path)
+            !location.exists
         {
             try content.write(
-                to: targetLocation,
+                to: location.url,
                 atomically: true,
                 encoding: .utf8
             )

@@ -26,6 +26,8 @@
 
 import XCTest
 
+import FileKit
+
 // @testable
 import XCERepoConfigurator
 
@@ -38,6 +40,7 @@ class FastlaneTests: FileModelTestsContext
 
     static
     var allTests = [
+        ("testGemName", testGemName),
         ("testFileNames", testFileNames),
         ("testDefaultHeader", testDefaultHeader),
         ("testLibraryBeforeReleaseLane", testLibraryBeforeReleaseLane),
@@ -51,17 +54,45 @@ class FastlaneTests: FileModelTestsContext
 
 extension FastlaneTests
 {
+    func testGemName()
+    {
+        XCTAssertEqual(Fastlane.gemName, "fastlane")
+    }
+    
     func testFileNames()
     {
-        let expectedName = "fastlane/Fastfile"
+        let expectedRelativeLocation: Path = ["fastlane", "Fastfile"]
+        let expectedAbsoluteLocation: Path = someLocation + expectedRelativeLocation
         
-        XCTAssert(Fastlane.Fastfile.fileName == expectedName)
-        XCTAssert(Fastlane.Fastfile.ForApp.fileName == expectedName)
-        XCTAssert(Fastlane.Fastfile.ForLibrary.fileName == expectedName)
+        XCTAssertEqual(
+            Fastlane.Fastfile.relativeLocation,
+            expectedRelativeLocation
+        )
         
-        XCTAssert(Fastlane.Fastfile().prepare(targetFolder: "").name == expectedName)
-        XCTAssert(Fastlane.Fastfile.ForApp().prepare(targetFolder: "").name == expectedName)
-        XCTAssert(Fastlane.Fastfile.ForLibrary().prepare(targetFolder: "").name == expectedName)
+        XCTAssertEqual(
+            Fastlane.Fastfile.ForApp.relativeLocation,
+            expectedRelativeLocation
+        )
+        
+        XCTAssertEqual(
+            Fastlane.Fastfile.ForLibrary.relativeLocation,
+            expectedRelativeLocation
+        )
+        
+        XCTAssertEqual(
+            Fastlane.Fastfile().prepare(absolutePrefixLocation: someLocation).location,
+            expectedAbsoluteLocation
+        )
+
+        XCTAssertEqual(
+            Fastlane.Fastfile.ForApp().prepare(absolutePrefixLocation: someLocation).location,
+            expectedAbsoluteLocation
+        )
+
+        XCTAssertEqual(
+            Fastlane.Fastfile.ForLibrary().prepare(absolutePrefixLocation: someLocation).location,
+            expectedAbsoluteLocation
+        )
     }
     
     func testDefaultHeader()
@@ -97,7 +128,7 @@ extension FastlaneTests
             .Fastfile()
             .defaultHeader()
             .prepare(
-                targetFolder: targetFolderPath
+                absolutePrefixLocation: someLocation
             )
         
         //---
@@ -163,7 +194,7 @@ extension FastlaneTests
                 podSpec: [cocoaPodsModuleName]
             )
             .prepare(
-                targetFolder: targetFolderPath
+                absolutePrefixLocation: someLocation
             )
         
         //---
@@ -195,7 +226,7 @@ extension FastlaneTests
                 callCocoaPods: .directly
             )
             .prepare(
-                targetFolder: targetFolderPath
+                absolutePrefixLocation: someLocation
             )
         
         //---
@@ -227,7 +258,7 @@ extension FastlaneTests
                 derivedPaths: [[".build"]]
             )
             .prepare(
-                targetFolder: targetFolderPath
+                absolutePrefixLocation: someLocation
             )
         
         //---

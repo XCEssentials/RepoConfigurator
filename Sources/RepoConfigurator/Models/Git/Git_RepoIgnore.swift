@@ -24,6 +24,10 @@
 
  */
 
+import FileKit
+
+//---
+
 extension Git
 {
     public
@@ -34,7 +38,7 @@ extension Git
 
         public
         static
-        let fileName = ".gitignore"
+        let relativeLocation: Path = [".gitignore"]
 
         // MARK: Instance level members
 
@@ -63,7 +67,7 @@ extension Git.RepoIgnore
     static
     func app(
         ignoreDependenciesSources: Bool = false,
-        archivesExportPath: String = Defaults.archivesExportPath,
+        archivesExportLocation: Path = Defaults.archivesExportLocation,
         otherEntries: [String] = []
         ) -> Git.RepoIgnore
     {
@@ -75,7 +79,7 @@ extension Git.RepoIgnore
             .addCocoaPodsSection(ignoreSources: ignoreDependenciesSources)
             .addCarthageSection(ignoreSources: ignoreDependenciesSources)
             .addFastlaneSection()
-            .addArchivesExportPathSection(archivesExportPath)
+            .addArchivesExportPathSection(archivesExportLocation)
 
         _ = result.add(
             otherEntries.joined(
@@ -324,7 +328,7 @@ extension Git.RepoIgnore
     }
 
     func addArchivesExportPathSection(
-        _ archivesExportPath: String
+        _ archivesExportLocation: Path
         ) -> Git.RepoIgnore
     {
         buffer <<< """
@@ -332,7 +336,7 @@ extension Git.RepoIgnore
             # ==========
             ### Archives Export Path (for apps only) ###
 
-            \(archivesExportPath)
+            \(archivesExportLocation.rawValue)
 
             ### Archives Export Path (for apps only) ###
             # ==========

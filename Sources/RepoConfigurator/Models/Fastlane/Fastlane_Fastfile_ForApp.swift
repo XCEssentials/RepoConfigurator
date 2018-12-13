@@ -211,8 +211,8 @@ extension Fastlane.Fastfile.ForApp
         //---
 
         _ = require(
-            CocoaPods.name,
-            Xcodeproj.name
+            CocoaPods.gemName,
+            Xcodeproj.gemName
         )
         
         //---
@@ -278,7 +278,7 @@ extension Fastlane.Fastfile.ForApp
         project: Path = Spec.Project.location,
         schemeName: String? = nil, // 'productName' will be used if 'nil'
         exportMethod: Fastlane.Fastfile.ArchiveExportMethod = Defaults.stagingExportMethod,
-        archivesExportPath: String = Defaults.archivesExportPath
+        archivesExportLocation: Path = Defaults.archivesExportLocation
         ) -> Self
     {
         let laneName = #function.split(separator: "(").first!
@@ -328,7 +328,7 @@ extension Fastlane.Fastfile.ForApp
                         scheme: '\(schemeName)',
                         export_method: '\(exportMethod)',
                         output_name: '\(productName)_' + versionNumber + '_' + buildNumber + '.ipa',
-                        output_directory: '\(archivesExportPath)'
+                        output_directory: '\(archivesExportLocation.rawValue)'
                     )
 
                     # === mark dirty

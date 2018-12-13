@@ -24,6 +24,10 @@
 
  */
 
+import FileKit
+
+//---
+
 public
 extension GitHub
 {
@@ -34,7 +38,7 @@ extension GitHub
 
         public
         static
-        let fileName: String = "_config.yml"
+        let relativeLocation: Path = ["_config.yml"]
 
         // MARK: Instance level members
 
