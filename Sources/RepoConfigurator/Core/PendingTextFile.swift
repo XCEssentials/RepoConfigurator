@@ -135,7 +135,7 @@ struct PendingTextFile<T: TextFile>
             }
             else
             {
-                print("⏭ SKIPPED file: \(locationForReporting)")
+                print("SKIPPED file: \(locationForReporting)")
                 
                 return false
             }
