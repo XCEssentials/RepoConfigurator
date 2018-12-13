@@ -102,33 +102,42 @@ struct PendingTextFile<T: TextFile>
         ifFileExists: IfFileExistsWritePolicy = .override
         ) throws -> Bool
     {
-        try location
-            .parent
-            .createDirectory(
-                withIntermediateDirectories: createIntermediateDirectories
-            )
-        
-        //---
-        
-        if
-            (ifFileExists == .override) ||
-            !location.exists
+        do
         {
-            try content.write(
-                to: location.url,
-                atomically: true,
-                encoding: .utf8
+            try location
+                .parent
+                .createDirectory(
+                    withIntermediateDirectories: createIntermediateDirectories
             )
             
-            print("📄 Written file: \(location.url.absoluteString)")
+            //---
             
-            return true
+            if
+                (ifFileExists == .override) ||
+                !location.exists
+            {
+                try content.write(
+                    to: location.url,
+                    atomically: true,
+                    encoding: .utf8
+                )
+                
+                print("📄 Written file: \(location.url.absoluteString)")
+                
+                return true
+            }
+            else
+            {
+                print("⏭ SKIPPED file: \(location.url.absoluteString)")
+                
+                return false
+            }
         }
-        else
+        catch
         {
-            print("❌ Failed to write file: \(location.url.absoluteString)")
+            print("❌ Failed to write file: \(location.url.absoluteString).")
             
-            return false
+            throw error
         }
     }
 }
