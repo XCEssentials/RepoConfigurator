@@ -24,6 +24,10 @@
 
  */
 
+import FileKit
+
+//---
+
 /**
  https://github.com/realm/SwiftLint
  */
@@ -35,7 +39,7 @@ class SwiftLint: FixedNameTextFile
 
     public
     static
-    let fileName = ".swiftlint.yml"
+    let relativeLocation: Path = [".swiftlint.yml"]
 
     public
     typealias RuleOption = (

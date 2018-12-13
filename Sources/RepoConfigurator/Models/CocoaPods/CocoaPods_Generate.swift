@@ -35,10 +35,10 @@ extension CocoaPods
     {
         public
         static
-        let name = CocoaPods.name + "-" + String(describing: Generate.self).lowercased()
+        let gemName = CocoaPods.gemName + "-" + String(describing: Generate.self).lowercased()
         
         public
         static
-        let callName: String = "gen"
+        let gemCallName: String = "gen"
     }
 }

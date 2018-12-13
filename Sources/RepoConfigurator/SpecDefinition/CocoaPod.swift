@@ -134,6 +134,6 @@ extension PodSubSpecs
     
     var linterCfgLocation: Path // for symlink !
     {
-        return sourcesLocation + SwiftLint.fileName
+        return sourcesLocation + SwiftLint.relativeLocation
     }
 }

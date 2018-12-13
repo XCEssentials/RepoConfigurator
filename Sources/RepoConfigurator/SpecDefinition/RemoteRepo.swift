@@ -24,6 +24,10 @@
  
  */
 
+import Foundation
+
+//---
+
 public
 extension Spec
 {
@@ -45,8 +49,32 @@ extension Spec.RemoteRepo
     var name = Spec.LocalRepo.name
     
     static
-    var fullRepoAddress: String
+    var fullRepoAddress: URL
     {
-        return "\(serverAddress)/\(accountName.require())/\(name).git"
+        guard
+            let accountName = accountName
+        else
+        {
+            fatalError(
+                "❌ Account name is not set, so '\(#function)' for remote repo is unknown!"
+            )
+        }
+        
+        //---
+        
+        guard
+            let result = URL(
+                string: serverAddress + "/" + accountName + "/" + name + ".git"
+            )
+        else
+        {
+            fatalError(
+                "❌ Failed to construct remote repo URL!"
+            )
+        }
+        
+        //---
+        
+        return result
     }
 }

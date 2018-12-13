@@ -24,6 +24,10 @@
  
  */
 
+import FileKit
+
+//---
+
 public
 struct DummyFile: FixedNameTextFile
 {
@@ -31,7 +35,7 @@ struct DummyFile: FixedNameTextFile
 
     public
     static
-    var fileName: String = "RemoveMe.swift" // VAR!
+    var relativeLocation: Path = ["RemoveMe.swift"] // VAR!
 
     // MARK: Instance level members
 

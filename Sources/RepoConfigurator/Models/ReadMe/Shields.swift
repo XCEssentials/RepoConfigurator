@@ -26,6 +26,10 @@
 
 import Foundation
 
+import FileKit
+
+//---
+
 /**
  https://shields.io/
  */
@@ -62,14 +66,14 @@ extension Shields
 
         //internal
         init(
-            _ linkPath: String,
+            _ linkPath: Path,
             _ parameters: [(key: String, value: Any)]?
             ) throws
         {
             guard
                 var result = URL
                     .init(string: type(of: self).baseURL)?
-                    .appendingPathComponent(linkPath)
+                    .appendingPathComponent(linkPath.rawValue)
             else
             {
                 throw Errors.failedToGenerateOutputURL
@@ -151,15 +155,16 @@ extension Shields
         public
         static
         func special(
-            _ linkPath: String,
+            _ linkPath: Path,
             _ parameters: Parameters? = nil
             ) throws -> Badge
         {
             guard
-                !linkPath.isEmpty
+                !linkPath.components.isEmpty
             else
             {
                 print(linkPath)
+                
                 throw Errors.invalidParamters(
                     message: "Link path can NOT be blank!"
                 )

@@ -26,6 +26,8 @@
 
 import Foundation
 
+import FileKit
+
 //---
 
 public
@@ -36,7 +38,7 @@ class ReadMe: FixedNameTextFile
 
     public
     static
-    let fileName: String = "README.md"
+    let relativeLocation: Path = ["README.md"]
 
     // MARK: Instance level members
 

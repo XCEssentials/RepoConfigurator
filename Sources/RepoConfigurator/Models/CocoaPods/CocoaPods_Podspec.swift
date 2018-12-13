@@ -24,6 +24,10 @@
 
  */
 
+import FileKit
+
+//---
+
 public
 extension CocoaPods
 {
@@ -61,14 +65,14 @@ public
 extension CocoaPods.Podspec
 {
     func prepare(
-        targetFolder: String = Spec.LocalRepo.location.rawValue,
+        absolutePrefixLocation: Path = Spec.LocalRepo.location,
         removeSpacesAtEOL: Bool = true,
         removeRepeatingEmptyLines: Bool = true
         ) -> PendingTextFile<CocoaPods.Podspec>
     {
         return prepare(
-            name: Spec.CocoaPod.podspecLocation.rawValue,
-            targetFolder: targetFolder,
+            relativeLocation: Spec.CocoaPod.podspecLocation,
+            absolutePrefixLocation: absolutePrefixLocation,
             removeSpacesAtEOL: removeSpacesAtEOL,
             removeRepeatingEmptyLines: removeRepeatingEmptyLines
         )
