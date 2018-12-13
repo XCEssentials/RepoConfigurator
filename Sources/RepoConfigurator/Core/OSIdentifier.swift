@@ -56,29 +56,3 @@ extension OSIdentifier
         }
     }
 }
-
-public
-extension OSIdentifier
-{
-    /**
-     Platform ID for Struct config file.
-     See [documentation](https://github.com/lyptt/struct/wiki/Spec-format:-v2.0#platform).
-     */
-    var structId: String
-    {
-        switch self
-        {
-        case .iOS:
-            return "ios"
-
-        case .watchOS:
-            return "watch"
-
-        case .tvOS:
-            return "tv"
-
-        case .macOS:
-            return "mac"
-        }
-    }
-}

@@ -70,15 +70,3 @@ extension Xcodeproj
         let octestBundle        = bundle
     }
 }
-
-//---
-
-public
-extension Xcodeproj.ProductType
-{
-    var structId: String
-    {
-        return rawValue
-            .replacingOccurrences(of: "com.apple.product-type.", with: "")
-    }
-}

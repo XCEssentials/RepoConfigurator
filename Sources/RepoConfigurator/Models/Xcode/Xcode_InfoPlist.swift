@@ -25,7 +25,7 @@
  */
 
 public
-extension Xcode.Target
+extension Xcode
 {
     public
     final
@@ -121,7 +121,7 @@ extension Xcode.Target
 // MARK: - Convenience helpers
 
 public
-extension Xcode.Target.InfoPlist
+extension Xcode.InfoPlist
 {
     static
     func prepare<T: XcodeProjectTarget>(
@@ -132,7 +132,7 @@ extension Xcode.Target.InfoPlist
         targetFolder: String = Spec.LocalRepo.location.rawValue,
         removeSpacesAtEOL: Bool = true,
         removeRepeatingEmptyLines: Bool = true
-        ) -> PendingTextFile<Xcode.Target.InfoPlist>
+        ) -> PendingTextFile<Xcode.InfoPlist>
     {
         guard
             Array(Spec.Product.deploymentTargets.keys)
@@ -144,7 +144,7 @@ extension Xcode.Target.InfoPlist
     
         //---
     
-        let preset: Xcode.Target.InfoPlist.Preset?
+        let preset: Xcode.InfoPlist.Preset?
     
         switch target.deploymentTarget.platform
         {
@@ -183,7 +183,7 @@ extension Xcode.Target.InfoPlist
 // MARK: - Presets
 
 public
-extension Xcode.Target.InfoPlist
+extension Xcode.InfoPlist
 {
     public
     enum Preset
@@ -213,7 +213,7 @@ extension Xcode.Target.InfoPlist
 // MARK: - Content rendering
 
 fileprivate
-extension Xcode.Target.InfoPlist.Sections
+extension Xcode.InfoPlist.Sections
 {
     func header()
     {
@@ -226,7 +226,7 @@ extension Xcode.Target.InfoPlist.Sections
     }
 
     func basic(
-        packageType: Xcode.Target.InfoPlist.PackageType,
+        packageType: Xcode.InfoPlist.PackageType,
         initialVersionString: VersionString = Defaults.initialVersionString,
         initialBuildNumber: BuildNumber = Defaults.initialBuildNumber
         )
