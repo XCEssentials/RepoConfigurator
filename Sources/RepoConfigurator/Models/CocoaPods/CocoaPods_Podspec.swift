@@ -394,12 +394,35 @@ extension CocoaPods.Podspec
 public
 extension CocoaPods.Podspec.PerPlatformSettings
 {
+    enum PrefixedEntry
+    {
+        case noPrefix(String)
+        case sourceFiles(String)
+        case dependency(String)
+        
+        fileprivate
+        var unwrapped: String
+        {
+            switch self
+            {
+            case .noPrefix(let entry):
+                return entry
+                
+            case .sourceFiles(let entry):
+                return "source_files = " + entry
+                
+            case .dependency(let entry):
+                return "dependency " + entry
+            }
+        }
+    }
+    
     /**
      Adds minimum deployment target declaration & related platform specific settings.
      */
     func settings(
         for deploymentTarget: DeploymentTarget,
-        _ settigns: String...
+        _ settigns: [PrefixedEntry]
         )
     {
         // https://guides.cocoapods.org/syntax/podspec.html#group_multi_platform_support
@@ -424,9 +447,23 @@ extension CocoaPods.Podspec.PerPlatformSettings
         // or a combination of single and multilines,
         // so lets flatten this out
         buffer <<< settigns.map{ """
-            \(prefix)\($0)
+            \(prefix)\($0.unwrapped)
             """
         }
+    }
+    
+    /**
+     Adds minimum deployment target declaration & related platform specific settings.
+     */
+    func settings(
+        for deploymentTarget: DeploymentTarget,
+        _ settigns: PrefixedEntry...
+        )
+    {
+        settings(
+            for: deploymentTarget,
+            settigns
+        )
     }
     
     /**
@@ -434,7 +471,7 @@ extension CocoaPods.Podspec.PerPlatformSettings
      */
     func settings(
         for platformId: OSIdentifier,
-        _ settigns: String...
+        _ settigns: [PrefixedEntry]
         )
     {
         // https://guides.cocoapods.org/syntax/podspec.html#group_multi_platform_support
@@ -454,16 +491,31 @@ extension CocoaPods.Podspec.PerPlatformSettings
         // or a combination of single and multilines,
         // so lets flatten this out
         buffer <<< settigns.map{ """
-            \(prefix)\($0)
+            \(prefix)\($0.unwrapped)
             """
         }
+    }
+    
+    
+    /**
+     Adds platform specific settings for given platform.
+     */
+    func settings(
+        for platformId: OSIdentifier,
+        _ settigns: PrefixedEntry...
+        )
+    {
+        settings(
+            for: platformId,
+            settigns
+        )
     }
     
     /**
      Settings common for all platforms.
      */
     func settings(
-        _ settigns: String...
+        _ settigns: [PrefixedEntry]
         )
     {
         // https://guides.cocoapods.org/syntax/podspec.html#group_multi_platform_support
@@ -477,9 +529,21 @@ extension CocoaPods.Podspec.PerPlatformSettings
         // or a combination of single and multilines,
         // so lets flatten this out
         buffer <<< settigns.map{ """
-            \(prefix)\($0)
+            \(prefix)\($0.unwrapped)
             """
         }
+    }
+    
+    /**
+     Settings common for all platforms.
+     */
+    func settings(
+        _ settigns: PrefixedEntry...
+        )
+    {
+        settings(
+            settigns
+        )
     }
 }
 

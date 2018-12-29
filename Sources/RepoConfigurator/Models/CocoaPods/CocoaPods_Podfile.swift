@@ -24,6 +24,10 @@
 
  */
 
+import FileKit
+
+//---
+
 public
 extension CocoaPods
 {
@@ -60,6 +64,26 @@ extension CocoaPods
                 )
             {
                 self.buffer = buffer
+            }
+        }
+
+        public
+        struct PostInstallContext
+        {
+            private
+            let buffer: IndentedTextBuffer
+
+            public
+            let installerVar: String
+            
+            //internal
+            init(
+                _ buffer: IndentedTextBuffer,
+                _ installerVar: String
+                )
+            {
+                self.buffer = buffer
+                self.installerVar = installerVar
             }
         }
 
@@ -155,6 +179,39 @@ extension CocoaPods.Podfile
 
         //---
 
+        return self
+    }
+    
+    func postInstall(
+        installerVar: String = "installer",
+        _ body: (CocoaPods.Podfile.PostInstallContext) -> Void
+        ) -> CocoaPods.Podfile
+    {
+        buffer <<< { """
+            
+            post_install do |\(installerVar)|
+            
+            """
+        }()
+
+        buffer.indentation.nest{
+
+            body(
+                .init(
+                    buffer,
+                    installerVar
+                )
+            )
+        }
+        
+        buffer <<< { """
+            
+            end # post_install
+            """
+        }()
+        
+        //---
+        
         return self
     }
 
@@ -310,5 +367,137 @@ extension CocoaPods.Podfile.ConcreteTargetContext
 
             end
             """
+    }
+}
+
+public
+extension CocoaPods.Podfile.PostInstallContext
+{
+    enum BuildPhaseScriptPosition
+    {
+        case preCompile
+        case postCompile
+    }
+    
+    func custom(
+        _ customEntry: String
+        )
+    {
+        buffer <<< customEntry
+    }
+    
+    func setBuildPhaseScript(
+        project: Path = Spec.Project.location,
+        target: String,
+        scriptName: String,
+        scriptBody: String,
+        runOnlyForDeploymentPostprocessing: Bool? = nil,
+        position: BuildPhaseScriptPosition = .preCompile
+        )
+    {
+        buffer <<< {"""
+            
+            # === Build Phase Script - \(scriptName) | \(target) | \(project)
+            
+            project = Xcodeproj::Project.open("\(project)")
+            target = project.targets.find { |e| e.name == "\(target)" }
+            
+            scriptPhase = target.shell_script_build_phases.find { |e| e.name == "\(scriptName)" }
+
+            unless scriptPhase.nil?
+                target.build_phases.delete(scriptPhase)
+            end
+
+            scriptPhase = target.new_shell_script_build_phase("\(scriptName)")
+            scriptPhase.shell_script = '\(scriptBody)'
+            \(runOnlyForDeploymentPostprocessing
+                .map{ "scriptPhase.run_only_for_deployment_postprocessing = '\(($0 ? 1 : 0))'" }
+                ?? "# scriptPhase.run_only_for_deployment_postprocessing = ..."
+            )
+            """
+        }()
+        
+        buffer <<< (position == .preCompile).mapIf(true) {"""
+            
+            target.build_phases.delete(scriptPhase)
+            target.build_phases.unshift(scriptPhase)
+            """
+        }
+        
+        buffer <<< {"""
+            
+            project.save()
+            """
+        }()
+    }
+    
+    func setBuildSettings(
+        project: Path = Spec.Project.location,
+        settings: [String : Any]
+        )
+    {
+        let settings = settings.sortedByKey()
+        
+        //---
+        
+        buffer <<< {"""
+            
+            # === Build Settings | \(project)
+            
+            project = Xcodeproj::Project.open("\(project)")
+            
+            project.build_configurations.each do |config|
+            
+            """
+        }()
+        
+        buffer.indentation.nest{
+            
+            buffer <<< settings.map{ "config.build_settings['\($0)'] = '\($1)'" }
+        }
+        
+        buffer <<< {"""
+            
+            end # project.build_configurations.each
+
+            project.save()
+            """
+        }()
+    }
+    
+    func setBuildSettings(
+        project: Path = Spec.Project.location,
+        target: String,
+        settings: [String : Any]
+        )
+    {
+        let settings = settings.sortedByKey()
+        
+        //---
+        
+        buffer <<< {"""
+            
+            # === Build Settings | \(target) | \(project)
+            
+            project = Xcodeproj::Project.open("\(project)")
+            mainTarget = project.targets.find { |e| e.name == "\(target)" }
+
+            mainTarget.build_configurations.each do |config|
+            
+            """
+        }()
+        
+        buffer.indentation.nest{
+            
+            buffer <<< settings.map{ "config.build_settings['\($0)'] = '\($1)'" }
+        }
+        
+        buffer <<< {"""
+            
+            end # mainTarget.build_configurations.each
+
+            project.save()
+            """
+        }()
     }
 }

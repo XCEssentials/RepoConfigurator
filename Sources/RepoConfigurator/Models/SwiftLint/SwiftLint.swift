@@ -83,8 +83,8 @@ extension SwiftLint
     func standard(
         setXCEDefaults: Bool = true,
         disabledRules: [String] = [],
-        include: [String] = [],
-        exclude: [String] = [],
+        include: [Path] = [],
+        exclude: [Path] = [],
         rulesOptions: [SwiftLint.RuleOption] = [],
         otherEntries: [String] = []
         ) -> SwiftLint
@@ -164,7 +164,7 @@ extension SwiftLint
     }
 
     func addIncluded(
-        _ paths: [String] = []
+        _ paths: [Path] = []
         ) -> SwiftLint
     {
         guard
@@ -196,7 +196,7 @@ extension SwiftLint
 
     func addExcluded(
         setXCEDefaults: Bool = true,
-        _ otherExclude: [String] = []
+        _ otherExclude: [Path] = []
         ) -> SwiftLint
     {
         buffer <<< """

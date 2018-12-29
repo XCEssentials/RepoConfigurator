@@ -30,7 +30,6 @@ import FileKit
 
 //---
 
-
 public
 extension Path
 {
