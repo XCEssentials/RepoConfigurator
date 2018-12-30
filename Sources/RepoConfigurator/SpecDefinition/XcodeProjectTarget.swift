@@ -56,7 +56,7 @@ extension XcodeProjectTarget
     
     var productName: String
     {
-        return Spec.Product.name + "$(TARGET_NAME)"
+        return Spec.Product.name + name
     }
     
     var bundleId: String
@@ -72,7 +72,7 @@ extension XcodeProjectTarget
         
         //---
         
-        return bundleIdPrefix + "." + "$(PRODUCT_NAME)"
+        return bundleIdPrefix + "." + productName
     }
     
     var provisioningProfiles: [Xcode.ProvisioningProfileKind : String]

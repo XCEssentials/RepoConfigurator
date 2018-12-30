@@ -373,17 +373,17 @@ extension CocoaPods.Podfile.ConcreteTargetContext
 public
 extension CocoaPods.Podfile.PostInstallContext
 {
-    enum BuildPhaseScriptPosition
-    {
-        case preCompile
-        case postCompile
-    }
-    
     func custom(
         _ customEntry: String
         )
     {
         buffer <<< customEntry
+    }
+    
+    enum BuildPhaseScriptPosition
+    {
+        case preCompile
+        case postCompile
     }
     
     func setBuildPhaseScript(
@@ -433,13 +433,10 @@ extension CocoaPods.Podfile.PostInstallContext
     
     func setBuildSettings(
         project: Path = Spec.Project.location,
-        settings: [String : Any]
+        _ shared: Xcode.RawBuildSettings = [:],
+        _ perConfiguration: [Xcode.BuildConfiguration : Xcode.RawBuildSettings] = [:]
         )
     {
-        let settings = settings.sortedByKey()
-        
-        //---
-        
         buffer <<< {"""
             
             # === Build Settings | \(project)
@@ -453,7 +450,35 @@ extension CocoaPods.Podfile.PostInstallContext
         
         buffer.indentation.nest{
             
-            buffer <<< settings.map{ "config.build_settings['\($0)'] = '\($1)'" }
+            buffer <<< shared
+                .sortedByKey()
+                .map{ "config.build_settings['\($0)'] = '\($1)'" }
+            
+            perConfiguration.forEach{
+                
+                (config, settings) in
+                
+                //---
+                
+                buffer <<< {"""
+                    if config.name == "\(config.title)"
+                    
+                    """
+                }()
+                
+                buffer.indentation.nest{
+                    
+                    buffer <<< settings
+                        .sortedByKey()
+                        .map{ "config.build_settings['\($0)'] = '\($1)'" }
+                }
+                
+                buffer <<< {"""
+                    
+                    end # config.name == "\(config.title)"
+                    """
+                }()
+            }
         }
         
         buffer <<< {"""
@@ -468,13 +493,10 @@ extension CocoaPods.Podfile.PostInstallContext
     func setBuildSettings(
         project: Path = Spec.Project.location,
         target: String,
-        settings: [String : Any]
+        _ shared: Xcode.RawBuildSettings = [:],
+        _ perConfiguration: [Xcode.BuildConfiguration : Xcode.RawBuildSettings] = [:]
         )
     {
-        let settings = settings.sortedByKey()
-        
-        //---
-        
         buffer <<< {"""
             
             # === Build Settings | \(target) | \(project)
@@ -489,7 +511,37 @@ extension CocoaPods.Podfile.PostInstallContext
         
         buffer.indentation.nest{
             
-            buffer <<< settings.map{ "config.build_settings['\($0)'] = '\($1)'" }
+            buffer <<< shared
+                .sortedByKey()
+                .map{ "config.build_settings['\($0)'] = '\($1)'" }
+            
+            perConfiguration.forEach{
+                
+                (config, settings) in
+                
+                //---
+                
+                buffer.appendNewLine()
+                
+                buffer <<< {"""
+                    if config.name == "\(config.title)"
+                    
+                    """
+                }()
+                
+                buffer.indentation.nest{
+                    
+                    buffer <<< settings
+                        .sortedByKey()
+                        .map{ "config.build_settings['\($0)'] = '\($1)'" }
+                }
+                
+                buffer <<< {"""
+                    
+                    end # config.name == "\(config.title)"
+                    """
+                }()
+            }
         }
         
         buffer <<< {"""
