@@ -37,6 +37,7 @@ protocol XcodeProjectTarget: RawRepresentable, CaseIterable
     var bundleId: String { get }
     var provisioningProfiles: [Xcode.ProvisioningProfileKind : String] { get }
     var sourcesLocations: [Path] { get }
+    var resourcesLocations: [Path] { get }
     var infoPlistLocation: Path { get }
     var packageType: Xcode.InfoPlist.PackageType { get }
 }
@@ -45,10 +46,17 @@ protocol XcodeProjectTarget: RawRepresentable, CaseIterable
 
 public
 extension XcodeProjectTarget
+    where
+    RawValue == String
 {
+    var name: String
+    {
+        return platform.simplifiedTitle + title
+    }
+    
     var productName: String
     {
-        return Spec.Product.name + "$(TARGET_NAME)"
+        return Spec.Product.name + name
     }
     
     var bundleId: String
@@ -64,7 +72,7 @@ extension XcodeProjectTarget
         
         //---
         
-        return bundleIdPrefix + "." + "$(PRODUCT_NAME)"
+        return bundleIdPrefix + "." + productName
     }
     
     var provisioningProfiles: [Xcode.ProvisioningProfileKind : String]
@@ -76,7 +84,15 @@ extension XcodeProjectTarget
     {
         return [
             
-            Spec.Locations.sources + [name]
+            Spec.Locations.sources + name
+        ]
+    }
+    
+    var resourcesLocations: [Path]
+    {
+        return [
+            
+            Spec.Locations.resources + name
         ]
     }
     

@@ -24,6 +24,10 @@
 
  */
 
+import FileKit
+
+//---
+
 public
 extension CocoaPods
 {
@@ -60,6 +64,26 @@ extension CocoaPods
                 )
             {
                 self.buffer = buffer
+            }
+        }
+
+        public
+        struct PostInstallContext
+        {
+            private
+            let buffer: IndentedTextBuffer
+
+            public
+            let installerVar: String
+            
+            //internal
+            init(
+                _ buffer: IndentedTextBuffer,
+                _ installerVar: String
+                )
+            {
+                self.buffer = buffer
+                self.installerVar = installerVar
             }
         }
 
@@ -155,6 +179,39 @@ extension CocoaPods.Podfile
 
         //---
 
+        return self
+    }
+    
+    func postInstall(
+        installerVar: String = "installer",
+        _ body: (CocoaPods.Podfile.PostInstallContext) -> Void
+        ) -> CocoaPods.Podfile
+    {
+        buffer <<< { """
+            
+            post_install do |\(installerVar)|
+            
+            """
+        }()
+
+        buffer.indentation.nest{
+
+            body(
+                .init(
+                    buffer,
+                    installerVar
+                )
+            )
+        }
+        
+        buffer <<< { """
+            
+            end # post_install
+            """
+        }()
+        
+        //---
+        
         return self
     }
 
@@ -310,5 +367,16 @@ extension CocoaPods.Podfile.ConcreteTargetContext
 
             end
             """
+    }
+}
+
+public
+extension CocoaPods.Podfile.PostInstallContext
+{
+    func custom(
+        _ customEntry: String
+        )
+    {
+        buffer <<< customEntry
     }
 }

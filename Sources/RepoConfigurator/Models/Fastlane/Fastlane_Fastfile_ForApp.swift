@@ -62,7 +62,7 @@ extension Fastlane.Fastfile.ForApp
             $0.pathExtension = CocoaPods.Podspec.extension // just in case!
         }
         
-        let allPodspecs: [Path] = [masterPodSpec] + otherPodSpecs.map{
+        let otherPodSpecs = otherPodSpecs.map{
             
             Utils.mutate($0){
                 
@@ -70,6 +70,8 @@ extension Fastlane.Fastfile.ForApp
             }
             
         }
+        
+        let allPodspecs = [masterPodSpec] + otherPodSpecs
         
         //---
 
@@ -168,7 +170,7 @@ extension Fastlane.Fastfile.ForApp
                 commit_version_bump(
                     message: 'Version Bump to ' + newVersionNumber + ' (' + newBuildNumber + ')',
                     xcodeproj: '\(project)',
-                    include: \(allPodspecs)
+                    include: \(allPodspecs.map{ $0.rawValue })
                 )
                 """
             }()
@@ -197,7 +199,8 @@ extension Fastlane.Fastfile.ForApp
         beginningEntries: [String] = [],
         project: Path = Spec.Project.location,
         callGems: GemCallMethod = .viaBundler,
-        extraScriptBuildPhases: [ExtraScriptBuildPhase] = [],
+        scriptBuildPhases: (ScriptBuildPhaseContext) -> Void = { _ in },
+        buildSettings: (BuildSettingsContext) -> Void = { _ in },
         endingEntries: [String] = []
         ) -> Self
     {
@@ -251,7 +254,17 @@ extension Fastlane.Fastfile.ForApp
                 """
             }()
 
-            processExtraScriptBuildPhases(extraScriptBuildPhases)
+            scriptBuildPhases(
+                .init(
+                    main
+                )
+            )
+            
+            buildSettings(
+                .init(
+                    main
+                )
+            )
             
             main <<< endingEntries.isEmpty.mapIf(false){ """
                 

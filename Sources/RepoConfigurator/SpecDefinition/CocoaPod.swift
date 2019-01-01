@@ -78,7 +78,7 @@ extension Spec.CocoaPod
         return (
             name: Spec.Company.name,
             identifier: Spec.Company.bundleIdPrefix.require(file: file, line: line),
-            prefix: namePrefix.require(file: file, line: line)
+            prefix: namePrefix ?? ""
         )
     }
     
