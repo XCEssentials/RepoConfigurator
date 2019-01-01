@@ -199,7 +199,8 @@ extension Fastlane.Fastfile.ForApp
         beginningEntries: [String] = [],
         project: Path = Spec.Project.location,
         callGems: GemCallMethod = .viaBundler,
-        extraScriptBuildPhases: [ExtraScriptBuildPhase] = [],
+        scriptBuildPhases: (ScriptBuildPhaseContext) -> Void = { _ in },
+        buildSettings: (BuildSettingsContext) -> Void = { _ in },
         endingEntries: [String] = []
         ) -> Self
     {
@@ -253,7 +254,17 @@ extension Fastlane.Fastfile.ForApp
                 """
             }()
 
-            processExtraScriptBuildPhases(extraScriptBuildPhases)
+            scriptBuildPhases(
+                .init(
+                    main
+                )
+            )
+            
+            buildSettings(
+                .init(
+                    main
+                )
+            )
             
             main <<< endingEntries.isEmpty.mapIf(false){ """
                 
