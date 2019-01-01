@@ -58,6 +58,43 @@ extension Fastlane
             case developerId = "developer-id"
         }
 
+        public
+        enum BuildPhaseScriptPosition
+        {
+            case preCompile
+            case postCompile
+        }
+        
+        public
+        struct ScriptBuildPhaseContext
+        {
+            private
+            let buffer: IndentedTextBuffer
+            
+            //internal
+            init(
+                _ buffer: IndentedTextBuffer
+                )
+            {
+                self.buffer = buffer
+            }
+        }
+
+        public
+        struct BuildSettingsContext
+        {
+            private
+            let buffer: IndentedTextBuffer
+            
+            //internal
+            init(
+                _ buffer: IndentedTextBuffer
+                )
+            {
+                self.buffer = buffer
+            }
+        }
+
         // MARK: Instance level members
 
         //internal
@@ -191,262 +228,326 @@ extension Fastlane.Fastfile
     }
 }
 
-// MARK: - Internal helpers
-
 public
-extension Fastlane.Fastfile
+extension Fastlane.Fastfile.ScriptBuildPhaseContext
 {
-    enum ExtraScriptBuildPhase
+    func custom(
+        project: Path = Spec.Project.location,
+        targetNames: [String],
+        scriptName: String,
+        scriptBody: String,
+        runOnlyForDeploymentPostprocessing: Bool? = nil,
+        position: Fastlane.Fastfile.BuildPhaseScriptPosition = .preCompile
+        )
     {
-        case swiftGen(
-            projectName: String,
-            targetNames: [String]
+        guard
+            !targetNames.isEmpty
+        else
+        {
+            return
+        }
+
+        //---
+
+        let project: Path = (
+            project.isAbsolute ?
+                project
+                : "./.." + project
         )
         
-        case sourcery(
-            projectName: String,
-            targetNames: [String]
-        )
+        let targetNames = targetNames
+            .map{ "'\($0)'" }
+            .joined(separator: ", ")
+
+        //---
+
+        buffer <<< {"""
+            
+            # === Build Phase Script - \(scriptName) | \(targetNames) | \(project)
+            
+            """
+        }()
         
-        case swiftLint(
-            projectName: String,
-            targetNames: [String],
-            params: [String]
+        buffer <<< {"""
+            begin
+            
+                project = Xcodeproj::Project.open("\(project)")
+            
+            rescue => ex
+            
+                # https://github.com/fastlane/fastlane/issues/7944#issuecomment-274232674
+                UI.error ex
+                UI.error("Failed to add Build Phase Script - \(scriptName) | \(targetNames) | \(project)")
+            
+            end
+            
+            """
+        }()
+        
+        buffer <<< {"""
+            project
+                .targets
+                .select{ |t| [\(targetNames)].include?(t.name) }
+                .each{ |t|
+
+                    thePhase = t.shell_script_build_phases.find { |s| s.name == "\(scriptName)" }
+            
+                    unless thePhase.nil?
+                        t.build_phases.delete(thePhase)
+                    end
+            
+                    thePhase = t.new_shell_script_build_phase("\(scriptName)")
+                    thePhase.shell_script = '\(scriptBody)'
+                    \(runOnlyForDeploymentPostprocessing
+                        .map{ "thePhase.run_only_for_deployment_postprocessing = '\(($0 ? 1 : 0))'" }
+                        ?? "# thePhase.run_only_for_deployment_postprocessing = ..."
+                    )
+            
+                    \(position == .preCompile ?
+                        """
+                        t.build_phases.unshift(t.build_phases.delete(thePhase)) # move to top
+                        """
+                        : "# NOTE: 'thePhase' will be placed after 'compile' phase"
+                    )
+            
+            
+                }
+
+            project.save()
+            
+            UI.success("Added Build Phase Script - \(scriptName) | \(targetNames) | \(project)")
+            """
+        }()
+    }
+    
+    func swiftGen(
+        project: Path = Spec.Project.location,
+        targetNames: [String],
+        scriptName: String = "SwiftGen",
+        params: [String] = []
+        )
+    {
+        custom(
+            project: project,
+            targetNames: targetNames,
+            scriptName: scriptName,
+            scriptBody: """
+                "$PODS_ROOT/SwiftGen/bin/swiftgen"  \(params.joined(separator: " "))
+                """
+        )
+    }
+    
+    func sourcery(
+        project: Path = Spec.Project.location,
+        targetNames: [String],
+        scriptName: String = "Sourcery",
+        params: [String] = [
+            "--prune"
+            ]
+        )
+    {
+        custom(
+            project: project,
+            targetNames: targetNames,
+            scriptName: scriptName,
+            scriptBody: """
+                "$PODS_ROOT/Sourcery/bin/sourcery"  \(params.joined(separator: " "))
+                """
+        )
+    }
+    
+    func swiftLint(
+        project: Path = Spec.Project.location,
+        targetNames: [String],
+        scriptName: String = "SwiftLintPods",
+        params: [String] = []
+        )
+    {
+        custom(
+            project: project,
+            targetNames: targetNames,
+            scriptName: scriptName,
+            scriptBody: """
+                "$PODS_ROOT/SwiftLint/swiftlint"  \(params.joined(separator: " "))
+                """
         )
     }
 }
 
-// internal
-extension Fastlane.Fastfile
+public
+extension Fastlane.Fastfile.BuildSettingsContext
 {
-    func processExtraScriptBuildPhases(
-        _ config: [ExtraScriptBuildPhase]
+    func projectLevel(
+        project: Path = Spec.Project.location,
+        shared: Xcode.RawBuildSettings = [:],
+        perConfiguration: [Xcode.BuildConfiguration : Xcode.RawBuildSettings] = [:]
         )
     {
-        for item in config
-        {
-            switch item
-            {
-            case .swiftGen(let projectName, let targetNames):
-                swiftGenBuildPhase(
-                    projectName: projectName,
-                    targetNames: targetNames
-                )
+        let project: Path = (
+            project.isAbsolute ?
+                project
+                : "./.." + project
+        )
+        
+        //---
+        
+        buffer <<< {"""
+            
+            # === Build Settings | \(project)
+            
+            begin
+            
+                project = Xcodeproj::Project.open("\(project)")
+            
+            rescue => ex
+            
+                # https://github.com/fastlane/fastlane/issues/7944#issuecomment-274232674
+                UI.error ex
+                UI.error("Failed to set Build Settings - \(project)")
+            
+            end
+            
+            project.build_configurations.each do |config|
+            
+            """
+        }()
+        
+        buffer.indentation.nest{
+            
+            buffer <<< shared
+                .sortedByKey()
+                .map{ "config.build_settings['\($0)'] = '\($1)'" }
+            
+            perConfiguration.forEach{
                 
-            case .sourcery(let projectName, let targetNames):
-                sourceryBuildPhase(
-                    projectName: projectName,
-                    targetNames: targetNames
-                )
+                (config, settings) in
                 
-            case .swiftLint(let projectName, let targetNames, let params):
-                swiftLintBuildPhase(
-                    projectName: projectName,
-                    targetNames: targetNames,
-                    params: params
-                )
+                //---
+                
+                buffer <<< {"""
+                    if config.name == "\(config.title)"
+                    
+                    """
+                }()
+                
+                buffer.indentation.nest{
+                    
+                    buffer <<< settings
+                        .sortedByKey()
+                        .map{ "config.build_settings['\($0)'] = '\($1)'" }
+                }
+                
+                buffer <<< {"""
+                    
+                    end # config.name == "\(config.title)"
+                    """
+                }()
             }
         }
+        
+        buffer <<< {"""
+            
+            end # project.build_configurations.each
+
+            project.save()
+            
+            UI.success("Set Build Settings - \(project)")
+            """
+        }()
     }
     
-    func swiftGenBuildPhase(
-        projectName: String,
-        targetNames: [String]
+    func targetLevel(
+        project: Path = Spec.Project.location,
+        target: String,
+        shared: Xcode.RawBuildSettings = [:],
+        perConfiguration: [Xcode.BuildConfiguration : Xcode.RawBuildSettings] = [:]
         )
     {
-        guard
-            !targetNames.isEmpty
-        else
-        {
-            return
-        }
-
+        let project: Path = (
+                project.isAbsolute ?
+                project
+                : "./.." + project
+            )
+        
         //---
-
-        let scriptName = "SwiftGen"
-        let targetNames = targetNames.map{ "'\($0)'" }.joined(separator: ", ")
-
-        //---
-
-        main.appendNewLine()
         
-        main <<< """
-            # === Add BUILD PHASE script '\(scriptName)'
-            """
-        
-        main.appendNewLine()
-        
-        main <<< """
-            # remember, we are in ./fastlane/ folder now...
-            fullProjFilePath = Dir.pwd + '/../\(projectName).xcodeproj'
-            """
-
-        main.appendNewLine()
-        
-        main <<< """
-            # https://github.com/fastlane/fastlane/issues/7944#issuecomment-274232674
+        buffer <<< {"""
+            
+            # === Build Settings | \(target) | \(project)
+            
             begin
-                project = Xcodeproj::Project.open(fullProjFilePath)
+            
+                project = Xcodeproj::Project.open("\(project)")
+            
             rescue => ex
+            
+                # https://github.com/fastlane/fastlane/issues/7944#issuecomment-274232674
                 UI.error ex
-                UI.user_error!("Failed to open project: " + fullProjFilePath)
+                UI.error("Failed to set Build Settings - \(target) | \(project)")
+            
             end
+            
+            begin
+            
+                target = project.targets.find { |e| e.name == "\(target)" }
+                raise RuntimeError, 'Target \(target) is not found' if target.nil?
+            
+            rescue => ex
+            
+                # https://github.com/fastlane/fastlane/issues/7944#issuecomment-274232674
+                UI.error ex
+                UI.error("Failed to set Build Settings - \(target) | \(project)")
+            
+            end
+            
+            target.build_configurations.each do |config|
+            
             """
+        }()
         
-        main.appendNewLine()
-        
-        main <<< """
-            project
-                .targets
-                .select{ |t| [\(targetNames)].include?(t.name) }
-                .each{ |t|
-
-                    thePhase = t.new_shell_script_build_phase('\(scriptName)')
-                    thePhase.shell_script = '"$PODS_ROOT/SwiftGen/bin/swiftgen" config run --config ".swiftgen.yml"'
-                    # thePhase.run_only_for_deployment_postprocessing = '1'
-
-                    # now lets put the newly added phase before sources compilation phase
-                    t.build_phases.delete(thePhase)
-                    t.build_phases.unshift(thePhase)
+        buffer.indentation.nest{
+            
+            buffer <<< shared
+                .sortedByKey()
+                .map{ "config.build_settings['\($0)'] = '\($1)'" }
+            
+            perConfiguration.forEach{
+                
+                (config, settings) in
+                
+                //---
+                
+                buffer.appendNewLine()
+                
+                buffer <<< {"""
+                    if config.name == "\(config.title)"
+                    
+                    """
+                }()
+                
+                buffer.indentation.nest{
+                    
+                    buffer <<< settings
+                        .sortedByKey()
+                        .map{ "config.build_settings['\($0)'] = '\($1)'" }
                 }
+                
+                buffer <<< {"""
+                    
+                    end # config.name == "\(config.title)"
+                    """
+                }()
+            }
+        }
+        
+        buffer <<< {"""
+            
+            end # target.build_configurations.each
 
             project.save()
+            
+            UI.success("Set Build Settings - \(target) | \(project)")
             """
-    }
-
-    func sourceryBuildPhase(
-        projectName: String,
-        targetNames: [String]
-        )
-    {
-        guard
-            !targetNames.isEmpty
-        else
-        {
-            return
-        }
-
-        //---
-
-        let scriptName = "Sourcery"
-        let targetNames = targetNames.map{ "'\($0)'" }.joined(separator: ", ")
-
-        //---
-
-        main.appendNewLine()
-        
-        main <<< """
-            # === Add BUILD PHASE script '\(scriptName)'
-            """
-        
-        main.appendNewLine()
-        
-        main <<< """
-            # remember, we are in ./fastlane/ folder now...
-            fullProjFilePath = Dir.pwd + '/../\(projectName).xcodeproj'
-            """
-        
-        main.appendNewLine()
-        
-        main <<< """
-            # https://github.com/fastlane/fastlane/issues/7944#issuecomment-274232674
-            begin
-                project = Xcodeproj::Project.open(fullProjFilePath)
-            rescue => ex
-                UI.error ex
-                UI.user_error!("Failed to open project: " + fullProjFilePath)
-            end
-            """
-        
-        main.appendNewLine()
-        
-        main <<< """
-            project
-                .targets
-                .select{ |t| [\(targetNames)].include?(t.name) }
-                .each{ |t|
-
-                    thePhase = t.new_shell_script_build_phase('\(scriptName)')
-                    thePhase.shell_script = '"$PODS_ROOT/Sourcery/bin/sourcery" --prune'
-                    # thePhase.run_only_for_deployment_postprocessing = '1'
-
-                    # now lets put the newly added phase before sources compilation phase
-                    t.build_phases.delete(thePhase)
-                    t.build_phases.unshift(thePhase)
-
-                }
-
-            project.save()
-            """
-    }
-
-    func swiftLintBuildPhase(
-        projectName: String,
-        targetNames: [String],
-        params: [String]
-        )
-    {
-        guard
-            !targetNames.isEmpty
-        else
-        {
-            return
-        }
-
-        //---
-
-        let scriptName = "SwiftLintPods"
-        let targetNames = targetNames.map{ "'\($0)'" }.joined(separator: ", ")
-
-        //---
-
-        main.appendNewLine()
-        
-        main <<< """
-            # === Add BUILD PHASE script '\(scriptName)'
-            """
-        
-        main.appendNewLine()
-        
-        main <<< """
-            # remember, we are in ./fastlane/ folder now...
-            fullProjFilePath = Dir.pwd + '/../\(projectName).xcodeproj'
-            """
-
-        main.appendNewLine()
-        
-        main <<< """
-            # https://github.com/fastlane/fastlane/issues/7944#issuecomment-274232674
-            begin
-                project = Xcodeproj::Project.open(fullProjFilePath)
-            rescue => ex
-                UI.error ex
-                UI.user_error!("Failed to open project: " + fullProjFilePath)
-            end
-            """
-        
-        main.appendNewLine()
-        
-        let theScript = """
-            "${PODS_ROOT}/SwiftLint/swiftlint" \(params.joined(separator: " "))
-            """
-        
-        main <<< """
-            project
-                .targets
-                .select{ |t| [\(targetNames)].include?(t.name) }
-                .each{ |t|
-
-                    thePhase = t.new_shell_script_build_phase('\(scriptName)')
-                    thePhase.shell_script = '\(theScript)'
-                    # thePhase.run_only_for_deployment_postprocessing = '1'
-
-                    t.build_phases.delete(thePhase)
-                    t.build_phases.unshift(thePhase)
-
-                }
-
-            project.save()
-            """
+        }()
     }
 }

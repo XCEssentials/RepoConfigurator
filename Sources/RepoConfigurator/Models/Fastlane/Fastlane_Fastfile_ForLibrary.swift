@@ -162,7 +162,8 @@ extension Fastlane.Fastfile.ForLibrary
         callCocoaPods: GemCallMethod, // enforce explicit configuration!
         prefixLocation: Path = Path("Xcode"),
         extraGenParams: [String] = [],
-        extraScriptBuildPhases: [ExtraScriptBuildPhase] = [],
+        scriptBuildPhases: (ScriptBuildPhaseContext) -> Void = { _ in },
+        buildSettings: (BuildSettingsContext) -> Void = { _ in },
         endingEntries: [String] = []
         ) -> Self
     {
@@ -172,7 +173,8 @@ extension Fastlane.Fastfile.ForLibrary
 
         _ = require(
             CocoaPods.gemName,
-            CocoaPods.Generate.gemName
+            CocoaPods.Generate.gemName,
+            Xcodeproj.gemName
         )
         
         //---
@@ -221,7 +223,17 @@ extension Fastlane.Fastfile.ForLibrary
                 sh 'cd ./..\(cleanupCmd) && \(CocoaPods.call(callCocoaPods)) \(CocoaPods.Generate.gemCallName) \(genParams)'
                 """
             
-            processExtraScriptBuildPhases(extraScriptBuildPhases)
+            scriptBuildPhases(
+                .init(
+                    main
+                )
+            )
+            
+            buildSettings(
+                .init(
+                    main
+                )
+            )
             
             main <<< endingEntries.isEmpty.mapIf(false){ """
                 
