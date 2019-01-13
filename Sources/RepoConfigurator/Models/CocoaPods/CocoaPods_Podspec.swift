@@ -24,6 +24,8 @@
 
  */
 
+import Foundation
+
 import FileKit
 
 //---
@@ -39,7 +41,7 @@ extension CocoaPods
 
         public
         static
-        let `extension`: String = "podspec"
+        let `extension`: String = String(describing: Podspec.self).lowercased()
         
         // MARK: Instance level members
 
