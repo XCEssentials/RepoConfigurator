@@ -46,7 +46,7 @@ extension WidelyUsedLicense
     {
         return (
             type: licenseType,
-            relativeLocation.rawValue
+            relativeLocation
         )
     }
 }

@@ -100,7 +100,7 @@ extension CocoaPods.Podspec
     public
     typealias License = (
         type: String,
-        fileName: String
+        fileName: Path
     )
 
     public
