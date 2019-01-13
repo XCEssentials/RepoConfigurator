@@ -28,7 +28,7 @@
  https://github.com/CocoaPods/Xcodeproj
  */
 public
-enum Xcodeproj: Gem {}
+enum Xcodeproj: RubyGem {}
 
 //---
 

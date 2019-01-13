@@ -29,7 +29,7 @@ import Foundation
 //---
 
 public
-enum CocoaPods: Gem
+enum CocoaPods: RubyGem
 {
     public
     static

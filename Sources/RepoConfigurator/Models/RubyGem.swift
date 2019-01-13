@@ -26,10 +26,10 @@
 
 import Foundation
 
-//---
+// MARK: - RubyGem
 
 public
-protocol Gem
+protocol RubyGem
 {
     static
     var gemName: String { get } // for Gemfile, require, etc.
@@ -38,8 +38,10 @@ protocol Gem
     var gemCallName: String { get } // how to call in command line, script, etc.
 }
 
+// MARK: - RubyGem - Defaults
+
 public
-extension Gem
+extension RubyGem
 {
     static
     var gemName: String
@@ -54,8 +56,17 @@ extension Gem
     }
 }
 
+// MARK: - RubyGem - helpers
+
 public
-extension Gem
+enum GemCallMethod
+{
+    case directly
+    case viaBundler
+}
+
+public
+extension RubyGem
 {
     static
     func call(
@@ -71,13 +82,4 @@ extension Gem
             return Bundler.execPrefix + gemCallName
         }
     }
-}
-
-//---
-
-public
-enum GemCallMethod
-{
-    case directly
-    case viaBundler
 }
