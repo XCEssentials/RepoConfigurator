@@ -33,7 +33,24 @@ extension Fastlane.Fastfile
 {
     public
     final
-    class ForApp: Fastlane.Fastfile {}
+    class ForApp: Fastlane.Fastfile
+    {
+        /**
+         Method used to export the archive.
+         Valid values are: app-store, ad-hoc, package, enterprise, development, developer-id.
+         See more: https://docs.fastlane.tools/actions/gym/#parameters
+         */
+        public
+        enum GymArchiveExportMethod: String
+        {
+            case appStore = "app-store"
+            case adHoc = "ad-hoc"
+            case package = "package"
+            case enterprise = "enterprise"
+            case development = "development"
+            case developerId = "developer-id"
+        }
+    }
 }
 
 //---
@@ -290,7 +307,7 @@ extension Fastlane.Fastfile.ForApp
         productName: String,
         project: Path = Spec.Project.location,
         schemeName: String? = nil, // 'productName' will be used if 'nil'
-        exportMethod: Fastlane.Fastfile.ArchiveExportMethod = Defaults.stagingExportMethod,
+        exportMethod: GymArchiveExportMethod = Defaults.stagingExportMethod,
         archivesExportLocation: Path = Defaults.archivesExportLocation
         ) -> Self
     {
