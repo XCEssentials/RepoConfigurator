@@ -31,26 +31,47 @@ import FileKit
 public
 extension Spec
 {
-    enum Project {}
-}
-
-//---
-
-public
-extension Spec.Project
-{
-    static
-    var name = Spec.Product.name
-}
-
-//---
-
-public
-extension Spec.Project
-{
-    static
-    var location: Path
+    struct Project
     {
-        return [name + "." + Xcode.Project.extension]
+        public
+        let location: Path
+        
+        public
+        enum InitializationError: Error
+        {
+            case invalidLocation
+            case nameAutoDetectionFailure
+        }
+        
+        public
+        init(
+            location: Path
+            ) throws
+        {
+            try location.isRelative
+                ?! InitializationError.invalidLocation
+            
+            let location = Utils
+                .mutate(location){
+                    
+                    $0.pathExtension = Xcode.Project.extension // ensure right extension
+                }
+            
+            //---
+            
+            self.location = location
+        }
+        
+        public
+        init(
+            for product: Spec.Product
+            ) throws
+        {
+            self.location = Utils
+                .mutate([product.name]){
+                    
+                    $0.pathExtension = Xcode.Project.extension
+                }
+        }
     }
 }

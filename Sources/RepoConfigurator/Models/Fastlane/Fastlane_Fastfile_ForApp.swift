@@ -61,7 +61,7 @@ extension Fastlane.Fastfile.ForApp
     func beforeRelease(
         beginningEntries: [String] = [],
         ensureGitBranch: String? = Defaults.releaseGitBranchesRegEx,
-        project: Path = Spec.Project.location,
+        project: Spec.Project,
         masterPodSpec: Path = Spec.CocoaPod.podspecLocation,
         otherPodSpecs: [Path] = [],
         endingEntries: [String] = []
@@ -69,10 +69,11 @@ extension Fastlane.Fastfile.ForApp
     {
         let laneName = #function.split(separator: "(").first!
         
-        let project = Utils.mutate(project){
-            
-            $0.pathExtension = Xcode.Project.extension // just in case!
-        }
+        let project: Path = Utils
+            .mutate([".", ".."] + project.location){
+                
+                $0.pathExtension = Xcode.Project.extension // ensure right extension
+            }
         
         let masterPodSpec = Utils.mutate(masterPodSpec){
             
@@ -214,7 +215,7 @@ extension Fastlane.Fastfile.ForApp
 
     func reconfigureProject(
         beginningEntries: [String] = [],
-        project: Path = Spec.Project.location,
+        project: Spec.Project,
         callGems: GemCallMethod = .viaBundler,
         scriptBuildPhases: (ScriptBuildPhaseContext) -> Void = { _ in },
         buildSettings: (BuildSettingsContext) -> Void = { _ in },
@@ -223,10 +224,11 @@ extension Fastlane.Fastfile.ForApp
     {
         let laneName = #function.split(separator: "(").first!
         
-        let project = Utils.mutate(project){
-            
-            $0.pathExtension = Xcode.Project.extension // just in case!
-        }
+        let project: Path = Utils
+            .mutate([".", ".."] + project.location){
+                
+                $0.pathExtension = Xcode.Project.extension // ensure right extension
+            }
         
         //---
 
@@ -305,7 +307,7 @@ extension Fastlane.Fastfile.ForApp
 
     func archiveBeta(
         productName: String,
-        project: Path = Spec.Project.location,
+        project: Spec.Project,
         schemeName: String? = nil, // 'productName' will be used if 'nil'
         exportMethod: GymArchiveExportMethod = Defaults.stagingExportMethod,
         archivesExportLocation: Path = Defaults.archivesExportLocation
@@ -313,10 +315,11 @@ extension Fastlane.Fastfile.ForApp
     {
         let laneName = #function.split(separator: "(").first!
         
-        let project = Utils.mutate(project){
-            
-            $0.pathExtension = Xcode.Project.extension // just in case!
-        }
+        let project: Path = Utils
+            .mutate([".", ".."] + project.location){
+                
+                $0.pathExtension = Xcode.Project.extension // ensure right extension
+            }
         
         let schemeName = schemeName ?? productName
 

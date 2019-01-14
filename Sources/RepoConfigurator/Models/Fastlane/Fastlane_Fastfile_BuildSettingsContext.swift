@@ -52,16 +52,16 @@ public
 extension Fastlane.Fastfile.BuildSettingsContext
 {
     func projectLevel(
-        project: Path = Spec.Project.location,
+        project: Spec.Project,
         shared: Xcode.RawBuildSettings = [:],
         perConfiguration: [Xcode.BuildConfiguration : Xcode.RawBuildSettings] = [:]
         )
     {
-        let project: Path = (
-            project.isAbsolute ?
-                project
-                : "./.." + project
-        )
+        let project: Path = Utils
+            .mutate([".", ".."] + project.location){
+                
+                $0.pathExtension = Xcode.Project.extension // ensure right extension
+            }
         
         //---
         
@@ -131,17 +131,13 @@ extension Fastlane.Fastfile.BuildSettingsContext
     }
     
     func targetLevel(
-        project: Path = Spec.Project.location,
+        project: Spec.Project,
         target: String,
         shared: Xcode.RawBuildSettings = [:],
         perConfiguration: [Xcode.BuildConfiguration : Xcode.RawBuildSettings] = [:]
         )
     {
-        let project: Path = (
-                project.isAbsolute ?
-                project
-                : "./.." + project
-            )
+        let project: Path = [".", ".."] + project.location
         
         //---
         

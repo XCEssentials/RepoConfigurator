@@ -260,11 +260,14 @@ extension Fastlane.Fastfile.ForLibrary
      https://github.com/jakeheis/Ice
      */
     func generateProjectViaIce(
-        derivedPaths: [Path] = [[".build"], Spec.Project.location]
+        derivedPaths: [Path] = [[".build"]],
+        derivedProject: Spec.Project? = nil
         ) -> Self
     {
         let laneName = #function.split(separator: "(").first!
 
+        let derivedPaths = derivedPaths + (derivedProject?.location ?? [])
+        
         //---
         
         main <<< """

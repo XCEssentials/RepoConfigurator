@@ -58,7 +58,7 @@ extension Fastlane.Fastfile.ScriptBuildPhaseContext
     }
     
     func custom(
-        project: Path = Spec.Project.location,
+        project: Spec.Project,
         targetNames: [String],
         scriptName: String,
         scriptBody: String,
@@ -75,11 +75,11 @@ extension Fastlane.Fastfile.ScriptBuildPhaseContext
 
         //---
 
-        let project: Path = (
-            project.isAbsolute ?
-                project
-                : "./.." + project
-        )
+        let project: Path = Utils
+            .mutate([".", ".."] + project.location){
+                
+                $0.pathExtension = Xcode.Project.extension // ensure right extension
+            }
         
         let targetNames = targetNames
             .map{ "'\($0)'" }
@@ -147,7 +147,7 @@ extension Fastlane.Fastfile.ScriptBuildPhaseContext
     }
     
     func swiftGen(
-        project: Path = Spec.Project.location,
+        project: Spec.Project,
         targetNames: [String],
         scriptName: String = "SwiftGen",
         params: [String] = []
@@ -164,7 +164,7 @@ extension Fastlane.Fastfile.ScriptBuildPhaseContext
     }
     
     func sourcery(
-        project: Path = Spec.Project.location,
+        project: Spec.Project,
         targetNames: [String],
         scriptName: String = "Sourcery",
         params: [String] = [
@@ -183,7 +183,7 @@ extension Fastlane.Fastfile.ScriptBuildPhaseContext
     }
     
     func swiftLint(
-        project: Path = Spec.Project.location,
+        project: Spec.Project,
         targetNames: [String],
         scriptName: String = "SwiftLintPods",
         params: [String] = []
