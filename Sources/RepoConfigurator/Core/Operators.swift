@@ -174,3 +174,64 @@ func <<< (
         receiver.append($0)
     }
 }
+
+// MARK: - Internal helpers
+
+// https://developer.apple.com/documentation/swift/swift_standard_library/operator_declarations
+
+infix operator ?! : NilCoalescingPrecedence
+
+//internal
+func ?! <T, E>(
+    input: T?,
+    error: E
+    ) throws -> T
+    where
+    E: Swift.Error
+{
+    if
+        let input = input
+    {
+        return input
+    }
+    else
+    {
+        throw error
+    }
+}
+
+//internal
+func ?! <E>(
+    input: Bool,
+    error: E
+    ) throws
+    where
+    E: Swift.Error
+{
+    if
+        !input
+    {
+        throw error
+    }
+}
+
+//internal
+func ?! <T, E>(
+    input: T?,
+    error: E
+    ) throws -> T
+    where
+    T: Collection,
+    E: Swift.Error
+{
+    if
+        let input = input,
+        !input.isEmpty
+    {
+        return input
+    }
+    else
+    {
+        throw error
+    }
+}
