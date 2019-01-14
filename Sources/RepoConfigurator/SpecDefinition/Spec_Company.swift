@@ -27,26 +27,54 @@
 public
 extension Spec
 {
-    enum Company {}
+    struct Company
+    {
+        public
+        let name: String
+        
+        public
+        let bundleIdPrefix: String
+        
+        public
+        let developmentTeamId: String
+        
+        public
+        enum InitializationError: Error
+        {
+            case unableAutoDetectCompanyName
+        }
+        
+        public
+        init(
+            name: String? = nil,
+            bundleIdPrefix: String = "",
+            developmentTeamId: String = "",
+            shouldReport: Bool = false
+            ) throws
+        {
+            self.name = try name
+                ?? LocalRepo.current().context
+                ?! InitializationError.unableAutoDetectCompanyName
+            
+            self.bundleIdPrefix = bundleIdPrefix
+            self.developmentTeamId = developmentTeamId
+            
+            //---
+            
+            if
+                shouldReport
+            {
+                report()
+            }
+        }
+    }
 }
 
 public
 extension Spec.Company
 {
-    static
-    var name: String = {
-
-        let result = Spec.LocalRepo.context
-        print("✅ Company name: \(result)")
-
-        //---
-
-        return result
-    }()
-
-    static
-    var bundleIdPrefix: String?
-
-    static
-    var developmentTeamId: String?
+    func report()
+    {
+        print("✅ Company name: \(name)")
+    }
 }

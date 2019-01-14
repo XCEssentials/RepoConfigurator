@@ -73,7 +73,11 @@ extension Spec.LocalRepo
                 ?! InitializationError.unableToDetectRepoParentFolder
         )
         
-        (shouldReport ? result.report() : ())
+        if
+            shouldReport
+        {
+            result.report()
+        }
         
         //---
         

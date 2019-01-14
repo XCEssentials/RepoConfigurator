@@ -118,6 +118,7 @@ extension Xcode.InfoPlist
         initialVersionString: VersionString = Defaults.initialVersionString,
         initialBuildNumber: BuildNumber = Defaults.initialBuildNumber,
         otherEntries: [String] = [],
+        companyName: String? = nil, // for macOS
         absolutePrefixLocation: Path? = nil,
         removeSpacesAtEOL: Bool = true,
         removeRepeatingEmptyLines: Bool = true
@@ -141,9 +142,10 @@ extension Xcode.InfoPlist
             preset = .iOS
             
         case .macOS:
-            preset = .macOS(
+            preset = try .macOS(
                 copyrightYear: Spec.Product.copyrightYear,
-                copyrightEntity: Spec.Company.name
+                copyrightEntity: companyName
+                    ?? Spec.Company().name
             )
             
         default:
