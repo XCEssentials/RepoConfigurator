@@ -29,49 +29,52 @@ import Foundation
 //---
 
 public
-struct RemoteRepo
+extension Spec
 {
-    public
-    let serverAddress: String
-    
-    public
-    let accountName: String
-    
-    public
-    let name: String
-    
-    public
-    enum InitializationError: Swift.Error
+    struct RemoteRepo
     {
-        case unableAutoDetectAccountName
-        case unableAutoDetectRepoName
-    }
-    
-    public
-    init(
-        serverAddress: String = "https://github.com",
-        accountName: String? = nil,
-        name: String? = nil
-        ) throws
-    {
-        self.serverAddress = serverAddress
-     
-        let localRepo = try? Spec.LocalRepo.current()
+        public
+        let serverAddress: String
         
-        self.accountName = try accountName
-            ?? localRepo?.context
-            ?! InitializationError.unableAutoDetectAccountName
+        public
+        let accountName: String
         
-        self.name = try name
-            ?? localRepo?.name
-            ?! InitializationError.unableAutoDetectRepoName
+        public
+        let name: String
+        
+        public
+        enum InitializationError: Swift.Error
+        {
+            case unableAutoDetectAccountName
+            case unableAutoDetectRepoName
+        }
+        
+        public
+        init(
+            serverAddress: String = "https://github.com",
+            accountName: String? = nil,
+            name: String? = nil
+            ) throws
+        {
+            self.serverAddress = serverAddress
+            
+            let localRepo = try? Spec.LocalRepo.current()
+            
+            self.accountName = try accountName
+                ?? localRepo?.context
+                ?! InitializationError.unableAutoDetectAccountName
+            
+            self.name = try name
+                ?? localRepo?.name
+                ?! InitializationError.unableAutoDetectRepoName
+        }
     }
 }
 
 //---
 
 public
-extension RemoteRepo
+extension Spec.RemoteRepo
 {
     public
     enum Error: Swift.Error
