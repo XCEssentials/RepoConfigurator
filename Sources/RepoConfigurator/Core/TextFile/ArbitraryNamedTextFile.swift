@@ -44,7 +44,7 @@ extension ArbitraryNamedTextFile
         ) throws -> PendingTextFile<Self>
     {
         let absolutePrefixLocation = try absolutePrefixLocation
-            ?? LocalRepo.current().location
+            ?? Spec.LocalRepo.current().location
         
         //---
         

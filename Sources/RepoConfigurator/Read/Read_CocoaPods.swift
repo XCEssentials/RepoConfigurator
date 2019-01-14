@@ -54,7 +54,7 @@ extension Read.CocoaPods
         ) throws -> VersionString
     {
         let absolutePodspecLocation = try absolutePodspecLocation
-            ?? (try? LocalRepo.current().location + Spec.CocoaPod.podspecLocation)
+            ?? (try? Spec.LocalRepo.current().location + Spec.CocoaPod.podspecLocation)
             ?! Error.unableAutoDetectPodspecLocation
         
         guard

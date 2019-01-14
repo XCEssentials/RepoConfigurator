@@ -29,25 +29,28 @@ import FileKit
 //---
 
 public
-struct  LocalRepo
+extension Spec
 {
-    public
-    let location: Path
-    
-    public
-    let context: String
-    
-    public
-    var name: String
+    struct  LocalRepo
     {
-        return location.fileName
+        public
+        let location: Path
+        
+        public
+        let context: String
+        
+        public
+        var name: String
+        {
+            return location.fileName
+        }
     }
 }
 
 //---
 
 public
-extension LocalRepo
+extension Spec.LocalRepo
 {
     public
     enum InitializationError: Error
@@ -59,11 +62,11 @@ extension LocalRepo
     static
     func current(
         shouldReport: Bool = false
-        ) throws -> LocalRepo
+        ) throws -> Spec.LocalRepo
     {
         let location = Path.currentRepoRoot
         
-        let result: LocalRepo = try .init(
+        let result: Spec.LocalRepo = try .init(
             location: location
                 ?! InitializationError.unableToDetectGitRepo,
             context: location?.parent.fileName

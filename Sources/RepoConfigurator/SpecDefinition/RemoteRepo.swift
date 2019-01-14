@@ -56,7 +56,7 @@ struct RemoteRepo
     {
         self.serverAddress = serverAddress
      
-        let localRepo = try? LocalRepo.current()
+        let localRepo = try? Spec.LocalRepo.current()
         
         self.accountName = try accountName
             ?? localRepo?.context

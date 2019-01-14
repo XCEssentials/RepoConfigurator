@@ -104,7 +104,7 @@ struct PendingTextFile<T: TextFile>
         ) throws -> Bool
     {
         let reportingPrefixLocation = reportingPrefixLocation
-            ?? (try? LocalRepo.current().location)
+            ?? (try? Spec.LocalRepo.current().location)
         
         let locationForReporting: Path = reportingPrefixLocation
             .flatMap{ try? Utils.removePrefix($0, from: location) }
