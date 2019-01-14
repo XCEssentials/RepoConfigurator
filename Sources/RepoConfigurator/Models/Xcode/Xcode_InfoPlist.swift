@@ -112,26 +112,38 @@ extension Xcode
 public
 extension Xcode.InfoPlist
 {
+    public
+    enum Error: Swift.Error
+    {
+        case encounteredUnsupportedPlatform(
+            platform: OSIdentifier
+        )
+    }
+    
     static
     func prepare<T: XcodeProjectTarget>(
-        for target: T,
+        for product: Spec.Product,
+        target: T,
         initialVersionString: VersionString = Defaults.initialVersionString,
         initialBuildNumber: BuildNumber = Defaults.initialBuildNumber,
         otherEntries: [String] = [],
-        companyName: String? = nil, // for macOS
+        company: Spec.Company? = nil, // for macOS
         absolutePrefixLocation: Path? = nil,
         removeSpacesAtEOL: Bool = true,
         removeRepeatingEmptyLines: Bool = true
         ) throws -> PendingTextFile<Xcode.InfoPlist>
     {
-        guard
-            Array(Spec.Product.deploymentTargets.keys)
-                .contains(target.deploymentTarget.platform)
-        else
-        {
-            fatalError("❌ Attempt to generate info file for unsupported platform \(target.deploymentTarget.platform)!")
-        }
-    
+        try Array
+            .init(
+                product.deploymentTargets.keys
+            )
+            .contains(
+                target.deploymentTarget.platform
+            )
+            ?! Error.encounteredUnsupportedPlatform(
+                platform: target.deploymentTarget.platform
+            )
+        
         //---
     
         let preset: Xcode.InfoPlist.Preset?
@@ -143,8 +155,8 @@ extension Xcode.InfoPlist
             
         case .macOS:
             preset = try .macOS(
-                copyrightYear: Spec.Product.copyrightYear,
-                copyrightEntity: companyName
+                copyrightYear: product.copyrightYear,
+                copyrightEntity: company?.name
                     ?? Spec.Company().name
             )
             
@@ -189,13 +201,14 @@ extension Xcode.InfoPlist
         //---
 
         static
-        func macOSWithCurrentYear(
-            copyrightEntity: String
+        func macOS(
+            _ company: Spec.Company,
+            _ product: Spec.Product
             ) -> Preset
         {
             return .macOS(
-                copyrightYear: Spec.Product.copyrightYear,
-                copyrightEntity: copyrightEntity
+                copyrightYear: product.copyrightYear,
+                copyrightEntity: company.name
             )
         }
     }

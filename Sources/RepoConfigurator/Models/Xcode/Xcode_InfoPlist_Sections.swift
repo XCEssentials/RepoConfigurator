@@ -62,8 +62,8 @@ extension Xcode.InfoPlist.Sections
 
     func basic(
         packageType: Xcode.InfoPlist.PackageType,
-        initialVersionString: VersionString = Defaults.initialVersionString,
-        initialBuildNumber: BuildNumber = Defaults.initialBuildNumber
+        initialVersionString: VersionString,
+        initialBuildNumber: BuildNumber
         )
     {
         buffer <<< """
@@ -107,7 +107,7 @@ extension Xcode.InfoPlist.Sections
     }
 
     func macOSApp(
-        copyrightYear: UInt = Spec.Product.copyrightYear,
+        copyrightYear: UInt,
         copyrightEntity: String
         )
     {
@@ -127,7 +127,7 @@ extension Xcode.InfoPlist.Sections
     }
 
     func macOSFramework(
-        copyrightYear: UInt = Spec.Product.copyrightYear,
+        copyrightYear: UInt,
         copyrightEntity: String
         )
     {

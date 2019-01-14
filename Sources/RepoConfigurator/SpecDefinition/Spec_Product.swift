@@ -24,47 +24,50 @@
  
  */
 
+import Foundation
+
+//---
+
 public
 extension Spec
 {
-    struct Company
+    struct Product
     {
-        public
-        let prefix: String // product/project/module name prefix
-        
         public
         let name: String
         
         public
-        let bundleIdPrefix: String
+        let copyrightYear: UInt
         
         public
-        let developmentTeamId: String
+        let deploymentTargets: [OSIdentifier: VersionString]
         
         public
         enum InitializationError: Error
         {
-            case unableAutoDetectCompanyName
+            case nameAutoDetectionFailure
         }
         
         public
         init(
-            prefix: String? = nil,
             name: String? = nil,
-            bundleIdPrefix: String = "",
-            developmentTeamId: String = "",
+            copyrightYear: UInt? = nil,
+            deploymentTargets: [OSIdentifier: VersionString],
             shouldReport: Bool = false
             ) throws
         {
-            self.prefix = prefix
-                ?? "" // totally fine to be empty
-            
             self.name = try name
-                ?? LocalRepo.current().context
-                ?! InitializationError.unableAutoDetectCompanyName
+                ?? LocalRepo.current().name
+                ?! InitializationError.nameAutoDetectionFailure // non-nil, but zero-length
             
-            self.bundleIdPrefix = bundleIdPrefix
-            self.developmentTeamId = developmentTeamId
+            self.copyrightYear = copyrightYear
+                ?? UInt(
+                    Calendar
+                        .current
+                        .component(.year, from: Date())
+                )
+            
+            self.deploymentTargets = deploymentTargets
             
             //---
             
@@ -77,11 +80,13 @@ extension Spec
     }
 }
 
+//---
+
 public
-extension Spec.Company
+extension Spec.Product
 {
     func report()
     {
-        print("✅ Company name: \(name)")
+        print("✅ Product name (without company prefix): \(name)")
     }
 }

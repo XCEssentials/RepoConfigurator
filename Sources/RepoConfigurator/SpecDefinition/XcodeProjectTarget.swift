@@ -54,7 +54,7 @@ extension XcodeProjectTarget
         return platform.simplifiedTitle + title
     }
     
-    var productName: String
+    var productName: String // more like module name!
     {
         return Spec.Product.name + name
     }
