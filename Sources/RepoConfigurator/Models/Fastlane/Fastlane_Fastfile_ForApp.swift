@@ -69,12 +69,7 @@ extension Fastlane.Fastfile.ForApp
     {
         let laneName = #function.split(separator: "(").first!
         
-        let project: Path = Utils
-            .mutate([".", ".."] + project.location){
-                
-                $0.pathExtension = Xcode.Project.extension // ensure right extension
-            }
-        
+        let project = [".", ".."] + project.location
         let masterPodSpec = masterPod.podspecLocation
         let otherPodSpecs = otherPods.map{ $0.podspecLocation }
         let allPodspecs = [masterPodSpec] + otherPodSpecs
@@ -212,11 +207,7 @@ extension Fastlane.Fastfile.ForApp
     {
         let laneName = #function.split(separator: "(").first!
         
-        let project: Path = Utils
-            .mutate([".", ".."] + project.location){
-                
-                $0.pathExtension = Xcode.Project.extension // ensure right extension
-            }
+        let project = [".", ".."] + project.location
         
         //---
 
@@ -303,12 +294,7 @@ extension Fastlane.Fastfile.ForApp
     {
         let laneName = #function.split(separator: "(").first!
         
-        let project: Path = Utils
-            .mutate([".", ".."] + project.location){
-                
-                $0.pathExtension = Xcode.Project.extension // ensure right extension
-            }
-        
+        let project = [".", ".."] + project.location
         let schemeName = schemeName ?? productName
 
         //---

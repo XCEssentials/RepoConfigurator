@@ -75,11 +75,7 @@ extension Fastlane.Fastfile.ScriptBuildPhaseContext
 
         //---
 
-        let project: Path = Utils
-            .mutate([".", ".."] + project.location){
-                
-                $0.pathExtension = Xcode.Project.extension // ensure right extension
-            }
+        let project = [".", ".."] + project.location
         
         let targetNames = targetNames
             .map{ "'\($0)'" }
