@@ -29,52 +29,67 @@ import Foundation
 //---
 
 public
-extension Spec
+struct RemoteRepo
 {
-    enum RemoteRepo {}
+    public
+    let serverAddress: String
+    
+    public
+    let accountName: String
+    
+    public
+    let name: String
+    
+    public
+    enum InitializationError: Swift.Error
+    {
+        case unableAutoDetectAccountName
+        case unableAutoDetectRepoName
+    }
+    
+    public
+    init(
+        serverAddress: String = "https://github.com",
+        accountName: String? = nil,
+        name: String? = nil
+        ) throws
+    {
+        self.serverAddress = serverAddress
+     
+        let localRepo = try? LocalRepo.current()
+        
+        self.accountName = try accountName
+            ?? localRepo?.context
+            ?! InitializationError.unableAutoDetectAccountName
+        
+        self.name = try name
+            ?? localRepo?.name
+            ?! InitializationError.unableAutoDetectRepoName
+    }
 }
 
 //---
 
 public
-extension Spec.RemoteRepo
+extension RemoteRepo
 {
-    static
-    var serverAddress = "https://github.com"
-
-    static
-    var accountName: String?
-
-    static
-    var name = Spec.LocalRepo.name
-    
-    static
-    var fullRepoAddress: URL
+    public
+    enum Error: Swift.Error
     {
-        guard
-            let accountName = accountName
-        else
-        {
-            fatalError(
-                "❌ Account name is not set, so '\(#function)' for remote repo is unknown!"
+        case unableConstructFullRepoURL
+    }
+    
+    func fullRepoAddress() throws -> URL
+    {
+        return try URL
+            .init(
+                string: [
+                    serverAddress,
+                    accountName,
+                    name + ".git"
+                    ]
+                    .joined(separator: "/")
             )
-        }
-        
-        //---
-        
-        guard
-            let result = URL(
-                string: serverAddress + "/" + accountName + "/" + name + ".git"
-            )
-        else
-        {
-            fatalError(
-                "❌ Failed to construct remote repo URL!"
-            )
-        }
-        
-        //---
-        
-        return result
+            ?! Error.unableConstructFullRepoURL
     }
 }
