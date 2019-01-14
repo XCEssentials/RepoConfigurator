@@ -62,8 +62,8 @@ extension Fastlane.Fastfile.ForApp
         beginningEntries: [String] = [],
         ensureGitBranch: String? = Defaults.releaseGitBranchesRegEx,
         project: Spec.Project,
-        masterPodSpec: Path = Spec.CocoaPod.podspecLocation,
-        otherPodSpecs: [Path] = [],
+        masterPod: Spec.CocoaPod,
+        otherPods: [Spec.CocoaPod] = [],
         endingEntries: [String] = []
         ) -> Self
     {
@@ -75,20 +75,8 @@ extension Fastlane.Fastfile.ForApp
                 $0.pathExtension = Xcode.Project.extension // ensure right extension
             }
         
-        let masterPodSpec = Utils.mutate(masterPodSpec){
-            
-            $0.pathExtension = CocoaPods.Podspec.extension // just in case!
-        }
-        
-        let otherPodSpecs = otherPodSpecs.map{
-            
-            Utils.mutate($0){
-                
-                $0.pathExtension = CocoaPods.Podspec.extension // just in case!
-            }
-            
-        }
-        
+        let masterPodSpec = masterPod.podspecLocation
+        let otherPodSpecs = otherPods.map{ $0.podspecLocation }
         let allPodspecs = [masterPodSpec] + otherPodSpecs
         
         //---

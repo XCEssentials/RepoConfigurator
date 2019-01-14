@@ -67,13 +67,14 @@ public
 extension CocoaPods.Podspec
 {
     func prepare(
+        for cocoaPod: Spec.CocoaPod,
         absolutePrefixLocation: Path? = nil,
         removeSpacesAtEOL: Bool = true,
         removeRepeatingEmptyLines: Bool = true
         ) throws -> PendingTextFile<CocoaPods.Podspec>
     {
         return try prepare(
-            relativeLocation: Spec.CocoaPod.podspecLocation,
+            relativeLocation: cocoaPod.podspecLocation,
             absolutePrefixLocation: absolutePrefixLocation,
             removeSpacesAtEOL: removeSpacesAtEOL,
             removeRepeatingEmptyLines: removeRepeatingEmptyLines

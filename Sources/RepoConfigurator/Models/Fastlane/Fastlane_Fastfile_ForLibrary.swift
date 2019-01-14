@@ -44,16 +44,13 @@ extension Fastlane.Fastfile.ForLibrary
     func beforeRelease(
         beginningEntries: [String] = [],
         ensureGitBranch: String? = Defaults.releaseGitBranchesRegEx,
-        podSpec: Path? = Spec.CocoaPod.podspecLocation, // pass 'nil' if shouldn't support CocoaPods
+        cocoaPod: Spec.CocoaPod?, // pass 'nil' if shouldn't support CocoaPods
         endingEntries: [String] = []
         ) -> Self
     {
         let laneName = #function.split(separator: "(").first!
 
-        let podSpec = Utils.mutate(podSpec){
-            
-            $0?.pathExtension = CocoaPods.Podspec.extension // just in case!
-        }
+        let podSpec = cocoaPod.map{ $0.podspecLocation }
         
         //---
 

@@ -37,6 +37,9 @@ extension Spec
         let name: String
         
         public
+        let summary: String
+        
+        public
         let copyrightYear: UInt
         
         public
@@ -51,6 +54,7 @@ extension Spec
         public
         init(
             name: String? = nil,
+            summary: String,
             copyrightYear: UInt? = nil,
             deploymentTargets: [OSIdentifier: VersionString],
             shouldReport: Bool = false
@@ -59,6 +63,8 @@ extension Spec
             self.name = try name
                 ?? LocalRepo.current().name
                 ?! InitializationError.nameAutoDetectionFailed // non-nil, but zero-length
+            
+            self.summary = summary
             
             self.copyrightYear = copyrightYear
                 ?? UInt(
@@ -80,7 +86,7 @@ extension Spec
     }
 }
 
-//---
+// MARK: - Helpers
 
 public
 extension Spec.Product

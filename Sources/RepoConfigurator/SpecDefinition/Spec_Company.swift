@@ -36,7 +36,7 @@ extension Spec
         let name: String
         
         public
-        let bundleIdPrefix: String
+        let identifier: String
         
         public
         let developmentTeamId: String
@@ -51,7 +51,7 @@ extension Spec
         init(
             prefix: String? = nil,
             name: String? = nil,
-            bundleIdPrefix: String = "",
+            identifier: String = "",
             developmentTeamId: String = "",
             shouldReport: Bool = false
             ) throws
@@ -63,7 +63,7 @@ extension Spec
                 ?? LocalRepo.current().context
                 ?! InitializationError.companyNameAutoDetectionFailed
             
-            self.bundleIdPrefix = bundleIdPrefix
+            self.identifier = identifier
             self.developmentTeamId = developmentTeamId
             
             //---
@@ -76,6 +76,8 @@ extension Spec
         }
     }
 }
+
+// MARK: - Helpers
 
 public
 extension Spec.Company
