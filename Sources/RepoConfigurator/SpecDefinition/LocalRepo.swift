@@ -29,60 +29,58 @@ import FileKit
 //---
 
 public
-extension Spec
+struct  LocalRepo
 {
-    enum LocalRepo {}
+    public
+    let location: Path
+    
+    public
+    let context: String
+    
+    public
+    var name: String
+    {
+        return location.fileName
+    }
 }
 
+//---
+
 public
-extension Spec.LocalRepo
+extension LocalRepo
 {
+    public
+    enum InitializationError: Error
+    {
+        case unableToDetectGitRepo
+        case unableToDetectRepoParentFolder
+    }
+    
     static
-    var location: Path = {
-        if
-            let result = Path.currentRepoRoot
-        {
-            print("✅ Repo folder: \(result.rawValue)")
-
-            //---
-
-            return result
-        }
-        else
-        {
-            preconditionFailure("❌ Expected to be inside a git repo folder!")
-        }
-    }()
-
-    static
-    var context: String = {
+    func current(
+        shouldReport: Bool = false
+        ) throws -> LocalRepo
+    {
+        let location = Path.currentRepoRoot
         
-        let result = location.parent.fileName
-
-        if
-            result.isEmpty
-        {
-            preconditionFailure("❌ Expected to be one level deep from a company-named folder!")
-        }
-        else
-        {
-            print("✅ Repo context: \(result)")
-
-            //---
-
-            return result
-        }
-    }()
-
-    static
-    var name: String = {
+        let result: LocalRepo = try .init(
+            location: location
+                ?! InitializationError.unableToDetectGitRepo,
+            context: location?.parent.fileName
+                ?! InitializationError.unableToDetectRepoParentFolder
+        )
         
-        let result = location.fileName
-
-        print("✅ Repo name: \(result)")
-
+        (shouldReport ? result.report() : ())
+        
         //---
-
+        
         return result
-    }()
+    }
+    
+    func report()
+    {
+        print("✅ Repo name: \(name)")
+        print("✅ Repo location: \(location)")
+        print("✅ Repo context: \(context)")
+    }
 }

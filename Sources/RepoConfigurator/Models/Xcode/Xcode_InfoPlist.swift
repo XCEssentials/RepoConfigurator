@@ -118,10 +118,10 @@ extension Xcode.InfoPlist
         initialVersionString: VersionString = Defaults.initialVersionString,
         initialBuildNumber: BuildNumber = Defaults.initialBuildNumber,
         otherEntries: [String] = [],
-        absolutePrefixLocation: Path = Spec.LocalRepo.location,
+        absolutePrefixLocation: Path? = nil,
         removeSpacesAtEOL: Bool = true,
         removeRepeatingEmptyLines: Bool = true
-        ) -> PendingTextFile<Xcode.InfoPlist>
+        ) throws -> PendingTextFile<Xcode.InfoPlist>
     {
         guard
             Array(Spec.Product.deploymentTargets.keys)
@@ -152,7 +152,7 @@ extension Xcode.InfoPlist
     
         //---
     
-        return self
+        return try self
             .init(
                 for: target.packageType,
                 initialVersionString: initialVersionString,

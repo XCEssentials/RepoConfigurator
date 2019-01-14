@@ -56,11 +56,16 @@ extension FixedNameTextFile
     }
     
     func prepare(
-        absolutePrefixLocation: Path = Spec.LocalRepo.location,
+        absolutePrefixLocation: Path? = nil,
         removeSpacesAtEOL: Bool = true,
         removeRepeatingEmptyLines: Bool = true
-        ) -> PendingTextFile<Self>
+        ) throws -> PendingTextFile<Self>
     {
+        let absolutePrefixLocation = try absolutePrefixLocation
+            ?? LocalRepo.current().location
+        
+        //---
+        
         return PendingTextFile(
             model: self,
             location: absolutePrefixLocation + type(of: self).relativeLocation,

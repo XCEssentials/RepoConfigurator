@@ -100,9 +100,12 @@ struct PendingTextFile<T: TextFile>
     func writeToFileSystem(
         createIntermediateDirectories: Bool = true,
         ifFileExists: IfFileExistsWritePolicy = .override,
-        reportingPrefixLocation: Path? = Spec.LocalRepo.location
+        reportingPrefixLocation: Path? = nil
         ) throws -> Bool
     {
+        let reportingPrefixLocation = reportingPrefixLocation
+            ?? (try? LocalRepo.current().location)
+        
         let locationForReporting: Path = reportingPrefixLocation
             .flatMap{ try? Utils.removePrefix($0, from: location) }
             ?? location

@@ -43,22 +43,27 @@ extension Read.CocoaPods
 {
     enum Error: Swift.Error
     {
+        case unableAutoDetectPodspecLocation
         case podspecNotFound(expectedPath: String)
     }
     
     static
     func currentVersion(
-        from podspec: Path = Spec.CocoaPod.podspecLocation,
+        from absolutePodspecLocation: Path? = nil,
         callFastlane method: GemCallMethod
         ) throws -> VersionString
     {
-        let podspec = Spec.LocalRepo.location + podspec
+        let absolutePodspecLocation = try absolutePodspecLocation
+            ?? (try? LocalRepo.current().location + Spec.CocoaPod.podspecLocation)
+            ?! Error.unableAutoDetectPodspecLocation
         
         guard
-            podspec.exists
+            absolutePodspecLocation.exists
         else
         {
-            throw Error.podspecNotFound(expectedPath: podspec.rawValue)
+            throw Error.podspecNotFound(
+                expectedPath: absolutePodspecLocation.rawValue
+            )
         }
         
         //---
@@ -71,7 +76,7 @@ extension Read.CocoaPods
         
         return try shellOut(
             to: """
-            \(Fastlane.call(method)) run version_get_podspec path:"\(podspec.rawValue)" \
+            \(Fastlane.call(method)) run version_get_podspec path:"\(absolutePodspecLocation.rawValue)" \
             | grep "Result:" \
             | find-versions
             """
