@@ -55,8 +55,8 @@ extension Spec.LocalRepo
     public
     enum InitializationError: Error
     {
-        case unableToDetectGitRepo
-        case unableToDetectRepoParentFolder
+        case gitRepoAutoDetectionFailed
+        case repoParentFolderAutoDetectionFailed
     }
     
     static
@@ -68,9 +68,9 @@ extension Spec.LocalRepo
         
         let result: Spec.LocalRepo = try .init(
             location: location
-                ?! InitializationError.unableToDetectGitRepo,
+                ?! InitializationError.gitRepoAutoDetectionFailed,
             context: location?.parent.fileName
-                ?! InitializationError.unableToDetectRepoParentFolder
+                ?! InitializationError.repoParentFolderAutoDetectionFailed
         )
         
         if

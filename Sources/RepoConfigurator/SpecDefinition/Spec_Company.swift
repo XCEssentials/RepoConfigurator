@@ -44,7 +44,7 @@ extension Spec
         public
         enum InitializationError: Error
         {
-            case unableAutoDetectCompanyName
+            case companyNameAutoDetectionFailed
         }
         
         public
@@ -61,7 +61,7 @@ extension Spec
             
             self.name = try name
                 ?? LocalRepo.current().context
-                ?! InitializationError.unableAutoDetectCompanyName
+                ?! InitializationError.companyNameAutoDetectionFailed
             
             self.bundleIdPrefix = bundleIdPrefix
             self.developmentTeamId = developmentTeamId

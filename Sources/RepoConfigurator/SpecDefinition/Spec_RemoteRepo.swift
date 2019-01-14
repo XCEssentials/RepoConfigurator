@@ -45,8 +45,8 @@ extension Spec
         public
         enum InitializationError: Swift.Error
         {
-            case unableAutoDetectAccountName
-            case unableAutoDetectRepoName
+            case accountNameAutoDetectionFailed
+            case repoNameAutoDetectionFailed
         }
         
         public
@@ -62,11 +62,11 @@ extension Spec
             
             self.accountName = try accountName
                 ?? localRepo?.context
-                ?! InitializationError.unableAutoDetectAccountName
+                ?! InitializationError.accountNameAutoDetectionFailed
             
             self.name = try name
                 ?? localRepo?.name
-                ?! InitializationError.unableAutoDetectRepoName
+                ?! InitializationError.repoNameAutoDetectionFailed
         }
     }
 }
@@ -79,7 +79,7 @@ extension Spec.RemoteRepo
     public
     enum Error: Swift.Error
     {
-        case unableConstructFullRepoURL
+        case fullRepoURLConstructionFailed
     }
     
     func fullRepoAddress() throws -> URL
@@ -93,6 +93,6 @@ extension Spec.RemoteRepo
                     ]
                     .joined(separator: "/")
             )
-            ?! Error.unableConstructFullRepoURL
+            ?! Error.fullRepoURLConstructionFailed
     }
 }

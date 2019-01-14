@@ -45,7 +45,7 @@ extension Spec
         public
         enum InitializationError: Error
         {
-            case nameAutoDetectionFailure
+            case nameAutoDetectionFailed
         }
         
         public
@@ -58,7 +58,7 @@ extension Spec
         {
             self.name = try name
                 ?? LocalRepo.current().name
-                ?! InitializationError.nameAutoDetectionFailure // non-nil, but zero-length
+                ?! InitializationError.nameAutoDetectionFailed // non-nil, but zero-length
             
             self.copyrightYear = copyrightYear
                 ?? UInt(
