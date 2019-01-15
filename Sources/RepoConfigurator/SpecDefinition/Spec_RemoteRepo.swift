@@ -56,17 +56,21 @@ extension Spec
             name: String? = nil
             ) throws
         {
-            self.serverAddress = serverAddress
-            
             let localRepo = try? Spec.LocalRepo.current()
             
-            self.accountName = try accountName
+            let accountName = try accountName
                 ?? localRepo?.context
                 ?! InitializationError.accountNameAutoDetectionFailed
             
-            self.name = try name
+            let name = try name
                 ?? localRepo?.name
                 ?! InitializationError.repoNameAutoDetectionFailed
+            
+            //---
+            
+            self.serverAddress = serverAddress
+            self.accountName = accountName
+            self.name = name
         }
     }
 }
@@ -84,15 +88,20 @@ extension Spec.RemoteRepo
     
     func fullRepoAddress() throws -> URL
     {
-        return try URL
-            .init(
-                string: [
-                    serverAddress,
-                    accountName,
-                    name + ".git"
-                    ]
-                    .joined(separator: "/")
-            )
+        let components = [
+            serverAddress,
+            accountName,
+            name + ".git"
+        ]
+        
+        let stringRepresentation = components
+            .joined(separator: "/")
+        
+        let result = try URL(string: stringRepresentation)
             ?! Error.fullRepoURLConstructionFailed
+        
+        //---
+        
+        return result
     }
 }

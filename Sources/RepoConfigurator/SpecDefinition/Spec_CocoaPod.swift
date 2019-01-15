@@ -74,15 +74,15 @@ extension Spec
         public
         enum CompanyInfo
         {
-            case fromCompany(Spec.Company)
-            case custom(CocoaPods.Podspec.Company)
+            case from(Spec.Company)
+            case use(CocoaPods.Podspec.Company)
         }
         
         public
         enum ProjectInfo
         {
-            case fromProject(Spec.Project)
-            case custom(CocoaPods.Podspec.Project)
+            case from(Spec.Project)
+            case use(CocoaPods.Podspec.Project)
         }
         
         public
@@ -94,38 +94,48 @@ extension Spec
             xcodeArtifactsLocation: Path? = nil
             ) throws
         {
+            let podspecCompanyDescription: CocoaPods.Podspec.Company
+            
             switch companyInfo
             {
-            case .fromCompany(let company):
-                self.company = (
+            case .from(let company):
+                podspecCompanyDescription = (
                     company.name,
                     company.identifier,
                     company.prefix
                 )
                 
-            case .custom(let company):
-                self.company = company
+            case .use(let value):
+                podspecCompanyDescription = value
             }
+            
+            let podspecProjectDescription: CocoaPods.Podspec.Project
             
             switch projectInfo
             {
-            case .fromProject(let project):
-                self.project = (
+            case .from(let project):
+                podspecProjectDescription = (
                     project.name,
                     project.summary
                 )
                 
-            case .custom(let project):
-                self.project = project
+            case .use(let value):
+                podspecProjectDescription = value
             }
             
-            self.authors = authors
-            
-            self.currentVersion = currentVersion
+            let currentVersion = currentVersion
                 ?? Defaults.initialVersionString
             
-            self.xcodeArtifactsLocation = xcodeArtifactsLocation
+            let xcodeArtifactsLocation = xcodeArtifactsLocation
                 ?? ["Xcode"]
+            
+            //---
+            
+            self.company = podspecCompanyDescription
+            self.project = podspecProjectDescription
+            self.authors = authors
+            self.currentVersion = currentVersion
+            self.xcodeArtifactsLocation = xcodeArtifactsLocation
         }
     }
 }

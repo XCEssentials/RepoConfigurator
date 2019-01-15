@@ -56,13 +56,17 @@ extension Spec
             shouldReport: Bool = false
             ) throws
         {
-            self.prefix = prefix
+            let prefix = prefix
                 ?? "" // totally fine to be empty
             
-            self.name = try name
+            let name = try name
                 ?? LocalRepo.current().context
                 ?! InitializationError.companyNameAutoDetectionFailed
             
+            //---
+            
+            self.prefix = prefix
+            self.name = name
             self.identifier = identifier
             self.developmentTeamId = developmentTeamId
             

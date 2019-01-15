@@ -51,7 +51,7 @@ extension Spec
         let location: Path
         
         public
-        enum LocationSource
+        enum Location
         {
             case auto
             case use(Path)
@@ -71,7 +71,7 @@ extension Spec
             summary: String,
             copyrightYear: UInt? = nil,
             deploymentTargets: [OSIdentifier: VersionString],
-            location: LocationSource? = nil,
+            location: Location? = nil,
             shouldReport: Bool = false
             ) throws
         {
@@ -86,24 +86,19 @@ extension Spec
                         .component(.year, from: Date())
                 )
             
-            //---
-            
-            self.name = name
-            self.summary = summary
-            self.copyrightYear = copyrightYear
-            self.deploymentTargets = deploymentTargets
+            let fileLocation: Path
             
             switch location ?? .auto
             {
             case .auto:
-                self.location = Utils
+                fileLocation = Utils
                     .mutate([name]){
                         
                         $0.pathExtension = Xcode.Project.extension
                     }
                 
             case .use(let location) where location.isRelative:
-                self.location = Utils
+                fileLocation = Utils
                     .mutate(location){
                         
                         $0.pathExtension = Xcode.Project.extension // ensure right extension
@@ -112,6 +107,14 @@ extension Spec
             default:
                 throw InitializationError.invalidLocation
             }
+            
+            //---
+            
+            self.name = name
+            self.summary = summary
+            self.copyrightYear = copyrightYear
+            self.deploymentTargets = deploymentTargets
+            self.location = fileLocation
             
             //---
             

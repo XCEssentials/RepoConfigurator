@@ -64,22 +64,26 @@ extension Spec.LocalRepo
         shouldReport: Bool = false
         ) throws -> Spec.LocalRepo
     {
-        let location = Path.currentRepoRoot
+        let location = try Path.currentRepoRoot
+            ?! InitializationError.gitRepoAutoDetectionFailed
         
-        let result: Spec.LocalRepo = try .init(
-            location: location
-                ?! InitializationError.gitRepoAutoDetectionFailed,
-            context: location?.parent.fileName
-                ?! InitializationError.repoParentFolderAutoDetectionFailed
+        let context = try location.parent.fileName
+            ?! InitializationError.repoParentFolderAutoDetectionFailed
+        
+        //---
+        
+        let result: Spec.LocalRepo = .init(
+            location: location,
+            context: context
         )
+        
+        //---
         
         if
             shouldReport
         {
             result.report()
         }
-        
-        //---
         
         return result
     }
