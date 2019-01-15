@@ -29,62 +29,68 @@ import FileKit
 //---
 
 public
-protocol ArchitecturalLayer
+extension Spec
 {
-    static
-    var deploymentTargets: [OSIdentifier: VersionString] { get }
-    
-    static
-    var name: String { get }
-    
-    static
-    var moduleName: String { get }
-    
-    static
-    var summary: String { get }
-    
-    static
-    var podspecLocation: Path { get }
-}
-
-public
-extension ArchitecturalLayer
-{
-    static
-    var name: String
+    struct ArchitecturalLayer
     {
-        return String(describing: self)
-    }
-    
-    static
-    var moduleName: String
-    {
-        return Spec.Project.name + name
-    }
-    
-    static
-    var podspecLocation: Path
-    {
-        return [moduleName + "." + CocoaPods.Podspec.extension]
-    }
-}
-
-public
-extension ArchitecturalLayer
-{
-    static
-    var isCrossPlatform: Bool
-    {
-        return deploymentTargets.count > 1
-    }
-    
-    static
-    var product: CocoaPods.Podspec.Project
-    {
-        return (
-            moduleName,
-            summary
-        )
+        public
+        let name: String
+        
+        public
+        let product: CocoaPods.Podspec.Product
+        
+        public
+        let deploymentTargets: DeploymentTargets
+        
+        public
+        let podspecLocation: Path
+        
+        public
+        var isCrossPlatform: Bool
+        {
+            return deploymentTargets.count > 1
+        }
+        
+        public
+        enum InitializationError: Error
+        {
+            case productDescriptionAutoDetectionFailed
+            case deploymentTargetsAutoDetectionFailed
+        }
+        
+        public
+        init(
+            _ name: String,
+            project: Spec.Project? = nil,
+            product: CocoaPods.Podspec.Product? = nil,
+            deploymentTargets: DeploymentTargets? = nil,
+            podspecLocation: Path? = nil
+            ) throws
+        {
+            let product = try product
+                ?? project.map{(
+                    $0.name + name,
+                    $0.summary
+                )}
+                ?! InitializationError.productDescriptionAutoDetectionFailed
+            
+            let deploymentTargets = try deploymentTargets
+                ?? project?.deploymentTargets
+                ?! InitializationError.deploymentTargetsAutoDetectionFailed
+            
+            let podspecLocation = Utils
+                .mutate(podspecLocation ?? [product.name]){
+                    
+                    $0.pathExtension = CocoaPods.Podspec.extension // ensure right extension
+                }
+            
+            //---
+            
+            self.name = name
+            self.product = product
+            self.deploymentTargets = deploymentTargets
+            self.podspecLocation = podspecLocation
+        }
     }
 }
 
