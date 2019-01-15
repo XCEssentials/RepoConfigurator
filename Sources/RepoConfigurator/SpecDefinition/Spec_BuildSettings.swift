@@ -27,12 +27,25 @@
 public
 extension Spec
 {
-    enum BuildSettings {}
+    enum BuildSettings
+    {
+        public
+        struct Setting
+        {
+            public
+            let key: String
+            
+            public
+            var value: String
+        }
+    }
 }
+
+// MARK: - Predefined Settings
 
 public
 extension Spec.BuildSettings
 {
     static
-    var swiftVersion: VersionString = "4.2"
+    var swiftVersion: Setting = .init(key: "SWIFT_VERSION", value: "4.2")
 }

@@ -127,7 +127,7 @@ extension CocoaPods.Podspec
         license: License,
         authors: [Author],
         cocoapodsVersion: VersionString? = Defaults.cocoapodsVersion,
-        swiftVersion: VersionString? = Spec.BuildSettings.swiftVersion,
+        swiftVersion: VersionString? = Spec.BuildSettings.swiftVersion.value,
         perPlatformSettings: (PerPlatformSettingsContext) -> Void,
         customEntries: [String] = []
         ) -> CocoaPods.Podspec
@@ -189,7 +189,7 @@ extension CocoaPods.Podspec
         license: License,
         authors: [Author],
         cocoapodsVersion: VersionString? = Defaults.cocoapodsVersion,
-        swiftVersion: VersionString? = Spec.BuildSettings.swiftVersion,
+        swiftVersion: VersionString? = Spec.BuildSettings.swiftVersion.value,
         perPlatformSettings: (PerPlatformSettingsContext) -> Void,
         subSpecs: (SubSpecsContext) -> Void,
         testSubSpecs: (TestSubSpecsContext) -> Void = { _ in },
@@ -280,7 +280,7 @@ extension CocoaPods.Podspec
         license: CocoaPods.Podspec.License,
         authors: [CocoaPods.Podspec.Author],
         cocoapodsVersion: VersionString? = Defaults.cocoapodsVersion,
-        swiftVersion: VersionString? = Spec.BuildSettings.swiftVersion
+        swiftVersion: VersionString? = Spec.BuildSettings.swiftVersion.value
         )
     {
         // https://guides.cocoapods.org/syntax/podspec.html#group_root_specification

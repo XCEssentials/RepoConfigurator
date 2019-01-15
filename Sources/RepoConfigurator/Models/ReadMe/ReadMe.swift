@@ -307,7 +307,7 @@ extension ReadMe
     }
 
     func addWrittenInSwiftBadge(
-        version swiftVersionNumber: String = Spec.BuildSettings.swiftVersion,
+        version swiftVersionNumber: String = Spec.BuildSettings.swiftVersion.value,
         _ parameters: Shields.Parameters = .parameters()
         ) throws -> ReadMe
     {
