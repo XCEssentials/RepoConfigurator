@@ -42,15 +42,21 @@ extension Spec.Locations
     {
         return [#function.capitalized]
     }
+    
     static
     var resources: Path
     {
         return [#function.capitalized]
     }
     
-    
     static
     var sources: Path
+    {
+        return [#function.capitalized]
+    }
+    
+    static
+    var tests: Path
     {
         return [#function.capitalized]
     }
