@@ -45,7 +45,7 @@ extension Spec
         let copyrightYear: UInt
         
         public
-        let deploymentTargets: [OSIdentifier: VersionString]
+        let deploymentTargets: DeploymentTargets
         
         public
         let location: Path
@@ -70,7 +70,7 @@ extension Spec
             name: String? = nil,
             summary: String,
             copyrightYear: UInt? = nil,
-            deploymentTargets: [OSIdentifier: VersionString],
+            deploymentTargets: DeploymentTargets,
             location: Location? = nil,
             shouldReport: Bool = false
             ) throws

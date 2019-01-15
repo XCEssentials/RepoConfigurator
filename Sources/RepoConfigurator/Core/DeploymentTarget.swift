@@ -30,6 +30,9 @@ typealias DeploymentTarget = (
     minimumVersion: VersionString
 )
 
+public
+typealias DeploymentTargets = [OSIdentifier: VersionString]
+
 //---
 
 public
