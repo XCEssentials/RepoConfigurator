@@ -38,7 +38,7 @@ extension Spec
         let company: CocoaPods.Podspec.Company
         
         public
-        let project: CocoaPods.Podspec.Project
+        let product: CocoaPods.Podspec.Product
         
         public
         let authors: [CocoaPods.Podspec.Author]
@@ -52,7 +52,7 @@ extension Spec
         public
         var fullName: String
         {
-            return company.prefix + project.name
+            return company.prefix + product.name
         }
         
         public
@@ -79,16 +79,16 @@ extension Spec
         }
         
         public
-        enum ProjectInfo
+        enum ProductInfo
         {
             case from(Spec.Project)
-            case use(CocoaPods.Podspec.Project)
+            case use(CocoaPods.Podspec.Product)
         }
         
         public
         init(
             companyInfo: CompanyInfo,
-            projectInfo: ProjectInfo,
+            productInfo: ProductInfo,
             authors: [CocoaPods.Podspec.Author],
             currentVersion: VersionString? = nil,
             xcodeArtifactsLocation: Path? = nil
@@ -109,18 +109,18 @@ extension Spec
                 podspecCompanyDescription = value
             }
             
-            let podspecProjectDescription: CocoaPods.Podspec.Project
+            let podspecProductDescription: CocoaPods.Podspec.Product
             
-            switch projectInfo
+            switch productInfo
             {
             case .from(let project):
-                podspecProjectDescription = (
+                podspecProductDescription = (
                     project.name,
                     project.summary
                 )
                 
             case .use(let value):
-                podspecProjectDescription = value
+                podspecProductDescription = value
             }
             
             let currentVersion = currentVersion
@@ -132,7 +132,7 @@ extension Spec
             //---
             
             self.company = podspecCompanyDescription
-            self.project = podspecProjectDescription
+            self.product = podspecProductDescription
             self.authors = authors
             self.currentVersion = currentVersion
             self.xcodeArtifactsLocation = xcodeArtifactsLocation

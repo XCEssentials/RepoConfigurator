@@ -88,7 +88,7 @@ public
 extension CocoaPods.Podspec
 {
     public
-    typealias Project = (
+    typealias Product = (
         name: String,
         summary: String
     )
@@ -121,7 +121,7 @@ extension CocoaPods.Podspec
     static
     func standard(
         specVar: String = Defaults.specVariable,
-        product: Project,
+        product: Product,
         company: Company,
         version: VersionString = Defaults.initialVersionString,
         license: License,
@@ -183,7 +183,7 @@ extension CocoaPods.Podspec
     func withSubSpecs(
         specVar: String = Defaults.specVariable,
         subSpecVar: String = Defaults.subSpecVariable,
-        product: Project,
+        product: Product,
         company: Company,
         version: VersionString = Defaults.initialVersionString,
         license: License,
@@ -274,7 +274,7 @@ extension CocoaPods.Podspec
 {
     func generalSettings(
         specVar: String,
-        product: CocoaPods.Podspec.Project,
+        product: CocoaPods.Podspec.Product,
         company: CocoaPods.Podspec.Company,
         version: VersionString = Defaults.initialVersionString,
         license: CocoaPods.Podspec.License,
