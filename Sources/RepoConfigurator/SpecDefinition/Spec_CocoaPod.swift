@@ -194,34 +194,3 @@ extension Spec.CocoaPod
         }
     }
 }
-
-// MARK: - SupSpecs
-
-public
-protocol PodSubSpecs: RawRepresentable, CaseIterable {}
-
-public
-extension PodSubSpecs
-    where
-    RawValue == String
-{
-    var sourcesLocation: Path
-    {
-        return Spec.Locations.sources + self.title
-    }
-    
-    var sourcesPattern: String
-    {
-        return (
-            sourcesLocation
-            + "**"
-            + "*.swift"
-            )
-            .rawValue
-    }
-    
-    var linterCfgLocation: Path // for symlink !
-    {
-        return sourcesLocation + SwiftLint.relativeLocation
-    }
-}

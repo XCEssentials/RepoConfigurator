@@ -43,39 +43,44 @@ extension Spec
         let deploymentTargets: DeploymentTargets
         
         public
-        let podspecLocation: Path
-        
-        public
         var isCrossPlatform: Bool
         {
             return deploymentTargets.count > 1
         }
         
         public
+        let podspecLocation: Path
+        
+        public
+        lazy
+        var core: Spec.CocoaPod.SubSpec = .init(name)
+        
+        public
+        lazy
+        var tests: Spec.CocoaPod.SubSpec = .tests(name + "Tests")
+        
+        public
         enum InitializationError: Error
         {
-            case productDescriptionAutoDetectionFailed
             case deploymentTargetsAutoDetectionFailed
         }
         
         public
         init(
-            _ name: String,
-            project: Spec.Project? = nil,
-            product: CocoaPods.Podspec.Product? = nil,
+            project: Spec.Project,
+            name: String,
+            summary: String,
             deploymentTargets: DeploymentTargets? = nil,
             podspecLocation: Path? = nil
             ) throws
         {
-            let product = try product
-                ?? project.map{(
-                    $0.name + name,
-                    $0.summary
-                )}
-                ?! InitializationError.productDescriptionAutoDetectionFailed
+            let product: CocoaPods.Podspec.Product = (
+                    project.name + name, // no need company prefix, cause its for apps
+                    summary
+                )
             
             let deploymentTargets = try deploymentTargets
-                ?? project?.deploymentTargets
+                ?? project.deploymentTargets
                 ?! InitializationError.deploymentTargetsAutoDetectionFailed
             
             let podspecLocation = Utils
@@ -91,95 +96,5 @@ extension Spec
             self.deploymentTargets = deploymentTargets
             self.podspecLocation = podspecLocation
         }
-    }
-}
-
-//---
-
-public
-protocol ArchitecturalLayerSubspec
-{
-    associatedtype Layer: ArchitecturalLayer
-    
-    static
-    var name: String { get }
-    
-    static
-    var sourcesLocation: Path { get }
-    
-    static
-    var resourcesLocation: Path { get }
-}
-
-public
-extension ArchitecturalLayerSubspec
-{
-    static
-    var name: String
-    {
-        return String(describing: self)
-    }
-    
-    static
-    var sourcesLocation: Path
-    {
-        // usually expect only one "Core" subspec,
-        // so the sources folder is named after the layer itself
-        return Spec.Locations.sources + Layer.name
-    }
-    
-    static
-    var resourcesLocation: Path
-    {
-        // usually expect only one "Core" subspec,
-        // so the resources folder is named after the layer itself
-        return Spec.Locations.resources + Layer.name
-    }
-}
-
-public
-extension ArchitecturalLayerSubspec
-{
-    static
-    var sourcesPattern: String
-    {
-        return (
-            sourcesLocation
-                + "**"
-                + "*"
-            )
-            .rawValue
-    }
-    
-    static
-    var resourcesPattern: String
-    {
-        return (
-            resourcesLocation
-                + "**"
-                + "*"
-            )
-            .rawValue
-    }
-}
-
-//---
-
-public
-protocol ArchitecturalLayerTestSubspec: ArchitecturalLayerSubspec {}
-
-public
-extension ArchitecturalLayerTestSubspec
-{
-    static
-    var sourcesLocation: Path
-    {
-        return Spec.Locations.sources + (Layer.name + name)
-    }
-
-    static
-    var resourcesLocation: Path
-    {
-        return Spec.Locations.resources + (Layer.name + name)
     }
 }
