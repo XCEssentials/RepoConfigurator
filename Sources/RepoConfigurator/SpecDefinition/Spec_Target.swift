@@ -95,7 +95,7 @@ extension Spec
         public
         init(
             _ name: String,
-            project: Spec.Product,
+            project: Spec.Project,
             platform: OSIdentifier,
             productInfo: ProductInfo? = nil,
             bundleId: BundleId,

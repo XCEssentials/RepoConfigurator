@@ -126,7 +126,7 @@ extension Xcode.InfoPlist
     
     static
     func prepare(
-        for product: Spec.Product,
+        for project: Spec.Project,
         target: Spec.Target,
         initialVersionString: VersionString = Defaults.initialVersionString,
         initialBuildNumber: BuildNumber = Defaults.initialBuildNumber,
@@ -139,7 +139,7 @@ extension Xcode.InfoPlist
     {
         try Array
             .init(
-                product.deploymentTargets.keys
+                project.deploymentTargets.keys
             )
             .contains(
                 target.deploymentTarget.platform
@@ -159,7 +159,7 @@ extension Xcode.InfoPlist
             
         case .macOS:
             preset = try .macOS(
-                copyrightYear: product.copyrightYear,
+                copyrightYear: project.copyrightYear,
                 copyrightEntity: company?.name
                     ?? Spec.Company().name
             )
@@ -207,11 +207,11 @@ extension Xcode.InfoPlist
         static
         func macOS(
             _ company: Spec.Company,
-            _ product: Spec.Product
+            _ project: Spec.Project
             ) -> Preset
         {
             return .macOS(
-                copyrightYear: product.copyrightYear,
+                copyrightYear: project.copyrightYear,
                 copyrightEntity: company.name
             )
         }

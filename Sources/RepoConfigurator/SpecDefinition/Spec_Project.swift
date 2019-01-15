@@ -24,6 +24,8 @@
  
  */
 
+import Foundation
+
 import FileKit
 
 //---
@@ -34,44 +36,101 @@ extension Spec
     struct Project
     {
         public
+        let name: String
+        
+        public
+        let summary: String
+        
+        public
+        let copyrightYear: UInt
+        
+        public
+        let deploymentTargets: [OSIdentifier: VersionString]
+        
+        public
         let location: Path
+        
+        public
+        enum LocationSource
+        {
+            case auto
+            case use(Path)
+        }
         
         public
         enum InitializationError: Error
         {
+            case nameAutoDetectionFailed
             case invalidLocation
             case nameAutoDetectionFailure
         }
         
         public
         init(
-            location: Path
+            name: String? = nil,
+            summary: String,
+            copyrightYear: UInt? = nil,
+            deploymentTargets: [OSIdentifier: VersionString],
+            location: LocationSource? = nil,
+            shouldReport: Bool = false
             ) throws
         {
-            try location.isRelative
-                ?! InitializationError.invalidLocation
+            let name = try name
+                ?? LocalRepo.current().name
+                ?! InitializationError.nameAutoDetectionFailed // non-nil, but zero-length
             
-            let location = Utils
-                .mutate(location){
-                    
-                    $0.pathExtension = Xcode.Project.extension // ensure right extension
-                }
+            let copyrightYear = copyrightYear
+                ?? UInt(
+                    Calendar
+                        .current
+                        .component(.year, from: Date())
+                )
             
             //---
             
-            self.location = location
+            self.name = name
+            self.summary = summary
+            self.copyrightYear = copyrightYear
+            self.deploymentTargets = deploymentTargets
+            
+            switch location ?? .auto
+            {
+            case .auto:
+                self.location = Utils
+                    .mutate([name]){
+                        
+                        $0.pathExtension = Xcode.Project.extension
+                    }
+                
+            case .use(let location) where location.isRelative:
+                self.location = Utils
+                    .mutate(location){
+                        
+                        $0.pathExtension = Xcode.Project.extension // ensure right extension
+                    }
+                
+            default:
+                throw InitializationError.invalidLocation
+            }
+            
+            //---
+            
+            if
+                shouldReport
+            {
+                report()
+            }
         }
-        
-        public
-        init(
-            for product: Spec.Product
-            ) throws
-        {
-            self.location = Utils
-                .mutate([product.name]){
-                    
-                    $0.pathExtension = Xcode.Project.extension
-                }
-        }
+    }
+}
+
+// MARK: - Helpers
+
+public
+extension Spec.Project
+{
+    func report()
+    {
+        print("✅ Project name (without company prefix): \(name)")
     }
 }

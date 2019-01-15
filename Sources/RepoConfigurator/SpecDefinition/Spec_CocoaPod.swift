@@ -38,7 +38,7 @@ extension Spec
         let company: CocoaPods.Podspec.Company
         
         public
-        let product: CocoaPods.Podspec.Product
+        let project: CocoaPods.Podspec.Project
         
         public
         let authors: [CocoaPods.Podspec.Author]
@@ -52,7 +52,7 @@ extension Spec
         public
         var fullName: String
         {
-            return company.prefix + product.name
+            return company.prefix + project.name
         }
         
         public
@@ -79,16 +79,16 @@ extension Spec
         }
         
         public
-        enum ProductInfo
+        enum ProjectInfo
         {
-            case fromProduct(Spec.Product)
-            case custom(CocoaPods.Podspec.Product)
+            case fromProject(Spec.Project)
+            case custom(CocoaPods.Podspec.Project)
         }
         
         public
         init(
             companyInfo: CompanyInfo,
-            productInfo: ProductInfo,
+            projectInfo: ProjectInfo,
             authors: [CocoaPods.Podspec.Author],
             currentVersion: VersionString? = nil,
             xcodeArtifactsLocation: Path? = nil
@@ -107,16 +107,16 @@ extension Spec
                 self.company = company
             }
             
-            switch productInfo
+            switch projectInfo
             {
-            case .fromProduct(let product):
-                self.product = (
-                    product.name,
-                    product.summary
+            case .fromProject(let project):
+                self.project = (
+                    project.name,
+                    project.summary
                 )
                 
-            case .custom(let product):
-                self.product = product
+            case .custom(let project):
+                self.project = project
             }
             
             self.authors = authors

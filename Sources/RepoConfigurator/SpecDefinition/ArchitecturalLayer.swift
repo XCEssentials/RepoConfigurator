@@ -59,7 +59,7 @@ extension ArchitecturalLayer
     static
     var moduleName: String
     {
-        return Spec.Product.name + name
+        return Spec.Project.name + name
     }
     
     static
@@ -79,7 +79,7 @@ extension ArchitecturalLayer
     }
     
     static
-    var product: CocoaPods.Podspec.Product
+    var product: CocoaPods.Podspec.Project
     {
         return (
             moduleName,
