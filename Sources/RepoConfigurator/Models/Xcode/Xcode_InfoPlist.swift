@@ -44,6 +44,10 @@ extension Xcode
             case framework = "FMWK"
             case tests = "BNDL"
         }
+        
+        public
+        static
+        let `extension` = "plist"
 
         // MARK: Instance level members
 
@@ -121,9 +125,9 @@ extension Xcode.InfoPlist
     }
     
     static
-    func prepare<T: XcodeProjectTarget>(
+    func prepare(
         for product: Spec.Product,
-        target: T,
+        target: Spec.Target,
         initialVersionString: VersionString = Defaults.initialVersionString,
         initialBuildNumber: BuildNumber = Defaults.initialBuildNumber,
         otherEntries: [String] = [],
