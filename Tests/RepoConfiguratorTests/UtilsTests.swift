@@ -28,6 +28,8 @@ import XCTest
 
 import FileKit
 
+import SwiftHamcrest
+
 // @testable
 import XCERepoConfigurator
 
@@ -58,9 +60,11 @@ extension UtilsTests
         
         //---
         
-        XCTAssertEqual(
-            try! Utils.removePrefix(prefixPath, from: filePath).rawValue,
-            expectedRelativePath
+        assertThat(
+            try! Utils
+                .removePrefix(prefixPath, from: filePath)
+                .rawValue
+                == expectedRelativePath
         )
     }
 }

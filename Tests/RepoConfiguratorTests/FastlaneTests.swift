@@ -27,6 +27,7 @@
 import XCTest
 
 import FileKit
+import SwiftHamcrest
 
 // @testable
 import XCERepoConfigurator
@@ -61,37 +62,49 @@ extension FastlaneTests
     
     func testFileNames()
     {
-        let expectedRelativeLocation: Path = ["fastlane", "Fastfile"]
+        let expectedRelativeLocation: Path = Fastlane.Fastfile.relativeLocation
         let expectedAbsoluteLocation: Path = someLocation + expectedRelativeLocation
         
-        XCTAssertEqual(
-            Fastlane.Fastfile.relativeLocation,
-            expectedRelativeLocation
+        assertThat(
+            Fastlane
+                .Fastfile
+                .ForApp
+                .relativeLocation
+                == expectedRelativeLocation
         )
         
-        XCTAssertEqual(
-            Fastlane.Fastfile.ForApp.relativeLocation,
-            expectedRelativeLocation
+        assertThat(
+            Fastlane
+                .Fastfile
+                .ForLibrary
+                .relativeLocation
+                == expectedRelativeLocation
         )
         
-        XCTAssertEqual(
-            Fastlane.Fastfile.ForLibrary.relativeLocation,
-            expectedRelativeLocation
-        )
-        
-        XCTAssertEqual(
-            Fastlane.Fastfile().prepare(absolutePrefixLocation: someLocation).location,
-            expectedAbsoluteLocation
+        assertThat(
+            try! Fastlane
+                .Fastfile()
+                .prepare(absolutePrefixLocation: someLocation)
+                .location
+                == expectedAbsoluteLocation
         )
 
-        XCTAssertEqual(
-            Fastlane.Fastfile.ForApp().prepare(absolutePrefixLocation: someLocation).location,
-            expectedAbsoluteLocation
+        assertThat(
+            try! Fastlane
+                .Fastfile
+                .ForApp()
+                .prepare(absolutePrefixLocation: someLocation)
+                .location
+                == expectedAbsoluteLocation
         )
 
-        XCTAssertEqual(
-            Fastlane.Fastfile.ForLibrary().prepare(absolutePrefixLocation: someLocation).location,
-            expectedAbsoluteLocation
+        assertThat(
+            try! Fastlane
+                .Fastfile
+                .ForLibrary()
+                .prepare(absolutePrefixLocation: someLocation)
+                .location
+            == expectedAbsoluteLocation
         )
     }
     
@@ -120,11 +133,12 @@ extension FastlaneTests
             # This is the minimum version number required.
             # Update this, if you use features of a newer version
             fastlane_version '2.100.0'
+            
             """
         
         //---
         
-        let model = Fastlane
+        let model = try! Fastlane
             .Fastfile()
             .defaultHeader()
             .prepare(
@@ -133,14 +147,15 @@ extension FastlaneTests
         
         //---
         
-        XCTAssert(model.content.trimmingNewLines == targetOutput)
+        assertThat(model.content == targetOutput)
     }
     
     func testLibraryBeforeReleaseLane()
     {
-        let cocoaPodsModuleName = "XCEPipeline"
+        let cocoaPodsModuleName = "XCEPipeline.podspec"
         
-        let targetOutput = """
+        let targetOutput = { """
+            
             lane :beforeRelease do
 
                 ensure_git_branch(
@@ -159,7 +174,7 @@ extension FastlaneTests
                 # === Remember current version number
 
                 versionNumber = version_get_podspec(
-                    path: '\(cocoaPodsModuleName).podspec'
+                    path: '\(cocoaPodsModuleName)'
                 )
 
                 puts 'Current VERSION number: ' + versionNumber
@@ -173,25 +188,26 @@ extension FastlaneTests
                 # === Bump version number & commit changes
 
                 version_bump_podspec(
-                    path: '\(cocoaPodsModuleName).podspec',
+                    path: '\(cocoaPodsModuleName)',
                     version_number: newVersionNumber
                 )
 
                 git_commit(
-                    path: '\(cocoaPodsModuleName).podspec',
+                    path: '\(cocoaPodsModuleName)',
                     message: 'Version Bump to ' + newVersionNumber + ' in Podspec file'
                 )
 
             end # lane :beforeRelease
             """
+        }()
         
         //---
         
-        let model = Fastlane
+        let model = try! Fastlane
             .Fastfile
             .ForLibrary()
             .beforeRelease(
-                podSpec: [cocoaPodsModuleName]
+                podspecLocation: .use([cocoaPodsModuleName])
             )
             .prepare(
                 absolutePrefixLocation: someLocation
@@ -199,12 +215,13 @@ extension FastlaneTests
         
         //---
         
-        XCTAssert(model.content.trimmingNewLines == targetOutput)
+        assertThat(model.content == targetOutput)
     }
     
     func testLibraryGenerateProjectViaCPLane()
     {
         let targetOutput = """
+            
             lane :generateProjectViaCP do
             
                 # === Regenerate project
@@ -219,7 +236,7 @@ extension FastlaneTests
         
         //---
         
-        let model = Fastlane
+        let model = try! Fastlane
             .Fastfile
             .ForLibrary()
             .generateProjectViaCP(
@@ -231,12 +248,13 @@ extension FastlaneTests
         
         //---
         
-        XCTAssert(model.content.trimmingNewLines == targetOutput)
+        assertThat(model.content == targetOutput)
     }
     
     func testLibraryGenerateProjectViaIceLane()
     {
         let targetOutput = """
+            
             lane :generateProjectViaIce do
             
                 # === Regenerate project
@@ -251,7 +269,7 @@ extension FastlaneTests
         
         //---
         
-        let model = Fastlane
+        let model = try! Fastlane
             .Fastfile
             .ForLibrary()
             .generateProjectViaIce(
@@ -263,6 +281,6 @@ extension FastlaneTests
         
         //---
         
-        XCTAssert(model.content.trimmingNewLines == targetOutput)
+        assertThat(model.content == targetOutput)
     }
 }

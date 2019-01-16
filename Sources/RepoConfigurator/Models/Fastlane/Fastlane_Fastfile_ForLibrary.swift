@@ -41,16 +41,35 @@ extension Fastlane.Fastfile
 public
 extension Fastlane.Fastfile.ForLibrary
 {
+    public
+    enum PodspecLocation
+    {
+        case from(Spec.CocoaPod)
+        case use(Path)
+    }
+    
     func beforeRelease(
         beginningEntries: [String] = [],
         ensureGitBranch: String? = Defaults.releaseGitBranchesRegEx,
-        cocoaPod: Spec.CocoaPod?, // pass 'nil' if shouldn't support CocoaPods
+        podspecLocation: PodspecLocation?, // pass 'nil' if shouldn't support CocoaPods
         endingEntries: [String] = []
         ) -> Self
     {
         let laneName = #function.split(separator: "(").first!
 
-        let podSpec = cocoaPod.map{ $0.podspecLocation }
+        let podSpec: Path?
+        
+        switch podspecLocation
+        {
+        case .some(.from(let cocoaPod)):
+            podSpec = cocoaPod.podspecLocation
+            
+        case .some(.use(let value)):
+            podSpec = value
+            
+        default:
+            podSpec = nil
+        }
         
         //---
 
@@ -263,7 +282,12 @@ extension Fastlane.Fastfile.ForLibrary
     {
         let laneName = #function.split(separator: "(").first!
 
-        let derivedPaths = derivedPaths + (derivedProject?.location ?? [])
+        var derivedPaths = derivedPaths
+            
+        derivedProject.map{
+            
+            derivedPaths += [$0.location]
+        }
         
         //---
         
@@ -276,14 +300,10 @@ extension Fastlane.Fastfile.ForLibrary
 
             let cleanupCmd = derivedPaths
                 .map{ """
-                    rm -rf "\($0)"
-                    """
-                 }
-                .map{ """
-                     && \($0)
+                    rm -rf "\($0.rawValue)"
                     """
                 }
-                .joined()
+                .joined(separator: " && ")
             
             main <<< """
 
@@ -292,7 +312,7 @@ extension Fastlane.Fastfile.ForLibrary
                 # default initial location for any command
                 # is inside 'Fastlane' folder
 
-                sh 'cd ./..\(cleanupCmd) && ice xc'
+                sh 'cd ./.. && \(cleanupCmd) && ice xc'
                 """
         }
 

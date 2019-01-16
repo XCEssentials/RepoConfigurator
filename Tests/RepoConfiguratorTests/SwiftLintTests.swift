@@ -26,6 +26,8 @@
 
 import XCTest
 
+import SwiftHamcrest
+
 // @testable
 import XCERepoConfigurator
 
@@ -82,7 +84,7 @@ extension SwiftLintTests
 
         //---
 
-        let model = SwiftLint
+        let model = try! SwiftLint
             .standard(
                 exclude: [
                     "Templates"
@@ -94,6 +96,6 @@ extension SwiftLintTests
 
         //---
 
-        XCTAssert(model.content.trimmingNewLines == targetOutput)
+        assertThat(model.content == targetOutput)
     }
 }
