@@ -111,7 +111,7 @@ enum SubSpecs
 //---
 
 final
-class FrameworkConfigExample: XCTestCase
+class FrameworkConfigTests: XCTestCase
 {
     // MARK: Type level members
     
@@ -129,7 +129,7 @@ class FrameworkConfigExample: XCTestCase
 
 //---
 
-extension FrameworkConfigExample
+extension FrameworkConfigTests
 {
     func testLocalRepo()
     {
