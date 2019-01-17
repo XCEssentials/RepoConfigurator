@@ -35,7 +35,7 @@ import XCERepoConfigurator
 //---
 
 final
-class FastlaneTests: FileModelTestsContext
+class FastlaneTests: XCTestCase
 {
     // MARK: Type level members
 
@@ -63,7 +63,7 @@ extension FastlaneTests
     func testFileNames()
     {
         let expectedRelativeLocation: Path = Fastlane.Fastfile.relativeLocation
-        let expectedAbsoluteLocation: Path = someLocation + expectedRelativeLocation
+        let expectedAbsoluteLocation: Path = Some.path + expectedRelativeLocation
         
         assertThat(
             Fastlane
@@ -84,7 +84,7 @@ extension FastlaneTests
         assertThat(
             try! Fastlane
                 .Fastfile()
-                .prepare(absolutePrefixLocation: someLocation)
+                .prepare(absolutePrefixLocation: Some.path)
                 .location
                 == expectedAbsoluteLocation
         )
@@ -93,7 +93,7 @@ extension FastlaneTests
             try! Fastlane
                 .Fastfile
                 .ForApp()
-                .prepare(absolutePrefixLocation: someLocation)
+                .prepare(absolutePrefixLocation: Some.path)
                 .location
                 == expectedAbsoluteLocation
         )
@@ -102,7 +102,7 @@ extension FastlaneTests
             try! Fastlane
                 .Fastfile
                 .ForLibrary()
-                .prepare(absolutePrefixLocation: someLocation)
+                .prepare(absolutePrefixLocation: Some.path)
                 .location
             == expectedAbsoluteLocation
         )
@@ -142,7 +142,7 @@ extension FastlaneTests
             .Fastfile()
             .defaultHeader()
             .prepare(
-                absolutePrefixLocation: someLocation
+                absolutePrefixLocation: Some.path
             )
         
         //---
@@ -210,7 +210,7 @@ extension FastlaneTests
                 podspecLocation: .use([cocoaPodsModuleName])
             )
             .prepare(
-                absolutePrefixLocation: someLocation
+                absolutePrefixLocation: Some.path
             )
         
         //---
@@ -243,7 +243,7 @@ extension FastlaneTests
                 callCocoaPods: .directly
             )
             .prepare(
-                absolutePrefixLocation: someLocation
+                absolutePrefixLocation: Some.path
             )
         
         //---
@@ -276,7 +276,7 @@ extension FastlaneTests
                 derivedPaths: [[".build"]]
             )
             .prepare(
-                absolutePrefixLocation: someLocation
+                absolutePrefixLocation: Some.path
             )
         
         //---

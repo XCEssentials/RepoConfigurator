@@ -34,7 +34,7 @@ import XCERepoConfigurator
 //---
 
 final
-class SwiftLintTests: FileModelTestsContext
+class SwiftLintTests: XCTestCase
 {
     // MARK: Type level members
     
@@ -91,7 +91,7 @@ extension SwiftLintTests
                 ]
             )
             .prepare(
-                absolutePrefixLocation: someLocation
+                absolutePrefixLocation: Some.path
             )
 
         //---

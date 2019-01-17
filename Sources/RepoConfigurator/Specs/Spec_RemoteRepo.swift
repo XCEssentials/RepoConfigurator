@@ -56,14 +56,17 @@ extension Spec
             name: String? = nil
             ) throws
         {
-            let localRepo = try? Spec.LocalRepo.current()
+            let localRepo: () -> Spec.LocalRepo? = {
+                
+                try? Spec.LocalRepo.current()
+            }
             
             let accountName = try accountName
-                ?? localRepo?.context
+                ?? localRepo()?.context
                 ?! InitializationError.accountNameAutoDetectionFailed
             
             let name = try name
-                ?? localRepo?.name
+                ?? localRepo()?.name
                 ?! InitializationError.repoNameAutoDetectionFailed
             
             //---

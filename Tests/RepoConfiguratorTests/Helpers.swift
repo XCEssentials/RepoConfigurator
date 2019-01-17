@@ -30,9 +30,12 @@ import FileKit
 
 //---
 
-class FileModelTestsContext: XCTestCase
+enum Some
 {
-    // MARK: Instance level members
-    
-    let someLocation: Path = .root // doesn't matter
+    static
+    let path: Path = [
+        "SomeFolder",
+        "CompanyName",
+        "RepoName"
+    ] // doesn't matter
 }
