@@ -35,14 +35,14 @@ import XCERepoConfigurator
 
 //---
 
-// let localRepo = try! Spec.LocalRepo.current()
-
 fileprivate
 let currentLocation: Path = [
-    "SomeFolder",
+    "Dev",
     "XCEssentials",
     "Pipeline"
 ]
+
+// let localRepo = try! Spec.LocalRepo.current()
 
 fileprivate
 let localRepo = Spec.LocalRepo(
@@ -87,6 +87,7 @@ let cocoaPod = try! Spec.CocoaPod(
     ]
 )
 
+fileprivate
 enum SubSpecs
 {
     static

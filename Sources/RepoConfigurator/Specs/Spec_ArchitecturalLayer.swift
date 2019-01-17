@@ -52,12 +52,10 @@ extension Spec
         let podspecLocation: Path
         
         public
-        lazy
-        var core: Spec.CocoaPod.SubSpec = .init(name)
+        let main: Spec.CocoaPod.SubSpec
         
         public
-        lazy
-        var tests: Spec.CocoaPod.SubSpec = .tests(name + "Tests")
+        let tests: Spec.CocoaPod.SubSpec
         
         public
         enum InitializationError: Error
@@ -95,6 +93,8 @@ extension Spec
             self.product = product
             self.deploymentTargets = deploymentTargets
             self.podspecLocation = podspecLocation
+            self.main = .init(name)
+            self.tests = .tests(name + "Tests")
         }
     }
 }
