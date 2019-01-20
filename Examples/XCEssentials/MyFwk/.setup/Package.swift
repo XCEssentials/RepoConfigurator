@@ -13,7 +13,7 @@ let package = Package(
     targets: [
         .target(
             name: "MyFwkSetup",
-            dependencies: ["XCERepoConfigurator"],
+            dependencies: ["XCERepoConfigurator", "FileKit"],
             path: ".",
             sources: ["main.swift"]
         )
