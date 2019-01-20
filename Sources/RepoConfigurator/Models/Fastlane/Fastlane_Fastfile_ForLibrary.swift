@@ -312,7 +312,7 @@ extension Fastlane.Fastfile.ForLibrary
                 # default initial location for any command
                 # is inside 'Fastlane' folder
 
-                sh 'cd ./.. && \(cleanupCmd) && ice xc'
+                sh 'cd ./.. && \(cleanupCmd) && swift package generate-xcodeproj'
                 """
         }
 
