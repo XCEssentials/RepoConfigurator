@@ -195,7 +195,6 @@ try CocoaPods
 
                 $0.settings(
                     .noPrefix("requires_app_host = false"),
-                    .noPrefix("framework = 'XCTest'"),
                     .dependency("SwiftLint"), // we will be running linting from unit tests!
                     .sourceFiles(subSpecs.tests.sourcesPattern)
                 )
