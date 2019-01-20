@@ -208,19 +208,9 @@ extension Fastlane.Fastfile.ForLibrary
             
             main.appendNewLine()
 
-            let cleanupCmd = [
-                
-                    prefixLocation
-                ]
-                .map{ """
-                    rm -rf "\($0)"
-                    """
-                }
-                .map{ """
-                     && \($0)
-                    """
-                }
-                .joined()
+            let cleanupCmd = """
+                rm -rf "\(prefixLocation)"
+                """
             
             let genParams = (extraGenParams + [
                 
@@ -236,7 +226,7 @@ extension Fastlane.Fastfile.ForLibrary
                 # default initial location for any command
                 # is inside 'Fastlane' folder
 
-                sh 'cd ./..\(cleanupCmd) && \(CocoaPods.call(callCocoaPods)) \(CocoaPods.Generate.gemCallName) \(genParams)'
+                sh 'cd ./.. && \(cleanupCmd) && \(CocoaPods.call(callCocoaPods)) \(CocoaPods.Generate.gemCallName) \(genParams)'
                 """
             
             scriptBuildPhases(
