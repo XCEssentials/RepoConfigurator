@@ -66,9 +66,9 @@ extension Spec
         }
         
         public
-        var generatedXcodeProjectLocation: Path // WITHOUT extension!
+        var generatedXcodeProjectLocation: Path
         {
-            return xcodeArtifactsLocation + fullName + "Pods"
+            return xcodeArtifactsLocation + fullName + "Pods.\(Xcode.Project.extension)"
         }
         
         public
