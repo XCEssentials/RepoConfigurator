@@ -285,6 +285,55 @@ try Git
     .prepare()
     .writeToFileSystem()
 
+// MARK: Write - Package.swift
+
+try CustomTextFile("""
+    // swift-tools-version:\(Spec.BuildSettings.swiftVersion.value)
+
+    import PackageDescription
+
+    let package = Package(
+        name: "\(cocoaPod.fullName)",
+        products: [
+            .library(
+                name: "\(cocoaPod.fullName)",
+                targets: [
+                    "\(cocoaPod.fullName + subSpecs.core.name)"
+                ]
+            ),
+            .library(
+                name: "\(cocoaPod.fullName + "WithOperators")",
+                targets: [
+                    "\(cocoaPod.fullName + subSpecs.operators.name)"
+                ]
+            ),
+        ],
+        targets: [
+            .target(
+                name: "\(cocoaPod.fullName + subSpecs.core.name)",
+                path: "\(subSpecs.core.sourcesLocation)"
+            ),
+            .target(
+                name: "\(cocoaPod.fullName + subSpecs.operators.name)",
+                dependencies: ["\(cocoaPod.fullName + subSpecs.core.name)"],
+                path: "\(subSpecs.operators.sourcesLocation)"
+            ),
+            .testTarget(
+                name: "\(cocoaPod.fullName + subSpecs.tests.name)",
+                dependencies: [
+                    "\(cocoaPod.fullName + subSpecs.core.name)",
+                    "\(cocoaPod.fullName + subSpecs.operators.name)"
+                ],
+                path: "\(subSpecs.tests.sourcesLocation)"
+            ),
+        ],
+        swiftLanguageVersions: [.v4, .v4_2]
+    )
+    """
+    )
+    .prepare(relativeLocation: ["Package.swift"])
+    .writeToFileSystem()
+
 // MARK: - POST-script invocation output
 
 print("--- END of '\(Executable.name!)' script ---")
