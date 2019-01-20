@@ -43,10 +43,14 @@ extension Spec
         let name: String
         
         public
+        let fullRepoAddress: URL
+        
+        public
         enum InitializationError: Swift.Error
         {
             case accountNameAutoDetectionFailed
             case repoNameAutoDetectionFailed
+            case fullRepoURLConstructionFailed
         }
         
         public
@@ -70,11 +74,22 @@ extension Spec
                 ?? localRepo()?.name
                 ?! InitializationError.repoNameAutoDetectionFailed
             
+            let fullRepoAddressStr = [
+                serverAddress,
+                accountName,
+                name + ".git"
+                ]
+                .joined(separator: "/")
+            
+            let fullRepoAddress = try URL(string: fullRepoAddressStr)
+                ?! InitializationError.fullRepoURLConstructionFailed
+            
             //---
             
             self.serverAddress = serverAddress
             self.accountName = accountName
             self.name = name
+            self.fullRepoAddress = fullRepoAddress
             
             //---
             
@@ -94,32 +109,6 @@ extension Spec.RemoteRepo
 {
     func report()
     {
-        (try? fullRepoAddress())
-            .map{ print("✅ Remote repo: \($0.absoluteString)") }
-            ?? print("⚠ Remote repo UNKNOWN!")
-    }
-    
-    enum Error: Swift.Error
-    {
-        case fullRepoURLConstructionFailed
-    }
-    
-    func fullRepoAddress() throws -> URL
-    {
-        let components = [
-            serverAddress,
-            accountName,
-            name + ".git"
-        ]
-        
-        let stringRepresentation = components
-            .joined(separator: "/")
-        
-        let result = try URL(string: stringRepresentation)
-            ?! Error.fullRepoURLConstructionFailed
-        
-        //---
-        
-        return result
+        print("✅ Remote repo: \(fullRepoAddress.absoluteString)")
     }
 }
