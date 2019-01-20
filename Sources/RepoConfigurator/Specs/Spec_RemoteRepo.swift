@@ -53,12 +53,13 @@ extension Spec
         init(
             serverAddress: String = "https://github.com",
             accountName: String? = nil,
-            name: String? = nil
+            name: String? = nil,
+            shouldReport: Bool = false
             ) throws
         {
             let localRepo: () -> Spec.LocalRepo? = {
                 
-                try? Spec.LocalRepo.current()
+                try? Spec.LocalRepo.current(shouldReport: shouldReport)
             }
             
             let accountName = try accountName
@@ -74,6 +75,14 @@ extension Spec
             self.serverAddress = serverAddress
             self.accountName = accountName
             self.name = name
+            
+            //---
+            
+            if
+                shouldReport
+            {
+                self.report()
+            }
         }
     }
 }
@@ -83,7 +92,13 @@ extension Spec
 public
 extension Spec.RemoteRepo
 {
-    public
+    func report()
+    {
+        (try? fullRepoAddress())
+            .map{ print("✅ Remote repo: \($0.absoluteString)") }
+            ?? print("⚠ Remote repo UNKNOWN!")
+    }
+    
     enum Error: Swift.Error
     {
         case fullRepoURLConstructionFailed

@@ -88,6 +88,9 @@ extension Spec.Company
 {
     func report()
     {
+        print("✅ Company prefix: \(prefix)")
         print("✅ Company name: \(name)")
+        print("✅ Company identifier: \(identifier)")
+        print("✅ Company developmentTeamId: \(developmentTeamId)")
     }
 }

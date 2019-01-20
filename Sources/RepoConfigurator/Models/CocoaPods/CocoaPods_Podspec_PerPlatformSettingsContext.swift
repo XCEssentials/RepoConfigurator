@@ -67,10 +67,10 @@ extension CocoaPods.Podspec.PerPlatformSettingsContext
                 return entry
                 
             case .sourceFiles(let entry):
-                return "source_files = " + entry
+                return "source_files = '" + entry + "'"
                 
             case .dependency(let entry):
-                return "dependency " + entry
+                return "dependency '" + entry + "'"
             }
         }
     }

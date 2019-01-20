@@ -103,7 +103,7 @@ extension CocoaPods.Podspec
     public
     typealias License = (
         type: String,
-        fileName: Path
+        file: Path
     )
 
     public
@@ -299,7 +299,7 @@ extension CocoaPods.Podspec
 
             \(s).requires_arc  = true
 
-            \(s).license       = { :type => '\(license.type)', :file => '\(license.fileName)' }
+            \(s).license       = { :type => '\(license.type)', :file => '\(license.file.rawValue)' }
 
             \(s).authors = {
             """

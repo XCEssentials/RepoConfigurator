@@ -176,7 +176,7 @@ extension Fastlane.Fastfile.ForLibrary
     func generateProjectViaCP(
         beginningEntries: [String] = [],
         callCocoaPods: GemCallMethod, // enforce explicit configuration!
-        prefixLocation: Path = Path("Xcode"),
+        prefixLocation: Path = ["Xcode"],
         extraGenParams: [String] = [],
         scriptBuildPhases: (ScriptBuildPhaseContext) -> Void = { _ in },
         buildSettings: (BuildSettingsContext) -> Void = { _ in },

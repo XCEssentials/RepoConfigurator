@@ -145,6 +145,13 @@ extension Spec
 public
 extension Spec.CocoaPod
 {
+    func report()
+    {
+        print("✅ CocoaPod authors: \(authors).")
+        print("✅ CocoaPod current version: \(currentVersion).")
+        print("✅ CocoaPod xcodeArtifactsLocation: \(xcodeArtifactsLocation.rawValue).")
+    }
+    
     enum ReadCurrentVersionError: Error
     {
         case invalidAbsolutePodspecLocationPrefix
