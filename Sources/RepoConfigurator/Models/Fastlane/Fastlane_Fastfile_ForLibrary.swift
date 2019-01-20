@@ -275,7 +275,7 @@ extension Fastlane.Fastfile.ForLibrary
      Depends on SwiftPM and Ice.
      https://github.com/jakeheis/Ice
      */
-    func generateProjectViaIce(
+    func generateProjectViaSwiftPM(
         derivedPaths: [Path] = [[".build"]],
         derivedProject: Spec.Project? = nil
         ) -> Self
