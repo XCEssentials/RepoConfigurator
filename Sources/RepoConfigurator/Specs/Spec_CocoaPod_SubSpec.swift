@@ -65,6 +65,8 @@ extension Spec.CocoaPod
             tests: Bool = false
             )
         {
+            let name = (tests ? name + "Tests" : name)
+            
             let sourcesLocation = sourcesLocation
                 ?? (tests ? Spec.Locations.tests : Spec.Locations.sources) + name
             
@@ -95,7 +97,7 @@ extension Spec.CocoaPod
         public
         static
         func tests(
-            _ name: String = "Tests",
+            _ name: String = "All",
             sourcesLocation: Path? = nil,
             sourcesPattern: String? = nil,
             resourcesLocation: Path? = nil,
