@@ -51,6 +51,14 @@ extension Fastlane.Fastfile
 public
 extension Fastlane.Fastfile.ScriptBuildPhaseContext
 {
+    enum Error: Swift.Error
+    {
+        case invalidProjectLocation // must be relative!
+        case emptyTargetNamesList // what's the point to pass empty list? looks like an error
+        case emptyScriptName
+        case emptyScriptBody
+    }
+    
     enum BuildPhaseScriptPosition
     {
         case preCompile
@@ -58,24 +66,33 @@ extension Fastlane.Fastfile.ScriptBuildPhaseContext
     }
     
     func custom(
-        project: Spec.Project,
+        project: Path,
         targetNames: [String],
         scriptName: String,
         scriptBody: String,
         runOnlyForDeploymentPostprocessing: Bool? = nil,
         position: BuildPhaseScriptPosition = .preCompile
-        )
+        ) throws
     {
-        guard
-            !targetNames.isEmpty
-        else
-        {
-            return
-        }
-
+        try project.isRelative
+            ?! Error.invalidProjectLocation
+        
+        try !targetNames.isEmpty
+            ?! Error.emptyTargetNamesList
+        
+        try !scriptName.isEmpty
+            ?! Error.emptyScriptName
+        
+        try !scriptBody.isEmpty
+            ?! Error.emptyScriptBody
+        
         //---
 
-        let project = [".", ".."] + project.location
+        let project = Utils.mutate(project){
+            
+            $0 = [".", ".."] + $0 // REMEMBER: we are inside 'fastlane' folder!
+            $0.pathExtension = Xcode.Project.extension // just in case
+        }
         
         let targetNames = targetNames
             .map{ "'\($0)'" }
@@ -143,13 +160,13 @@ extension Fastlane.Fastfile.ScriptBuildPhaseContext
     }
     
     func swiftGen(
-        project: Spec.Project,
+        project: Path,
         targetNames: [String],
         scriptName: String = "SwiftGen",
         params: [String] = []
-        )
+        ) throws
     {
-        custom(
+        try custom(
             project: project,
             targetNames: targetNames,
             scriptName: scriptName,
@@ -160,15 +177,15 @@ extension Fastlane.Fastfile.ScriptBuildPhaseContext
     }
     
     func sourcery(
-        project: Spec.Project,
+        project: Path,
         targetNames: [String],
         scriptName: String = "Sourcery",
         params: [String] = [
             "--prune"
             ]
-        )
+        ) throws
     {
-        custom(
+        try custom(
             project: project,
             targetNames: targetNames,
             scriptName: scriptName,
@@ -179,13 +196,13 @@ extension Fastlane.Fastfile.ScriptBuildPhaseContext
     }
     
     func swiftLint(
-        project: Spec.Project,
+        project: Path,
         targetNames: [String],
         scriptName: String = "SwiftLintPods",
         params: [String] = []
-        )
+        ) throws
     {
-        custom(
+        try custom(
             project: project,
             targetNames: targetNames,
             scriptName: scriptName,

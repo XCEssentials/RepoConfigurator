@@ -178,10 +178,10 @@ extension Fastlane.Fastfile.ForLibrary
         callCocoaPods: GemCallMethod, // enforce explicit configuration!
         prefixLocation: Path = ["Xcode"],
         extraGenParams: [String] = [],
-        scriptBuildPhases: (ScriptBuildPhaseContext) -> Void = { _ in },
+        scriptBuildPhases: (ScriptBuildPhaseContext) throws -> Void = { _ in },
         buildSettings: (BuildSettingsContext) -> Void = { _ in },
         endingEntries: [String] = []
-        ) -> Self
+        ) throws -> Self
     {
         let laneName = #function.split(separator: "(").first!
 
@@ -202,7 +202,7 @@ extension Fastlane.Fastfile.ForLibrary
         
         main.appendNewLine()
 
-        main.indentation.nest{
+        try main.indentation.nest{
 
             main <<< beginningEntries
             
@@ -229,7 +229,7 @@ extension Fastlane.Fastfile.ForLibrary
                 sh 'cd ./.. && \(cleanupCmd) && \(CocoaPods.call(callCocoaPods)) \(CocoaPods.Generate.gemCallName) \(genParams)'
                 """
             
-            scriptBuildPhases(
+            try scriptBuildPhases(
                 .init(
                     main
                 )
