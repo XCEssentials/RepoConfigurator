@@ -46,7 +46,7 @@ class FastlaneTests: XCTestCase
         ("testDefaultHeader", testDefaultHeader),
         ("testLibraryBeforeReleaseLane", testLibraryBeforeReleaseLane),
         ("testLibraryGenerateProjectViaCPLane", testLibraryGenerateProjectViaCPLane),
-        ("testLibraryGenerateProjectViaIceLane", testLibraryGenerateProjectViaIceLane)
+        ("testLibraryGenerateProjectViaSwiftPMLane", testLibraryGenerateProjectViaSwiftPMLane)
         ]
 
 }
@@ -251,20 +251,20 @@ extension FastlaneTests
         assertThat(model.content == targetOutput)
     }
     
-    func testLibraryGenerateProjectViaIceLane()
+    func testLibraryGenerateProjectViaSwiftPMLane()
     {
         let targetOutput = """
             
-            lane :generateProjectViaIce do
+            lane :generateProjectViaSwiftPM do
             
                 # === Regenerate project
             
                 # default initial location for any command
                 # is inside 'Fastlane' folder
             
-                sh 'cd ./.. && rm -rf ".build" && ice xc'
+                sh 'cd ./.. && rm -rf ".build" && swift package generate-xcodeproj'
             
-            end # lane :generateProjectViaIce
+            end # lane :generateProjectViaSwiftPM
             """
         
         //---
@@ -272,7 +272,7 @@ extension FastlaneTests
         let model = try! Fastlane
             .Fastfile
             .ForLibrary()
-            .generateProjectViaIce(
+            .generateProjectViaSwiftPM(
                 derivedPaths: [[".build"]]
             )
             .prepare(

@@ -88,26 +88,11 @@ let cocoaPod = try! Spec.CocoaPod(
 )
 
 fileprivate
-enum SubSpecs
-{
-    static
-    var core: Spec.CocoaPod.SubSpec
-    {
-        return .init(#function.capitalized)
-    }
-    
-    static
-    var operators: Spec.CocoaPod.SubSpec
-    {
-        return .init(#function.capitalized)
-    }
-    
-    static
-    var tests: Spec.CocoaPod.SubSpec
-    {
-        return .tests(#function.capitalized)
-    }
-}
+let subSpecs = (
+    core: Spec.CocoaPod.SubSpec("Core"),
+    operators: Spec.CocoaPod.SubSpec("Operators"),
+    tests: Spec.CocoaPod.SubSpec.tests()
+)
 
 //---
 
@@ -190,23 +175,23 @@ extension FrameworkConfigTests
         let resources = Spec.Locations.resources
         let name = "Core"
         
-        assertThat(SubSpecs.core.name == name)
-        assertThat(SubSpecs.core.sourcesLocation == (sources + name))
-        assertThat(SubSpecs.core.sourcesPattern == (sources + name + "**" + "*").rawValue)
-        assertThat(SubSpecs.core.resourcesLocation == (resources + name))
-        assertThat(SubSpecs.core.resourcesPattern == (resources + name + "**" + "*").rawValue)
-        assertThat(SubSpecs.core.linterCfgLocation == (sources + name + SwiftLint.relativeLocation))
-        assertThat(SubSpecs.core.tests == false)
+        assertThat(subSpecs.core.name == name)
+        assertThat(subSpecs.core.sourcesLocation == (sources + name))
+        assertThat(subSpecs.core.sourcesPattern == (sources + name + "**" + "*").rawValue)
+        assertThat(subSpecs.core.resourcesLocation == (resources + name))
+        assertThat(subSpecs.core.resourcesPattern == (resources + name + "**" + "*").rawValue)
+        assertThat(subSpecs.core.linterCfgLocation == (sources + name + SwiftLint.relativeLocation))
+        assertThat(subSpecs.core.tests == false)
     }
     
     func testTestsSubSpec()
     {
         let tests = Spec.Locations.tests
-        let name = "Tests"
+        let defaultTestsSubSpecName = "AllTests"
         
-        assertThat(SubSpecs.tests.name == name)
-        assertThat(SubSpecs.tests.sourcesLocation == (tests + name))
-        assertThat(SubSpecs.tests.sourcesPattern == (tests + name + "**" + "*").rawValue)
-        assertThat(SubSpecs.tests.tests == true)
+        assertThat(subSpecs.tests.name == defaultTestsSubSpecName)
+        assertThat(subSpecs.tests.sourcesLocation == (tests + defaultTestsSubSpecName))
+        assertThat(subSpecs.tests.sourcesPattern == (tests + defaultTestsSubSpecName + "**" + "*").rawValue)
+        assertThat(subSpecs.tests.tests == true)
     }
 }
