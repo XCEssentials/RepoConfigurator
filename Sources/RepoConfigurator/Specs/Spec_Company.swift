@@ -90,7 +90,7 @@ extension Spec.Company
     {
         print("✅ Company prefix: \(prefix)")
         print("✅ Company name: \(name)")
-        print("✅ Company identifier: \(identifier)")
-        print("✅ Company developmentTeamId: \(developmentTeamId)")
+        if !identifier.isEmpty { print("✅ Company identifier: \(identifier)") }
+        if !developmentTeamId.isEmpty { print("✅ Company developmentTeamId: \(developmentTeamId)") }
     }
 }

@@ -171,9 +171,11 @@ extension Spec.CocoaPod
         try absolutePodspecLocationPrefix.isAbsolute
             ?! ReadCurrentVersionError.invalidAbsolutePodspecLocationPrefix
         
-        try absolutePodspecLocationPrefix.exists
+        let targetPodspecLocation = absolutePodspecLocationPrefix + podspecLocation
+        
+        try targetPodspecLocation.exists
             ?! ReadCurrentVersionError.podspecNotFound(
-                expectedPath: absolutePodspecLocationPrefix.rawValue
+                expectedPath: targetPodspecLocation.rawValue
             )
         
         //---
@@ -184,20 +186,29 @@ extension Spec.CocoaPod
         // run before first time usage:
         // try shellOut(to: "npm install --global find-versions-cli")
         
-        self.currentVersion = try shellOut(
+        let result = try shellOut(
             to: """
-            \(Fastlane.call(method)) run version_get_podspec path:"\((absolutePodspecLocationPrefix + podspecLocation).rawValue)" \
+            \(Fastlane.call(method)) run version_get_podspec path:"\(targetPodspecLocation.rawValue)" \
             | grep "Result:" \
             | find-versions
             """
         )
         
-        //---
+        //--- undefined
         
         if
-            shouldReport
+            result != "undefined"
+            && !result.isEmpty
         {
-            print("✅ Detected current pod version: \(currentVersion).")
+            self.currentVersion = result
+            
+            //---
+            
+            if
+                shouldReport
+            {
+                print("✅ Detected current pod version: \(currentVersion).")
+            }
         }
     }
 }
