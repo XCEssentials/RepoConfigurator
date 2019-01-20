@@ -153,7 +153,9 @@ extension FrameworkConfigTests
     {
         let cocoaPodFullName = company.prefix + project.name
         let podspec: Path = ["\(company.prefix)\(project.name).\(CocoaPods.Podspec.extension)"]
-        let generatedXcodeProjectLocation: Path = ["Xcode"] + cocoaPodFullName + "Pods"
+        let generatedXcodeProjectLocation: Path = ["Xcode"]
+            + cocoaPodFullName
+            + "Pods.\(Xcode.Project.extension)"
         
         assertThat(cocoaPod.company.name == company.name)
         assertThat(cocoaPod.company.identifier == company.identifier)
