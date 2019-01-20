@@ -53,7 +53,7 @@ try? cocoaPod.readCurrentVersion(
 let subSpecs = (
     core: Spec.CocoaPod.SubSpec("Core"),
     operators: Spec.CocoaPod.SubSpec("Operators"),
-    tests: Spec.CocoaPod.SubSpec.tests("Tests")
+    tests: Spec.CocoaPod.SubSpec.tests()
 )
 
 // MARK: Parameters - Summary
