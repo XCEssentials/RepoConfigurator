@@ -94,7 +94,7 @@ extension Spec
             self.deploymentTargets = deploymentTargets
             self.podspecLocation = podspecLocation
             self.main = .init(name)
-            self.tests = .tests(name + "Tests")
+            self.tests = .tests(name)
         }
     }
 }
