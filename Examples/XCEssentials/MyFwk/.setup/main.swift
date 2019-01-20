@@ -251,7 +251,7 @@ try Fastlane
             """
         ]
     )
-    .generateProjectViaIce()
+    .generateProjectViaSwiftPM()
     .prepare()
     .writeToFileSystem()
 
