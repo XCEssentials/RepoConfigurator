@@ -88,7 +88,7 @@ extension Spec.Company
 {
     func report()
     {
-        print("✅ Company prefix: \(prefix)")
+        if !prefix.isEmpty { print("✅ Company prefix: \(prefix)") }
         print("✅ Company name: \(name)")
         if !identifier.isEmpty { print("✅ Company identifier: \(identifier)") }
         if !developmentTeamId.isEmpty { print("✅ Company developmentTeamId: \(developmentTeamId)") }
