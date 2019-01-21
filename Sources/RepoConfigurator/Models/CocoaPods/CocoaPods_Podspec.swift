@@ -121,6 +121,7 @@ extension CocoaPods.Podspec
     static
     func standard(
         specVar: String = Defaults.specVariable,
+        subSpecVar: String = Defaults.subSpecVariable,
         product: Product,
         company: Company,
         version: VersionString = Defaults.initialVersionString,
@@ -129,6 +130,7 @@ extension CocoaPods.Podspec
         cocoapodsVersion: VersionString? = Defaults.cocoapodsVersion,
         swiftVersion: VersionString? = Spec.BuildSettings.swiftVersion.value,
         perPlatformSettings: (PerPlatformSettingsContext) -> Void,
+        testSubSpecs: (TestSubSpecsContext) -> Void = { _ in },
         customEntries: [String] = []
         ) -> CocoaPods.Podspec
     {
@@ -157,6 +159,14 @@ extension CocoaPods.Podspec
             perPlatformSettings(
                 PerPlatformSettingsContext(
                     specVar: specVar,
+                    buffer: result.buffer
+                )
+            )
+
+            testSubSpecs(
+                TestSubSpecsContext(
+                    parentSpecVar: specVar,
+                    specVar: subSpecVar,
                     buffer: result.buffer
                 )
             )
