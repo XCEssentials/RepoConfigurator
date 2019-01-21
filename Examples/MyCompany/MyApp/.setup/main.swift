@@ -439,10 +439,10 @@ try CocoaPods
         deploymentTarget: targets.app.deploymentTarget,
         pods: [
             
-            "pod '\(modules.mobileViews.product.name)', :path => './'",
-            "pod '\(modules.viewModels.product.name)', :path => './'",
-            "pod '\(modules.models.product.name)', :path => './'",
-            "pod '\(modules.services.product.name)', :path => './'",
+            "pod '\(modules.mobileViews.product.name)', :path => './', :testspecs => ['Tests']",
+            "pod '\(modules.viewModels.product.name)', :path => './', :testspecs => ['Tests']",
+            "pod '\(modules.models.product.name)', :path => './', :testspecs => ['Tests']",
+            "pod '\(modules.services.product.name)', :path => './', :testspecs => ['Tests']",
 
             "# --- here override sources for any needed pods...",
             
