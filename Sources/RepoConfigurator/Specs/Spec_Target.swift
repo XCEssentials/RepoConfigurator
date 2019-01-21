@@ -58,6 +58,9 @@ extension Spec
         let resourcesLocation: Path
         
         public
+        let linterCfgLocation: Path
+        
+        public
         let packageType: Xcode.InfoPlist.PackageType
         
         public
@@ -71,7 +74,7 @@ extension Spec
         }
         
         public
-        enum BundleId
+        enum BundleIdInfo
         {
             case autoWithCompany(
                 Spec.Company
@@ -98,54 +101,69 @@ extension Spec
             project: Spec.Project,
             platform: OSIdentifier,
             productInfo: ProductInfo? = nil,
-            bundleId: BundleId,
+            bundleIdInfo: BundleIdInfo,
             provisioningProfiles: [Xcode.ProvisioningProfileKind : String],
             infoPlistLocation: Path? = nil,
             sourcesLocation: Path? = nil,
             resourcesLocation: Path? = nil,
+            linterCfgLocation: Path? = nil,
             packageType: Xcode.InfoPlist.PackageType
             ) throws
         {
-            self.name = name
-            
-            self.deploymentTarget = try project.deploymentTargets.asPair(platform)
+            let deploymentTarget = try project.deploymentTargets.asPair(platform)
                 ?! InitializationError.unsupportedDeploymentTarget
+            
+            let productName: String
             
             switch productInfo ?? .fromProject
             {
             case .fromProject:
-                self.productName = project.name + name
+                productName = project.name + name
                 
-            case .use(let productName):
-                self.productName = productName + name
+            case .use(let value):
+                productName = value + name
             }
             
-            switch bundleId
+            let bundleId: String
+            
+            switch bundleIdInfo
             {
             case .autoWithCompany(let company):
-                self.bundleId = company.identifier + "." + productName
+                bundleId = company.identifier + "." + productName
                 
             case .autoWithCompanyId(let companyId):
-                self.bundleId = companyId + "." + productName
+                bundleId = companyId + "." + productName
                 
-            case .use(let customBundleId):
-                self.bundleId = customBundleId
+            case .use(let value):
+                bundleId = value
             }
             
-            self.provisioningProfiles = provisioningProfiles
-            
-            self.infoPlistLocation = infoPlistLocation
+            let infoPlistLocation = infoPlistLocation
                 ?? (Spec.Locations.info + [name + "." + Xcode.InfoPlist.extension])
             
-            self.sourcesLocation = sourcesLocation
+            let sourcesLocation = sourcesLocation
                 ?? (
                     (packageType == .tests ? Spec.Locations.tests : Spec.Locations.sources)
                         + name
                 )
             
-            self.resourcesLocation = resourcesLocation
+            let resourcesLocation = resourcesLocation
                 ?? (Spec.Locations.resources + name)
             
+            let linterCfgLocation = linterCfgLocation
+                ?? sourcesLocation + SwiftLint.relativeLocation
+            
+            //---
+            
+            self.name = name
+            self.deploymentTarget = deploymentTarget
+            self.productName = productName
+            self.bundleId = bundleId
+            self.provisioningProfiles = provisioningProfiles
+            self.infoPlistLocation = infoPlistLocation
+            self.sourcesLocation = sourcesLocation
+            self.resourcesLocation = resourcesLocation
+            self.linterCfgLocation = linterCfgLocation
             self.packageType = packageType
         }
     }

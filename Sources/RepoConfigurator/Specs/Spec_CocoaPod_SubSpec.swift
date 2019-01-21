@@ -82,7 +82,6 @@ extension Spec.CocoaPod
             let linterCfgLocation = linterCfgLocation
                 ?? sourcesLocation + SwiftLint.relativeLocation
                 
-            
             //---
             
             self.name = name
