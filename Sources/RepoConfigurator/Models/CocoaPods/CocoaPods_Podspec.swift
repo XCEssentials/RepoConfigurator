@@ -129,7 +129,7 @@ extension CocoaPods.Podspec
         authors: [Author],
         cocoapodsVersion: VersionString? = Defaults.cocoapodsVersion,
         swiftVersion: VersionString? = Spec.BuildSettings.swiftVersion.value,
-        perPlatformSettings: (PerPlatformSettingsContext) -> Void,
+        globalSettings: (PerPlatformSettingsContext) -> Void,
         testSubSpecs: (TestSubSpecsContext) -> Void = { _ in },
         customEntries: [String] = []
         ) -> CocoaPods.Podspec
@@ -156,7 +156,7 @@ extension CocoaPods.Podspec
                 swiftVersion: swiftVersion
             )
 
-            perPlatformSettings(
+            globalSettings(
                 PerPlatformSettingsContext(
                     specVar: specVar,
                     buffer: result.buffer
@@ -200,7 +200,7 @@ extension CocoaPods.Podspec
         authors: [Author],
         cocoapodsVersion: VersionString? = Defaults.cocoapodsVersion,
         swiftVersion: VersionString? = Spec.BuildSettings.swiftVersion.value,
-        perPlatformSettings: (PerPlatformSettingsContext) -> Void,
+        globalSettings: (PerPlatformSettingsContext) -> Void,
         subSpecs: (SubSpecsContext) -> Void,
         testSubSpecs: (TestSubSpecsContext) -> Void = { _ in },
         customEntries: [String] = []
@@ -228,7 +228,7 @@ extension CocoaPods.Podspec
                 swiftVersion: swiftVersion
             )
 
-            perPlatformSettings(
+            globalSettings(
                 PerPlatformSettingsContext(
                     specVar: specVar,
                     buffer: result.buffer
