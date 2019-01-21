@@ -49,14 +49,16 @@ extension Fastlane.Fastfile.ForLibrary
     }
     
     func beforeRelease(
+        laneName: String? = nil,
         beginningEntries: [String] = [],
         ensureGitBranch: String? = Defaults.releaseGitBranchesRegEx,
         podspecLocation: PodspecLocation?, // pass 'nil' if shouldn't support CocoaPods
         endingEntries: [String] = []
         ) -> Self
     {
-        let laneName = #function.split(separator: "(").first!
-
+        let laneName = laneName
+            ?? String(#function.split(separator: "(").first!)
+        
         let podSpec: Path?
         
         switch podspecLocation
@@ -174,6 +176,7 @@ extension Fastlane.Fastfile.ForLibrary
      folder, using 'cocoapods' and 'cocoapods-generate'.
      */
     func generateProjectViaCP(
+        laneName: String? = nil,
         beginningEntries: [String] = [],
         callCocoaPods: GemCallMethod, // enforce explicit configuration!
         prefixLocation: Path = ["Xcode"],
@@ -183,8 +186,9 @@ extension Fastlane.Fastfile.ForLibrary
         endingEntries: [String] = []
         ) rethrows -> Self
     {
-        let laneName = #function.split(separator: "(").first!
-
+        let laneName = laneName
+            ?? String(#function.split(separator: "(").first!)
+        
         //---
 
         _ = require(
@@ -266,12 +270,14 @@ extension Fastlane.Fastfile.ForLibrary
      https://github.com/jakeheis/Ice
      */
     func generateProjectViaSwiftPM(
+        laneName: String? = nil,
         derivedPaths: [Path] = [[".build"]],
         derivedProject: Spec.Project? = nil
         ) -> Self
     {
-        let laneName = #function.split(separator: "(").first!
-
+        let laneName = laneName
+            ?? String(#function.split(separator: "(").first!)
+        
         var derivedPaths = derivedPaths
             
         derivedProject.map{

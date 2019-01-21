@@ -59,6 +59,7 @@ public
 extension Fastlane.Fastfile.ForApp
 {
     func beforeRelease(
+        laneName: String? = nil,
         beginningEntries: [String] = [],
         ensureGitBranch: String? = Defaults.releaseGitBranchesRegEx,
         project: Spec.Project,
@@ -67,7 +68,8 @@ extension Fastlane.Fastfile.ForApp
         endingEntries: [String] = []
         ) -> Self
     {
-        let laneName = #function.split(separator: "(").first!
+        let laneName = laneName
+            ?? String(#function.split(separator: "(").first!)
         
         let project = [".", ".."] + project.location
         let masterPodSpec = masterPod.podspecLocation
@@ -196,6 +198,7 @@ extension Fastlane.Fastfile.ForApp
     }
 
     func reconfigureProject(
+        laneName: String? = nil,
         beginningEntries: [String] = [],
         project: Spec.Project,
         callGems: GemCallMethod = .viaBundler,
@@ -204,7 +207,8 @@ extension Fastlane.Fastfile.ForApp
         endingEntries: [String] = []
         ) rethrows -> Self
     {
-        let laneName = #function.split(separator: "(").first!
+        let laneName = laneName
+            ?? String(#function.split(separator: "(").first!)
         
         let project = [".", ".."] + project.location
         
@@ -284,6 +288,7 @@ extension Fastlane.Fastfile.ForApp
     }
 
     func archiveBeta(
+        laneName: String? = nil,
         productName: String,
         project: Spec.Project,
         schemeName: String? = nil, // 'productName' will be used if 'nil'
@@ -291,7 +296,8 @@ extension Fastlane.Fastfile.ForApp
         archivesExportLocation: Path = Defaults.archivesExportLocation
         ) -> Self
     {
-        let laneName = #function.split(separator: "(").first!
+        let laneName = laneName
+            ?? String(#function.split(separator: "(").first!)
         
         let project = [".", ".."] + project.location
         let schemeName = schemeName ?? productName
