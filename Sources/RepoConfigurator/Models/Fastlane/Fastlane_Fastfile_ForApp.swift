@@ -210,8 +210,6 @@ extension Fastlane.Fastfile.ForApp
         let laneName = laneName
             ?? String(#function.split(separator: "(").first!)
         
-        let project = [".", ".."] + project.location
-        
         //---
 
         _ = require(
@@ -251,7 +249,7 @@ extension Fastlane.Fastfile.ForApp
                 # default initial location for any command
                 # is inside 'Fastlane' folder
 
-                sh 'cd ./.. && \(Xcodeproj.call(callGems)) sort "\(project)"'
+                sh 'cd ./.. && \(Xcodeproj.call(callGems)) sort "\(project.location)"'
                 """
             }()
 
