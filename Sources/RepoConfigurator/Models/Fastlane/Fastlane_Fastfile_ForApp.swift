@@ -63,7 +63,7 @@ extension Fastlane.Fastfile.ForApp
         ensureGitBranch: String? = Defaults.releaseGitBranchesRegEx,
         project: Spec.Project,
         masterPod: Spec.CocoaPod,
-        otherPods: [Spec.CocoaPod] = [],
+        otherPodSpecs: [Path] = [],
         endingEntries: [String] = []
         ) -> Self
     {
@@ -71,7 +71,6 @@ extension Fastlane.Fastfile.ForApp
         
         let project = [".", ".."] + project.location
         let masterPodSpec = masterPod.podspecLocation
-        let otherPodSpecs = otherPods.map{ $0.podspecLocation }
         let allPodspecs = [masterPodSpec] + otherPodSpecs
         
         //---
@@ -200,10 +199,10 @@ extension Fastlane.Fastfile.ForApp
         beginningEntries: [String] = [],
         project: Spec.Project,
         callGems: GemCallMethod = .viaBundler,
-        scriptBuildPhases: (ScriptBuildPhaseContext) -> Void = { _ in },
+        scriptBuildPhases: (ScriptBuildPhaseContext) throws -> Void = { _ in },
         buildSettings: (BuildSettingsContext) -> Void = { _ in },
         endingEntries: [String] = []
-        ) -> Self
+        ) rethrows -> Self
     {
         let laneName = #function.split(separator: "(").first!
         
@@ -224,7 +223,7 @@ extension Fastlane.Fastfile.ForApp
 
             """
 
-        main.indentation.nest{
+        try main.indentation.nest{
 
             main <<< beginningEntries
             
@@ -252,7 +251,7 @@ extension Fastlane.Fastfile.ForApp
                 """
             }()
 
-            scriptBuildPhases(
+            try scriptBuildPhases(
                 .init(
                     main
                 )

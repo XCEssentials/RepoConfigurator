@@ -181,7 +181,7 @@ extension Fastlane.Fastfile.ForLibrary
         scriptBuildPhases: (ScriptBuildPhaseContext) throws -> Void = { _ in },
         buildSettings: (BuildSettingsContext) -> Void = { _ in },
         endingEntries: [String] = []
-        ) throws -> Self
+        ) rethrows -> Self
     {
         let laneName = #function.split(separator: "(").first!
 
