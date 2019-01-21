@@ -131,20 +131,27 @@ extension AppConfigTests
         let moduleSummary = "[View] level types according to MVVMSE."
         let podspecLocation: Path = [productName + "." + CocoaPods.Podspec.extension]
         
-        let subSpecNames = (
-            core: moduleName,
-            tests: moduleName + "Tests"
+        let locations = (
+            mainSources: Spec.Locations.sources + moduleName,
+            mainResources: Spec.Locations.resources + moduleName,
+            testsSources: Spec.Locations.tests + "\(moduleName)Tests",
+            testsResources: Spec.Locations.resources + "\(moduleName)Tests"
         )
         
-        assertThat(Modules.MobileViews.name == moduleName)
         assertThat(Modules.MobileViews.product.name == productName)
         assertThat(Modules.MobileViews.product.summary == moduleSummary)
         assertThat(Modules.MobileViews.deploymentTargets.count == 1)
         assertThat(Modules.MobileViews.deploymentTargets, hasKey(.iOS))
         assertThat(Modules.MobileViews.isCrossPlatform == false)
         assertThat(Modules.MobileViews.podspecLocation == podspecLocation)
-        assertThat(Modules.MobileViews.main.name == subSpecNames.core)
-        assertThat(Modules.MobileViews.tests.name == subSpecNames.tests)
+        
+        assertThat(Modules.MobileViews.main.name == productName)
+        assertThat(Modules.MobileViews.main.sourcesLocation == locations.mainSources)
+        assertThat(Modules.MobileViews.main.resourcesLocation == locations.mainResources)
+        
+        assertThat(Modules.MobileViews.tests.name == "Tests")
+        assertThat(Modules.MobileViews.tests.sourcesLocation == locations.testsSources)
+        assertThat(Modules.MobileViews.tests.resourcesLocation == locations.testsResources)
     }
 }
 

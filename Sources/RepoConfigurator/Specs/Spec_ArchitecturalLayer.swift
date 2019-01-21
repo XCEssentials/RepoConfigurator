@@ -34,9 +34,6 @@ extension Spec
     struct ArchitecturalLayer
     {
         public
-        let name: String
-        
-        public
         let product: CocoaPods.Podspec.Product
         
         public
@@ -89,12 +86,25 @@ extension Spec
             
             //---
             
-            self.name = name
             self.product = product
             self.deploymentTargets = deploymentTargets
             self.podspecLocation = podspecLocation
-            self.main = .init(name)
-            self.tests = .tests(name)
+            
+            // 'main' subspec basically represents the module itself,
+            // so we jsut repeat product/module name here
+            self.main = .init(
+                product.name,
+                sourcesLocation: Spec.Locations.sources + name,
+                resourcesLocation: Spec.Locations.resources + name
+            )
+            
+            // 'tests' subspec only makes sense in context the module itself,
+            // so it's fine to have it named just "Tests"
+            self.tests = .tests(
+                "", // NOTE: will be extended with "Tests" and become just "Tests"
+                sourcesLocation: Spec.Locations.tests + "\(name)Tests",
+                resourcesLocation: Spec.Locations.resources + "\(name)Tests"
+            )
         }
     }
 }
