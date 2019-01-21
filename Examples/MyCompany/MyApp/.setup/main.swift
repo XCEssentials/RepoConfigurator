@@ -120,10 +120,13 @@ project.report()
 
 // MARK: Write - Dummy files
 
-try allSubspecs
+try (
+    allSubspecs.map{ $0.sourcesLocation } +
+        [targets.app.sourcesLocation]
+    )
     .map{
         
-        localRepo.location + $0.sourcesLocation
+        localRepo.location + $0
     }
     .map{
         
@@ -216,7 +219,7 @@ try CocoaPods
         license: (license.name, license.location),
         authors: masterCocoaPod.authors,
         swiftVersion: Spec.BuildSettings.swiftVersion.value,
-        perPlatformSettings: {
+        globalSettings: {
             
             globalContext in
             
@@ -236,13 +239,14 @@ try [modules.mobileViews].forEach{ module in
 
     try CocoaPods
         .Podspec
-        .withSubSpecs(
+        .standard(
             product: module.product,
             company: masterCocoaPod.company,
             version: masterCocoaPod.currentVersion,
             license: (license.name, license.location),
             authors: masterCocoaPod.authors,
-            perPlatformSettings: {
+            swiftVersion: Spec.BuildSettings.swiftVersion.value,
+            globalSettings: {
                 
                 podspec in
                 
@@ -253,27 +257,15 @@ try [modules.mobileViews].forEach{ module in
                     .asPairs()
                     .forEach{ podspec.settings(for: $0) }
                 
-                podspec
-                    .settings(
-                        .noPrefix("# static_framework = true") // if depends on static fwk
-                    )
-            },
-            subSpecs: {
+                podspec.settings(
+                    sharedPodDependencies.map{ .dependency($0) }
+                )
                 
-                $0.subSpec(module.main.name){
-                    
-                    $0.settings(
-                        .dependency(modules.viewModels.name) // <<<======= lower layer
-                    )
-                    
-                    $0.settings(
-                        sharedPodDependencies.map{ .dependency($0) }
-                    )
-                    
-                    $0.settings(
-                        .sourceFiles(module.main.sourcesPattern)
-                    )
-                }
+                podspec.settings(
+                    .noPrefix("framework = 'UIKit'"),
+                    .dependency(modules.viewModels.product.name), // <<<======= lower layer
+                    .sourceFiles(module.main.sourcesPattern)
+                )
             },
             testSubSpecs: {
                 
@@ -294,13 +286,14 @@ try [modules.viewModels].forEach{ module in
 
     try CocoaPods
         .Podspec
-        .withSubSpecs(
+        .standard(
             product: module.product,
             company: masterCocoaPod.company,
             version: masterCocoaPod.currentVersion,
             license: (license.name, license.location),
             authors: masterCocoaPod.authors,
-            perPlatformSettings: {
+            swiftVersion: Spec.BuildSettings.swiftVersion.value,
+            globalSettings: {
                 
                 podspec in
                 
@@ -311,27 +304,14 @@ try [modules.viewModels].forEach{ module in
                     .asPairs()
                     .forEach{ podspec.settings(for: $0) }
                 
-                podspec
-                    .settings(
-                        .noPrefix("# static_framework = true") // if depends on static fwk
-                    )
-            },
-            subSpecs: {
+                podspec.settings(
+                    sharedPodDependencies.map{ .dependency($0) }
+                )
                 
-                $0.subSpec(module.main.name){
-                    
-                    $0.settings(
-                        .dependency(modules.models.name) // <<<======= lower layer
-                    )
-                    
-                    $0.settings(
-                        sharedPodDependencies.map{ .dependency($0) }
-                    )
-                    
-                    $0.settings(
-                        .sourceFiles(module.main.sourcesPattern)
-                    )
-                }
+                podspec.settings(
+                    .dependency(modules.models.product.name), // <<<======= lower layer
+                    .sourceFiles(module.main.sourcesPattern)
+                )
             },
             testSubSpecs: {
                 
@@ -352,13 +332,14 @@ try [modules.models].forEach{ module in
 
     try CocoaPods
         .Podspec
-        .withSubSpecs(
+        .standard(
             product: module.product,
             company: masterCocoaPod.company,
             version: masterCocoaPod.currentVersion,
             license: (license.name, license.location),
             authors: masterCocoaPod.authors,
-            perPlatformSettings: {
+            swiftVersion: Spec.BuildSettings.swiftVersion.value,
+            globalSettings: {
                 
                 podspec in
                 
@@ -369,27 +350,14 @@ try [modules.models].forEach{ module in
                     .asPairs()
                     .forEach{ podspec.settings(for: $0) }
                 
-                podspec
-                    .settings(
-                        .noPrefix("# static_framework = true") // if depends on static fwk
-                    )
-            },
-            subSpecs: {
+                podspec.settings(
+                    sharedPodDependencies.map{ .dependency($0) }
+                )
                 
-                $0.subSpec(module.main.name){
-                    
-                    $0.settings(
-                        .dependency(modules.services.name) // <<<======= lower layer
-                    )
-                    
-                    $0.settings(
-                        sharedPodDependencies.map{ .dependency($0) }
-                    )
-                    
-                    $0.settings(
-                        .sourceFiles(module.main.sourcesPattern)
-                    )
-                }
+                podspec.settings(
+                    .dependency(modules.services.product.name), // <<<======= lower layer
+                    .sourceFiles(module.main.sourcesPattern)
+                )
             },
             testSubSpecs: {
                 
@@ -410,13 +378,14 @@ try [modules.services].forEach{ module in
 
     try CocoaPods
         .Podspec
-        .withSubSpecs(
+        .standard(
             product: module.product,
             company: masterCocoaPod.company,
             version: masterCocoaPod.currentVersion,
             license: (license.name, license.location),
             authors: masterCocoaPod.authors,
-            perPlatformSettings: {
+            swiftVersion: Spec.BuildSettings.swiftVersion.value,
+            globalSettings: {
                 
                 podspec in
                 
@@ -427,25 +396,15 @@ try [modules.services].forEach{ module in
                     .asPairs()
                     .forEach{ podspec.settings(for: $0) }
                 
-                podspec
-                    .settings(
-                        .noPrefix("# static_framework = true") // if depends on static fwk
-                    )
-            },
-            subSpecs: {
+                // === >>> NO lower layer dependency, as it's the lowest level
                 
-                $0.subSpec(module.main.name){
-                    
-                    // === >>> NO lower layer dependency, as it's the lowest level
-                    
-                    $0.settings(
-                        sharedPodDependencies.map{ .dependency($0) }
-                    )
-                    
-                    $0.settings(
-                        .sourceFiles(module.main.sourcesPattern)
-                    )
-                }
+                podspec.settings(
+                    sharedPodDependencies.map{ .dependency($0) }
+                )
+                
+                podspec.settings(
+                    .sourceFiles(module.main.sourcesPattern)
+                )
             },
             testSubSpecs: {
                 
@@ -480,16 +439,15 @@ try CocoaPods
         deploymentTarget: targets.app.deploymentTarget,
         pods: [
             
-            "pod '\(modules.mobileViews.name)', :path => './'",
-            "pod '\(modules.viewModels.name)', :path => './'",
-            "pod '\(modules.models.name)', :path => './'",
-            "pod '\(modules.services.name)', :path => './'",
+            "pod '\(modules.mobileViews.product.name)', :path => './'",
+            "pod '\(modules.viewModels.product.name)', :path => './'",
+            "pod '\(modules.models.product.name)', :path => './'",
+            "pod '\(modules.services.product.name)', :path => './'",
 
             "# --- here override sources for any needed pods...",
             
             "# --- list any app-level pods like crash reporting, Reveal, etc.",
-
-            "pod 'SwiftLint'",
+            
             "pod 'Reveal-SDK', '13', :configurations => ['Debug']",
             "pod 'HockeySDK', '~> 4.1.0', :subspecs => ['CrashOnlyLib']"
         ]
@@ -507,7 +465,6 @@ try Fastlane
         project: project,
         masterPod: masterCocoaPod,
         otherPodSpecs: [
-            
             modules.mobileViews,
             modules.viewModels,
             modules.models,
@@ -563,37 +520,23 @@ try Fastlane
                 ]
             )
         },
-        endingEntries: [
-            allSubspecs
-                .map{
-                    
-                    Utils.symLinkCmd(
-                        ("$PWD" + SwiftLint.relativeLocation).rawValue,
-                        $0.linterCfgLocation.rawValue
-                    )
-                }
-                .map{
-                    
-                    """
-                    sh 'cd ./.. && \($0)'
-                    """
-                },
-            [targets.app]
-                .map{
-                    
-                    Utils.symLinkCmd(
-                        ("$PWD" + SwiftLint.relativeLocation).rawValue,
-                        $0.linterCfgLocation.rawValue
-                    )
-                }
-                .map{
-                    
-                    """
-                    sh 'cd ./.. && \($0)'
-                    """
-                }
-            ]
-            .flatMap{ $0 }
+        endingEntries: (
+            allSubspecs.map{ $0.linterCfgLocation } +
+            [targets.app.linterCfgLocation]
+            )
+            .map{
+                
+                Utils.symLinkCmd(
+                    ("$PWD" + SwiftLint.relativeLocation).rawValue,
+                    $0.rawValue
+                )
+            }
+            .map{
+                
+                """
+                sh 'cd ./.. && \($0)'
+                """
+            }
     )
     .prepare()
     .writeToFileSystem()
