@@ -57,10 +57,7 @@ struct PendingTextFile<T: TextFile>
     let model: T
 
     public
-    let absolutePrefixLocation: Path
-
-    public
-    let relativeLocation: Path
+    let location: Path
 
     public
     let shouldRemoveSpacesAtEOL: Bool
@@ -98,6 +95,12 @@ struct PendingTextFile<T: TextFile>
 
     //---
 
+    public
+    enum WriteToFileSystemError: Error
+    {
+        case absoluteTargetLocationUndefined
+    }
+    
     @discardableResult
     public
     func writeToFileSystem(
@@ -106,10 +109,20 @@ struct PendingTextFile<T: TextFile>
         reportingPrefixLocation: Path? = nil
         ) throws -> Bool
     {
+        let location = try Utils.mutate(self.location){
+            
+            if
+                !$0.isAbsolute
+            {
+                $0 = try Spec.LocalRepo.current().location + $0
+            }
+        }
+        
+        try location.isAbsolute
+            ?! WriteToFileSystemError.absoluteTargetLocationUndefined
+        
         let reportingPrefixLocation = reportingPrefixLocation
             ?? (try? Spec.LocalRepo.current().location)
-        
-        let location = absolutePrefixLocation + relativeLocation
         
         let locationForReporting: Path = reportingPrefixLocation
             .flatMap{ try? Utils.removePrefix($0, from: location) }

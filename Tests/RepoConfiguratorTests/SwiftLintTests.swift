@@ -91,7 +91,7 @@ extension SwiftLintTests
                 ]
             )
             .prepare(
-                absolutePrefixLocation: Some.path
+                at: Some.path
             )
 
         //---

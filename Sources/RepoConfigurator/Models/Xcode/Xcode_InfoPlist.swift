@@ -132,7 +132,6 @@ extension Xcode.InfoPlist
         initialBuildNumber: BuildNumber = Defaults.initialBuildNumber,
         otherEntries: [String] = [],
         company: Spec.Company? = nil, // for macOS
-        absolutePrefixLocation: Path? = nil,
         removeSpacesAtEOL: Bool = true,
         removeRepeatingEmptyLines: Bool = true
         ) throws -> PendingTextFile<Xcode.InfoPlist>
@@ -179,8 +178,7 @@ extension Xcode.InfoPlist
                 otherEntries: otherEntries
             )
             .prepare(
-                absolutePrefixLocation: absolutePrefixLocation,
-                relativeLocation: target.infoPlistLocation,
+                at: target.infoPlistLocation,
                 removeSpacesAtEOL: removeSpacesAtEOL,
                 removeRepeatingEmptyLines: removeRepeatingEmptyLines
             )

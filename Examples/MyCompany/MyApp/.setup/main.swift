@@ -130,7 +130,7 @@ try (
     }
     .map{
         
-        try DummyFile().prepare(absolutePrefixLocation: $0)
+        try DummyFile().prepare(at: $0)
     }
     .forEach{
         
@@ -204,7 +204,7 @@ try CustomTextFile
         license.text
     )
     .prepare(
-        relativeLocation: license.location
+        at: license.location
     )
     .writeToFileSystem()
 
@@ -278,7 +278,7 @@ try [modules.mobileViews].forEach{ module in
                 }
             }
         )
-        .prepare(relativeLocation: module.podspecLocation)
+        .prepare(at: module.podspecLocation)
         .writeToFileSystem()
 }
 
@@ -324,7 +324,7 @@ try [modules.viewModels].forEach{ module in
                 }
             }
         )
-        .prepare(relativeLocation: module.podspecLocation)
+        .prepare(at: module.podspecLocation)
         .writeToFileSystem()
 }
 
@@ -370,7 +370,7 @@ try [modules.models].forEach{ module in
                 }
             }
         )
-        .prepare(relativeLocation: module.podspecLocation)
+        .prepare(at: module.podspecLocation)
         .writeToFileSystem()
 }
 
@@ -417,7 +417,7 @@ try [modules.services].forEach{ module in
                 }
             }
         )
-        .prepare(relativeLocation: module.podspecLocation)
+        .prepare(at: module.podspecLocation)
         .writeToFileSystem()
 }
 

@@ -78,7 +78,7 @@ try [
     }
     .map{
         
-        try DummyFile().prepare(absolutePrefixLocation: $0)
+        try DummyFile().prepare(at: $0)
     }
     .forEach{
         
@@ -331,7 +331,7 @@ try CustomTextFile("""
     )
     """
     )
-    .prepare(relativeLocation: ["Package.swift"])
+    .prepare(at: ["Package.swift"])
     .writeToFileSystem()
 
 // MARK: - POST-script invocation output

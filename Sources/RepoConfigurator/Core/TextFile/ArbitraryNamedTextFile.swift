@@ -37,21 +37,14 @@ public
 extension ArbitraryNamedTextFile
 {
     func prepare(
-        absolutePrefixLocation: Path? = nil,
-        relativeLocation: Path,
+        at location: Path,
         removeSpacesAtEOL: Bool = true,
         removeRepeatingEmptyLines: Bool = true
         ) throws -> PendingTextFile<Self>
     {
-        let absolutePrefixLocation = try absolutePrefixLocation
-            ?? Spec.LocalRepo.current().location
-        
-        //---
-        
         return PendingTextFile(
             model: self,
-            absolutePrefixLocation: absolutePrefixLocation,
-            relativeLocation: relativeLocation,
+            location: location,
             shouldRemoveSpacesAtEOL: removeSpacesAtEOL,
             shouldRemoveRepeatingEmptyLines: removeRepeatingEmptyLines
         )
