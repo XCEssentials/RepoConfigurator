@@ -37,8 +37,8 @@ public
 extension ArbitraryNamedTextFile
 {
     func prepare(
-        relativeLocation: Path,
         absolutePrefixLocation: Path? = nil,
+        relativeLocation: Path,
         removeSpacesAtEOL: Bool = true,
         removeRepeatingEmptyLines: Bool = true
         ) throws -> PendingTextFile<Self>
@@ -50,21 +50,8 @@ extension ArbitraryNamedTextFile
         
         return PendingTextFile(
             model: self,
-            location: absolutePrefixLocation + relativeLocation,
-            shouldRemoveSpacesAtEOL: removeSpacesAtEOL,
-            shouldRemoveRepeatingEmptyLines: removeRepeatingEmptyLines
-        )
-    }
-    
-    func prepare(
-        absoluteLocation: Path,
-        removeSpacesAtEOL: Bool = true,
-        removeRepeatingEmptyLines: Bool = true
-        ) -> PendingTextFile<Self>
-    {
-        return PendingTextFile(
-            model: self,
-            location: absoluteLocation,
+            absolutePrefixLocation: absolutePrefixLocation,
+            relativeLocation: relativeLocation,
             shouldRemoveSpacesAtEOL: removeSpacesAtEOL,
             shouldRemoveRepeatingEmptyLines: removeRepeatingEmptyLines
         )

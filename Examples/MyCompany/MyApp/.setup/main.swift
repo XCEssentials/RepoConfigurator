@@ -204,7 +204,7 @@ try CustomTextFile
         license.text
     )
     .prepare(
-        absoluteLocation: localRepo.location + license.location
+        relativeLocation: license.location
     )
     .writeToFileSystem()
 

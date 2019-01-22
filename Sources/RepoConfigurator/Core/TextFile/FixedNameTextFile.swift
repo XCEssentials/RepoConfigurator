@@ -68,7 +68,8 @@ extension FixedNameTextFile
         
         return PendingTextFile(
             model: self,
-            location: absolutePrefixLocation + type(of: self).relativeLocation,
+            absolutePrefixLocation: absolutePrefixLocation,
+            relativeLocation: type(of: self).relativeLocation,
             shouldRemoveSpacesAtEOL: removeSpacesAtEOL,
             shouldRemoveRepeatingEmptyLines: removeRepeatingEmptyLines
         )

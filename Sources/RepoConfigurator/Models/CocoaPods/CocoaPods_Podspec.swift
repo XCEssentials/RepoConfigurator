@@ -74,8 +74,8 @@ extension CocoaPods.Podspec
         ) throws -> PendingTextFile<CocoaPods.Podspec>
     {
         return try prepare(
-            relativeLocation: cocoaPod.podspecLocation,
             absolutePrefixLocation: absolutePrefixLocation,
+            relativeLocation: cocoaPod.podspecLocation,
             removeSpacesAtEOL: removeSpacesAtEOL,
             removeRepeatingEmptyLines: removeRepeatingEmptyLines
         )

@@ -179,8 +179,8 @@ extension Xcode.InfoPlist
                 otherEntries: otherEntries
             )
             .prepare(
-                relativeLocation: target.infoPlistLocation,
                 absolutePrefixLocation: absolutePrefixLocation,
+                relativeLocation: target.infoPlistLocation,
                 removeSpacesAtEOL: removeSpacesAtEOL,
                 removeRepeatingEmptyLines: removeRepeatingEmptyLines
             )

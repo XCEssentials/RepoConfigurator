@@ -63,7 +63,7 @@ extension FastlaneTests
     func testFileNames()
     {
         let expectedRelativeLocation: Path = Fastlane.Fastfile.relativeLocation
-        let expectedAbsoluteLocation: Path = Some.path + expectedRelativeLocation
+        let expectedAbsolutePrefixLocation: Path = Some.path
         
         assertThat(
             Fastlane
@@ -85,8 +85,8 @@ extension FastlaneTests
             try! Fastlane
                 .Fastfile()
                 .prepare(absolutePrefixLocation: Some.path)
-                .location
-                == expectedAbsoluteLocation
+                .absolutePrefixLocation
+                == expectedAbsolutePrefixLocation
         )
 
         assertThat(
@@ -94,8 +94,8 @@ extension FastlaneTests
                 .Fastfile
                 .ForApp()
                 .prepare(absolutePrefixLocation: Some.path)
-                .location
-                == expectedAbsoluteLocation
+                .absolutePrefixLocation
+                == expectedAbsolutePrefixLocation
         )
 
         assertThat(
@@ -103,8 +103,8 @@ extension FastlaneTests
                 .Fastfile
                 .ForLibrary()
                 .prepare(absolutePrefixLocation: Some.path)
-                .location
-            == expectedAbsoluteLocation
+                .absolutePrefixLocation
+            == expectedAbsolutePrefixLocation
         )
     }
     

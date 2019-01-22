@@ -57,7 +57,10 @@ struct PendingTextFile<T: TextFile>
     let model: T
 
     public
-    let location: Path
+    let absolutePrefixLocation: Path
+
+    public
+    let relativeLocation: Path
 
     public
     let shouldRemoveSpacesAtEOL: Bool
@@ -99,16 +102,10 @@ struct PendingTextFile<T: TextFile>
     public
     func writeToFileSystem(
         createIntermediateDirectories: Bool = true,
-        ifFileExists: IfFileExistsWritePolicy = .override,
-        reportingPrefixLocation: Path? = nil
+        ifFileExists: IfFileExistsWritePolicy = .override
         ) throws -> Bool
     {
-        let reportingPrefixLocation = reportingPrefixLocation
-            ?? (try? Spec.LocalRepo.current().location)
-        
-        let locationForReporting: Path = reportingPrefixLocation
-            .flatMap{ try? Utils.removePrefix($0, from: location) }
-            ?? location
+        let location = absolutePrefixLocation + relativeLocation
         
         //---
         
@@ -118,7 +115,7 @@ struct PendingTextFile<T: TextFile>
                 .parent
                 .createDirectory(
                     withIntermediateDirectories: createIntermediateDirectories
-            )
+                )
             
             //---
             
@@ -132,20 +129,20 @@ struct PendingTextFile<T: TextFile>
                     encoding: .utf8
                 )
                 
-                print("📄 Written file: \(locationForReporting)")
+                print("📄 Written file: \(relativeLocation)")
                 
                 return true
             }
             else
             {
-                print("ⓘ SKIPPED file: \(locationForReporting)")
+                print("ⓘ SKIPPED file: \(relativeLocation)")
                 
                 return false
             }
         }
         catch
         {
-            print("❌ Failed to write file: \(locationForReporting).")
+            print("❌ Failed to write file: \(location).")
             
             throw error
         }
