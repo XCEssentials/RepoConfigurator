@@ -271,18 +271,19 @@ extension Fastlane.Fastfile.ForLibrary
      */
     func generateProjectViaSwiftPM(
         laneName: String? = nil,
+        _ project: Spec.Project,
         derivedPaths: [Path] = [[".build"]],
-        derivedProject: Spec.Project? = nil
-        ) -> Self
+        scriptBuildPhases: (ScriptBuildPhaseContext) throws -> Void = { _ in },
+        buildSettings: (BuildSettingsContext) -> Void = { _ in },
+        endingEntries: [String] = []
+        ) rethrows -> Self
     {
         let laneName = laneName
             ?? String(#function.split(separator: "(").first!)
         
-        var derivedPaths = derivedPaths
+        let derivedPaths = Utils.mutate(derivedPaths){
             
-        derivedProject.map{
-            
-            derivedPaths += [$0.location]
+            $0 += [project.location]
         }
         
         //---
@@ -292,7 +293,7 @@ extension Fastlane.Fastfile.ForLibrary
             lane :\(laneName) do
             """
 
-        main.indentation.nest{
+        try main.indentation.nest{
 
             let cleanupCmd = derivedPaths
                 .map{ """
@@ -310,6 +311,27 @@ extension Fastlane.Fastfile.ForLibrary
 
                 sh 'cd ./.. && \(cleanupCmd) && swift package generate-xcodeproj'
                 """
+            
+            try scriptBuildPhases(
+                .init(
+                    main
+                )
+            )
+            
+            buildSettings(
+                .init(
+                    main
+                )
+            )
+            
+            main <<< endingEntries.isEmpty.mapIf(false){ """
+                
+                # ===
+                
+                """
+            }
+            
+            main <<< endingEntries
         }
 
         main <<< """

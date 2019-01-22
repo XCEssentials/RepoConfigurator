@@ -268,10 +268,53 @@ extension FastlaneTests
                 # default initial location for any command
                 # is inside 'Fastlane' folder
             
-                sh 'cd ./.. && rm -rf ".build" && swift package generate-xcodeproj'
+                sh 'cd ./.. && rm -rf ".build" && rm -rf "XCEMyFwk.xcodeproj" && swift package generate-xcodeproj'
+
+                # === Build Phase Script - SwiftLintPods | 'XCEMyFwk' | ./../XCEMyFwk.xcodeproj
+
+                begin
+
+                    project = Xcodeproj::Project.open("./../XCEMyFwk.xcodeproj")
+
+                rescue => ex
+
+                    # https://github.com/fastlane/fastlane/issues/7944#issuecomment-274232674
+                    UI.error ex
+                    UI.error("Failed to add Build Phase Script - SwiftLintPods | 'XCEMyFwk' | ./../XCEMyFwk.xcodeproj")
+
+                end
+
+                project
+                    .targets
+                    .select{ |t| ['XCEMyFwk'].include?(t.name) }
+                    .each{ |t|
+
+                        thePhase = t.shell_script_build_phases.find { |s| s.name == "SwiftLintPods" }
+
+                        unless thePhase.nil?
+                            t.build_phases.delete(thePhase)
+                        end
+
+                        thePhase = t.new_shell_script_build_phase("SwiftLintPods")
+                        thePhase.shell_script = '"$PODS_ROOT/SwiftLint/swiftlint"  '
+                        # thePhase.run_only_for_deployment_postprocessing = ...
+
+                        t.build_phases.unshift(t.build_phases.delete(thePhase)) # move to top
+
+                    }
+
+                project.save()
+
+                UI.success("Added Build Phase Script - SwiftLintPods | 'XCEMyFwk' | ./../XCEMyFwk.xcodeproj")
             
             end # lane :generateProjectViaSwiftPM
             """
+        
+        let project = try! Spec.Project(
+            name: "XCEMyFwk",
+            summary: "",
+            deploymentTargets: [:]
+        )
         
         //---
         
@@ -279,7 +322,14 @@ extension FastlaneTests
             .Fastfile
             .ForLibrary()
             .generateProjectViaSwiftPM(
-                derivedPaths: [[".build"]]
+                project,
+                scriptBuildPhases: {
+                    
+                    try! $0.swiftLint(
+                        project: project.location,
+                        targetNames: ["XCEMyFwk"]
+                    )
+                }
             )
             .prepare(
                 at: Some.path
