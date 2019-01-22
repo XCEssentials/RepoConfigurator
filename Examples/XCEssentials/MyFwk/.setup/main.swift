@@ -162,7 +162,7 @@ try CocoaPods
         license: license,
         authors: cocoaPod.authors,
         swiftVersion: Spec.BuildSettings.swiftVersion.value,
-        perPlatformSettings: {
+        globalSettings: {
             
             globalContext in
             
