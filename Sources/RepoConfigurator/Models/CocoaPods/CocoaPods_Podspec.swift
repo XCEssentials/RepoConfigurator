@@ -298,7 +298,7 @@ extension CocoaPods.Podspec
         //swiftlint:disable line_length
 
         buffer <<< """
-            \(s).name          = '\(company.prefix)\(product.name)'
+            \(s).name          = '\(product.name)'
             \(s).summary       = '\(product.summary)'
             \(s).version       = '\(version)'
             \(s).homepage      = 'https://\(company.name).github.io/\(product.name)'

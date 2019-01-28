@@ -151,22 +151,21 @@ extension FrameworkConfigTests
     
     func testCocoaPod()
     {
-        let cocoaPodFullName = company.prefix + project.name
-        let podspec: Path = ["\(company.prefix)\(project.name).\(CocoaPods.Podspec.extension)"]
+        let cocoaPodProductName = company.prefix + project.name
+        let podspec: Path = ["\(cocoaPodProductName).\(CocoaPods.Podspec.extension)"]
         let generatedXcodeProjectLocation: Path = ["Xcode"]
-            + cocoaPodFullName
+            + cocoaPodProductName
             + "Pods.\(Xcode.Project.extension)"
         
         assertThat(cocoaPod.company.name == company.name)
         assertThat(cocoaPod.company.identifier == company.identifier)
         assertThat(cocoaPod.company.prefix == company.prefix)
-        assertThat(cocoaPod.product.name == project.name)
+        assertThat(cocoaPod.product.name == cocoaPodProductName)
         assertThat(cocoaPod.product.summary == project.summary)
         assertThat(cocoaPod.authors.count == 1)
         assertThat(cocoaPod.authors[0].name == "Maxim Khatskevich")
         assertThat(cocoaPod.currentVersion == Defaults.initialVersionString)
         assertThat(cocoaPod.xcodeArtifactsLocation == ["Xcode"])
-        assertThat(cocoaPod.fullName == cocoaPodFullName)
         assertThat(cocoaPod.podspecLocation == podspec)
         assertThat(cocoaPod.generatedXcodeProjectLocation == generatedXcodeProjectLocation)
     }

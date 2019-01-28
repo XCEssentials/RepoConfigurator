@@ -159,19 +159,45 @@ extension Fastlane.Fastfile.ScriptBuildPhaseContext
         }()
     }
     
+    enum ExecutableLocationInfo
+    {
+        case podsRootBuildVar
+        case podsFolder
+        case use(Path)
+    }
+    
     func swiftGen(
         project: Path,
         targetNames: [String],
         scriptName: String = "SwiftGen",
+        executableAt executableLocationInfo: ExecutableLocationInfo = .podsFolder,
         params: [String] = []
         ) throws
     {
+        let typicalSubLocation: Path = ["SwiftGen", "bin", "swiftgen"]
+        
+        let executableLocation: Path
+        
+        switch executableLocationInfo
+        {
+        case .podsRootBuildVar:
+            executableLocation = ["$PODS_ROOT"] + typicalSubLocation
+            
+        case .podsFolder:
+            executableLocation = ["Pods"] + typicalSubLocation
+            
+        case .use(let value):
+            executableLocation = value
+        }
+        
+        //---
+        
         try custom(
             project: project,
             targetNames: targetNames,
             scriptName: scriptName,
             scriptBody: """
-                "$PODS_ROOT/SwiftGen/bin/swiftgen"  \(params.joined(separator: " "))
+                "\(executableLocation.rawValue)"  \(params.joined(separator: " "))
                 """
         )
     }
@@ -180,17 +206,36 @@ extension Fastlane.Fastfile.ScriptBuildPhaseContext
         project: Path,
         targetNames: [String],
         scriptName: String = "Sourcery",
+        executableAt executableLocationInfo: ExecutableLocationInfo = .podsFolder,
         params: [String] = [
             "--prune"
             ]
         ) throws
     {
+        let typicalSubLocation: Path = ["Sourcery", "bin", "sourcery"]
+        
+        let executableLocation: Path
+        
+        switch executableLocationInfo
+        {
+        case .podsRootBuildVar:
+            executableLocation = ["$PODS_ROOT"] + typicalSubLocation
+            
+        case .podsFolder:
+            executableLocation = ["Pods"] + typicalSubLocation
+            
+        case .use(let value):
+            executableLocation = value
+        }
+        
+        //---
+        
         try custom(
             project: project,
             targetNames: targetNames,
             scriptName: scriptName,
             scriptBody: """
-                "$PODS_ROOT/Sourcery/bin/sourcery"  \(params.joined(separator: " "))
+                "\(executableLocation.rawValue)"  \(params.joined(separator: " "))
                 """
         )
     }
@@ -198,16 +243,35 @@ extension Fastlane.Fastfile.ScriptBuildPhaseContext
     func swiftLint(
         project: Path,
         targetNames: [String],
-        scriptName: String = "SwiftLintPods",
+        scriptName: String = "SwiftLint",
+        executableAt executableLocationInfo: ExecutableLocationInfo = .podsFolder,
         params: [String] = []
         ) throws
     {
+        let typicalSubLocation: Path = ["SwiftLint", "swiftlint"]
+        
+        let executableLocation: Path
+        
+        switch executableLocationInfo
+        {
+        case .podsRootBuildVar:
+            executableLocation = ["$PODS_ROOT"] + typicalSubLocation
+            
+        case .podsFolder:
+            executableLocation = ["Pods"] + typicalSubLocation
+            
+        case .use(let value):
+            executableLocation = value
+        }
+        
+        //---
+        
         try custom(
             project: project,
             targetNames: targetNames,
             scriptName: scriptName,
             scriptBody: """
-                "$PODS_ROOT/SwiftLint/swiftlint"  \(params.joined(separator: " "))
+                "\(executableLocation.rawValue)" \(params.joined(separator: " "))
                 """
         )
     }

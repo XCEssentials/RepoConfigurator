@@ -50,16 +50,10 @@ extension Spec
         let xcodeArtifactsLocation: Path
         
         public
-        var fullName: String
-        {
-            return company.prefix + product.name
-        }
-        
-        public
         var podspecLocation: Path
         {
             return Utils
-                .mutate([fullName]){
+                .mutate([product.name]){
                     
                     $0.pathExtension = CocoaPods.Podspec.extension
                 }
@@ -68,7 +62,7 @@ extension Spec
         public
         var generatedXcodeProjectLocation: Path
         {
-            return xcodeArtifactsLocation + fullName + "Pods.\(Xcode.Project.extension)"
+            return xcodeArtifactsLocation + product.name + "Pods.\(Xcode.Project.extension)"
         }
         
         public
@@ -115,7 +109,7 @@ extension Spec
             {
             case .from(let project):
                 podspecProductDescription = (
-                    project.name,
+                    podspecCompanyDescription.prefix + project.name,
                     project.summary
                 )
                 

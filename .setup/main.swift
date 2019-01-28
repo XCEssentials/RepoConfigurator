@@ -38,14 +38,50 @@ let cocoaPod = try Spec.CocoaPod(
     ]
 )
 
+let targets = (
+    main: try Spec.Target(
+        cocoaPod.product.name, // library name with prefix!
+        project: project,
+        platform: project.deploymentTargets.asPairs()[0].platform,
+        bundleIdInfo: .autoWithCompany(company),
+        provisioningProfiles: [:],
+        sourcesLocation: Spec.Locations.sources + project.name,
+        packageType: .framework
+    ),
+    none: ()
+//    tst: try Spec.Target(
+//        project.name + "Tests", // NO company prefix!
+//        project: project,
+//        platform: project.deploymentTargets.asPairs()[0].platform,
+//        bundleIdInfo: .autoWithCompany(company),
+//        provisioningProfiles: [:],
+//        sourcesLocation: Spec.Locations.tests + "\(project.name)Tests",
+//        packageType: .tests
+//    )
+)
+
 // MARK: Parameters - Summary
 
 //localRepo.report()
 remoteRepo.report()
 company.report()
 project.report()
+cocoaPod.report()
 
 // MARK: -
+
+// MARK: Write - Bundler - Gemfile
+
+try Bundler
+    .Gemfile(
+        basicFastlane: true,
+        """
+        gem '\(CocoaPods.gemName)', '1.6.0.beta.2'
+        gem '\(CocoaPods.Rome.gemName)', '~>1.0.1'
+        """
+    )
+    .prepare()
+    .writeToFileSystem()
 
 // MARK: Write - ReadMe
 
@@ -93,13 +129,73 @@ try License
     .prepare()
     .writeToFileSystem()
 
+// MARK: Write - CocoaPods - Podfile
+
+try CocoaPods
+    .Podfile()
+//    .target(
+//        targets.main.name,
+//        deploymentTarget: project.deploymentTargets.asPairs()[0],
+//        pods: [
+//            "pod 'SwiftLint'"
+//        ],
+//        tests: {
+//
+//            $0.unitTestTarget(
+//                targets.tst.name,
+//                pods: [
+//                    "pod 'SwiftLint'"
+//                ]
+//            )
+//        }
+//    )
+    .custom("""
+        platform :osx, '\(project.deploymentTargets.asPairs()[0].minimumVersion)'
+
+        plugin '\(CocoaPods.Rome.gemName)'
+
+        target 'Abstract' do
+
+            pod 'SwiftLint'
+
+        end
+        """
+    )
+    .prepare()
+    .writeToFileSystem()
+
 // MARK: Write - Fastlane - Fastfile
 
 try Fastlane
     .Fastfile
     .ForLibrary()
     .defaultHeader()
-    .generateProjectViaSwiftPM()
+    .generateProjectViaSwiftPM(
+        for: cocoaPod,
+        scriptBuildPhases: {
+            
+            try $0.swiftLint(
+                project: [cocoaPod.product.name],
+                targetNames: [targets.main.name],
+                params:[
+                    """
+                    --path "\(targets.main.sourcesLocation)"
+                    """
+                ]
+            )
+        },
+        endingEntries: [
+            
+            """
+            cocoapods # https://docs.fastlane.tools/actions/cocoapods/
+            """,
+
+            """
+            # NOTE: Origin path MUST be absolute in order the symlink to work properly!
+            sh 'cd ./.. && \(Utils.symLinkCmd(("$PWD" + SwiftLint.relativeLocation).rawValue, targets.main.linterCfgLocation.rawValue))'
+            """
+        ]
+    )
     .prepare()
     .writeToFileSystem()
 

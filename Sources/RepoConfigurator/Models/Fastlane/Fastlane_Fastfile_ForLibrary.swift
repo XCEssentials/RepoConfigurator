@@ -271,7 +271,7 @@ extension Fastlane.Fastfile.ForLibrary
      */
     func generateProjectViaSwiftPM(
         laneName: String? = nil,
-        _ project: Spec.Project,
+        for library: Spec.CocoaPod,
         derivedPaths: [Path] = [[".build"]],
         scriptBuildPhases: (ScriptBuildPhaseContext) throws -> Void = { _ in },
         buildSettings: (BuildSettingsContext) -> Void = { _ in },
@@ -281,13 +281,21 @@ extension Fastlane.Fastfile.ForLibrary
         let laneName = laneName
             ?? String(#function.split(separator: "(").first!)
         
-        let derivedPaths = Utils.mutate(derivedPaths){
+        let projectLocation: Path = Utils.mutate([library.product.name]){
             
-            $0 += [project.location]
+            $0.pathExtension = Xcode.Project.extension
         }
+        
+        let derivedPaths = derivedPaths + [projectLocation]
         
         //---
         
+        _ = require(
+            Xcodeproj.gemName
+        )
+        
+        //---
+
         main <<< """
 
             lane :\(laneName) do

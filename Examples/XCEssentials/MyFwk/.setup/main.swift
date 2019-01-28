@@ -56,6 +56,21 @@ let subSpecs = (
     tests: Spec.CocoaPod.SubSpec.tests()
 )
 
+let targetsSPM = (
+    core: (
+        productName: cocoaPod.product.name,
+        name: cocoaPod.product.name + subSpecs.core.name
+    ),
+    operators: (
+        productName: cocoaPod.product.name + "WithOperators",
+        name: cocoaPod.product.name + subSpecs.operators.name
+    ),
+    allTests: (
+        name: cocoaPod.product.name + subSpecs.tests.name,
+        none: ()
+    )
+)
+
 // MARK: Parameters - Summary
 
 localRepo.report()
@@ -111,10 +126,10 @@ try ReadMe()
         repo: project.name
     )
     .addCocoaPodsVersionBadge(
-        podName: cocoaPod.fullName
+        podName: cocoaPod.product.name
     )
     .addCocoaPodsPlatformsBadge(
-        podName: cocoaPod.fullName
+        podName: cocoaPod.product.name
     )
     .addSwiftPMCompatibleBadge()
     .addCarthageCompatibleBadge()
@@ -184,7 +199,7 @@ try CocoaPods
             $0.subSpec(subSpecs.operators.name){
                 
                 $0.settings(
-                    .dependency("\(cocoaPod.fullName)/\(subSpecs.core.name)"),
+                    .dependency("\(cocoaPod.product.name)/\(subSpecs.core.name)"),
                     .sourceFiles(subSpecs.operators.sourcesPattern)
                 )
             }
@@ -231,10 +246,10 @@ try Fastlane
                 targetNames: project
                     .deploymentTargets
                     .keys
-                    .map{ "\(cocoaPod.fullName)-\($0.rawValue)" },
+                    .map{ "\(cocoaPod.product.name)-\($0.rawValue)" },
                 params: [
 
-                    // NOTE: the '${SRCROOT}' of 'Pods' points inside "./Xcode/MyFwk/"
+                    // NOTE: the '${SRCROOT}' of 'Pods' points inside "./Xcode/XCEMyFwk/"
                     
                     """
                     --path "${SRCROOT}/../../\(Spec.Locations.sources.rawValue)"
@@ -251,7 +266,9 @@ try Fastlane
             """
         ]
     )
-    .generateProjectViaSwiftPM()
+    .generateProjectViaSwiftPM(
+        for: cocoaPod
+    )
     .prepare()
     .writeToFileSystem()
 
@@ -293,36 +310,36 @@ try CustomTextFile("""
     import PackageDescription
 
     let package = Package(
-        name: "\(cocoaPod.fullName)",
+        name: "\(cocoaPod.product.name)",
         products: [
             .library(
-                name: "\(cocoaPod.fullName)",
+                name: "\(targetsSPM.core.productName)",
                 targets: [
-                    "\(cocoaPod.fullName + subSpecs.core.name)"
+                    "\(targetsSPM.core.name)"
                 ]
             ),
             .library(
-                name: "\(cocoaPod.fullName + "WithOperators")",
+                name: "\(targetsSPM.operators.productName)",
                 targets: [
-                    "\(cocoaPod.fullName + subSpecs.operators.name)"
+                    "\(targetsSPM.operators.name)"
                 ]
             ),
         ],
         targets: [
             .target(
-                name: "\(cocoaPod.fullName + subSpecs.core.name)",
+                name: "\(targetsSPM.core.name)",
                 path: "\(subSpecs.core.sourcesLocation)"
             ),
             .target(
-                name: "\(cocoaPod.fullName + subSpecs.operators.name)",
-                dependencies: ["\(cocoaPod.fullName + subSpecs.core.name)"],
+                name: "\(targetsSPM.operators.name)",
+                dependencies: ["\(targetsSPM.core.name)"],
                 path: "\(subSpecs.operators.sourcesLocation)"
             ),
             .testTarget(
-                name: "\(cocoaPod.fullName + subSpecs.tests.name)",
+                name: "\(targetsSPM.allTests.name)",
                 dependencies: [
-                    "\(cocoaPod.fullName + subSpecs.core.name)",
-                    "\(cocoaPod.fullName + subSpecs.operators.name)"
+                    "\(targetsSPM.core.name)",
+                    "\(targetsSPM.operators.name)"
                 ],
                 path: "\(subSpecs.tests.sourcesLocation)"
             ),
