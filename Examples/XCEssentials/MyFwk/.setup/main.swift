@@ -5,7 +5,7 @@ import XCERepoConfigurator
 // MARK: - PRE-script invocation output
 
 print("\n")
-print("--- BEGIN of '\(Executable.name!)' script ---")
+print("--- BEGIN of '\(Executable.name)' script ---")
 
 // MARK: -
 
@@ -353,4 +353,4 @@ try CustomTextFile("""
 
 // MARK: - POST-script invocation output
 
-print("--- END of '\(Executable.name!)' script ---")
+print("--- END of '\(Executable.name)' script ---")
