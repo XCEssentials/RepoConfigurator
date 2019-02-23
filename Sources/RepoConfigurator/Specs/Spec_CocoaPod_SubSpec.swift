@@ -80,7 +80,7 @@ extension Spec.CocoaPod
                 ?? (resourcesLocation + "**" + "*").rawValue
             
             let linterCfgLocation = linterCfgLocation
-                ?? sourcesLocation + SwiftLint.relativeLocation
+                ?? sourcesLocation
                 
             //---
             
