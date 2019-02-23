@@ -24,6 +24,8 @@
 
  */
 
+import Foundation
+
 import FileKit
 
 //---
@@ -39,7 +41,7 @@ extension CocoaPods
 
         public
         static
-        let `extension`: String = "podspec"
+        let `extension`: String = String(describing: Podspec.self).lowercased()
         
         // MARK: Instance level members
 
@@ -65,14 +67,13 @@ public
 extension CocoaPods.Podspec
 {
     func prepare(
-        absolutePrefixLocation: Path = Spec.LocalRepo.location,
+        for cocoaPod: Spec.CocoaPod,
         removeSpacesAtEOL: Bool = true,
         removeRepeatingEmptyLines: Bool = true
-        ) -> PendingTextFile<CocoaPods.Podspec>
+        ) throws -> PendingTextFile<CocoaPods.Podspec>
     {
-        return prepare(
-            relativeLocation: Spec.CocoaPod.podspecLocation,
-            absolutePrefixLocation: absolutePrefixLocation,
+        return try prepare(
+            at: cocoaPod.podspecLocation,
             removeSpacesAtEOL: removeSpacesAtEOL,
             removeRepeatingEmptyLines: removeRepeatingEmptyLines
         )
@@ -100,7 +101,7 @@ extension CocoaPods.Podspec
     public
     typealias License = (
         type: String,
-        fileName: String
+        file: Path
     )
 
     public
@@ -108,76 +109,6 @@ extension CocoaPods.Podspec
         name: String,
         email: String
     )
-
-    public
-    struct PerPlatformSettings
-    {
-        private
-        let specVar: String
-
-        private
-        let buffer: IndentedTextBuffer
-
-        //internal
-        init(
-            specVar: String,
-            buffer: IndentedTextBuffer
-            )
-        {
-            self.specVar = specVar
-            self.buffer = buffer
-        }
-    }
-
-    public
-    struct SubSpecs
-    {
-        private
-        let parentSpecVar: String
-
-        private
-        let specVar: String
-
-        private
-        let buffer: IndentedTextBuffer
-
-        //internal
-        init(
-            parentSpecVar: String,
-            specVar: String,
-            buffer: IndentedTextBuffer
-            )
-        {
-            self.parentSpecVar = parentSpecVar
-            self.specVar = specVar
-            self.buffer = buffer
-        }
-    }
-
-    public
-    struct TestSubSpecs
-    {
-        private
-        let parentSpecVar: String
-
-        private
-        let specVar: String
-
-        private
-        let buffer: IndentedTextBuffer
-
-        //internal
-        init(
-            parentSpecVar: String,
-            specVar: String,
-            buffer: IndentedTextBuffer
-            )
-        {
-            self.parentSpecVar = parentSpecVar
-            self.specVar = specVar
-            self.buffer = buffer
-        }
-    }
 }
 
 // MARK: - Presets
@@ -188,14 +119,16 @@ extension CocoaPods.Podspec
     static
     func standard(
         specVar: String = Defaults.specVariable,
+        subSpecVar: String = Defaults.subSpecVariable,
         product: Product,
         company: Company,
         version: VersionString = Defaults.initialVersionString,
         license: License,
         authors: [Author],
         cocoapodsVersion: VersionString? = Defaults.cocoapodsVersion,
-        swiftVersion: VersionString? = Spec.BuildSettings.swiftVersion,
-        perPlatformSettings: (PerPlatformSettings) -> Void,
+        swiftVersion: VersionString? = Spec.BuildSettings.swiftVersion.value,
+        globalSettings: (PerPlatformSettingsContext) -> Void,
+        testSubSpecs: (TestSubSpecsContext) -> Void = { _ in },
         customEntries: [String] = []
         ) -> CocoaPods.Podspec
     {
@@ -221,9 +154,17 @@ extension CocoaPods.Podspec
                 swiftVersion: swiftVersion
             )
 
-            perPlatformSettings(
-                PerPlatformSettings(
+            globalSettings(
+                PerPlatformSettingsContext(
                     specVar: specVar,
+                    buffer: result.buffer
+                )
+            )
+
+            testSubSpecs(
+                TestSubSpecsContext(
+                    parentSpecVar: specVar,
+                    specVar: subSpecVar,
                     buffer: result.buffer
                 )
             )
@@ -256,10 +197,10 @@ extension CocoaPods.Podspec
         license: License,
         authors: [Author],
         cocoapodsVersion: VersionString? = Defaults.cocoapodsVersion,
-        swiftVersion: VersionString? = Spec.BuildSettings.swiftVersion,
-        perPlatformSettings: (PerPlatformSettings) -> Void,
-        subSpecs: (SubSpecs) -> Void,
-        testSubSpecs: (TestSubSpecs) -> Void = { _ in },
+        swiftVersion: VersionString? = Spec.BuildSettings.swiftVersion.value,
+        globalSettings: (PerPlatformSettingsContext) -> Void,
+        subSpecs: (SubSpecsContext) -> Void,
+        testSubSpecs: (TestSubSpecsContext) -> Void = { _ in },
         customEntries: [String] = []
         ) -> CocoaPods.Podspec
     {
@@ -285,8 +226,8 @@ extension CocoaPods.Podspec
                 swiftVersion: swiftVersion
             )
 
-            perPlatformSettings(
-                PerPlatformSettings(
+            globalSettings(
+                PerPlatformSettingsContext(
                     specVar: specVar,
                     buffer: result.buffer
                 )
@@ -300,7 +241,7 @@ extension CocoaPods.Podspec
                 """
 
             subSpecs(
-                SubSpecs(
+                SubSpecsContext(
                     parentSpecVar: specVar,
                     specVar: subSpecVar,
                     buffer: result.buffer
@@ -308,7 +249,7 @@ extension CocoaPods.Podspec
             )
 
             testSubSpecs(
-                TestSubSpecs(
+                TestSubSpecsContext(
                     parentSpecVar: specVar,
                     specVar: subSpecVar,
                     buffer: result.buffer
@@ -347,7 +288,7 @@ extension CocoaPods.Podspec
         license: CocoaPods.Podspec.License,
         authors: [CocoaPods.Podspec.Author],
         cocoapodsVersion: VersionString? = Defaults.cocoapodsVersion,
-        swiftVersion: VersionString? = Spec.BuildSettings.swiftVersion
+        swiftVersion: VersionString? = Spec.BuildSettings.swiftVersion.value
         )
     {
         // https://guides.cocoapods.org/syntax/podspec.html#group_root_specification
@@ -357,7 +298,7 @@ extension CocoaPods.Podspec
         //swiftlint:disable line_length
 
         buffer <<< """
-            \(s).name          = '\(company.prefix)\(product.name)'
+            \(s).name          = '\(product.name)'
             \(s).summary       = '\(product.summary)'
             \(s).version       = '\(version)'
             \(s).homepage      = 'https://\(company.name).github.io/\(product.name)'
@@ -366,7 +307,7 @@ extension CocoaPods.Podspec
 
             \(s).requires_arc  = true
 
-            \(s).license       = { :type => '\(license.type)', :file => '\(license.fileName)' }
+            \(s).license       = { :type => '\(license.type)', :file => '\(license.file.rawValue)' }
 
             \(s).authors = {
             """
@@ -387,230 +328,6 @@ extension CocoaPods.Podspec
             \(swiftVersion.map{ "\(s).swift_version = '\($0)'" } ?? "")
 
             \(cocoapodsVersion.map{ "\(s).cocoapods_version = '>= \($0)'" } ?? "")
-            """
-    }
-}
-
-public
-extension CocoaPods.Podspec.PerPlatformSettings
-{
-    enum PrefixedEntry
-    {
-        case noPrefix(String)
-        case sourceFiles(String)
-        case dependency(String)
-        
-        fileprivate
-        var unwrapped: String
-        {
-            switch self
-            {
-            case .noPrefix(let entry):
-                return entry
-                
-            case .sourceFiles(let entry):
-                return "source_files = " + entry
-                
-            case .dependency(let entry):
-                return "dependency " + entry
-            }
-        }
-    }
-    
-    /**
-     Adds minimum deployment target declaration & related platform specific settings.
-     */
-    func settings(
-        for deploymentTarget: DeploymentTarget,
-        _ settigns: [PrefixedEntry]
-        )
-    {
-        // https://guides.cocoapods.org/syntax/podspec.html#group_multi_platform_support
-
-        let platformId = deploymentTarget.platform.cocoaPodsId
-        let prefix = "\(specVar).\(platformId)."
-
-        buffer.appendNewLine()
-        
-        buffer <<< """
-            # === \(platformId)
-
-            """
-
-        buffer <<< """
-            \(prefix)deployment_target = '\(deploymentTarget.minimumVersion)'
-
-            """
-
-        // might be a list of single lines,
-        // one nultiline strings,
-        // or a combination of single and multilines,
-        // so lets flatten this out
-        buffer <<< settigns.map{ """
-            \(prefix)\($0.unwrapped)
-            """
-        }
-    }
-    
-    /**
-     Adds minimum deployment target declaration & related platform specific settings.
-     */
-    func settings(
-        for deploymentTarget: DeploymentTarget,
-        _ settigns: PrefixedEntry...
-        )
-    {
-        settings(
-            for: deploymentTarget,
-            settigns
-        )
-    }
-    
-    /**
-     Adds platform specific settings for given platform.
-     */
-    func settings(
-        for platformId: OSIdentifier,
-        _ settigns: [PrefixedEntry]
-        )
-    {
-        // https://guides.cocoapods.org/syntax/podspec.html#group_multi_platform_support
-
-        let platformId = platformId.cocoaPodsId
-        let prefix = "\(specVar).\(platformId)."
-
-        buffer.appendNewLine()
-        
-        buffer <<< """
-            # === \(platformId)
-
-            """
-
-        // might be a list of single lines,
-        // one nultiline strings,
-        // or a combination of single and multilines,
-        // so lets flatten this out
-        buffer <<< settigns.map{ """
-            \(prefix)\($0.unwrapped)
-            """
-        }
-    }
-    
-    
-    /**
-     Adds platform specific settings for given platform.
-     */
-    func settings(
-        for platformId: OSIdentifier,
-        _ settigns: PrefixedEntry...
-        )
-    {
-        settings(
-            for: platformId,
-            settigns
-        )
-    }
-    
-    /**
-     Settings common for all platforms.
-     */
-    func settings(
-        _ settigns: [PrefixedEntry]
-        )
-    {
-        // https://guides.cocoapods.org/syntax/podspec.html#group_multi_platform_support
-
-        let prefix = "\(specVar)."
-
-        buffer.appendNewLine()
-        
-        // might be a list of single lines,
-        // one nultiline strings,
-        // or a combination of single and multilines,
-        // so lets flatten this out
-        buffer <<< settigns.map{ """
-            \(prefix)\($0.unwrapped)
-            """
-        }
-    }
-    
-    /**
-     Settings common for all platforms.
-     */
-    func settings(
-        _ settigns: PrefixedEntry...
-        )
-    {
-        settings(
-            settigns
-        )
-    }
-}
-
-public
-extension CocoaPods.Podspec.SubSpecs
-{
-    func subSpec(
-        _ specName: String,
-        perPlatformSettings: (CocoaPods.Podspec.PerPlatformSettings) -> Void
-        )
-    {
-        // https://guides.cocoapods.org/syntax/podspec.html#subspec
-
-        buffer.appendNewLine()
-        
-        buffer <<< """
-            \(parentSpecVar).subspec '\(specName)' do |\(specVar)|
-
-            """
-
-        buffer.indentation.nest{
-
-            perPlatformSettings(
-                CocoaPods.Podspec.PerPlatformSettings(
-                    specVar: specVar,
-                    buffer: buffer
-                )
-            )
-        }
-
-        buffer <<< """
-
-            end # subspec '\(specName)'
-            """
-    }
-}
-
-public
-extension CocoaPods.Podspec.TestSubSpecs
-{
-    func testSubSpec(
-        _ specName: String,
-        perPlatformSettings: (CocoaPods.Podspec.PerPlatformSettings) -> Void
-        )
-    {
-        // https://guides.cocoapods.org/syntax/podspec.html#test_spec
-
-        buffer.appendNewLine()
-        
-        buffer <<< """
-            \(parentSpecVar).test_spec '\(specName)' do |\(specVar)|
-
-            """
-
-        buffer.indentation.nest{
-
-            perPlatformSettings(
-                CocoaPods.Podspec.PerPlatformSettings(
-                    specVar: specVar,
-                    buffer: buffer
-                )
-            )
-        }
-
-        buffer <<< """
-
-            end # test_spec '\(specName)'
             """
     }
 }

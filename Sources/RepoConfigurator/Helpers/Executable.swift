@@ -36,8 +36,8 @@ enum Executable // scope
      */
     public
     static
-    var name: String?
+    var name: String
     {
-        return Bundle.main.executableURL?.pathComponents.last
+        return Bundle.main.executableURL?.pathComponents.last ?? ""
     }
 }

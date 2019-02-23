@@ -11,7 +11,6 @@ let package = Package(
         )
     ],
     dependencies: [
-        // NOTE: we expect this package is one level deeper from root!
         .package(path: "./../")
     ],
     targets: [

@@ -27,6 +27,7 @@
 import XCTest
 
 import FileKit
+import SwiftHamcrest
 
 // @testable
 import XCERepoConfigurator
@@ -34,7 +35,7 @@ import XCERepoConfigurator
 //---
 
 final
-class FastlaneTests: FileModelTestsContext
+class FastlaneTests: XCTestCase
 {
     // MARK: Type level members
 
@@ -45,7 +46,7 @@ class FastlaneTests: FileModelTestsContext
         ("testDefaultHeader", testDefaultHeader),
         ("testLibraryBeforeReleaseLane", testLibraryBeforeReleaseLane),
         ("testLibraryGenerateProjectViaCPLane", testLibraryGenerateProjectViaCPLane),
-        ("testLibraryGenerateProjectViaIceLane", testLibraryGenerateProjectViaIceLane)
+        ("testLibraryGenerateProjectViaSwiftPMLane", testLibraryGenerateProjectViaSwiftPMLane)
         ]
 
 }
@@ -61,37 +62,55 @@ extension FastlaneTests
     
     func testFileNames()
     {
-        let expectedRelativeLocation: Path = ["fastlane", "Fastfile"]
-        let expectedAbsoluteLocation: Path = someLocation + expectedRelativeLocation
+        let expectedRelativeLocation: Path = Fastlane.Fastfile.relativeLocation
+        let expectedAbsolutePrefixLocation: Path = Some.path + expectedRelativeLocation
         
-        XCTAssertEqual(
-            Fastlane.Fastfile.relativeLocation,
-            expectedRelativeLocation
+        assertThat(
+            Fastlane
+                .Fastfile
+                .ForApp
+                .relativeLocation
+                == expectedRelativeLocation
         )
         
-        XCTAssertEqual(
-            Fastlane.Fastfile.ForApp.relativeLocation,
-            expectedRelativeLocation
+        assertThat(
+            Fastlane
+                .Fastfile
+                .ForLibrary
+                .relativeLocation
+                == expectedRelativeLocation
         )
         
-        XCTAssertEqual(
-            Fastlane.Fastfile.ForLibrary.relativeLocation,
-            expectedRelativeLocation
-        )
-        
-        XCTAssertEqual(
-            Fastlane.Fastfile().prepare(absolutePrefixLocation: someLocation).location,
-            expectedAbsoluteLocation
+        assertThat(
+            try! Fastlane
+                .Fastfile()
+                .prepare(
+                    at: Some.path
+                )
+                .location
+                == expectedAbsolutePrefixLocation
         )
 
-        XCTAssertEqual(
-            Fastlane.Fastfile.ForApp().prepare(absolutePrefixLocation: someLocation).location,
-            expectedAbsoluteLocation
+        assertThat(
+            try! Fastlane
+                .Fastfile
+                .ForApp()
+                .prepare(
+                    at: Some.path
+                )
+                .location
+                == expectedAbsolutePrefixLocation
         )
 
-        XCTAssertEqual(
-            Fastlane.Fastfile.ForLibrary().prepare(absolutePrefixLocation: someLocation).location,
-            expectedAbsoluteLocation
+        assertThat(
+            try! Fastlane
+                .Fastfile
+                .ForLibrary()
+                .prepare(
+                    at: Some.path
+                )
+                .location
+            == expectedAbsolutePrefixLocation
         )
     }
     
@@ -120,27 +139,29 @@ extension FastlaneTests
             # This is the minimum version number required.
             # Update this, if you use features of a newer version
             fastlane_version '2.100.0'
+            
             """
         
         //---
         
-        let model = Fastlane
+        let model = try! Fastlane
             .Fastfile()
             .defaultHeader()
             .prepare(
-                absolutePrefixLocation: someLocation
+                at: Some.path
             )
         
         //---
         
-        XCTAssert(model.content.trimmingNewLines == targetOutput)
+        assertThat(model.content == targetOutput)
     }
     
     func testLibraryBeforeReleaseLane()
     {
-        let cocoaPodsModuleName = "XCEPipeline"
+        let cocoaPodsModuleName = "XCEPipeline.podspec"
         
-        let targetOutput = """
+        let targetOutput = { """
+            
             lane :beforeRelease do
 
                 ensure_git_branch(
@@ -159,7 +180,7 @@ extension FastlaneTests
                 # === Remember current version number
 
                 versionNumber = version_get_podspec(
-                    path: '\(cocoaPodsModuleName).podspec'
+                    path: '\(cocoaPodsModuleName)'
                 )
 
                 puts 'Current VERSION number: ' + versionNumber
@@ -173,38 +194,40 @@ extension FastlaneTests
                 # === Bump version number & commit changes
 
                 version_bump_podspec(
-                    path: '\(cocoaPodsModuleName).podspec',
+                    path: '\(cocoaPodsModuleName)',
                     version_number: newVersionNumber
                 )
 
                 git_commit(
-                    path: '\(cocoaPodsModuleName).podspec',
+                    path: '\(cocoaPodsModuleName)',
                     message: 'Version Bump to ' + newVersionNumber + ' in Podspec file'
                 )
 
             end # lane :beforeRelease
             """
+        }()
         
         //---
         
-        let model = Fastlane
+        let model = try! Fastlane
             .Fastfile
             .ForLibrary()
             .beforeRelease(
-                podSpec: [cocoaPodsModuleName]
+                podspecLocation: .use([cocoaPodsModuleName])
             )
             .prepare(
-                absolutePrefixLocation: someLocation
+                at: Some.path
             )
         
         //---
         
-        XCTAssert(model.content.trimmingNewLines == targetOutput)
+        assertThat(model.content == targetOutput)
     }
     
     func testLibraryGenerateProjectViaCPLane()
     {
         let targetOutput = """
+            
             lane :generateProjectViaCP do
             
                 # === Regenerate project
@@ -219,50 +242,114 @@ extension FastlaneTests
         
         //---
         
-        let model = Fastlane
+        let model = try! Fastlane
             .Fastfile
             .ForLibrary()
             .generateProjectViaCP(
                 callCocoaPods: .directly
             )
             .prepare(
-                absolutePrefixLocation: someLocation
+                at: Some.path
             )
         
         //---
         
-        XCTAssert(model.content.trimmingNewLines == targetOutput)
+        assertThat(model.content == targetOutput)
     }
     
-    func testLibraryGenerateProjectViaIceLane()
+    func testLibraryGenerateProjectViaSwiftPMLane()
     {
+        let scriptName = "SwiftLint"
+        
         let targetOutput = """
-            lane :generateProjectViaIce do
+            
+            lane :generateProjectViaSwiftPM do
             
                 # === Regenerate project
             
                 # default initial location for any command
                 # is inside 'Fastlane' folder
             
-                sh 'cd ./.. && rm -rf ".build" && ice xc'
+                sh 'cd ./.. && rm -rf ".build" && rm -rf "XCEMyFwk.xcodeproj" && swift package generate-xcodeproj'
+
+                # === Build Phase Script - \(scriptName) | 'XCEMyFwk' | ./../XCEMyFwk.xcodeproj
+
+                begin
+
+                    project = Xcodeproj::Project.open("./../XCEMyFwk.xcodeproj")
+
+                rescue => ex
+
+                    # https://github.com/fastlane/fastlane/issues/7944#issuecomment-274232674
+                    UI.error ex
+                    UI.error("Failed to add Build Phase Script - \(scriptName) | 'XCEMyFwk' | ./../XCEMyFwk.xcodeproj")
+
+                end
+
+                project
+                    .targets
+                    .select{ |t| ['XCEMyFwk'].include?(t.name) }
+                    .each{ |t|
+
+                        thePhase = t.shell_script_build_phases.find { |s| s.name == "\(scriptName)" }
+
+                        unless thePhase.nil?
+                            t.build_phases.delete(thePhase)
+                        end
+
+                        thePhase = t.new_shell_script_build_phase("\(scriptName)")
+                        thePhase.shell_script = '"Pods/SwiftLint/swiftlint" '
+                        # thePhase.run_only_for_deployment_postprocessing = ...
+
+                        t.build_phases.unshift(t.build_phases.delete(thePhase)) # move to top
+
+                    }
+
+                project.save()
+
+                UI.success("Added Build Phase Script - \(scriptName) | 'XCEMyFwk' | ./../XCEMyFwk.xcodeproj")
             
-            end # lane :generateProjectViaIce
+            end # lane :generateProjectViaSwiftPM
             """
         
+        let company = try! Spec.Company(
+            prefix: "XCE",
+            name: ""
+        )
+        
+        let project = try! Spec.Project(
+            name: "MyFwk",
+            summary: "",
+            deploymentTargets: [:]
+        )
+        
+        let library = try! Spec.CocoaPod(
+            companyInfo: .from(company),
+            productInfo: .from(project),
+            authors: []
+        )
+        
         //---
         
-        let model = Fastlane
+        let model = try! Fastlane
             .Fastfile
             .ForLibrary()
-            .generateProjectViaIce(
-                derivedPaths: [[".build"]]
+            .generateProjectViaSwiftPM(
+                for: library,
+                scriptBuildPhases: {
+                    
+                    try! $0.swiftLint(
+                        project: [library.product.name],
+                        targetNames: [library.product.name]
+                    )
+                }
             )
             .prepare(
-                absolutePrefixLocation: someLocation
+                at: Some.path
             )
         
         //---
         
-        XCTAssert(model.content.trimmingNewLines == targetOutput)
+        assertThat(model.content == targetOutput)
     }
 }

@@ -26,13 +26,15 @@
 
 import XCTest
 
+import SwiftHamcrest
+
 // @testable
 import XCERepoConfigurator
 
 //---
 
 final
-class SwiftLintTests: FileModelTestsContext
+class SwiftLintTests: XCTestCase
 {
     // MARK: Type level members
     
@@ -82,18 +84,18 @@ extension SwiftLintTests
 
         //---
 
-        let model = SwiftLint
+        let model = try! SwiftLint
             .standard(
                 exclude: [
                     "Templates"
                 ]
             )
             .prepare(
-                absolutePrefixLocation: someLocation
+                at: Some.path
             )
 
         //---
 
-        XCTAssert(model.content.trimmingNewLines == targetOutput)
+        assertThat(model.content == targetOutput)
     }
 }

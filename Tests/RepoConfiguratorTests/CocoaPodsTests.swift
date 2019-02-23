@@ -26,6 +26,8 @@
 
 import XCTest
 
+import SwiftHamcrest
+
 // @testable
 import XCERepoConfigurator
 
@@ -49,7 +51,7 @@ extension CocoaPodsTests
 {
     func testGemNames()
     {
-        XCTAssertEqual(CocoaPods.gemName, "cocoapods")
-        XCTAssertEqual(CocoaPods.gemCallName, "pod")
+        assertThat(CocoaPods.gemName == "cocoapods")
+        assertThat(CocoaPods.gemCallName == "pod")
     }
 }

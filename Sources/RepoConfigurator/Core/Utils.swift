@@ -85,14 +85,14 @@ extension Utils
     static
     func mutate<T>(
         _ value: T,
-        _ body: (inout T) -> Void
-        ) -> T
+        _ body: (inout T) throws -> Void
+        ) rethrows -> T
     {
         var tmp = value
         
         //---
         
-        body(&tmp)
+        try body(&tmp)
         
         //---
         

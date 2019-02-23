@@ -44,21 +44,10 @@ extension Xcode
             case framework = "FMWK"
             case tests = "BNDL"
         }
-
-        fileprivate
-        struct Sections
-        {
-            private
-            let buffer: IndentedTextBuffer
-            
-            fileprivate
-            init(
-                buffer: IndentedTextBuffer
-                )
-            {
-                self.buffer = buffer
-            }
-        }
+        
+        public
+        static
+        let `extension` = "plist"
 
         // MARK: Instance level members
 
@@ -127,25 +116,37 @@ extension Xcode
 public
 extension Xcode.InfoPlist
 {
+    public
+    enum Error: Swift.Error
+    {
+        case encounteredUnsupportedPlatform(
+            platform: OSIdentifier
+        )
+    }
+    
     static
-    func prepare<T: XcodeProjectTarget>(
-        for target: T,
+    func prepare(
+        for project: Spec.Project,
+        target: Spec.Target,
         initialVersionString: VersionString = Defaults.initialVersionString,
         initialBuildNumber: BuildNumber = Defaults.initialBuildNumber,
         otherEntries: [String] = [],
-        absolutePrefixLocation: Path = Spec.LocalRepo.location,
+        company: Spec.Company? = nil, // for macOS
         removeSpacesAtEOL: Bool = true,
         removeRepeatingEmptyLines: Bool = true
-        ) -> PendingTextFile<Xcode.InfoPlist>
+        ) throws -> PendingTextFile<Xcode.InfoPlist>
     {
-        guard
-            Array(Spec.Product.deploymentTargets.keys)
-                .contains(target.deploymentTarget.platform)
-        else
-        {
-            fatalError("❌ Attempt to generate info file for unsupported platform \(target.deploymentTarget.platform)!")
-        }
-    
+        try Array
+            .init(
+                project.deploymentTargets.keys
+            )
+            .contains(
+                target.deploymentTarget.platform
+            )
+            ?! Error.encounteredUnsupportedPlatform(
+                platform: target.deploymentTarget.platform
+            )
+        
         //---
     
         let preset: Xcode.InfoPlist.Preset?
@@ -156,9 +157,10 @@ extension Xcode.InfoPlist
             preset = .iOS
             
         case .macOS:
-            preset = .macOS(
-                copyrightYear: Spec.Product.copyrightYear,
-                copyrightEntity: Spec.Company.name
+            preset = try .macOS(
+                copyrightYear: project.copyrightYear,
+                copyrightEntity: company?.name
+                    ?? Spec.Company().name
             )
             
         default:
@@ -167,7 +169,7 @@ extension Xcode.InfoPlist
     
         //---
     
-        return self
+        return try self
             .init(
                 for: target.packageType,
                 initialVersionString: initialVersionString,
@@ -176,8 +178,7 @@ extension Xcode.InfoPlist
                 otherEntries: otherEntries
             )
             .prepare(
-                relativeLocation: target.infoPlistLocation,
-                absolutePrefixLocation: absolutePrefixLocation,
+                at: target.infoPlistLocation,
                 removeSpacesAtEOL: removeSpacesAtEOL,
                 removeRepeatingEmptyLines: removeRepeatingEmptyLines
             )
@@ -202,129 +203,15 @@ extension Xcode.InfoPlist
         //---
 
         static
-        func macOSWithCurrentYear(
-            copyrightEntity: String
+        func macOS(
+            _ company: Spec.Company,
+            _ project: Spec.Project
             ) -> Preset
         {
             return .macOS(
-                copyrightYear: Spec.Product.copyrightYear,
-                copyrightEntity: copyrightEntity
+                copyrightYear: project.copyrightYear,
+                copyrightEntity: company.name
             )
         }
-    }
-}
-
-// MARK: - Content rendering
-
-fileprivate
-extension Xcode.InfoPlist.Sections
-{
-    func header()
-    {
-        buffer <<< """
-            <?xml version="1.0" encoding="UTF-8"?>
-            <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-            <plist version="1.0">
-            <dict>
-            """
-    }
-
-    func basic(
-        packageType: Xcode.InfoPlist.PackageType,
-        initialVersionString: VersionString = Defaults.initialVersionString,
-        initialBuildNumber: BuildNumber = Defaults.initialBuildNumber
-        )
-    {
-        buffer <<< """
-
-            <key>CFBundleDevelopmentRegion</key>
-            <string>$(DEVELOPMENT_LANGUAGE)</string>
-            <key>CFBundleExecutable</key>
-            <string>$(EXECUTABLE_NAME)</string>
-            <key>CFBundleIdentifier</key>
-            <string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
-            <key>CFBundleInfoDictionaryVersion</key>
-            <string>6.0</string>
-            <key>CFBundleName</key>
-            <string>$(PRODUCT_NAME)</string>
-            <key>CFBundlePackageType</key>
-            <string>\(packageType.rawValue)</string>
-            <key>CFBundleShortVersionString</key>
-            <string>\(initialVersionString)</string>
-            <key>CFBundleVersion</key>
-            <string>\(initialBuildNumber)</string>
-            """
-    }
-
-    func iOSApp()
-    {
-        buffer <<< """
-
-            <key>LSRequiresIPhoneOS</key>
-            <true/>
-            <key>UILaunchStoryboardName</key>
-            <string>LaunchScreen</string>
-            <key>UIRequiredDeviceCapabilities</key>
-            <array>
-            <string>armv7</string>
-            </array>
-            <key>UISupportedInterfaceOrientations</key>
-            <array>
-            <string>UIInterfaceOrientationPortrait</string>
-            </array>
-            """
-    }
-
-    func macOSApp(
-        copyrightYear: UInt = Spec.Product.copyrightYear,
-        copyrightEntity: String
-        )
-    {
-        buffer <<< """
-
-            <key>CFBundleIconFile</key>
-            <string></string>
-            <key>LSMinimumSystemVersion</key>
-            <string>$(MACOSX_DEPLOYMENT_TARGET)</string>
-            <key>NSHumanReadableCopyright</key>
-            <string>Copyright © \(copyrightYear) \(copyrightEntity). All rights reserved.</string>
-            <key>NSMainNibFile</key>
-            <string>MainMenu</string>
-            <key>NSPrincipalClass</key>
-            <string>NSApplication</string>
-            """
-    }
-
-    func macOSFramework(
-        copyrightYear: UInt = Spec.Product.copyrightYear,
-        copyrightEntity: String
-        )
-    {
-        buffer <<< """
-
-            <key>NSHumanReadableCopyright</key>
-            <string>Copyright © \(copyrightYear) \(copyrightEntity). All rights reserved.</string>
-            <key>NSPrincipalClass</key>
-            <string></string>
-            """
-    }
-
-    func custom(
-        _ customEntry: String
-        )
-    {
-        buffer <<< """
-
-            \(customEntry)
-            """
-    }
-
-    func footer()
-    {
-        buffer <<< """
-
-            </dict>
-            </plist>
-            """
     }
 }

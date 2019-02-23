@@ -41,18 +41,36 @@ extension Fastlane.Fastfile
 public
 extension Fastlane.Fastfile.ForLibrary
 {
+    public
+    enum PodspecLocation
+    {
+        case from(Spec.CocoaPod)
+        case use(Path)
+    }
+    
     func beforeRelease(
+        laneName: String? = nil,
         beginningEntries: [String] = [],
         ensureGitBranch: String? = Defaults.releaseGitBranchesRegEx,
-        podSpec: Path? = Spec.CocoaPod.podspecLocation, // pass 'nil' if shouldn't support CocoaPods
+        podspecLocation: PodspecLocation?, // pass 'nil' if shouldn't support CocoaPods
         endingEntries: [String] = []
         ) -> Self
     {
-        let laneName = #function.split(separator: "(").first!
-
-        let podSpec = Utils.mutate(podSpec){
+        let laneName = laneName
+            ?? String(#function.split(separator: "(").first!)
+        
+        let podSpec: Path?
+        
+        switch podspecLocation
+        {
+        case .some(.from(let cocoaPod)):
+            podSpec = cocoaPod.podspecLocation
             
-            $0?.pathExtension = CocoaPods.Podspec.extension // just in case!
+        case .some(.use(let value)):
+            podSpec = value
+            
+        default:
+            podSpec = nil
         }
         
         //---
@@ -158,17 +176,19 @@ extension Fastlane.Fastfile.ForLibrary
      folder, using 'cocoapods' and 'cocoapods-generate'.
      */
     func generateProjectViaCP(
+        laneName: String? = nil,
         beginningEntries: [String] = [],
         callCocoaPods: GemCallMethod, // enforce explicit configuration!
-        prefixLocation: Path = Path("Xcode"),
+        prefixLocation: Path = ["Xcode"],
         extraGenParams: [String] = [],
-        scriptBuildPhases: (ScriptBuildPhaseContext) -> Void = { _ in },
+        scriptBuildPhases: (ScriptBuildPhaseContext) throws -> Void = { _ in },
         buildSettings: (BuildSettingsContext) -> Void = { _ in },
         endingEntries: [String] = []
-        ) -> Self
+        ) rethrows -> Self
     {
-        let laneName = #function.split(separator: "(").first!
-
+        let laneName = laneName
+            ?? String(#function.split(separator: "(").first!)
+        
         //---
 
         _ = require(
@@ -186,25 +206,15 @@ extension Fastlane.Fastfile.ForLibrary
         
         main.appendNewLine()
 
-        main.indentation.nest{
+        try main.indentation.nest{
 
             main <<< beginningEntries
             
             main.appendNewLine()
 
-            let cleanupCmd = [
-                
-                    prefixLocation
-                ]
-                .map{ """
-                    rm -rf "\($0)"
-                    """
-                }
-                .map{ """
-                     && \($0)
-                    """
-                }
-                .joined()
+            let cleanupCmd = """
+                rm -rf "\(prefixLocation)"
+                """
             
             let genParams = (extraGenParams + [
                 
@@ -220,10 +230,10 @@ extension Fastlane.Fastfile.ForLibrary
                 # default initial location for any command
                 # is inside 'Fastlane' folder
 
-                sh 'cd ./..\(cleanupCmd) && \(CocoaPods.call(callCocoaPods)) \(CocoaPods.Generate.gemCallName) \(genParams)'
+                sh 'cd ./.. && \(cleanupCmd) && \(CocoaPods.call(callCocoaPods)) \(CocoaPods.Generate.gemCallName) \(genParams)'
                 """
             
-            scriptBuildPhases(
+            try scriptBuildPhases(
                 .init(
                     main
                 )
@@ -259,31 +269,46 @@ extension Fastlane.Fastfile.ForLibrary
      Depends on SwiftPM and Ice.
      https://github.com/jakeheis/Ice
      */
-    func generateProjectViaIce(
-        derivedPaths: [Path] = [[".build"], Spec.Project.location]
-        ) -> Self
+    func generateProjectViaSwiftPM(
+        laneName: String? = nil,
+        for library: Spec.CocoaPod,
+        derivedPaths: [Path] = [[".build"]],
+        scriptBuildPhases: (ScriptBuildPhaseContext) throws -> Void = { _ in },
+        buildSettings: (BuildSettingsContext) -> Void = { _ in },
+        endingEntries: [String] = []
+        ) rethrows -> Self
     {
-        let laneName = #function.split(separator: "(").first!
-
+        let laneName = laneName
+            ?? String(#function.split(separator: "(").first!)
+        
+        let projectLocation: Path = Utils.mutate([library.product.name]){
+            
+            $0.pathExtension = Xcode.Project.extension
+        }
+        
+        let derivedPaths = derivedPaths + [projectLocation]
+        
         //---
         
+        _ = require(
+            Xcodeproj.gemName
+        )
+        
+        //---
+
         main <<< """
 
             lane :\(laneName) do
             """
 
-        main.indentation.nest{
+        try main.indentation.nest{
 
             let cleanupCmd = derivedPaths
                 .map{ """
-                    rm -rf "\($0)"
-                    """
-                 }
-                .map{ """
-                     && \($0)
+                    rm -rf "\($0.rawValue)"
                     """
                 }
-                .joined()
+                .joined(separator: " && ")
             
             main <<< """
 
@@ -292,8 +317,29 @@ extension Fastlane.Fastfile.ForLibrary
                 # default initial location for any command
                 # is inside 'Fastlane' folder
 
-                sh 'cd ./..\(cleanupCmd) && ice xc'
+                sh 'cd ./.. && \(cleanupCmd) && swift package generate-xcodeproj'
                 """
+            
+            try scriptBuildPhases(
+                .init(
+                    main
+                )
+            )
+            
+            buildSettings(
+                .init(
+                    main
+                )
+            )
+            
+            main <<< endingEntries.isEmpty.mapIf(false){ """
+                
+                # ===
+                
+                """
+            }
+            
+            main <<< endingEntries
         }
 
         main <<< """
