@@ -66,14 +66,14 @@ class Indentation: Equatable
 
     public
     func nest(
-        body: () -> Void
-        )
+        body: () throws -> Void
+        ) rethrows
     {
         self.increaseLevel()
 
         //---
 
-        body()
+        try body()
 
         //---
 
@@ -83,8 +83,8 @@ class Indentation: Equatable
     public
     func nestIf(
         _ condition: Bool,
-        body: () -> Void
-        )
+        body: () throws -> Void
+        ) rethrows
     {
         self.increaseLevel()
 
@@ -93,7 +93,7 @@ class Indentation: Equatable
         if
             condition
         {
-            body()
+            try body()
         }
 
         //---
@@ -104,8 +104,8 @@ class Indentation: Equatable
     public
     func nestIfUnwrap<T>(
         _ optionalValue: T?,
-        body: (T) -> Void
-        )
+        body: (T) throws -> Void
+        ) rethrows
     {
         self.increaseLevel()
 
@@ -114,7 +114,7 @@ class Indentation: Equatable
         if
             let unwrappedValue = optionalValue
         {
-            body(unwrappedValue)
+            try body(unwrappedValue)
         }
 
         //---

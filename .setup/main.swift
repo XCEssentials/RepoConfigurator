@@ -1,162 +1,204 @@
-import Foundation
-
-import Files
+import FileKit
 
 import XCERepoConfigurator
 
-//---
+// MARK: - PRE-script invocation output
 
 print("\n")
-print("--- BEGIN of '\(Executable.name!)' script ---")
+print("--- BEGIN of '\(Executable.name)' script ---")
 
-//---
+// MARK: -
 
-guard
-    let repoFolder = Folder.current.parent
-else
-{
-    preconditionFailure("❌ Expected to be in a subfolder, one level deep from root!")
-}
+// MARK: Parameters
 
-print("✅ Repo folder: \(repoFolder.path)")
+ Spec.BuildSettings.swiftVersion.value = "4.2"
 
-//---
+let remoteRepo = try Spec.RemoteRepo()
 
-guard
-    let companyName = repoFolder.parent?.name
-else
-{
-    preconditionFailure("❌ Expected to be two levels deep from a company-named folder!")
-}
+let company = try Spec.Company(
+    prefix: "XCE",
+    identifier: "com.\(remoteRepo.accountName)"
+)
 
-print("✅ Company name: \(companyName)")
+let project = try Spec.Project(
+    summary: "Generate repo config files using Swift and Xcode.",
+    copyrightYear: 2018,
+    deploymentTargets: [
+        .macOS : "10.11"
+    ]
+)
 
-//---
+let cocoaPod = try Spec.CocoaPod(
+    companyInfo: .from(company),
+    productInfo: .from(project),
+    authors: [
+        ("Maxim Khatskevich", "maxim@khatskevi.ch")
+    ]
+)
 
-let productName = repoFolder.name
+let targets = (
+    main: try Spec.Target(
+        cocoaPod.product.name, // library name with prefix!
+        project: project,
+        platform: project.deploymentTargets.asPairs()[0].platform,
+        bundleIdInfo: .autoWithCompany(company),
+        provisioningProfiles: [:],
+        sourcesLocation: Spec.Locations.sources + project.name,
+        packageType: .framework
+    ),
+    none: ()
+)
 
-print("✅ Product name (without company prefix): \(productName)")
+// MARK: Parameters - Summary
 
-//---
+remoteRepo.report()
+company.report()
+project.report()
+cocoaPod.report()
 
-let projectName = productName
+// MARK: -
 
-let swiftVersion = "4.2"
+// MARK: Write - Bundler - Gemfile
 
-let authorName = "Maxim Khatskevich"
+try Bundler
+    .Gemfile(
+        basicFastlane: true,
+        """
+        gem '\(CocoaPods.gemName)', '1.6.0.beta.2'
+        gem '\(CocoaPods.Rome.gemName)', '~>1.0.1'
+        """
+    )
+    .prepare()
+    .writeToFileSystem()
 
-let depTarget: DeploymentTarget = (.macOS, "10.13")
+// MARK: Write - ReadMe
 
-//---
+try ReadMe()
+    .addGitHubLicenseBadge(
+        account: company.name,
+        repo: project.name
+    )
+    .addGitHubTagBadge(
+        account: company.name,
+        repo: project.name
+    )
+    .addSwiftPMCompatibleBadge()
+    .addCarthageCompatibleBadge()
+    .addWrittenInSwiftBadge(
+        version: Spec.BuildSettings.swiftVersion.value
+    )
+    .add("""
 
-guard
-    let fastlaneFolder = try? repoFolder
-        .createSubfolderIfNeeded(withName: Defaults.pathToFastlaneFolder)
-else
-{
-    preconditionFailure("❌ Failed to establish Fastlane base folder.")
-}
+        # \(project.name)
 
-print("✅ Fastlane folder: ./\(fastlaneFolder.name)")
+        """
+    )
+    .prepare(
+        removeRepeatingEmptyLines: false
+    )
+    .writeToFileSystem(
+        ifFileExists: .skip
+    )
 
-//---
+// MARK: Write - SwiftLint
 
-do
-{
-    print("Writing '\(ReadMe.fileName)'")
+try SwiftLint
+    .standard()
+    .prepare()
+    .writeToFileSystem()
 
-    let readMe = try ReadMe()
-        .addGitHubLicenseBadge(
-            account: companyName,
-            repo: productName
-        )
-        .addGitHubTagBadge(
-            account: companyName,
-            repo: productName
-        )
-        .addCarthageCompatibleBadge()
-        .addSwiftPMCompatibleBadge()
-        .addWrittenInSwiftBadge(
-            version: swiftVersion
-        )
-        .add(
+// MARK: Write - License
+
+try License
+    .MIT(
+        copyrightYear: project.copyrightYear,
+        copyrightEntity: cocoaPod.authors[0].name
+    )
+    .prepare()
+    .writeToFileSystem()
+
+// MARK: Write - CocoaPods - Podfile
+
+try CocoaPods
+    .Podfile()
+    .custom("""
+        platform :osx, '\(project.deploymentTargets.asPairs()[0].minimumVersion)'
+
+        plugin '\(CocoaPods.Rome.gemName)'
+
+        target 'Abstract' do
+
+            pod 'SwiftLint'
+
+        end
+        """
+    )
+    .prepare()
+    .writeToFileSystem()
+
+// MARK: Write - Fastlane - Fastfile
+
+try Fastlane
+    .Fastfile
+    .ForLibrary()
+    .defaultHeader()
+    .generateProjectViaSwiftPM(
+        for: cocoaPod,
+        scriptBuildPhases: {
+            
+            try $0.swiftLint(
+                project: [cocoaPod.product.name],
+                targetNames: [targets.main.name],
+                params:[
+                    """
+                    --path "\(targets.main.sourcesLocation)"
+                    """
+                ]
+            )
+        },
+        endingEntries: [
+            
             """
-
-            # \(productName)
+            cocoapods # https://docs.fastlane.tools/actions/cocoapods/
+            """,
 
             """
-        )
-        .prepare(
-            targetFolder: repoFolder.path,
-            removeRepeatingEmptyLines: false
-        )
-        .writeToFileSystem(
-            ifFileExists: .skip
-        )
+            # NOTE: Origin path MUST be absolute in order the symlink to work properly!
+            sh 'cd ./.. && \(Utils.symLinkCmd(("$PWD" + SwiftLint.relativeLocation).rawValue, targets.main.linterCfgLocation.rawValue))'
+            """
+        ]
+    )
+    .prepare()
+    .writeToFileSystem()
 
-    if
-        !readMe
-    {
-        print("ⓘ NOTE: skipped ReadMe, because it already exists.")
-    }
+// MARK: Write - GitHub - PagesConfig
 
-    //---
+try GitHub
+    .PagesConfig()
+    .prepare()
+    .writeToFileSystem()
 
-    print("Writing '\(Git.RepoIgnore.fileName)'")
+// MARK: Write - Git - .gitignore
 
-    try Git
-        .RepoIgnore
-        .framework(
-            otherEntries: [
-                "*.xcodeproj"
-            ]
-        )
-        .prepare(
-            targetFolder: repoFolder.path
-        )
-        .writeToFileSystem()
+try Git
+    .RepoIgnore
+    .framework(
+        otherEntries: [
+            """
+            # we don't need to store any project files,
+            # as we generate them on-demand from specs
+            *.xcodeproj
 
-    //---
+            # derived files generated by '.setup' script
+            \(DummyFile.relativeLocation.rawValue)
+            
+            Examples/**/Package.resolved
+            """
+        ]
+    )
+    .prepare()
+    .writeToFileSystem()
 
-    print("Writing '\(SwiftLint.fileName)'")
+// MARK: - POST-script invocation output
 
-    try SwiftLint
-        .standard()
-        .prepare(
-            targetFolder: repoFolder.path
-        )
-        .writeToFileSystem()
-
-    //---
-
-    print("Writing '\(License.MIT.fileName)'")
-
-    try License
-        .MIT(
-            copyrightYear: 2018,
-            copyrightEntity: authorName
-        )
-        .prepare(
-            targetFolder: repoFolder.path
-        )
-        .writeToFileSystem()
-
-    //---
-
-    print("Writing '\(GitHub.PagesConfig.fileName)'")
-
-    try GitHub
-        .PagesConfig()
-        .prepare(
-            targetFolder: repoFolder.path
-        )
-        .writeToFileSystem()
-}
-catch
-{
-    print(error)
-}
-
-//---
-
-print("--- END of '\(Executable.name!)' script ---")
+print("--- END of '\(Executable.name)' script ---")

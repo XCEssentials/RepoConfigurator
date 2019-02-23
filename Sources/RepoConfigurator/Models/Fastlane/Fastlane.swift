@@ -33,4 +33,4 @@ import Foundation
  https://fastlane.tools/
  */
 public
-enum Fastlane: Gem {}
+enum Fastlane: RubyGem {}

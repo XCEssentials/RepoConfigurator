@@ -31,7 +31,7 @@ import Foundation
 public
 extension CocoaPods
 {
-    enum Generate: Gem
+    enum Generate: RubyGem
     {
         public
         static

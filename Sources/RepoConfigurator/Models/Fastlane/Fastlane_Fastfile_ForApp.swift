@@ -33,7 +33,24 @@ extension Fastlane.Fastfile
 {
     public
     final
-    class ForApp: Fastlane.Fastfile {}
+    class ForApp: Fastlane.Fastfile
+    {
+        /**
+         Method used to export the archive.
+         Valid values are: app-store, ad-hoc, package, enterprise, development, developer-id.
+         See more: https://docs.fastlane.tools/actions/gym/#parameters
+         */
+        public
+        enum GymArchiveExportMethod: String
+        {
+            case appStore = "app-store"
+            case adHoc = "ad-hoc"
+            case package = "package"
+            case enterprise = "enterprise"
+            case development = "development"
+            case developerId = "developer-id"
+        }
+    }
 }
 
 //---
@@ -42,35 +59,20 @@ public
 extension Fastlane.Fastfile.ForApp
 {
     func beforeRelease(
+        laneName: String? = nil,
         beginningEntries: [String] = [],
         ensureGitBranch: String? = Defaults.releaseGitBranchesRegEx,
-        project: Path = Spec.Project.location,
-        masterPodSpec: Path = Spec.CocoaPod.podspecLocation,
+        project: Spec.Project,
+        masterPod: Spec.CocoaPod,
         otherPodSpecs: [Path] = [],
         endingEntries: [String] = []
         ) -> Self
     {
-        let laneName = #function.split(separator: "(").first!
+        let laneName = laneName
+            ?? String(#function.split(separator: "(").first!)
         
-        let project = Utils.mutate(project){
-            
-            $0.pathExtension = Xcode.Project.extension // just in case!
-        }
-        
-        let masterPodSpec = Utils.mutate(masterPodSpec){
-            
-            $0.pathExtension = CocoaPods.Podspec.extension // just in case!
-        }
-        
-        let otherPodSpecs = otherPodSpecs.map{
-            
-            Utils.mutate($0){
-                
-                $0.pathExtension = CocoaPods.Podspec.extension // just in case!
-            }
-            
-        }
-        
+        let project = [".", ".."] + project.location
+        let masterPodSpec = masterPod.podspecLocation
         let allPodspecs = [masterPodSpec] + otherPodSpecs
         
         //---
@@ -196,20 +198,17 @@ extension Fastlane.Fastfile.ForApp
     }
 
     func reconfigureProject(
+        laneName: String? = nil,
         beginningEntries: [String] = [],
-        project: Path = Spec.Project.location,
+        project: Spec.Project,
         callGems: GemCallMethod = .viaBundler,
-        scriptBuildPhases: (ScriptBuildPhaseContext) -> Void = { _ in },
+        scriptBuildPhases: (ScriptBuildPhaseContext) throws -> Void = { _ in },
         buildSettings: (BuildSettingsContext) -> Void = { _ in },
         endingEntries: [String] = []
-        ) -> Self
+        ) rethrows -> Self
     {
-        let laneName = #function.split(separator: "(").first!
-        
-        let project = Utils.mutate(project){
-            
-            $0.pathExtension = Xcode.Project.extension // just in case!
-        }
+        let laneName = laneName
+            ?? String(#function.split(separator: "(").first!)
         
         //---
 
@@ -226,7 +225,7 @@ extension Fastlane.Fastfile.ForApp
 
             """
 
-        main.indentation.nest{
+        try main.indentation.nest{
 
             main <<< beginningEntries
             
@@ -250,11 +249,11 @@ extension Fastlane.Fastfile.ForApp
                 # default initial location for any command
                 # is inside 'Fastlane' folder
 
-                sh 'cd ./.. && \(Xcodeproj.call(callGems)) sort "\(project)"'
+                sh 'cd ./.. && \(Xcodeproj.call(callGems)) sort "\(project.location)"'
                 """
             }()
 
-            scriptBuildPhases(
+            try scriptBuildPhases(
                 .init(
                     main
                 )
@@ -287,20 +286,18 @@ extension Fastlane.Fastfile.ForApp
     }
 
     func archiveBeta(
+        laneName: String? = nil,
         productName: String,
-        project: Path = Spec.Project.location,
+        project: Spec.Project,
         schemeName: String? = nil, // 'productName' will be used if 'nil'
-        exportMethod: Fastlane.Fastfile.ArchiveExportMethod = Defaults.stagingExportMethod,
+        exportMethod: GymArchiveExportMethod = Defaults.stagingExportMethod,
         archivesExportLocation: Path = Defaults.archivesExportLocation
         ) -> Self
     {
-        let laneName = #function.split(separator: "(").first!
+        let laneName = laneName
+            ?? String(#function.split(separator: "(").first!)
         
-        let project = Utils.mutate(project){
-            
-            $0.pathExtension = Xcode.Project.extension // just in case!
-        }
-        
+        let project = [".", ".."] + project.location
         let schemeName = schemeName ?? productName
 
         //---

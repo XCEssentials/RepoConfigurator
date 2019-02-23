@@ -29,24 +29,9 @@ import Foundation
 //---
 
 public
-enum CocoaPods: Gem
+enum CocoaPods: RubyGem
 {
     public
     static
     let gemCallName: String = "pod"
-}
-
-//---
-
-public
-extension WidelyUsedLicense
-{
-    static
-    var cocoaPodsLicenseSummary: CocoaPods.Podspec.License
-    {
-        return (
-            type: licenseType,
-            relativeLocation.rawValue
-        )
-    }
 }

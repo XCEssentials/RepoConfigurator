@@ -15,8 +15,17 @@
         "repositoryURL": "https://github.com/JohnSundell/ShellOut",
         "state": {
           "branch": null,
-          "revision": "f1c253a34a40df4bfd268b09fdb101b059f6d52d",
-          "version": "2.1.0"
+          "revision": "d3d54ce662dfee7fef619330b71d251b8d4869f9",
+          "version": "2.2.0"
+        }
+      },
+      {
+        "package": "SwiftHamcrest",
+        "repositoryURL": "https://github.com/maximkhatskevich/SwiftHamcrest.git",
+        "state": {
+          "branch": "feature/SPMSupport",
+          "revision": "3ef54c9f8420e4be7183c6e1a2630286a6937143",
+          "version": null
         }
       }
     ]
