@@ -13,8 +13,6 @@ print("--- BEGIN of '\(Executable.name)' script ---")
 
  Spec.BuildSettings.swiftVersion.value = "4.2"
 
-//let localRepo = try Spec.LocalRepo.current()
-
 let remoteRepo = try Spec.RemoteRepo()
 
 let company = try Spec.Company(
@@ -49,20 +47,10 @@ let targets = (
         packageType: .framework
     ),
     none: ()
-//    tst: try Spec.Target(
-//        project.name + "Tests", // NO company prefix!
-//        project: project,
-//        platform: project.deploymentTargets.asPairs()[0].platform,
-//        bundleIdInfo: .autoWithCompany(company),
-//        provisioningProfiles: [:],
-//        sourcesLocation: Spec.Locations.tests + "\(project.name)Tests",
-//        packageType: .tests
-//    )
 )
 
 // MARK: Parameters - Summary
 
-//localRepo.report()
 remoteRepo.report()
 company.report()
 project.report()
@@ -133,22 +121,6 @@ try License
 
 try CocoaPods
     .Podfile()
-//    .target(
-//        targets.main.name,
-//        deploymentTarget: project.deploymentTargets.asPairs()[0],
-//        pods: [
-//            "pod 'SwiftLint'"
-//        ],
-//        tests: {
-//
-//            $0.unitTestTarget(
-//                targets.tst.name,
-//                pods: [
-//                    "pod 'SwiftLint'"
-//                ]
-//            )
-//        }
-//    )
     .custom("""
         platform :osx, '\(project.deploymentTargets.asPairs()[0].minimumVersion)'
 
