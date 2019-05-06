@@ -175,10 +175,20 @@ try ReadMe()
 
 // MARK: Write - SwiftLint
 
-try SwiftLint
-    .standard()
-    .prepare()
-    .writeToFileSystem()
+try (
+    allSubspecs
+        .map{ $0.linterCfgLocation }
+        + [targets.app.linterCfgLocation]
+    )
+    .forEach{
+        
+        try SwiftLint
+            .standard()
+            .prepare(
+                at: $0
+            )
+            .writeToFileSystem()
+    }
 
 // MARK: Write - Info Plists
 
@@ -519,24 +529,7 @@ try Fastlane
                     ]
                 ]
             )
-        },
-        endingEntries: (
-            allSubspecs.map{ $0.linterCfgLocation } +
-            [targets.app.linterCfgLocation]
-            )
-            .map{
-                
-                Utils.symLinkCmd(
-                    ("$PWD" + SwiftLint.relativeLocation).rawValue,
-                    $0.rawValue
-                )
-            }
-            .map{
-                
-                """
-                sh 'cd ./.. && \($0)'
-                """
-            }
+        }
     )
     .prepare()
     .writeToFileSystem()
