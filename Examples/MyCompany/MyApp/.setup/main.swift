@@ -159,7 +159,7 @@ try Bundler
     .Gemfile(
         basicFastlane: true,
         """
-        gem '\(CocoaPods.gemName)', '~> 1.6.0.beta.2'
+        gem '\(CocoaPods.gemName)'
         """
     )
     .prepare()
