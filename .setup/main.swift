@@ -104,10 +104,18 @@ try ReadMe()
 
 // MARK: Write - SwiftLint
 
-try SwiftLint
-    .standard()
-    .prepare()
-    .writeToFileSystem()
+try [
+    targets.main.linterCfgLocation
+    ]
+    .forEach{
+        
+        try SwiftLint
+            .standard()
+            .prepare(
+                at: $0
+            )
+            .writeToFileSystem()
+    }
 
 // MARK: Write - License
 
@@ -162,11 +170,6 @@ try Fastlane
             
             """
             cocoapods # https://docs.fastlane.tools/actions/cocoapods/
-            """,
-
-            """
-            # NOTE: Origin path MUST be absolute in order the symlink to work properly!
-            sh 'cd ./.. && \(Utils.symLinkCmd(("$PWD" + SwiftLint.relativeLocation).rawValue, targets.main.linterCfgLocation.rawValue))'
             """
         ]
     )

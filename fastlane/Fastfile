@@ -70,7 +70,5 @@ lane :generateProjectViaSwiftPM do
     # ===
 
     cocoapods # https://docs.fastlane.tools/actions/cocoapods/
-    # NOTE: Origin path MUST be absolute in order the symlink to work properly!
-    sh 'cd ./.. && ln -sf "$PWD/.swiftlint.yml" "Sources/RepoConfigurator/.swiftlint.yml"'
 
 end # lane :generateProjectViaSwiftPM
