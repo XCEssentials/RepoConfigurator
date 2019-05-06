@@ -267,7 +267,8 @@ try Fastlane
                 targetNames: project
                     .deploymentTargets
                     .keys
-                    .map{ "\(cocoaPod.product.name)-\($0.rawValue)" },
+                    .map{ "\(cocoaPod.product.name)-\($0.rawValue)-Unit-\(subSpecs.tests.name)" },
+                executableAt: .currentFolder, // this is how 'cocoapods-generate' works
                 params: [
 
                     // NOTE: the '${SRCROOT}' of 'Pods' points inside "./Xcode/XCEMyFwk/"
