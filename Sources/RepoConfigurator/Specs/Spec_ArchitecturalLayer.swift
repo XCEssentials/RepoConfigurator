@@ -108,3 +108,23 @@ extension Spec
         }
     }
 }
+
+//---
+
+public
+extension Spec.ArchitecturalLayer
+{
+    static
+    func extractAll(
+        from tupleWithModules: Any
+        ) -> [Spec.ArchitecturalLayer]
+    {
+        return Mirror(
+            reflecting: tupleWithModules
+            )
+            .children
+            .compactMap{
+                $0.value as? Spec.ArchitecturalLayer
+            }
+    }
+}

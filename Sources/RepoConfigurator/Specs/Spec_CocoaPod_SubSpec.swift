@@ -127,13 +127,11 @@ extension Spec.CocoaPod.SubSpec
         from tupleWithModules: Any
         ) -> [Spec.CocoaPod.SubSpec]
     {
-        return Mirror(
-            reflecting: tupleWithModules
+        return Spec
+            .ArchitecturalLayer
+            .extractAll(
+                from: tupleWithModules
             )
-            .children
-            .compactMap{
-                $0.value as? Spec.ArchitecturalLayer
-            }
             .flatMap{
                 [$0.main, $0.tests]
             }
