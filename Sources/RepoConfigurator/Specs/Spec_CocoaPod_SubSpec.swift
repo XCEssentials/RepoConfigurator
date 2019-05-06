@@ -116,3 +116,26 @@ extension Spec.CocoaPod
         }
     }
 }
+
+//---
+
+public
+extension Spec.CocoaPod.SubSpec
+{
+    static
+    func extractAll(
+        from tupleWithModules: Any
+        ) -> [Spec.CocoaPod.SubSpec]
+    {
+        return Mirror(
+            reflecting: tupleWithModules
+            )
+            .children
+            .compactMap{
+                $0.value as? Spec.ArchitecturalLayer
+            }
+            .flatMap{
+                [$0.main, $0.tests]
+            }
+    }
+}
