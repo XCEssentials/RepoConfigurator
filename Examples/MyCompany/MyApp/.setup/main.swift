@@ -120,22 +120,36 @@ project.report()
 
 // MARK: Write - Dummy files
 
-try (
-    allSubspecs
-        .map{ $0.sourcesLocation }
-        + [targets.app.sourcesLocation]
-    )
-    .map{
-        
-        localRepo.location + $0
-    }
-    .map{
-        
-        try DummyFile().prepare(at: $0)
-    }
+try [
+    targets.app
+    ]
     .forEach{
         
-        try $0.writeToFileSystem(ifFileExists: .skip)
+        try CustomTextFile
+            .init(
+                "//"
+            )
+            .prepare(
+                at: $0.sourcesLocation + ["\($0.name).swift"]
+            )
+            .writeToFileSystem(
+                ifFileExists: .skip
+        )
+}
+
+try allSubspecs
+    .forEach{
+    
+        try CustomTextFile
+            .init(
+                "//"
+            )
+            .prepare(
+                at: $0.sourcesLocation + ["\($0.name).swift"]
+            )
+            .writeToFileSystem(
+                ifFileExists: .skip
+            )
     }
 
 // MARK: Write - Bundler - Gemfile

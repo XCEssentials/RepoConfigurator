@@ -89,12 +89,14 @@ project.report()
 // MARK: Write - Dummy files
 
 try allSubspecs
-    .map{ $0.sourcesLocation }
     .forEach{
     
-        try DummyFile()
+        try CustomTextFile
+            .init(
+                "//"
+            )
             .prepare(
-                at: $0
+                at: $0.sourcesLocation + ["\($0.name).swift"]
             )
             .writeToFileSystem(
                 ifFileExists: .skip
