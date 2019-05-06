@@ -57,7 +57,7 @@ let subSpecs = (
     tests: Spec.CocoaPod.SubSpec.tests()
 )
 
-let allSubspecs = Spec
+let allSubspecs = try Spec
     .CocoaPod
     .SubSpec
     .extractAll(from: subSpecs)

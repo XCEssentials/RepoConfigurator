@@ -75,11 +75,11 @@ let modules = try (
     )
 )
 
-let allModules = Spec
+let allModules = try Spec
     .ArchitecturalLayer
     .extractAll(from: modules)
 
-let allSubspecs = Spec
+let allSubspecs = try Spec
     .CocoaPod
     .SubSpec
     .extractAll(from: modules)
