@@ -122,18 +122,48 @@ extension Spec.CocoaPod
 public
 extension Spec.CocoaPod.SubSpec
 {
+    enum ExtractionError: Error
+    {
+        case noModulesNorSubSpecsFound
+    }
+    
     static
     func extractAll(
-        from tupleWithModules: Any
-        ) -> [Spec.CocoaPod.SubSpec]
+        from tupleWithModulesOrSubSpecs: Any
+        ) throws -> [Spec.CocoaPod.SubSpec]
     {
-        return Spec
-            .ArchitecturalLayer
-            .extractAll(
-                from: tupleWithModules
+        if
+            let modules = try? Spec
+                .ArchitecturalLayer
+                .extractAll(
+                    from: tupleWithModulesOrSubSpecs
+                )
+        {
+            return modules
+                .flatMap{
+                    [$0.main, $0.tests]
+                }
+        }
+            
+        //---
+        
+        let result = Mirror(
+            reflecting: tupleWithModulesOrSubSpecs
             )
-            .flatMap{
-                [$0.main, $0.tests]
+            .children
+            .compactMap{
+                $0.value as? Spec.CocoaPod.SubSpec
             }
+        
+        guard
+            !result.isEmpty
+        else
+        {
+            throw ExtractionError.noModulesNorSubSpecsFound
+        }
+        
+        //---
+        
+        return result
     }
 }

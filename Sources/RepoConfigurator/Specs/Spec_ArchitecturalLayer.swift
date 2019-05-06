@@ -114,17 +114,35 @@ extension Spec
 public
 extension Spec.ArchitecturalLayer
 {
+    enum ExtractionError: Error
+    {
+        case noModulesFound
+    }
+    
     static
     func extractAll(
         from tupleWithModules: Any
-        ) -> [Spec.ArchitecturalLayer]
+        ) throws -> [Spec.ArchitecturalLayer]
     {
-        return Mirror(
+        let result = Mirror(
             reflecting: tupleWithModules
             )
             .children
             .compactMap{
                 $0.value as? Spec.ArchitecturalLayer
             }
+        
+        //---
+        
+        guard
+            !result.isEmpty
+        else
+        {
+            throw ExtractionError.noModulesFound
+        }
+        
+        //---
+        
+        return result
     }
 }
