@@ -178,6 +178,7 @@ try ReadMe()
 
 try (
     allSubspecs
+        .filter{ !$0.tests }
         .map{ $0.linterCfgLocation }
         + [targets.app.linterCfgLocation]
     )
