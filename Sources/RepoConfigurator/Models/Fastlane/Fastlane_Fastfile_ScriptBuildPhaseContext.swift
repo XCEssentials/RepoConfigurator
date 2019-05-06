@@ -161,6 +161,7 @@ extension Fastlane.Fastfile.ScriptBuildPhaseContext
     
     enum ExecutableLocationInfo
     {
+        case currentFolder
         case podsRootBuildVar
         case podsFolder
         case use(Path)
@@ -180,6 +181,9 @@ extension Fastlane.Fastfile.ScriptBuildPhaseContext
         
         switch executableLocationInfo
         {
+        case .currentFolder:
+            executableLocation = typicalSubLocation
+            
         case .podsRootBuildVar:
             executableLocation = ["$PODS_ROOT"] + typicalSubLocation
             
@@ -218,6 +222,9 @@ extension Fastlane.Fastfile.ScriptBuildPhaseContext
         
         switch executableLocationInfo
         {
+        case .currentFolder:
+            executableLocation = typicalSubLocation
+            
         case .podsRootBuildVar:
             executableLocation = ["$PODS_ROOT"] + typicalSubLocation
             
@@ -254,6 +261,9 @@ extension Fastlane.Fastfile.ScriptBuildPhaseContext
         
         switch executableLocationInfo
         {
+        case .currentFolder:
+            executableLocation = typicalSubLocation
+            
         case .podsRootBuildVar:
             executableLocation = ["$PODS_ROOT"] + typicalSubLocation
             
