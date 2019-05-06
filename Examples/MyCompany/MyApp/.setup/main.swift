@@ -11,7 +11,7 @@ print("--- BEGIN of '\(Executable.name)' script ---")
 
 // MARK: Parameters
 
- Spec.BuildSettings.swiftVersion.value = "4.2"
+Spec.BuildSettings.swiftVersion.value = "4.2"
 
 let localRepo = try Spec.LocalRepo.current()
 
@@ -28,6 +28,8 @@ let project = try Spec.Project(
         .iOS : "9.0"
     ]
 )
+
+let mobile = project.deploymentTargets.asPairs()[0]
 
 let license = (
     text: "Do NOT use any of the code without author's written permission.",
@@ -54,7 +56,7 @@ let modules = try (
         summary: "[View] level types according to MVVMSE.",
         deploymentTargets: project
             .deploymentTargets
-            .filter{ $0.key == .iOS }
+            .filter{ $0.key == mobile.platform }
     ),
     viewModels: Spec.ArchitecturalLayer(
         project: project,
@@ -73,11 +75,20 @@ let modules = try (
     )
 )
 
+let allModules = Spec
+    .ArchitecturalLayer
+    .extractAll(from: modules)
+
+let allSubspecs = Spec
+    .CocoaPod
+    .SubSpec
+    .extractAll(from: modules)
+
 let targets = (
     app: try Spec.Target(
-        "App",
+        "\(project.name)Mobile",
         project: project,
-        platform: modules.viewModels.deploymentTargets.asPairs()[0].platform,
+        platform: mobile.platform,
         bundleIdInfo: .autoWithCompany(company),
         provisioningProfiles: [.dev, .adHoc].reduce(into: [:]){
             
@@ -98,17 +109,6 @@ let sharedPodDependencies: [String] = [
     "XCEArrayExt"
 ]
 
-let allSubspecs = [
-    modules.mobileViews.main,
-    modules.mobileViews.tests,
-    modules.viewModels.main,
-    modules.viewModels.tests,
-    modules.models.main,
-    modules.models.tests,
-    modules.services.main,
-    modules.services.tests
-]
-
 // MARK: Parameters - Summary
 
 localRepo.report()
@@ -121,8 +121,9 @@ project.report()
 // MARK: Write - Dummy files
 
 try (
-    allSubspecs.map{ $0.sourcesLocation } +
-        [targets.app.sourcesLocation]
+    allSubspecs
+        .map{ $0.sourcesLocation }
+        + [targets.app.sourcesLocation]
     )
     .map{
         
@@ -144,7 +145,7 @@ try Bundler
     .Gemfile(
         basicFastlane: true,
         """
-        gem 'cocoapods', '~> 1.6.0.beta.2'
+        gem '\(CocoaPods.gemName)', '~> 1.6.0.beta.2'
         """
     )
     .prepare()
@@ -162,9 +163,9 @@ try ReadMe()
     )
     .add("""
 
-        # MyApp
+        # \(project.name)
 
-        Project description goes here...
+        \(project.summary)
 
         """
     )
@@ -195,16 +196,15 @@ try (
 try [
     targets.app
     ]
-    .map{
-        
-        try Xcode.InfoPlist.prepare(
-            for: project,
-            target: $0
-        )
-    }
     .forEach{
-        
-        try $0.writeToFileSystem(ifFileExists: .skip)
+     
+        try Xcode
+            .InfoPlist
+            .prepare(
+                for: project,
+                target: $0
+            )
+            .writeToFileSystem(ifFileExists: .skip)
     }
 
 // MARK: Write - License
@@ -264,7 +264,6 @@ try [modules.mobileViews].forEach{ module in
                 
                 module
                     .deploymentTargets
-                    .asPairs()
                     .forEach{ podspec.settings(for: $0) }
                 
                 podspec.settings(
@@ -406,13 +405,12 @@ try [modules.services].forEach{ module in
                     .asPairs()
                     .forEach{ podspec.settings(for: $0) }
                 
-                // === >>> NO lower layer dependency, as it's the lowest level
-                
                 podspec.settings(
                     sharedPodDependencies.map{ .dependency($0) }
                 )
                 
                 podspec.settings(
+                    // === >>> NO lower layer dependency, as it's the lowest level
                     .sourceFiles(module.main.sourcesPattern)
                 )
             },
@@ -438,21 +436,20 @@ try CocoaPods
         workspaceName: project.name
     )
     .custom("""
-        install! 'cocoapods',
+        install! '\(CocoaPods.gemName)',
             :deterministic_uuids => false
         """
     )
-    // .postInstall(...)
     .target(
         targets.app.name,
         projectName: project.name,
         deploymentTarget: targets.app.deploymentTarget,
         pods: [
             
-            "pod '\(modules.mobileViews.product.name)', :path => './', :testspecs => ['Tests']",
-            "pod '\(modules.viewModels.product.name)', :path => './', :testspecs => ['Tests']",
-            "pod '\(modules.models.product.name)', :path => './', :testspecs => ['Tests']",
-            "pod '\(modules.services.product.name)', :path => './', :testspecs => ['Tests']",
+            "pod '\(modules.mobileViews.main.name)', :path => './', :testspecs => ['\(modules.mobileViews.tests.name)']",
+            "pod '\(modules.viewModels.main.name)', :path => './', :testspecs => ['\(modules.viewModels.tests.name)']",
+            "pod '\(modules.models.main.name)', :path => './', :testspecs => ['\(modules.models.tests.name)']",
+            "pod '\(modules.services.main.name)', :path => './', :testspecs => ['\(modules.services.tests.name)']",
 
             "# --- here override sources for any needed pods...",
             
@@ -474,12 +471,7 @@ try Fastlane
     .beforeRelease(
         project: project,
         masterPod: masterCocoaPod,
-        otherPodSpecs: [
-            modules.mobileViews,
-            modules.viewModels,
-            modules.models,
-            modules.services
-            ]
+        otherPodSpecs: allModules
             .map{ $0.podspecLocation }
     )
     .reconfigureProject(
@@ -550,7 +542,7 @@ try Git
             """
             # we don't need to store any project files,
             # as we generate them on-demand from specs
-            *.xcodeproj
+            *.\(Xcode.Project.extension)
 
             # derived files generated by '.setup' script
             \(DummyFile.relativeLocation.rawValue)
