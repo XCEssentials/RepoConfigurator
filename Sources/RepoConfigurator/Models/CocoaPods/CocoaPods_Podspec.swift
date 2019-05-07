@@ -120,7 +120,7 @@ extension CocoaPods.Podspec
     func standard(
         specVar: String = Defaults.specVariable,
         subSpecVar: String = Defaults.subSpecVariable,
-        product: Product,
+        project: Spec.Project,
         company: Company,
         version: VersionString = Defaults.initialVersionString,
         license: License,
@@ -145,7 +145,7 @@ extension CocoaPods.Podspec
 
             result.generalSettings(
                 specVar: specVar,
-                product: product,
+                project: project,
                 company: company,
                 version: version,
                 license: license,
@@ -191,7 +191,7 @@ extension CocoaPods.Podspec
     func withSubSpecs(
         specVar: String = Defaults.specVariable,
         subSpecVar: String = Defaults.subSpecVariable,
-        product: Product,
+        project: Spec.Project,
         company: Company,
         version: VersionString = Defaults.initialVersionString,
         license: License,
@@ -217,7 +217,7 @@ extension CocoaPods.Podspec
 
             result.generalSettings(
                 specVar: specVar,
-                product: product,
+                project: project,
                 company: company,
                 version: version,
                 license: license,
@@ -282,7 +282,7 @@ extension CocoaPods.Podspec
 {
     func generalSettings(
         specVar: String,
-        product: CocoaPods.Podspec.Product,
+        project: Spec.Project,
         company: CocoaPods.Podspec.Company,
         version: VersionString = Defaults.initialVersionString,
         license: CocoaPods.Podspec.License,
@@ -298,12 +298,12 @@ extension CocoaPods.Podspec
         //swiftlint:disable line_length
 
         buffer <<< """
-            \(s).name          = '\(product.name)'
-            \(s).summary       = '\(product.summary)'
+            \(s).name          = '\(company.prefix)\(project.name)'
+            \(s).summary       = '\(project.summary)'
             \(s).version       = '\(version)'
-            \(s).homepage      = 'https://\(company.name).github.io/\(product.name)'
+            \(s).homepage      = 'https://\(company.name).github.io/\(project.name)'
 
-            \(s).source        = { :git => 'https://github.com/\(company.name)/\(product.name).git', :tag => \(s).version }
+            \(s).source        = { :git => 'https://github.com/\(company.name)/\(project.name).git', :tag => \(s).version }
 
             \(s).requires_arc  = true
 
