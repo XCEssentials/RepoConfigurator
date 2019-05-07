@@ -71,7 +71,7 @@ extension Fastlane.Fastfile.ForApp
         let laneName = laneName
             ?? String(#function.split(separator: "(").first!)
         
-        let project = [".", ".."] + project.location
+        let project = project.location
         let masterPodSpec = masterPod.podspecLocation
         let allPodspecs = [masterPodSpec] + otherPodSpecs
         
