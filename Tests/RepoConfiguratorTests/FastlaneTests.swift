@@ -46,7 +46,8 @@ class FastlaneTests: XCTestCase
         ("testDefaultHeader", testDefaultHeader),
         ("testLibraryBeforeReleaseLane", testLibraryBeforeReleaseLane),
         ("testLibraryGenerateProjectViaCPLane", testLibraryGenerateProjectViaCPLane),
-        ("testLibraryGenerateProjectViaSwiftPMLane", testLibraryGenerateProjectViaSwiftPMLane)
+        ("testLibraryGenerateProjectViaSwiftPMLane", testLibraryGenerateProjectViaSwiftPMLane),
+        ("testAppBeforeReleaseLane", testAppBeforeReleaseLane)
         ]
 
 }
@@ -343,6 +344,172 @@ extension FastlaneTests
                         targetNames: [library.product.name]
                     )
                 }
+            )
+            .prepare(
+                at: Some.path
+            )
+        
+        //---
+        
+        assertThat(model.content == targetOutput)
+    }
+    
+    func testAppBeforeReleaseLane()
+    {
+        let targetOutput = { """
+            
+            lane :beforeRelease do
+
+                ensure_git_branch(
+                    branch: '(release/*|hotfix/*)'
+                )
+
+                ensure_git_status_clean
+
+                # === Read current version number
+
+                versionNumber = version_get_podspec(
+                    path: 'AppTemplate.podspec'
+                )
+
+                puts 'Current VERSION number: ' + versionNumber
+
+                # === Infer new version number
+
+                defaultNewVersion = git_branch.split('/').last
+
+                # === Define new version & build number
+
+                useInferredNEWVersionNumber = prompt(
+                    text: 'Proceed with inferred NEW version number (' + defaultNewVersion + ')?',
+                    boolean: true
+                )
+
+                if useInferredNEWVersionNumber
+
+                    newVersionNumber = defaultNewVersion
+
+                else
+
+                    newVersionNumber = prompt(
+                        text: 'New VERSION number:'
+                    )
+
+                end
+
+                newBuildNumber = number_of_commits
+
+                # === Apply NEW version & build number
+
+                increment_version_number(
+                    xcodeproj: 'AppTemplate.xcodeproj',
+                    version_number: newVersionNumber
+                )
+
+                increment_build_number(
+                    xcodeproj: 'AppTemplate.xcodeproj',
+                    build_number: newBuildNumber
+                )
+
+                version_bump_podspec(
+                    path: 'AppTemplate.podspec',
+                    version_number: newVersionNumber
+                )
+
+                version_bump_podspec(
+                    path: 'AppTemplateMobileViews.podspec',
+                    version_number: newVersionNumber
+                )
+
+                version_bump_podspec(
+                    path: 'AppTemplateViewModels.podspec',
+                    version_number: newVersionNumber
+                )
+
+                version_bump_podspec(
+                    path: 'AppTemplateModels.podspec',
+                    version_number: newVersionNumber
+                )
+
+                version_bump_podspec(
+                    path: 'AppTemplateServices.podspec',
+                    version_number: newVersionNumber
+                )
+
+                # ===
+
+                commit_version_bump(
+                    message: 'Version Bump to ' + newVersionNumber + ' (' + newBuildNumber + ')',
+                    xcodeproj: 'AppTemplate.xcodeproj',
+                    include: ["AppTemplate.podspec", "AppTemplateMobileViews.podspec", "AppTemplateViewModels.podspec", "AppTemplateModels.podspec", "AppTemplateServices.podspec"]
+                )
+
+            end # lane :beforeRelease
+            """
+        }()
+        
+        //---
+        
+        let company = try! Spec.Company(
+            name: "XCEssentials",
+            identifier: "com.XCEssentials"
+        )
+
+        let project = try! Spec.Project(
+            name: "AppTemplate",
+            summary: "The greates app idea ever",
+            copyrightYear: 2019,
+            deploymentTargets: [
+                .iOS : "9.0"
+            ],
+            location: .use(["AppTemplate.xcodeproj"]),
+            shouldReport: false
+        )
+        
+        let modules = try! (
+            mobileViews: Spec.Module(
+                project: project,
+                name: "MobileViews",
+                summary: "[View] level types according to MVVMSE.",
+                deploymentTargets: project
+                    .deploymentTargets
+                    .filter{ $0.key == project.deploymentTargets.asPairs()[0].platform }
+            ),
+            viewModels: Spec.Module(
+                project: project,
+                name: "ViewModels",
+                summary: "[ViewModel] level types according to MVVMSE."
+            ),
+            models: Spec.Module(
+                project: project,
+                name: "Models",
+                summary: "[Model] level types according to MVVMSE."
+            ),
+            services: Spec.Module(
+                project: project,
+                name: "Services",
+                summary: "[Service] level types according to MVVMSE."
+            )
+        )
+        
+        let allModules = try! Spec.Module.extractAll(from: modules)
+        
+        let masterCocoaPod = try! Spec.CocoaPod(
+            companyInfo: .from(company),
+            productInfo: .from(project),
+            authors: [
+                ("Maxim Khatskevich", "maxim@khatskevi.ch")
+            ]
+        )
+
+        let model = try! Fastlane
+            .Fastfile
+            .ForApp()
+            .beforeRelease(
+                project: project,
+                masterPod: masterCocoaPod,
+                otherPodSpecs: allModules
+                    .map{ $0.podspecLocation }
             )
             .prepare(
                 at: Some.path
