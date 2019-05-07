@@ -145,11 +145,11 @@ extension AppConfigTests
         assertThat(Modules.MobileViews.isCrossPlatform == false)
         assertThat(Modules.MobileViews.podspecLocation == podspecLocation)
         
-        assertThat(Modules.MobileViews.main.name == productName)
+        assertThat(Modules.MobileViews.main.name == moduleName)
         assertThat(Modules.MobileViews.main.sourcesLocation == locations.mainSources)
         assertThat(Modules.MobileViews.main.resourcesLocation == locations.mainResources)
         
-        assertThat(Modules.MobileViews.tests.name == "Tests")
+        assertThat(Modules.MobileViews.tests.name == "\(moduleName)Tests")
         assertThat(Modules.MobileViews.tests.sourcesLocation == locations.testsSources)
         assertThat(Modules.MobileViews.tests.resourcesLocation == locations.testsResources)
     }
