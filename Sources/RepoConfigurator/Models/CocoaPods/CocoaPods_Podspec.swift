@@ -120,9 +120,43 @@ extension CocoaPods.Podspec
     func standard(
         specVar: String = Defaults.specVariable,
         subSpecVar: String = Defaults.subSpecVariable,
-        externalName: String? = nil,
-        internalName: String? = nil,
         project: Spec.Project,
+        company: Company,
+        version: VersionString = Defaults.initialVersionString,
+        license: License,
+        authors: [Author],
+        cocoapodsVersion: VersionString? = Defaults.cocoapodsVersion,
+        swiftVersion: VersionString? = Spec.BuildSettings.swiftVersion.value,
+        globalSettings: (PerPlatformSettingsContext) -> Void,
+        testSubSpecs: (TestSubSpecsContext) -> Void = { _ in },
+        customEntries: [String] = []
+        ) -> CocoaPods.Podspec
+    {
+        return standard(
+            specVar: specVar,
+            subSpecVar: subSpecVar,
+            externalName: company.prefix + project.name,
+            internalName: project.name,
+            summary: project.summary,
+            company: company,
+            version: version,
+            license: license,
+            authors: authors,
+            cocoapodsVersion: cocoapodsVersion,
+            swiftVersion: swiftVersion,
+            globalSettings: globalSettings,
+            testSubSpecs: testSubSpecs,
+            customEntries: customEntries
+            )
+    }
+    
+    static
+    func standard(
+        specVar: String = Defaults.specVariable,
+        subSpecVar: String = Defaults.subSpecVariable,
+        externalName: String,
+        internalName: String,
+        summary: String,
         company: Company,
         version: VersionString = Defaults.initialVersionString,
         license: License,
@@ -149,7 +183,7 @@ extension CocoaPods.Podspec
                 specVar: specVar,
                 externalName: externalName,
                 internalName: internalName,
-                project: project,
+                summary: summary,
                 company: company,
                 version: version,
                 license: license,
@@ -190,14 +224,50 @@ extension CocoaPods.Podspec
 
         return result
     }
+    
+    static
+    func withSubSpecs(
+        specVar: String = Defaults.specVariable,
+        subSpecVar: String = Defaults.subSpecVariable,
+        project: Spec.Project,
+        company: Company,
+        version: VersionString = Defaults.initialVersionString,
+        license: License,
+        authors: [Author],
+        cocoapodsVersion: VersionString? = Defaults.cocoapodsVersion,
+        swiftVersion: VersionString? = Spec.BuildSettings.swiftVersion.value,
+        globalSettings: (PerPlatformSettingsContext) -> Void,
+        subSpecs: (SubSpecsContext) -> Void,
+        testSubSpecs: (TestSubSpecsContext) -> Void = { _ in },
+        customEntries: [String] = []
+        ) -> CocoaPods.Podspec
+    {
+        return withSubSpecs(
+            specVar: specVar,
+            subSpecVar: subSpecVar,
+            externalName: company.prefix + project.name,
+            internalName: project.name,
+            summary: project.summary,
+            company: company,
+            version: version,
+            license: license,
+            authors: authors,
+            cocoapodsVersion: cocoapodsVersion,
+            swiftVersion: swiftVersion,
+            globalSettings: globalSettings,
+            subSpecs: subSpecs,
+            testSubSpecs: testSubSpecs,
+            customEntries: customEntries
+        )
+    }
 
     static
     func withSubSpecs(
         specVar: String = Defaults.specVariable,
         subSpecVar: String = Defaults.subSpecVariable,
-        externalName: String? = nil,
-        internalName: String? = nil,
-        project: Spec.Project,
+        externalName: String,
+        internalName: String,
+        summary: String,
         company: Company,
         version: VersionString = Defaults.initialVersionString,
         license: License,
@@ -225,7 +295,7 @@ extension CocoaPods.Podspec
                 specVar: specVar,
                 externalName: externalName,
                 internalName: internalName,
-                project: project,
+                summary: summary,
                 company: company,
                 version: version,
                 license: license,
@@ -290,9 +360,9 @@ extension CocoaPods.Podspec
 {
     func generalSettings(
         specVar: String,
-        externalName: String? = nil,
-        internalName: String? = nil,
-        project: Spec.Project,
+        externalName: String,
+        internalName: String,
+        summary: String,
         company: CocoaPods.Podspec.Company,
         version: VersionString = Defaults.initialVersionString,
         license: CocoaPods.Podspec.License,
@@ -304,14 +374,12 @@ extension CocoaPods.Podspec
         // https://guides.cocoapods.org/syntax/podspec.html#group_root_specification
 
         let s = specVar // swiftlint:disable:this identifier_name
-        let externalName = externalName ?? (company.prefix + project.name)
-        let internalName = internalName ?? project.name
-
+        
         //swiftlint:disable line_length
 
         buffer <<< """
             \(s).name          = '\(externalName)'
-            \(s).summary       = '\(project.summary)'
+            \(s).summary       = '\(summary)'
             \(s).version       = '\(version)'
             \(s).homepage      = 'https://\(company.name).github.io/\(internalName)'
 
