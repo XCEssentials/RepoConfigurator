@@ -116,7 +116,7 @@ class AppConfigTests: XCTestCase
     
     static
     var allTests = [
-        ("testArchitecturalLayers", testArchitecturalLayers)
+        ("testAppModules", testAppModules)
     ]
 }
 
@@ -124,10 +124,10 @@ class AppConfigTests: XCTestCase
 
 extension AppConfigTests
 {
-    func testArchitecturalLayers()
+    func testAppModules()
     {
         let moduleName = "MobileViews"
-        let productName = "\(project.name)\(moduleName)"
+        let productName = moduleName
         let moduleSummary = "[View] level types according to MVVMSE."
         let podspecLocation: Path = [productName + "." + CocoaPods.Podspec.extension]
         

@@ -70,7 +70,7 @@ extension Spec
             ) throws
         {
             let product: CocoaPods.Podspec.Product = (
-                    project.name + name, // no need company prefix, cause its for apps
+                    name, // no need company prefix, because its for apps
                     summary
                 )
             
