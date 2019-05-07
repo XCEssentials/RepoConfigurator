@@ -21,11 +21,11 @@
       },
       {
         "package": "SwiftHamcrest",
-        "repositoryURL": "https://github.com/maximkhatskevich/SwiftHamcrest.git",
+        "repositoryURL": "https://github.com/nschum/SwiftHamcrest",
         "state": {
-          "branch": "feature/SPMSupport",
-          "revision": "3ef54c9f8420e4be7183c6e1a2630286a6937143",
-          "version": null
+          "branch": null,
+          "revision": "53e322984e000deefd3a5efaa777a7365c51aac9",
+          "version": "2.2.1"
         }
       }
     ]

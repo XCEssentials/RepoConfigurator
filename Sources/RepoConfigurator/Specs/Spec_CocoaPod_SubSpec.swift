@@ -80,7 +80,7 @@ extension Spec.CocoaPod
                 ?? (resourcesLocation + "**" + "*").rawValue
             
             let linterCfgLocation = linterCfgLocation
-                ?? sourcesLocation + SwiftLint.relativeLocation
+                ?? sourcesLocation
                 
             //---
             
@@ -114,5 +114,56 @@ extension Spec.CocoaPod
                 tests: true
             )
         }
+    }
+}
+
+//---
+
+public
+extension Spec.CocoaPod.SubSpec
+{
+    enum ExtractionError: Error
+    {
+        case noModulesNorSubSpecsFound
+    }
+    
+    static
+    func extractAll(
+        from tupleWithModulesOrSubSpecs: Any
+        ) throws -> [Spec.CocoaPod.SubSpec]
+    {
+        if
+            let modules = try? Spec
+                .ArchitecturalLayer
+                .extractAll(
+                    from: tupleWithModulesOrSubSpecs
+                )
+        {
+            return modules
+                .flatMap{
+                    [$0.main, $0.tests]
+                }
+        }
+            
+        //---
+        
+        let result = Mirror(
+            reflecting: tupleWithModulesOrSubSpecs
+            )
+            .children
+            .compactMap{
+                $0.value as? Spec.CocoaPod.SubSpec
+            }
+        
+        guard
+            !result.isEmpty
+        else
+        {
+            throw ExtractionError.noModulesNorSubSpecsFound
+        }
+        
+        //---
+        
+        return result
     }
 }

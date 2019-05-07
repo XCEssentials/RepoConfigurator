@@ -181,7 +181,7 @@ extension FrameworkConfigTests
         assertThat(subSpecs.core.sourcesPattern == (sources + name + "**" + "*").rawValue)
         assertThat(subSpecs.core.resourcesLocation == (resources + name))
         assertThat(subSpecs.core.resourcesPattern == (resources + name + "**" + "*").rawValue)
-        assertThat(subSpecs.core.linterCfgLocation == (sources + name + SwiftLint.relativeLocation))
+        assertThat(subSpecs.core.linterCfgLocation == (sources + name))
         assertThat(subSpecs.core.tests == false)
     }
     
