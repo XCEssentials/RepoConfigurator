@@ -151,7 +151,7 @@ extension Spec
                 ?? (Spec.Locations.resources + name)
             
             let linterCfgLocation = linterCfgLocation
-                ?? sourcesLocation + SwiftLint.relativeLocation
+                ?? sourcesLocation
             
             //---
             

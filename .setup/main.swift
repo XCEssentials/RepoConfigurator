@@ -11,7 +11,7 @@ print("--- BEGIN of '\(Executable.name)' script ---")
 
 // MARK: Parameters
 
- Spec.BuildSettings.swiftVersion.value = "4.2"
+Spec.BuildSettings.swiftVersion.value = "4.2"
 
 let remoteRepo = try Spec.RemoteRepo()
 
@@ -36,11 +36,13 @@ let cocoaPod = try Spec.CocoaPod(
     ]
 )
 
+let desktop = project.deploymentTargets.asPairs()[0]
+
 let targets = (
     main: try Spec.Target(
         cocoaPod.product.name, // library name with prefix!
         project: project,
-        platform: project.deploymentTargets.asPairs()[0].platform,
+        platform: desktop.platform,
         bundleIdInfo: .autoWithCompany(company),
         provisioningProfiles: [:],
         sourcesLocation: Spec.Locations.sources + project.name,
@@ -97,15 +99,23 @@ try ReadMe()
         removeRepeatingEmptyLines: false
     )
     .writeToFileSystem(
-        ifFileExists: .skip
+        ifFileExists: .skip // ONLY write if missing!
     )
 
 // MARK: Write - SwiftLint
 
-try SwiftLint
-    .standard()
-    .prepare()
-    .writeToFileSystem()
+try [
+    targets.main.linterCfgLocation
+    ]
+    .forEach{
+        
+        try SwiftLint
+            .standard()
+            .prepare(
+                at: $0
+            )
+            .writeToFileSystem()
+    }
 
 // MARK: Write - License
 
@@ -122,7 +132,7 @@ try License
 try CocoaPods
     .Podfile()
     .custom("""
-        platform :osx, '\(project.deploymentTargets.asPairs()[0].minimumVersion)'
+        platform :\(desktop.platform.cocoaPodsId), '\(desktop.minimumVersion)'
 
         plugin '\(CocoaPods.Rome.gemName)'
 
@@ -160,11 +170,6 @@ try Fastlane
             
             """
             cocoapods # https://docs.fastlane.tools/actions/cocoapods/
-            """,
-
-            """
-            # NOTE: Origin path MUST be absolute in order the symlink to work properly!
-            sh 'cd ./.. && \(Utils.symLinkCmd(("$PWD" + SwiftLint.relativeLocation).rawValue, targets.main.linterCfgLocation.rawValue))'
             """
         ]
     )
