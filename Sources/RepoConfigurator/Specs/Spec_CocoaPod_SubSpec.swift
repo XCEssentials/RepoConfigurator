@@ -134,7 +134,7 @@ extension Spec.CocoaPod.SubSpec
     {
         if
             let modules = try? Spec
-                .ArchitecturalLayer
+                .Module
                 .extractAll(
                     from: tupleWithModulesOrSubSpecs
                 )

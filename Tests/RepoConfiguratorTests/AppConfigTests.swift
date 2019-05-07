@@ -64,7 +64,7 @@ fileprivate
 enum Modules
 {
     static
-    var MobileViews: Spec.ArchitecturalLayer
+    var MobileViews: Spec.Module
     {
         return try! .init(
             project: project,
@@ -77,7 +77,7 @@ enum Modules
     }
     
     static
-    var ViewModels: Spec.ArchitecturalLayer
+    var ViewModels: Spec.Module
     {
         return try! .init(
             project: project,
@@ -87,7 +87,7 @@ enum Modules
     }
     
     static
-    var Models: Spec.ArchitecturalLayer
+    var Models: Spec.Module
     {
         return try! .init(
             project: project,
@@ -97,7 +97,7 @@ enum Modules
     }
     
     static
-    var Services: Spec.ArchitecturalLayer
+    var Services: Spec.Module
     {
         return try! .init(
             project: project,
