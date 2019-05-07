@@ -417,22 +417,22 @@ extension FastlaneTests
                 )
 
                 version_bump_podspec(
-                    path: 'AppTemplateMobileViews.podspec',
+                    path: 'MobileViews.podspec',
                     version_number: newVersionNumber
                 )
 
                 version_bump_podspec(
-                    path: 'AppTemplateViewModels.podspec',
+                    path: 'ViewModels.podspec',
                     version_number: newVersionNumber
                 )
 
                 version_bump_podspec(
-                    path: 'AppTemplateModels.podspec',
+                    path: 'Models.podspec',
                     version_number: newVersionNumber
                 )
 
                 version_bump_podspec(
-                    path: 'AppTemplateServices.podspec',
+                    path: 'Services.podspec',
                     version_number: newVersionNumber
                 )
 
@@ -441,7 +441,7 @@ extension FastlaneTests
                 commit_version_bump(
                     message: 'Version Bump to ' + newVersionNumber + ' (' + newBuildNumber + ')',
                     xcodeproj: 'AppTemplate.xcodeproj',
-                    include: ["AppTemplate.podspec", "AppTemplateMobileViews.podspec", "AppTemplateViewModels.podspec", "AppTemplateModels.podspec", "AppTemplateServices.podspec"]
+                    include: ["AppTemplate.podspec", "MobileViews.podspec", "ViewModels.podspec", "Models.podspec", "Services.podspec"]
                 )
 
             end # lane :beforeRelease
