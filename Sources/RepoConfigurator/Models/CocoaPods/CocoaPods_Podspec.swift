@@ -120,6 +120,8 @@ extension CocoaPods.Podspec
     func standard(
         specVar: String = Defaults.specVariable,
         subSpecVar: String = Defaults.subSpecVariable,
+        externalName: String? = nil,
+        internalName: String? = nil,
         project: Spec.Project,
         company: Company,
         version: VersionString = Defaults.initialVersionString,
@@ -145,6 +147,8 @@ extension CocoaPods.Podspec
 
             result.generalSettings(
                 specVar: specVar,
+                externalName: externalName,
+                internalName: internalName,
                 project: project,
                 company: company,
                 version: version,
@@ -191,6 +195,8 @@ extension CocoaPods.Podspec
     func withSubSpecs(
         specVar: String = Defaults.specVariable,
         subSpecVar: String = Defaults.subSpecVariable,
+        externalName: String? = nil,
+        internalName: String? = nil,
         project: Spec.Project,
         company: Company,
         version: VersionString = Defaults.initialVersionString,
@@ -217,6 +223,8 @@ extension CocoaPods.Podspec
 
             result.generalSettings(
                 specVar: specVar,
+                externalName: externalName,
+                internalName: internalName,
                 project: project,
                 company: company,
                 version: version,
@@ -282,6 +290,8 @@ extension CocoaPods.Podspec
 {
     func generalSettings(
         specVar: String,
+        externalName: String? = nil,
+        internalName: String? = nil,
         project: Spec.Project,
         company: CocoaPods.Podspec.Company,
         version: VersionString = Defaults.initialVersionString,
@@ -294,16 +304,18 @@ extension CocoaPods.Podspec
         // https://guides.cocoapods.org/syntax/podspec.html#group_root_specification
 
         let s = specVar // swiftlint:disable:this identifier_name
+        let externalName = externalName ?? (company.prefix + project.name)
+        let internalName = internalName ?? project.name
 
         //swiftlint:disable line_length
 
         buffer <<< """
-            \(s).name          = '\(company.prefix)\(project.name)'
+            \(s).name          = '\(externalName)'
             \(s).summary       = '\(project.summary)'
             \(s).version       = '\(version)'
-            \(s).homepage      = 'https://\(company.name).github.io/\(project.name)'
+            \(s).homepage      = 'https://\(company.name).github.io/\(internalName)'
 
-            \(s).source        = { :git => 'https://github.com/\(company.name)/\(project.name).git', :tag => \(s).version }
+            \(s).source        = { :git => 'https://github.com/\(company.name)/\(internalName).git', :tag => \(s).version }
 
             \(s).requires_arc  = true
 
