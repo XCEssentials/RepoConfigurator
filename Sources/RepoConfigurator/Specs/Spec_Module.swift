@@ -31,7 +31,7 @@ import FileKit
 public
 extension Spec
 {
-    struct ArchitecturalLayer
+    struct Module
     {
         public
         let product: CocoaPods.Podspec.Product
@@ -112,7 +112,7 @@ extension Spec
 //---
 
 public
-extension Spec.ArchitecturalLayer
+extension Spec.Module
 {
     enum ExtractionError: Error
     {
@@ -122,14 +122,14 @@ extension Spec.ArchitecturalLayer
     static
     func extractAll(
         from tupleWithModules: Any
-        ) throws -> [Spec.ArchitecturalLayer]
+        ) throws -> [Spec.Module]
     {
         let result = Mirror(
             reflecting: tupleWithModules
             )
             .children
             .compactMap{
-                $0.value as? Spec.ArchitecturalLayer
+                $0.value as? Spec.Module
             }
         
         //---
