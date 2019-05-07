@@ -397,7 +397,7 @@ extension FastlaneTests
 
                 end
 
-                newBuildNumber = number_of_commits
+                newBuildNumber = number_of_commits.to_s
 
                 # === Apply NEW version & build number
 
