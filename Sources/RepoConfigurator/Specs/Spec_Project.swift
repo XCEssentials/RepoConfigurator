@@ -70,7 +70,7 @@ extension Spec
             name: String? = nil,
             summary: String,
             copyrightYear: UInt? = nil,
-            deploymentTargets: DeploymentTargets,
+            deploymentTargets: DictionaryLiteral<OSIdentifier, VersionString>,
             location: Location? = nil,
             shouldReport: Bool = false
             ) throws
@@ -113,7 +113,7 @@ extension Spec
             self.name = name
             self.summary = summary
             self.copyrightYear = copyrightYear
-            self.deploymentTargets = deploymentTargets
+            self.deploymentTargets = deploymentTargets.map{ ($0.key, $0.value) }
             self.location = fileLocation
             
             //---

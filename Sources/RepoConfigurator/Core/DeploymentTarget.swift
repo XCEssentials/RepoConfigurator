@@ -31,7 +31,7 @@ typealias DeploymentTarget = (
 )
 
 public
-typealias DeploymentTargets = [OSIdentifier: VersionString]
+typealias DeploymentTargets = [DeploymentTarget]
 
 //---
 
@@ -46,24 +46,5 @@ extension Array
         {
             return filter{ $0.platform == key }.first
         }
-    }
-}
-
-//---
-
-public
-extension Dictionary
-    where
-    Key == OSIdentifier,
-    Value == VersionString
-{
-    func asPair(_ key: OSIdentifier) -> DeploymentTarget?
-    {
-        return self[key].map{ (key, $0) }
-    }
-    
-    func asPairs() -> [DeploymentTarget]
-    {
-        return map{ ($0, $1) }
     }
 }

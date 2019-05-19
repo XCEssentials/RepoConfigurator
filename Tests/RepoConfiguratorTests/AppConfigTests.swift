@@ -72,7 +72,7 @@ enum Modules
             summary: "[View] level types according to MVVMSE.",
             deploymentTargets: project
                 .deploymentTargets
-                .filter{ $0.key == .iOS }
+                .filter{ $0.platform == .iOS }
         )
     }
     
@@ -141,7 +141,7 @@ extension AppConfigTests
         assertThat(Modules.MobileViews.product.name == productName)
         assertThat(Modules.MobileViews.product.summary == moduleSummary)
         assertThat(Modules.MobileViews.deploymentTargets.count == 1)
-        assertThat(Modules.MobileViews.deploymentTargets, hasKey(.iOS))
+        assertThat(Modules.MobileViews.deploymentTargets.map{ $0.platform }, hasItem(.iOS))
         assertThat(Modules.MobileViews.isCrossPlatform == false)
         assertThat(Modules.MobileViews.podspecLocation == podspecLocation)
         

@@ -473,7 +473,7 @@ extension FastlaneTests
                 summary: "[View] level types according to MVVMSE.",
                 deploymentTargets: project
                     .deploymentTargets
-                    .filter{ $0.key == project.deploymentTargets.asPairs()[0].platform }
+                    .filter{ $0.platform == project.deploymentTargets[0].platform }
             ),
             viewModels: Spec.Module(
                 project: project,
