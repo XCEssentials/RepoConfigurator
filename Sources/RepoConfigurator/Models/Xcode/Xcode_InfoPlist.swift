@@ -138,7 +138,7 @@ extension Xcode.InfoPlist
     {
         try Array
             .init(
-                project.deploymentTargets.keys
+                project.deploymentTargets.map{ $0.platform }
             )
             .contains(
                 target.deploymentTarget.platform
