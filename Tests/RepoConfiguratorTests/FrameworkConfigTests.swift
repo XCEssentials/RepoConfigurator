@@ -144,8 +144,7 @@ extension FrameworkConfigTests
         assertThat(project.summary == "Project summary")
         assertThat(project.copyrightYear == 2019)
         assertThat(project.deploymentTargets.count == 4)
-        assertThat(project.deploymentTargets, hasKey(.iOS))
-        assertThat(project.deploymentTargets, hasKey(.macOS))
+        assertThat(project.deploymentTargets.map{ $0.platform }, hasItems(.iOS, .macOS))
         assertThat(project.location == [localRepo.name + "." + Xcode.Project.extension])
     }
     

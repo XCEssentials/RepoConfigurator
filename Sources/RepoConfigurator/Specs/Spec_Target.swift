@@ -110,7 +110,7 @@ extension Spec
             packageType: Xcode.InfoPlist.PackageType
             ) throws
         {
-            let deploymentTarget = try project.deploymentTargets.asPair(platform)
+            let deploymentTarget = try project.deploymentTargets[platform]
                 ?! InitializationError.unsupportedDeploymentTarget
             
             let productName: String
