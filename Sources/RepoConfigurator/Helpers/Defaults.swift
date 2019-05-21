@@ -88,4 +88,8 @@ enum Defaults
     public
     static
     let licenseFileName = "LICENSE"
+    
+    public
+    static
+    let masterSpec: Path = ["Project.spec"]
 }

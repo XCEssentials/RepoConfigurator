@@ -369,7 +369,7 @@ extension FastlaneTests
                 # === Read current version number
 
                 versionNumber = version_get_podspec(
-                    path: 'AppTemplate.podspec'
+                    path: 'Project.spec'
                 )
 
                 puts 'Current VERSION number: ' + versionNumber
@@ -412,7 +412,7 @@ extension FastlaneTests
                 )
 
                 version_bump_podspec(
-                    path: 'AppTemplate.podspec',
+                    path: 'Project.spec',
                     version_number: newVersionNumber
                 )
 
@@ -441,7 +441,7 @@ extension FastlaneTests
                 commit_version_bump(
                     message: 'Version Bump to ' + newVersionNumber + ' (' + newBuildNumber + ')',
                     xcodeproj: 'AppTemplate.xcodeproj',
-                    include: ["AppTemplate.podspec", "MobileViews.podspec", "ViewModels.podspec", "Models.podspec", "Services.podspec"]
+                    include: ["Project.spec", "MobileViews.podspec", "ViewModels.podspec", "Models.podspec", "Services.podspec"]
                 )
 
             end # lane :beforeRelease
@@ -450,11 +450,6 @@ extension FastlaneTests
         
         //---
         
-        let company = try! Spec.Company(
-            name: "XCEssentials",
-            identifier: "com.XCEssentials"
-        )
-
         let project = try! Spec.Project(
             name: "AppTemplate",
             summary: "The greates app idea ever",
@@ -494,20 +489,11 @@ extension FastlaneTests
         
         let allModules = try! Spec.Module.extractAll(from: modules)
         
-        let masterCocoaPod = try! Spec.CocoaPod(
-            companyInfo: .from(company),
-            productInfo: .from(project),
-            authors: [
-                ("Maxim Khatskevich", "maxim@khatskevi.ch")
-            ]
-        )
-
         let model = try! Fastlane
             .Fastfile
             .ForApp()
             .beforeRelease(
                 project: project,
-                masterPod: masterCocoaPod,
                 otherPodSpecs: allModules
                     .map{ $0.podspecLocation }
             )
