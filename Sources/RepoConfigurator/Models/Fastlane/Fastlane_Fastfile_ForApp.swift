@@ -63,7 +63,7 @@ extension Fastlane.Fastfile.ForApp
         beginningEntries: [String] = [],
         ensureGitBranch: String? = Defaults.releaseGitBranchesRegEx,
         project: Spec.Project,
-        masterPod: Spec.CocoaPod,
+        masterSpec: Path = Defaults.masterSpec,
         otherPodSpecs: [Path] = [],
         endingEntries: [String] = []
         ) -> Self
@@ -72,8 +72,7 @@ extension Fastlane.Fastfile.ForApp
             ?? String(#function.split(separator: "(").first!)
         
         let project = project.location
-        let masterPodSpec = masterPod.podspecLocation
-        let allPodspecs = [masterPodSpec] + otherPodSpecs
+        let allPodspecs = [masterSpec] + otherPodSpecs
         
         //---
 
@@ -111,7 +110,7 @@ extension Fastlane.Fastfile.ForApp
                 # === Read current version number
 
                 versionNumber = version_get_podspec(
-                    path: '\(masterPodSpec)'
+                    path: '\(masterSpec)'
                 )
                 
                 puts 'Current VERSION number: ' + versionNumber
