@@ -27,8 +27,9 @@
 import XCTest
 
 import SwiftHamcrest
+import Version
 
-// @testable
+@testable
 import XCERepoConfigurator
 
 //---
@@ -212,5 +213,11 @@ extension CocoaPodsTests
         //---
         
         assertThat(model.content == targetOutput)
+    }
+    
+    func testVersions()
+    {
+        let rawVer = "app.version = '1.0.1'"
+        assertThat(try Spec.CocoaPod.extracVersionString(from: rawVer), equalTo("1.0.1"))
     }
 }

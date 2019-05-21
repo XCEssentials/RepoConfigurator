@@ -25,7 +25,7 @@
  */
 
 import FileKit
-import ShellOut
+import Version
 
 //---
 
@@ -148,61 +148,85 @@ extension Spec.CocoaPod
     
     enum ReadCurrentVersionError: Error
     {
-        case invalidAbsolutePodspecLocationPrefix
         case podspecNotFound(expectedPath: String)
+        case unableToDetectVersionString(rawSpecContent: String)
     }
     
     mutating
     func readCurrentVersion(
-        absolutePodspecLocationPrefix: Path? = nil,
-        callFastlane method: GemCallMethod,
+        specLocation: Path? = nil,
         shouldReport: Bool = true
         ) throws
     {
-        let absolutePodspecLocationPrefix = try absolutePodspecLocationPrefix
-            ?? Spec.LocalRepo.current().location
+        let specLocation = specLocation ?? self.podspecLocation
         
-        try absolutePodspecLocationPrefix.isAbsolute
-            ?! ReadCurrentVersionError.invalidAbsolutePodspecLocationPrefix
+        let targetLocation = try (
+            specLocation.isAbsolute ?
+            specLocation :
+            Spec.LocalRepo.current().location + specLocation
+        )
         
-        let targetPodspecLocation = absolutePodspecLocationPrefix + podspecLocation
-        
-        try targetPodspecLocation.exists
+        try targetLocation.exists
             ?! ReadCurrentVersionError.podspecNotFound(
-                expectedPath: targetPodspecLocation.rawValue
+                expectedPath: targetLocation.rawValue
             )
+        
+        let specContent = try String(
+            contentsOfFile: targetLocation.rawValue
+        )
+        
+        let result = try type(of: self).extracVersionString(
+            from: specContent
+        )
         
         //---
         
-        // NOTE: depends on https://fastlane.tools/
+        self.currentVersion = result
         
-        // NOTE: depends on https://github.com/sindresorhus/find-versions-cli
-        // run before first time usage:
-        // try shellOut(to: "npm install --global find-versions-cli")
-        
-        let result = try shellOut(
-            to: """
-            \(Fastlane.call(method)) run version_get_podspec path:"\(targetPodspecLocation.rawValue)" \
-            | grep "Result:" \
-            | find-versions
-            """
-        )
-        
-        //--- undefined
+        //---
         
         if
-            result != "undefined"
-            && !result.isEmpty
+            shouldReport
         {
-            self.currentVersion = result
-            
-            //---
-            
-            if
-                shouldReport
-            {
-                print("✅ Detected current pod version: \(currentVersion).")
-            }
+            print("✅ Detected current pod version: \(currentVersion).")
         }
+    }
+}
+
+//internal
+extension Spec.CocoaPod
+{
+    static
+    func extracVersionString(
+        from rawSpecContent: String
+        ) throws -> VersionString
+    {
+        let rawVersionString = try rawSpecContent
+            .components(
+                separatedBy: .newlines
+            )
+            .filter{
+                $0.lowercased().contains("version")
+            }
+            .first?
+            .components(
+                separatedBy: .whitespaces
+            )
+            .last?
+            .trimmingCharacters(
+                in: .punctuationCharacters
+            )
+            ?! ReadCurrentVersionError.unableToDetectVersionString(
+                rawSpecContent: rawSpecContent
+            )
+        
+        let result = try Version(
+            rawVersionString
+            )
+            ?! ReadCurrentVersionError.unableToDetectVersionString(
+                rawSpecContent: rawSpecContent
+            )
+        
+        return result.description
     }
 }
