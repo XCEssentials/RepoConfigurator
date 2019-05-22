@@ -56,7 +56,7 @@ lane :generateProjectViaSwiftPM do
             end
 
             thePhase = t.new_shell_script_build_phase("SwiftLint")
-            thePhase.shell_script = '"Pods/SwiftLint/swiftlint" --path "Sources/RepoConfigurator"'
+            thePhase.shell_script = '"Pods/SwiftLint/swiftlint" --path "Sources/Core"'
             # thePhase.run_only_for_deployment_postprocessing = ...
 
             t.build_phases.unshift(t.build_phases.delete(thePhase)) # move to top
@@ -69,6 +69,6 @@ lane :generateProjectViaSwiftPM do
 
     # ===
 
-    cocoapods # https://docs.fastlane.tools/actions/cocoapods/
+    cocoapods
 
 end # lane :generateProjectViaSwiftPM
