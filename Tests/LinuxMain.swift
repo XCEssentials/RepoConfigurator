@@ -1,7 +1,7 @@
 import XCTest
 
-import RepoConfiguratorTests
+import AllTests
 
 var tests = [XCTestCaseEntry]()
-tests += RepoConfiguratorTests.allTests()
+tests += AllTests.allTests()
 XCTMain(tests)

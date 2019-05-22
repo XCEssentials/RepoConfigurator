@@ -11,21 +11,12 @@
         }
       },
       {
-        "package": "ShellOut",
-        "repositoryURL": "https://github.com/JohnSundell/ShellOut",
-        "state": {
-          "branch": null,
-          "revision": "d3d54ce662dfee7fef619330b71d251b8d4869f9",
-          "version": "2.2.0"
-        }
-      },
-      {
         "package": "SwiftHamcrest",
         "repositoryURL": "https://github.com/nschum/SwiftHamcrest",
         "state": {
           "branch": null,
-          "revision": "53e322984e000deefd3a5efaa777a7365c51aac9",
-          "version": "2.2.1"
+          "revision": "034159ba9ac342372e3af119e7d80f38b5014782",
+          "version": "2.1.1"
         }
       },
       {
