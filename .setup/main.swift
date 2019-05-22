@@ -78,8 +78,8 @@ try Bundler
     .Gemfile(
         basicFastlane: true,
         """
-        gem '\(CocoaPods.gemName)', '1.6.0.beta.2'
-        gem '\(CocoaPods.Rome.gemName)', '~>1.0.1'
+        gem '\(CocoaPods.gemName)'
+        gem '\(CocoaPods.Rome.gemName)'
         """
     )
     .prepare()
@@ -181,7 +181,12 @@ try Fastlane
         endingEntries: [
             
             """
-            cocoapods
+            
+            # default initial location for any command
+            # is inside 'Fastlane' folder
+
+            sh 'cd ./.. && bundle exec pod install'
+
             """
         ]
     )
