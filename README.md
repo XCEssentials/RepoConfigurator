@@ -3,6 +3,7 @@
 [![Swift Package Manager Compatible](https://img.shields.io/badge/SPM-compatible-brightgreen.svg?longCache=true)](Package.swift)
 [![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-brightgreen.svg?longCache=true)](https://github.com/Carthage/Carthage)
 [![Written in Swift](https://img.shields.io/badge/Swift-4.2-orange.svg?longCache=true)](https://swift.org)
+[![Build Status](https://app.bitrise.io/app/434645f081b33ed5/status.svg?token=1T4cZnBtaminrPsDwHYGYg&branch=master)](https://app.bitrise.io/app/434645f081b33ed5)
 
 # RepoConfigurator
 
