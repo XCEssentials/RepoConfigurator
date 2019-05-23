@@ -1,6 +1,0 @@
-language: swift
-osx_image: xcode10.1
-before_install:
-  - bundle install
-  - bundle exec pod repo update
-script: swift test
