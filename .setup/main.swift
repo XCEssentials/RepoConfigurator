@@ -11,6 +11,12 @@ print("--- BEGIN of '\(Executable.name)' script ---")
 
 // MARK: Parameters
 
+let bitrise = (
+    appId: "434645f081b33ed5",
+    statusImageToken: "1T4cZnBtaminrPsDwHYGYg",
+    branch: "master"
+)
+
 Spec.BuildSettings.swiftVersion.value = "4.2"
 let swiftLanguageVersionsForSPM = "[.v4, .v4_2]"
 
@@ -102,7 +108,7 @@ try ReadMe()
         version: Spec.BuildSettings.swiftVersion.value
     )
     .add("""
-        [![Build Status](https://travis-ci.com/\(remoteRepo.accountName)/\(remoteRepo.name).svg?branch=master)](https://travis-ci.com/\(remoteRepo.accountName)/\(remoteRepo.name))
+        [![Build Status](https://app.bitrise.io/app/\(bitrise.appId)/status.svg?token=\(bitrise.statusImageToken)&branch=\(bitrise.branch))](https://app.bitrise.io/app/\(bitrise.appId))
         """
     )
     .add("""
