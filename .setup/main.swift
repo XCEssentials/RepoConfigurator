@@ -102,10 +102,6 @@ try ReadMe()
         version: Spec.BuildSettings.swiftVersion.value
     )
     .add("""
-        [![Build Status](https://travis-ci.com/\(remoteRepo.accountName)/\(remoteRepo.name).svg?branch=master)](https://travis-ci.com/\(remoteRepo.accountName)/\(remoteRepo.name))
-        """
-    )
-    .add("""
 
         # \(project.name)
 
