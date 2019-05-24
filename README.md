@@ -17,26 +17,16 @@ Note, that you might want to write some files only once during the repo lifetime
 
 ## Installation
 
-### For usage in Swift script (recommended)
+`XCERepoConfigurator` is a standard SwiftPM-compatible [package](Package.swift), so it can be used as dependincy in any [SPM](https://github.com/apple/swift-package-manager/tree/master/Documentation) based script.
 
-`XCERepoConfigurator` is a standard SwiftPM-compatible [package](Package.swift), so it can be used as dependincy in any [SPM](https://github.com/apple/swift-package-manager/tree/master/Documentation) or [Marathon](https://github.com/JohnSundell/Marathon) based script.
+## Usage
 
-### For usage in Xcode Playgrounds (via Carthage)
-
-`XCERepoConfigurator` can be also used in Xcode Playgrounds. Install it as dependency via [Carthage](https://github.com/Carthage/Carthage), just add to `Cartfile` the following.
-
-```ruby
-github "XCEssentials/RepoConfigurator"
-```
-
-After fetching dependencies with `Carthage`, add both `RepoConfigurator.xcodeproj` and playground(s) to the same workspace.
+To get an idea of how to use this library, see `.setup/main.swift` in this repo and also templates for [Cocoa app](https://github.com/XCEssentials/AppTemplate) and [Cocoa framework](https://github.com/XCEssentials/FrameworkTemplate).
 
 ## Remember
 
 Most of the initializers have some parameters with default values, look into sources to discover all available parameters to configure output file according to your needs.
 
-When define Xcode project target (for [Struct](https://github.com/lyptt/struct) project spec file), don't forget to set following build settings.
-- `SWIFT_VERSION` on project level;
-- `DEVELOPMENT_TEAM` with development team ID;
-- `INFOPLIST_FILE` with relative path to corresponding info plist file;
-- `PRODUCT_BUNDLE_IDENTIFIER`.
+## Development
+
+This repo uses itself for generating various infrastructure files in the repo, so go to `.setup` folder and run the SPM script located there by executing `swift run`, then switch back to root folder and run `bundle exec fastlane generateProjectViaSwiftPM`.
