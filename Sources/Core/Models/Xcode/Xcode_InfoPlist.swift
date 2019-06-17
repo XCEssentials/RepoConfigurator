@@ -31,7 +31,6 @@ import PathKit
 public
 extension Xcode
 {
-    public
     final
     class InfoPlist: ArbitraryNamedTextFile
     {
@@ -116,7 +115,6 @@ extension Xcode
 public
 extension Xcode.InfoPlist
 {
-    public
     enum Error: Swift.Error
     {
         case encounteredUnsupportedPlatform(
@@ -190,7 +188,6 @@ extension Xcode.InfoPlist
 public
 extension Xcode.InfoPlist
 {
-    public
     enum Preset
     {
         case iOS

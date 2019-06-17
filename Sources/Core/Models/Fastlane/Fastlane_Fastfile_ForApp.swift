@@ -31,7 +31,6 @@ import PathKit
 public
 extension Fastlane.Fastfile
 {
-    public
     final
     class ForApp: Fastlane.Fastfile
     {

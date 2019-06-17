@@ -31,7 +31,6 @@ import PathKit
 public
 extension GitHub
 {
-    public
     struct PagesConfig: FixedNameTextFile
     {
         // MARK: Type level members

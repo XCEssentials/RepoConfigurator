@@ -31,7 +31,6 @@ import PathKit
 public
 extension Fastlane.Fastfile
 {
-    public
     final
     class ForLibrary: Fastlane.Fastfile {}
 }
@@ -41,7 +40,6 @@ extension Fastlane.Fastfile
 public
 extension Fastlane.Fastfile.ForLibrary
 {
-    public
     enum PodspecLocation
     {
         case from(Spec.CocoaPod)

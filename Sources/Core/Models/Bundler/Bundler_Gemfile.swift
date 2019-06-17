@@ -27,7 +27,6 @@
 public
 extension Bundler
 {
-    public
     struct Gemfile: FixedNameTextFileAuto
     {
         // MARK: Instance level members

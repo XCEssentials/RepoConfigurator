@@ -41,7 +41,6 @@ enum Shields {}
 public
 extension Shields
 {
-    public
     struct Badge
     {
         // MARK: Type level members
@@ -187,7 +186,6 @@ extension Shields
 public
 extension Shields
 {
-    public
     enum Style: String
     {
         case plastic = "plastic"
@@ -205,7 +203,6 @@ extension Shields
 public
 extension Shields
 {
-    public
     struct Parameters
     {
         // MARK: Instance level members

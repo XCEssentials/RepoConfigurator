@@ -63,7 +63,6 @@ extension Git
 public
 extension Git.RepoIgnore
 {
-    public
     static
     func app(
         ignoreDependenciesSources: Bool = false,
@@ -92,7 +91,6 @@ extension Git.RepoIgnore
         return result
     }
 
-    public
     static
     func framework(
         ignoreDependenciesSources: Bool = true,

@@ -38,7 +38,6 @@ extension Xcodeproj
     /**
      https://github.com/CocoaPods/Xcodeproj/blob/c6c1c86459720e5dfbe406eb613a2d2de1607ee2/lib/xcodeproj/constants.rb#L125
      */
-    public
     enum ProductType: String
     {
         case

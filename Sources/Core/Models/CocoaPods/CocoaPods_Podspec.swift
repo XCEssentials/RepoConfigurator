@@ -33,7 +33,6 @@ import PathKit
 public
 extension CocoaPods
 {
-    public
     final
     class Podspec: ArbitraryNamedTextFile
     {
@@ -85,26 +84,22 @@ extension CocoaPods.Podspec
 public
 extension CocoaPods.Podspec
 {
-    public
     typealias Product = (
         name: String,
         summary: String
     )
 
-    public
     typealias Company = (
         name: String,
         identifier: String,
         prefix: String
     )
 
-    public
     typealias License = (
         type: String,
         file: Path
     )
 
-    public
     typealias Author = (
         name: String,
         email: String

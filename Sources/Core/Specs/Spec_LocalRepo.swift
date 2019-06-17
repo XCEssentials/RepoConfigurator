@@ -52,7 +52,6 @@ extension Spec
 public
 extension Spec.LocalRepo
 {
-    public
     enum InitializationError: Error
     {
         case gitRepoAutoDetectionFailed
