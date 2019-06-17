@@ -57,6 +57,11 @@ extension Fastlane.Fastfile
 public
 extension Fastlane.Fastfile.ForApp
 {
+    enum Error: Swift.Error
+    {
+        case projectLocationMustBeRelative
+    }
+    
     func beforeRelease(
         laneName: String? = nil,
         beginningEntries: [String] = [],
@@ -286,16 +291,26 @@ extension Fastlane.Fastfile.ForApp
     func archiveBeta(
         laneName: String? = nil,
         productName: String,
-        project: Spec.Project,
+        project: Path,
         schemeName: String? = nil, // 'productName' will be used if 'nil'
         exportMethod: GymArchiveExportMethod = Defaults.stagingExportMethod,
         archivesExportLocation: Path = Defaults.archivesExportLocation
-        ) -> Self
+        ) throws -> Self
     {
+        try project.isRelative
+            ?! Error.projectLocationMustBeRelative
+        
+        //---
+
         let laneName = laneName
             ?? String(#function.split(separator: "(").first!)
         
-        let project = [".", ".."] + project.location
+        let project = Utils.mutate(project){
+            
+            $0 = Path("..") + $0 // REMEMBER: we are inside 'fastlane' dir!
+            $0.setExtension(Xcode.Project.extension)
+        }
+        
         let schemeName = schemeName ?? productName
 
         //---

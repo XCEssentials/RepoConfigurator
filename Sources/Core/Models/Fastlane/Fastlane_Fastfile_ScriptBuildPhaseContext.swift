@@ -53,7 +53,7 @@ extension Fastlane.Fastfile.ScriptBuildPhaseContext
 {
     enum Error: Swift.Error
     {
-        case invalidProjectLocation // must be relative!
+        case projectLocationMustBeRelative
         case emptyTargetNamesList // what's the point to pass empty list? looks like an error
         case emptyScriptName
         case emptyScriptBody
@@ -75,7 +75,7 @@ extension Fastlane.Fastfile.ScriptBuildPhaseContext
         ) throws
     {
         try project.isRelative
-            ?! Error.invalidProjectLocation
+            ?! Error.projectLocationMustBeRelative
         
         try !targetNames.isEmpty
             ?! Error.emptyTargetNamesList
@@ -88,7 +88,11 @@ extension Fastlane.Fastfile.ScriptBuildPhaseContext
         
         //---
 
-        let project = [".", ".."] + project // REMEMBER: we are inside 'fastlane' folder!
+        let project = Utils.mutate(project){
+            
+            $0 = Path("..") + $0 // REMEMBER: we are inside 'fastlane' dir!
+            $0.setExtension(Xcode.Project.extension)
+        }
             
         let targetNames = targetNames
             .map{ "'\($0)'" }

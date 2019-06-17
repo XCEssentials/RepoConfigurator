@@ -92,6 +92,17 @@ extension Path
         }
         while true
     }
+    
+    mutating
+    func setExtension(
+        _ newExt: String
+        )
+    {
+        self = Path(
+            components: components.dropLast()
+                + ["\(lastComponentWithoutExtension).\(newExt)"]
+        )
+    }
 }
 
 //---

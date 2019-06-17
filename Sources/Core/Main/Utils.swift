@@ -62,3 +62,26 @@ enum Utils
         )
     }
 }
+
+//---
+
+//internal
+extension Utils
+{
+    static
+    func mutate<T>(
+        _ value: T,
+        _ body: (inout T) throws -> Void
+        ) rethrows -> T
+    {
+        var tmp = value
+        
+        //---
+        
+        try body(&tmp)
+        
+        //---
+        
+        return tmp
+    }
+}
