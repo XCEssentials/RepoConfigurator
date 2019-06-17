@@ -32,18 +32,6 @@ public
 enum Utils
 {
     public
-    static
-    func symLinkCmd(
-        _ source: String,
-        _ destination: String
-        ) -> String
-    {
-        return """
-            ln -sf "\(source)" "\(destination)"
-            """
-    }
-    
-    public
     enum PathManipulationError: Error
     {
         case pathsDontHaveCommonAncestor
@@ -72,28 +60,5 @@ enum Utils
         return Path(
             components: path.dropFirst(prefix.count)
         )
-    }
-}
-
-//---
-
-//internal
-extension Utils
-{
-    static
-    func mutate<T>(
-        _ value: T,
-        _ body: (inout T) throws -> Void
-        ) rethrows -> T
-    {
-        var tmp = value
-        
-        //---
-        
-        try body(&tmp)
-        
-        //---
-        
-        return tmp
     }
 }
