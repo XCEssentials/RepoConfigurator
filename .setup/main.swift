@@ -1,4 +1,4 @@
-import FileKit
+import PathKit
 
 import XCERepoConfigurator
 
@@ -244,7 +244,7 @@ try CustomTextFile("""
             )
         ],
         dependencies: [
-            .package(url: "https://github.com/nvzqz/FileKit", from: "5.2.0"),
+            .package(url: "https://github.com/kylef/PathKit", from: "1.0.0"),
             .package(url: "https://github.com/nschum/SwiftHamcrest", .exact("2.1.1")),
             .package(url: "https://github.com/mxcl/Version.git", from: "1.0.0")
         ],
@@ -253,7 +253,7 @@ try CustomTextFile("""
                 name: "\(targetsSPM.core.name)",
                 dependencies: [
                     "Version",
-                    "FileKit"
+                    "PathKit"
                 ],
                 path: "\(subSpecs.core.sourcesLocation)"
             ),

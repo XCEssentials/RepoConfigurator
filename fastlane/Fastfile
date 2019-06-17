@@ -30,17 +30,17 @@ lane :generateProjectViaSwiftPM do
 
     sh 'cd ./.. && rm -rf ".build" && rm -rf "XCERepoConfigurator.xcodeproj" && swift package generate-xcodeproj'
 
-    # === Build Phase Script - SwiftLint | 'XCERepoConfigurator' | ./../XCERepoConfigurator.xcodeproj
+    # === Build Phase Script - SwiftLint | 'XCERepoConfigurator' | ../XCERepoConfigurator.xcodeproj
 
     begin
 
-        project = Xcodeproj::Project.open("./../XCERepoConfigurator.xcodeproj")
+        project = Xcodeproj::Project.open("../XCERepoConfigurator.xcodeproj")
 
     rescue => ex
 
         # https://github.com/fastlane/fastlane/issues/7944#issuecomment-274232674
         UI.error ex
-        UI.error("Failed to add Build Phase Script - SwiftLint | 'XCERepoConfigurator' | ./../XCERepoConfigurator.xcodeproj")
+        UI.error("Failed to add Build Phase Script - SwiftLint | 'XCERepoConfigurator' | ../XCERepoConfigurator.xcodeproj")
 
     end
 
@@ -65,7 +65,7 @@ lane :generateProjectViaSwiftPM do
 
     project.save()
 
-    UI.success("Added Build Phase Script - SwiftLint | 'XCERepoConfigurator' | ./../XCERepoConfigurator.xcodeproj")
+    UI.success("Added Build Phase Script - SwiftLint | 'XCERepoConfigurator' | ../XCERepoConfigurator.xcodeproj")
 
     # ===
 

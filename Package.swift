@@ -13,9 +13,9 @@ let package = Package(
         )
     ],
     dependencies: [
-        .package(url: "https://github.com/nschum/SwiftHamcrest", .exact("2.1.1")),
-        .package(url: "https://github.com/mxcl/Version.git", from: "1.0.0"),
         .package(url: "https://github.com/kylef/PathKit", from: "1.0.0"),
+        .package(url: "https://github.com/nschum/SwiftHamcrest", .exact("2.1.1")),
+        .package(url: "https://github.com/mxcl/Version.git", from: "1.0.0")
     ],
     targets: [
         .target(
