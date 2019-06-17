@@ -41,12 +41,6 @@ class Indentation: Equatable
     var currentLevel = 0
 
     public
-    var snapshot: Snapshot
-    {
-        return .init(repeating: singleLevel, count: currentLevel)
-    }
-
-    public
     var rendered: String
     {
         return .init(repeating: singleLevel, count: currentLevel)

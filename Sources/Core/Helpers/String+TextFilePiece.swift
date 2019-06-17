@@ -35,6 +35,6 @@ extension String: TextFilePiece
             separator: "\n",
             omittingEmptySubsequences: false // to preserve empty lines!
             )
-            .map{ (indentation.snapshot, String($0)) }
+            .map{ (indentation.rendered, String($0)) }
     }
 }
