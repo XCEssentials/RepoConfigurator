@@ -31,7 +31,6 @@ import Foundation
 public
 extension License
 {
-    public
     final
     class MIT: WidelyUsedLicense
     {

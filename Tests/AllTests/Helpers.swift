@@ -26,7 +26,7 @@
 
 import XCTest
 
-import FileKit
+import PathKit
 
 //---
 

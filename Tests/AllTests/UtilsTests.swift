@@ -26,7 +26,7 @@
 
 import XCTest
 
-import FileKit
+import PathKit
 
 import SwiftHamcrest
 
@@ -63,7 +63,7 @@ extension UtilsTests
         assertThat(
             try! Utils
                 .removePrefix(prefixPath, from: filePath)
-                .rawValue
+                .string
                 == expectedRelativePath
         )
     }

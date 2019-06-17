@@ -24,7 +24,7 @@
  
  */
 
-import FileKit
+import PathKit
 
 //---
 
@@ -71,13 +71,13 @@ extension Spec.CocoaPod
                 ?? (tests ? Spec.Locations.tests : Spec.Locations.sources) + name
             
             let sourcesPattern = sourcesPattern
-                ?? (sourcesLocation + "**" + "*").rawValue
+                ?? (sourcesLocation + "**" + "*").string
             
             let resourcesLocation = resourcesLocation
                 ?? Spec.Locations.resources + name
             
             let resourcesPattern = resourcesPattern
-                ?? (resourcesLocation + "**" + "*").rawValue
+                ?? (resourcesLocation + "**" + "*").string
             
             let linterCfgLocation = linterCfgLocation
                 ?? sourcesLocation

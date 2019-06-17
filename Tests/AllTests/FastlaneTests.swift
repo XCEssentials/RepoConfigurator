@@ -26,7 +26,7 @@
 
 import XCTest
 
-import FileKit
+import PathKit
 import SwiftHamcrest
 
 // @testable
@@ -117,7 +117,7 @@ extension FastlaneTests
     
     func testDefaultHeader()
     {
-        let targetOutput = """
+        let targetOutput = { """
             # Customise this file, documentation can be found here:
             # https://github.com/KrauseFx/fastlane/tree/master/docs
             # All available actions: https://github.com/KrauseFx/fastlane/blob/master/docs/Actions.md
@@ -142,19 +142,26 @@ extension FastlaneTests
             fastlane_version '2.100.0'
             
             """
+        }()
+        .split(separator: "\n")
         
         //---
         
-        let model = try! Fastlane
+        let result = try! Fastlane
             .Fastfile()
             .defaultHeader()
             .prepare(
                 at: Some.path
             )
+            .content
+            .split(separator: "\n")
         
         //---
         
-        assertThat(model.content == targetOutput)
+        for (i, expected) in targetOutput.enumerated()
+        {
+            assertThat(expected == result[i])
+        }
     }
     
     func testLibraryBeforeReleaseLane()
@@ -207,10 +214,11 @@ extension FastlaneTests
             end # lane :beforeRelease
             """
         }()
+        .split(separator: "\n")
         
         //---
         
-        let model = try! Fastlane
+        let result = try! Fastlane
             .Fastfile
             .ForLibrary()
             .beforeRelease(
@@ -219,15 +227,20 @@ extension FastlaneTests
             .prepare(
                 at: Some.path
             )
+            .content
+            .split(separator: "\n")
         
         //---
         
-        assertThat(model.content == targetOutput)
+        for (i, expected) in targetOutput.enumerated()
+        {
+            assertThat(expected == result[i])
+        }
     }
     
     func testLibraryGenerateProjectViaCPLane()
     {
-        let targetOutput = """
+        let targetOutput = { """
             
             lane :generateProjectViaCP do
             
@@ -240,10 +253,12 @@ extension FastlaneTests
             
             end # lane :generateProjectViaCP
             """
+        }()
+        .split(separator: "\n")
         
         //---
         
-        let model = try! Fastlane
+        let result = try! Fastlane
             .Fastfile
             .ForLibrary()
             .generateProjectViaCP(
@@ -252,17 +267,22 @@ extension FastlaneTests
             .prepare(
                 at: Some.path
             )
+            .content
+            .split(separator: "\n")
         
         //---
         
-        assertThat(model.content == targetOutput)
+        for (i, expected) in targetOutput.enumerated()
+        {
+            assertThat(expected == result[i])
+        }
     }
     
     func testLibraryGenerateProjectViaSwiftPMLane()
     {
         let scriptName = "SwiftLint"
         
-        let targetOutput = """
+        let targetOutput = { """
             
             lane :generateProjectViaSwiftPM do
             
@@ -273,17 +293,17 @@ extension FastlaneTests
             
                 sh 'cd ./.. && rm -rf ".build" && rm -rf "XCEMyFwk.xcodeproj" && swift package generate-xcodeproj'
 
-                # === Build Phase Script - \(scriptName) | 'XCEMyFwk' | ./../XCEMyFwk.xcodeproj
+                # === Build Phase Script - \(scriptName) | 'XCEMyFwk' | ../XCEMyFwk.xcodeproj
 
                 begin
 
-                    project = Xcodeproj::Project.open("./../XCEMyFwk.xcodeproj")
+                    project = Xcodeproj::Project.open("../XCEMyFwk.xcodeproj")
 
                 rescue => ex
 
                     # https://github.com/fastlane/fastlane/issues/7944#issuecomment-274232674
                     UI.error ex
-                    UI.error("Failed to add Build Phase Script - \(scriptName) | 'XCEMyFwk' | ./../XCEMyFwk.xcodeproj")
+                    UI.error("Failed to add Build Phase Script - \(scriptName) | 'XCEMyFwk' | ../XCEMyFwk.xcodeproj")
 
                 end
 
@@ -308,10 +328,12 @@ extension FastlaneTests
 
                 project.save()
 
-                UI.success("Added Build Phase Script - \(scriptName) | 'XCEMyFwk' | ./../XCEMyFwk.xcodeproj")
+                UI.success("Added Build Phase Script - \(scriptName) | 'XCEMyFwk' | ../XCEMyFwk.xcodeproj")
             
             end # lane :generateProjectViaSwiftPM
             """
+        }()
+        .split(separator: "\n")
         
         let company = try! Spec.Company(
             prefix: "XCE",
@@ -332,7 +354,7 @@ extension FastlaneTests
         
         //---
         
-        let model = try! Fastlane
+        let result = try! Fastlane
             .Fastfile
             .ForLibrary()
             .generateProjectViaSwiftPM(
@@ -348,10 +370,15 @@ extension FastlaneTests
             .prepare(
                 at: Some.path
             )
+            .content
+            .split(separator: "\n")
         
         //---
         
-        assertThat(model.content == targetOutput)
+        for (i, expected) in targetOutput.enumerated()
+        {
+            assertThat(expected == result[i])
+        }
     }
     
     func testAppBeforeReleaseLane()
@@ -447,6 +474,7 @@ extension FastlaneTests
             end # lane :beforeRelease
             """
         }()
+        .split(separator: "\n")
         
         //---
         
@@ -457,7 +485,7 @@ extension FastlaneTests
             deploymentTargets: [
                 .iOS : "9.0"
             ],
-            location: .use(["AppTemplate.xcodeproj"]),
+            location: .use("AppTemplate"),
             shouldReport: false
         )
         
@@ -489,7 +517,9 @@ extension FastlaneTests
         
         let allModules = try! Spec.Module.extractAll(from: modules)
         
-        let model = try! Fastlane
+        //---
+        
+        let result = try! Fastlane
             .Fastfile
             .ForApp()
             .beforeRelease(
@@ -500,9 +530,14 @@ extension FastlaneTests
             .prepare(
                 at: Some.path
             )
+            .content
+            .split(separator: "\n")
         
         //---
         
-        assertThat(model.content == targetOutput)
+        for (i, expected) in targetOutput.enumerated()
+        {
+            assertThat(expected == result[i])
+        }
     }
 }
