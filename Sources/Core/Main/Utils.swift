@@ -24,7 +24,7 @@
  
  */
 
-import FileKit
+import PathKit
 
 //---
 
@@ -56,23 +56,21 @@ enum Utils
         from path: Path
         ) throws -> Path
     {
+        let prefix = prefix.absolute().components
+        let path = path.absolute().components
+        
         guard
-            path.commonAncestor(prefix) == prefix
+            prefix.count < path.count,
+            path.starts(with: prefix)
         else
         {
             throw PathManipulationError.pathsDontHaveCommonAncestor
         }
         
-        let pathComponents = path.absolute.components
-        
         //---
         
         return Path(
-            String(
-                pathComponents[ prefix.absolute.components.endIndex ..< pathComponents.endIndex ]
-                    .map{ $0.rawValue }
-                    .joined(separator: Path.separator)
-            )
+            components: path.dropFirst(prefix.count)
         )
     }
 }

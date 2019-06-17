@@ -24,7 +24,7 @@
  
  */
 
-import FileKit
+import PathKit
 import Version
 
 //---
@@ -52,11 +52,9 @@ extension Spec
         public
         var podspecLocation: Path
         {
-            return Utils
-                .mutate([product.name]){
-                    
-                    $0.pathExtension = CocoaPods.Podspec.extension
-                }
+            return .init(
+                "\(product.name).\(CocoaPods.Podspec.extension)"
+            )
         }
         
         public
@@ -143,7 +141,7 @@ extension Spec.CocoaPod
     {
         print("✅ CocoaPod authors: \(authors).")
         print("✅ CocoaPod current version: \(currentVersion).")
-        print("✅ CocoaPod xcodeArtifactsLocation: \(xcodeArtifactsLocation.rawValue).")
+        print("✅ CocoaPod xcodeArtifactsLocation: \(xcodeArtifactsLocation.string).")
     }
     
     enum ReadCurrentVersionError: Error
@@ -168,11 +166,11 @@ extension Spec.CocoaPod
         
         try targetLocation.exists
             ?! ReadCurrentVersionError.podspecNotFound(
-                expectedPath: targetLocation.rawValue
+                expectedPath: targetLocation.string
             )
         
         let specContent = try String(
-            contentsOfFile: targetLocation.rawValue
+            contentsOfFile: targetLocation.string
         )
         
         let result = try type(of: self).extracVersionString(

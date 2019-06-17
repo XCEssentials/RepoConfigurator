@@ -26,7 +26,7 @@
 
 import Foundation
 
-import FileKit
+import PathKit
 
 //---
 
@@ -91,18 +91,14 @@ extension Spec
             switch location ?? .auto
             {
             case .auto:
-                fileLocation = Utils
-                    .mutate([name]){
-                        
-                        $0.pathExtension = Xcode.Project.extension
-                    }
+                fileLocation = .init(
+                    "\(name).\(Xcode.Project.extension)"
+                )
                 
             case .use(let location) where location.isRelative:
-                fileLocation = Utils
-                    .mutate(location){
-                        
-                        $0.pathExtension = Xcode.Project.extension // ensure right extension
-                    }
+                fileLocation = .init(
+                    "\(location.string).\(Xcode.Project.extension)"
+                )
                 
             default:
                 throw InitializationError.invalidLocation

@@ -24,7 +24,7 @@
  
  */
 
-import FileKit
+import PathKit
 
 //---
 
@@ -171,7 +171,7 @@ extension Fastlane.Fastfile.ForApp
                 commit_version_bump(
                     message: 'Version Bump to ' + newVersionNumber + ' (' + newBuildNumber + ')',
                     xcodeproj: '\(project)',
-                    include: \(allPodspecs.map{ $0.rawValue })
+                    include: \(allPodspecs.map{ $0.string })
                 )
                 """
             }()
@@ -337,7 +337,7 @@ extension Fastlane.Fastfile.ForApp
                         scheme: '\(schemeName)',
                         export_method: '\(exportMethod)',
                         output_name: '\(productName)_' + versionNumber + '_' + buildNumber + '.ipa',
-                        output_directory: '\(archivesExportLocation.rawValue)'
+                        output_directory: '\(archivesExportLocation.string)'
                     )
 
                     # === mark dirty

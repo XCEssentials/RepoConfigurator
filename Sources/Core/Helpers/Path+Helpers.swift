@@ -26,7 +26,7 @@
 
 import Foundation
 
-import FileKit
+import PathKit
 
 //---
 
@@ -50,52 +50,44 @@ extension Path
         
         //---
         
-        guard
-            let resultPrefix = Path(url: userLibraryDir)
-        else
-        {
-            return nil
-        }
-        
-        //---
-        
-        return resultPrefix
+        return Path(
+            userLibraryDir.absoluteString
+            )
             + "Mobile Documents"
             + "com~apple~CloudDocs"
     }
     
-    var isGitRepoRoot: Bool
+    func isGitRepoRoot() throws -> Bool
     {
-        return children().contains{
-            
-            $0.isDirectory && ($0.components.last == ".git")
-        }
+        return try children()
+            .contains{
+                $0.isDirectory && ($0.components.last == ".git")
+            }
     }
     
     static
-    var currentRepoRoot: Path?
+    func currentRepoRoot() throws -> Path?
     {
-        var maybeResult: Path? = .current
+        var result: Path = .current
         
         //---
         
         repeat
         {
-            switch maybeResult
+            if
+                try result.isGitRepoRoot()
             {
-            case let .some(path):
-                if
-                    path.isGitRepoRoot
-                {
-                    return path
-                }
-                else
-                {
-                    maybeResult = path.parent // and keep looking...
-                }
-                
-            default:
+                return result
+            }
+            else
+            if
+                result ~= result.parent()
+            {
                 return nil
+            }
+            else
+            {
+                result = result.parent() // and keep looking...
             }
         }
         while true

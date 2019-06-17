@@ -26,7 +26,7 @@
 
 import Foundation
 
-import FileKit
+import PathKit
 
 //---
 
@@ -387,7 +387,7 @@ extension CocoaPods.Podspec
 
             \(s).requires_arc  = true
 
-            \(s).license       = { :type => '\(license.type)', :file => '\(license.file.rawValue)' }
+            \(s).license       = { :type => '\(license.type)', :file => '\(license.file.string)' }
 
             \(s).authors = {
             """

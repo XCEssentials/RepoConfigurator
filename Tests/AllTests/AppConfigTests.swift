@@ -27,7 +27,7 @@
 import Foundation
 import XCTest
 
-import FileKit
+import PathKit
 import SwiftHamcrest
 
 @testable
@@ -47,7 +47,7 @@ let currentLocation: Path = [
 fileprivate
 let localRepo = Spec.LocalRepo(
     location: currentLocation,
-    context: currentLocation.parent.fileName
+    context: currentLocation.parent().lastComponentWithoutExtension
 )
 
 fileprivate

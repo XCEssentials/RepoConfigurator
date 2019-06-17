@@ -26,7 +26,7 @@
 
 import Foundation
 
-import FileKit
+import PathKit
 
 //---
 
@@ -73,7 +73,7 @@ extension Shields
             guard
                 var result = URL
                     .init(string: type(of: self).baseURL)?
-                    .appendingPathComponent(linkPath.rawValue)
+                    .appendingPathComponent(linkPath.string)
             else
             {
                 throw Errors.failedToGenerateOutputURL
@@ -144,7 +144,7 @@ extension Shields
             //---
 
             return try .init(
-                "badge/\(subject)-\(status)-\(color).svg",
+                .init("badge/\(subject)-\(status)-\(color).svg"),
                 parameters?.output
             )
         }

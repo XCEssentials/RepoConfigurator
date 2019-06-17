@@ -26,7 +26,7 @@
 
 import Foundation
 
-import FileKit
+import PathKit
 
 //---
 
@@ -109,14 +109,11 @@ struct PendingTextFile<T: TextFile>
         reportingPrefixLocation: Path? = nil
         ) throws -> Bool
     {
-        let location = try Utils.mutate(self.location){
-            
-            if
-                !$0.isAbsolute
-            {
-                $0 = try Spec.LocalRepo.current().location + $0
-            }
-        }
+        let location = try (
+            self.location.isAbsolute ?
+                self.location
+                : Spec.LocalRepo.current().location + self.location
+        )
         
         try location.isAbsolute
             ?! WriteToFileSystemError.absoluteTargetLocationUndefined
@@ -132,11 +129,19 @@ struct PendingTextFile<T: TextFile>
         
         do
         {
-            try location
-                .parent
-                .createDirectory(
-                    withIntermediateDirectories: createIntermediateDirectories
-                )
+            if
+                createIntermediateDirectories
+            {
+                try location
+                    .parent()
+                    .mkpath()
+            }
+            else
+            {
+                try location
+                    .parent()
+                    .mkdir()
+            }
             
             //---
             

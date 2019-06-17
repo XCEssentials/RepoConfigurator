@@ -24,7 +24,7 @@
 
  */
 
-import FileKit
+import PathKit
 
 //---
 
@@ -336,7 +336,7 @@ extension Git.RepoIgnore
             # ==========
             ### Archives Export Path (for apps only) ###
 
-            \(archivesExportLocation.rawValue)
+            \(archivesExportLocation.string)
 
             ### Archives Export Path (for apps only) ###
             # ==========

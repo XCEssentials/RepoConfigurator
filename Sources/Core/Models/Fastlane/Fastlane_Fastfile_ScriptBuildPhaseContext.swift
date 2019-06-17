@@ -24,7 +24,7 @@
  
  */
 
-import FileKit
+import PathKit
 
 //---
 
@@ -88,12 +88,8 @@ extension Fastlane.Fastfile.ScriptBuildPhaseContext
         
         //---
 
-        let project = Utils.mutate(project){
+        let project = [".", ".."] + project // REMEMBER: we are inside 'fastlane' folder!
             
-            $0 = [".", ".."] + $0 // REMEMBER: we are inside 'fastlane' folder!
-            $0.pathExtension = Xcode.Project.extension // just in case
-        }
-        
         let targetNames = targetNames
             .map{ "'\($0)'" }
             .joined(separator: ", ")
@@ -201,7 +197,7 @@ extension Fastlane.Fastfile.ScriptBuildPhaseContext
             targetNames: targetNames,
             scriptName: scriptName,
             scriptBody: """
-                "\(executableLocation.rawValue)"  \(params.joined(separator: " "))
+                "\(executableLocation.string)"  \(params.joined(separator: " "))
                 """
         )
     }
@@ -242,7 +238,7 @@ extension Fastlane.Fastfile.ScriptBuildPhaseContext
             targetNames: targetNames,
             scriptName: scriptName,
             scriptBody: """
-                "\(executableLocation.rawValue)"  \(params.joined(separator: " "))
+                "\(executableLocation.string)"  \(params.joined(separator: " "))
                 """
         )
     }
@@ -281,7 +277,7 @@ extension Fastlane.Fastfile.ScriptBuildPhaseContext
             targetNames: targetNames,
             scriptName: scriptName,
             scriptBody: """
-                "\(executableLocation.rawValue)" \(params.joined(separator: " "))
+                "\(executableLocation.string)" \(params.joined(separator: " "))
                 """
         )
     }

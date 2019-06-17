@@ -24,7 +24,7 @@
  
  */
 
-import FileKit
+import PathKit
 
 //---
 
@@ -42,7 +42,7 @@ extension Spec
         public
         var name: String
         {
-            return location.fileName
+            return location.lastComponentWithoutExtension
         }
     }
 }
@@ -64,10 +64,10 @@ extension Spec.LocalRepo
         shouldReport: Bool = false
         ) throws -> Spec.LocalRepo
     {
-        let location = try Path.currentRepoRoot
+        let location = try Path.currentRepoRoot()
             ?! InitializationError.gitRepoAutoDetectionFailed
         
-        let context = try location.parent.fileName
+        let context = try location.parent().lastComponentWithoutExtension
             ?! InitializationError.repoParentFolderAutoDetectionFailed
         
         //---
