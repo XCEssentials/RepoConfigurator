@@ -27,7 +27,6 @@
 public
 extension Xcode
 {
-    public
     enum Project
     {
         public

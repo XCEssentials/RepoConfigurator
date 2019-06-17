@@ -24,7 +24,7 @@
 
  */
 
-import FileKit
+import PathKit
 
 //---
 
@@ -63,7 +63,6 @@ extension Git
 public
 extension Git.RepoIgnore
 {
-    public
     static
     func app(
         ignoreDependenciesSources: Bool = false,
@@ -92,7 +91,6 @@ extension Git.RepoIgnore
         return result
     }
 
-    public
     static
     func framework(
         ignoreDependenciesSources: Bool = true,
@@ -336,7 +334,7 @@ extension Git.RepoIgnore
             # ==========
             ### Archives Export Path (for apps only) ###
 
-            \(archivesExportLocation.rawValue)
+            \(archivesExportLocation.string)
 
             ### Archives Export Path (for apps only) ###
             # ==========

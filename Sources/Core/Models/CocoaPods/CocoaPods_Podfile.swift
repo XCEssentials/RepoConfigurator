@@ -24,14 +24,13 @@
 
  */
 
-import FileKit
+import PathKit
 
 //---
 
 public
 extension CocoaPods
 {
-    public
     final
     class Podfile: FixedNameTextFileAuto
     {

@@ -116,6 +116,7 @@ extension CocoaPodsTests
             
             """
         }()
+        .split(separator: "\n")
         
         //---
         
@@ -154,7 +155,9 @@ extension CocoaPodsTests
             tests: Spec.CocoaPod.SubSpec.tests()
         )
 
-        let model = try! CocoaPods
+        //---
+        
+        let result = try! CocoaPods
             .Podspec
             .withSubSpecs(
                 project: project,
@@ -209,10 +212,15 @@ extension CocoaPodsTests
                 }
             )
             .prepare(for: cocoaPod)
+            .content
+            .split(separator: "\n")
         
         //---
         
-        assertThat(model.content == targetOutput)
+        for (i, expected) in targetOutput.enumerated()
+        {
+            assertThat(expected == result[i])
+        }
     }
     
     func testVersions()

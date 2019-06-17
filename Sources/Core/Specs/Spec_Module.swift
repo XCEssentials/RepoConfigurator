@@ -24,7 +24,7 @@
  
  */
 
-import FileKit
+import PathKit
 
 //---
 
@@ -78,12 +78,9 @@ extension Spec
                 ?? project.deploymentTargets
                 ?! InitializationError.deploymentTargetsAutoDetectionFailed
             
-            let podspecLocation = Utils
-                .mutate(podspecLocation ?? [product.name]){
-                    
-                    $0.pathExtension = CocoaPods.Podspec.extension // ensure right extension
-                }
-            
+            let podspecLocation: Path = podspecLocation
+                ?? .init("\(product.name).\(CocoaPods.Podspec.extension)")
+                
             //---
             
             self.product = product

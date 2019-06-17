@@ -26,7 +26,7 @@
 
 import Foundation
 
-import FileKit
+import PathKit
 
 //---
 
@@ -41,7 +41,6 @@ enum Shields {}
 public
 extension Shields
 {
-    public
     struct Badge
     {
         // MARK: Type level members
@@ -73,7 +72,7 @@ extension Shields
             guard
                 var result = URL
                     .init(string: type(of: self).baseURL)?
-                    .appendingPathComponent(linkPath.rawValue)
+                    .appendingPathComponent(linkPath.string)
             else
             {
                 throw Errors.failedToGenerateOutputURL
@@ -144,7 +143,7 @@ extension Shields
             //---
 
             return try .init(
-                "badge/\(subject)-\(status)-\(color).svg",
+                .init("badge/\(subject)-\(status)-\(color).svg"),
                 parameters?.output
             )
         }
@@ -187,7 +186,6 @@ extension Shields
 public
 extension Shields
 {
-    public
     enum Style: String
     {
         case plastic = "plastic"
@@ -205,7 +203,6 @@ extension Shields
 public
 extension Shields
 {
-    public
     struct Parameters
     {
         // MARK: Instance level members

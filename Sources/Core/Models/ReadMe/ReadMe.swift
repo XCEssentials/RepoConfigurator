@@ -26,7 +26,7 @@
 
 import Foundation
 
-import FileKit
+import PathKit
 
 //---
 
@@ -74,7 +74,7 @@ extension ReadMe
         let linkToBadge = try Shields
             .Badge
             .special(
-                "github/license/\(account)/\(repo).svg",
+                .init("github/license/\(account)/\(repo).svg"),
                 parameters
             )
             .output
@@ -115,7 +115,7 @@ extension ReadMe
         let linkToBadge = try Shields
             .Badge
             .special(
-                "github/tag/\(account)/\(repo).svg",
+                .init("github/tag/\(account)/\(repo).svg"),
                 parameters
             )
             .output
@@ -155,7 +155,7 @@ extension ReadMe
         let linkToBadge = try Shields
             .Badge
             .special(
-                "cocoapods/v/\(podName).svg",
+                .init("cocoapods/v/\(podName).svg"),
                 parameters
             )
             .output
@@ -195,7 +195,7 @@ extension ReadMe
         let linkToBadge = try Shields
             .Badge
             .special(
-                "cocoapods/p/\(podName).svg",
+                .init("cocoapods/p/\(podName).svg"),
                 parameters
             )
             .output

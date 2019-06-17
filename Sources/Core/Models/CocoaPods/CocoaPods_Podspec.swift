@@ -26,14 +26,13 @@
 
 import Foundation
 
-import FileKit
+import PathKit
 
 //---
 
 public
 extension CocoaPods
 {
-    public
     final
     class Podspec: ArbitraryNamedTextFile
     {
@@ -85,26 +84,22 @@ extension CocoaPods.Podspec
 public
 extension CocoaPods.Podspec
 {
-    public
     typealias Product = (
         name: String,
         summary: String
     )
 
-    public
     typealias Company = (
         name: String,
         identifier: String,
         prefix: String
     )
 
-    public
     typealias License = (
         type: String,
         file: Path
     )
 
-    public
     typealias Author = (
         name: String,
         email: String
@@ -387,7 +382,7 @@ extension CocoaPods.Podspec
 
             \(s).requires_arc  = true
 
-            \(s).license       = { :type => '\(license.type)', :file => '\(license.file.rawValue)' }
+            \(s).license       = { :type => '\(license.type)', :file => '\(license.file.string)' }
 
             \(s).authors = {
             """

@@ -24,14 +24,13 @@
  
  */
 
-import FileKit
+import PathKit
 
 //---
 
 public
 extension Fastlane.Fastfile
 {
-    public
     final
     class ForLibrary: Fastlane.Fastfile {}
 }
@@ -41,7 +40,6 @@ extension Fastlane.Fastfile
 public
 extension Fastlane.Fastfile.ForLibrary
 {
-    public
     enum PodspecLocation
     {
         case from(Spec.CocoaPod)
@@ -281,10 +279,9 @@ extension Fastlane.Fastfile.ForLibrary
         let laneName = laneName
             ?? String(#function.split(separator: "(").first!)
         
-        let projectLocation: Path = Utils.mutate([library.product.name]){
-            
-            $0.pathExtension = Xcode.Project.extension
-        }
+        let projectLocation: Path = .init(
+            "\(library.product.name).\(Xcode.Project.extension)"
+        )
         
         let derivedPaths = derivedPaths + [projectLocation]
         
@@ -305,7 +302,7 @@ extension Fastlane.Fastfile.ForLibrary
 
             let cleanupCmd = derivedPaths
                 .map{ """
-                    rm -rf "\($0.rawValue)"
+                    rm -rf "\($0.string)"
                     """
                 }
                 .joined(separator: " && ")

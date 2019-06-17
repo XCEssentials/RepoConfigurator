@@ -51,7 +51,7 @@ extension SwiftLintTests
 {
     func testBasicConfig()
     {
-        let targetOutput = """
+        let targetOutput = { """
             # see docs at https://github.com/realm/SwiftLint
 
             disabled_rules:
@@ -81,10 +81,12 @@ extension SwiftLintTests
               - Pods
               - Templates
             """
+        }()
+        .split(separator: "\n")
 
         //---
 
-        let model = try! SwiftLint
+        let result = try! SwiftLint
             .standard(
                 exclude: [
                     "Templates"
@@ -93,9 +95,14 @@ extension SwiftLintTests
             .prepare(
                 at: Some.path
             )
-
+            .content
+            .split(separator: "\n")
+        
         //---
-
-        assertThat(model.content == targetOutput)
+        
+        for (i, expected) in targetOutput.enumerated()
+        {
+            assertThat(expected == result[i])
+        }
     }
 }

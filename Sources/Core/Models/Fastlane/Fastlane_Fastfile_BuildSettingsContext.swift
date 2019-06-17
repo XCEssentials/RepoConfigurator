@@ -24,7 +24,7 @@
  
  */
 
-import FileKit
+import PathKit
 
 //---
 
@@ -51,13 +51,27 @@ extension Fastlane.Fastfile
 public
 extension Fastlane.Fastfile.BuildSettingsContext
 {
+    enum Error: Swift.Error
+    {
+        case projectLocationMustBeRelative
+    }
+    
     func projectLevel(
-        project: Spec.Project,
+        project: Path,
         shared: Xcode.RawBuildSettings = [:],
         perConfiguration: [Xcode.BuildConfiguration : Xcode.RawBuildSettings] = [:]
-        )
+        ) throws
     {
-        let project = [".", ".."] + project.location
+        try project.isRelative
+            ?! Error.projectLocationMustBeRelative
+        
+        //---
+
+        let project = Utils.mutate(project){
+            
+            $0 = Path("..") + $0 // REMEMBER: we are inside 'fastlane' dir!
+            $0.setExtension(Xcode.Project.extension)
+        }
         
         //---
         
@@ -127,13 +141,22 @@ extension Fastlane.Fastfile.BuildSettingsContext
     }
     
     func targetLevel(
-        project: Spec.Project,
+        project: Path,
         target: String,
         shared: Xcode.RawBuildSettings = [:],
         perConfiguration: [Xcode.BuildConfiguration : Xcode.RawBuildSettings] = [:]
-        )
+        ) throws
     {
-        let project: Path = [".", ".."] + project.location
+        try project.isRelative
+            ?! Error.projectLocationMustBeRelative
+        
+        //---
+
+        let project = Utils.mutate(project){
+            
+            $0 = Path("..") + $0 // REMEMBER: we are inside 'fastlane' dir!
+            $0.setExtension(Xcode.Project.extension)
+        }
         
         //---
         

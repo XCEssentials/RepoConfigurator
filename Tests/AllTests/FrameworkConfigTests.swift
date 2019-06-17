@@ -27,7 +27,7 @@
 import Foundation
 import XCTest
 
-import FileKit
+import PathKit
 import SwiftHamcrest
 
 @testable
@@ -47,7 +47,7 @@ let currentLocation: Path = [
 fileprivate
 let localRepo = Spec.LocalRepo(
     location: currentLocation,
-    context: currentLocation.parent.fileName
+    context: currentLocation.parent().lastComponentWithoutExtension
 )
 
 fileprivate
@@ -120,7 +120,7 @@ extension FrameworkConfigTests
     func testLocalRepo()
     {
         assertThat(localRepo.location == currentLocation)
-        assertThat(localRepo.context == currentLocation.parent.fileName)
+        assertThat(localRepo.context == currentLocation.parent().lastComponentWithoutExtension)
     }
     
     func testRemoteRepo()
@@ -177,9 +177,9 @@ extension FrameworkConfigTests
         
         assertThat(subSpecs.core.name == name)
         assertThat(subSpecs.core.sourcesLocation == (sources + name))
-        assertThat(subSpecs.core.sourcesPattern == (sources + name + "**" + "*").rawValue)
+        assertThat(subSpecs.core.sourcesPattern == (sources + name + "**" + "*").string)
         assertThat(subSpecs.core.resourcesLocation == (resources + name))
-        assertThat(subSpecs.core.resourcesPattern == (resources + name + "**" + "*").rawValue)
+        assertThat(subSpecs.core.resourcesPattern == (resources + name + "**" + "*").string)
         assertThat(subSpecs.core.linterCfgLocation == (sources + name))
         assertThat(subSpecs.core.tests == false)
     }
@@ -191,7 +191,7 @@ extension FrameworkConfigTests
         
         assertThat(subSpecs.tests.name == defaultTestsSubSpecName)
         assertThat(subSpecs.tests.sourcesLocation == (tests + defaultTestsSubSpecName))
-        assertThat(subSpecs.tests.sourcesPattern == (tests + defaultTestsSubSpecName + "**" + "*").rawValue)
+        assertThat(subSpecs.tests.sourcesPattern == (tests + defaultTestsSubSpecName + "**" + "*").string)
         assertThat(subSpecs.tests.tests == true)
     }
 }

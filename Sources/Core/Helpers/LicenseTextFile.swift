@@ -24,7 +24,7 @@
 
  */
 
-import FileKit
+import PathKit
 
 //---
 

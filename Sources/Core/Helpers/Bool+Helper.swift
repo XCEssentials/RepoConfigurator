@@ -27,7 +27,6 @@
 public
 extension Bool
 {
-    public
     func mapIf<U>(
         _ condition: Bool,
         body: () -> U
