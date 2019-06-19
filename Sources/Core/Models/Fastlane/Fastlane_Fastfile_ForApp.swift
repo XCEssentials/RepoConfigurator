@@ -206,7 +206,7 @@ extension Fastlane.Fastfile.ForApp
         project: Spec.Project,
         callGems: GemCallMethod = .viaBundler,
         scriptBuildPhases: (ScriptBuildPhaseContext) throws -> Void = { _ in },
-        buildSettings: (BuildSettingsContext) -> Void = { _ in },
+        buildSettings: (BuildSettingsContext) throws -> Void = { _ in },
         endingEntries: [String] = []
         ) rethrows -> Self
     {
@@ -262,7 +262,7 @@ extension Fastlane.Fastfile.ForApp
                 )
             )
             
-            buildSettings(
+            try buildSettings(
                 .init(
                     main
                 )
