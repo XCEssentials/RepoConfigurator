@@ -47,13 +47,13 @@ class Indentation: Equatable
     }
 
     public
-    func increaseLevel() // TODO: make 'private' and rely on 'nest' func only!
+    func increaseLevel()
     {
         currentLevel += 1
     }
 
     public
-    func decreaseLevel() // TODO: make 'private' and rely on 'nest' func only!
+    func decreaseLevel()
     {
         currentLevel -= (currentLevel > 0 ? 1 : 0)
     }
@@ -138,7 +138,7 @@ func == (lhs: Indentation, rhs: Indentation) -> Bool
 
 //---
 
-postfix operator ++ // TODO: remove at all and rely on 'nest' func only!
+postfix operator ++
 
 public
 postfix func ++ (indentation: Indentation)
