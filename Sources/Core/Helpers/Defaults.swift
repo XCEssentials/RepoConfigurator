@@ -59,7 +59,7 @@ enum Defaults
 
     public
     static
-    let minimumFastlaneVersion: VersionString = "2.100.0" // TODO: define dynamically???
+    let minimumFastlaneVersion: VersionString = "2.100.0"
 
     public
     static
@@ -71,7 +71,7 @@ enum Defaults
 
     public
     static
-    let cocoapodsVersion: VersionString = "1.5.3" // TODO: define dynamically???
+    let cocoapodsVersion: VersionString = "1.7.0"
 
     public
     static

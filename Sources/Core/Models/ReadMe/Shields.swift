@@ -177,7 +177,7 @@ extension Shields
             )
         }
 
-        // TODO: Implement 'dynamic' too!
+        // Implement 'dynamic' too???
     }
 }
 

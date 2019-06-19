@@ -42,9 +42,6 @@ extension Array
 {
     subscript(_ key: OSIdentifier) -> DeploymentTarget?
     {
-        get
-        {
-            return filter{ $0.platform == key }.first
-        }
+        return filter{ $0.platform == key }.first
     }
 }

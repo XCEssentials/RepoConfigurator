@@ -59,7 +59,7 @@ extension Fastlane.Fastfile.BuildSettingsContext
     func projectLevel(
         project: Path,
         shared: Xcode.RawBuildSettings = [:],
-        perConfiguration: [Xcode.BuildConfiguration : Xcode.RawBuildSettings] = [:]
+        perConfiguration: [Xcode.BuildConfiguration: Xcode.RawBuildSettings] = [:]
         ) throws
     {
         try project.isRelative
@@ -144,7 +144,7 @@ extension Fastlane.Fastfile.BuildSettingsContext
         project: Path,
         target: String,
         shared: Xcode.RawBuildSettings = [:],
-        perConfiguration: [Xcode.BuildConfiguration : Xcode.RawBuildSettings] = [:]
+        perConfiguration: [Xcode.BuildConfiguration: Xcode.RawBuildSettings] = [:]
         ) throws
     {
         try project.isRelative
