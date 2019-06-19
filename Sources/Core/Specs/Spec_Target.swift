@@ -46,7 +46,7 @@ extension Spec
         let bundleId: String
         
         public
-        let provisioningProfiles: [Xcode.ProvisioningProfileKind : String]
+        let provisioningProfiles: [Xcode.ProvisioningProfileKind: String]
         
         public
         let infoPlistLocation: Path
@@ -102,7 +102,7 @@ extension Spec
             platform: OSIdentifier,
             productInfo: ProductInfo? = nil,
             bundleIdInfo: BundleIdInfo,
-            provisioningProfiles: [Xcode.ProvisioningProfileKind : String],
+            provisioningProfiles: [Xcode.ProvisioningProfileKind: String],
             infoPlistLocation: Path? = nil,
             sourcesLocation: Path? = nil,
             resourcesLocation: Path? = nil,

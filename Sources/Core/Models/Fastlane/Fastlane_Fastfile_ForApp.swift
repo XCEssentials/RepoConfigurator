@@ -315,8 +315,6 @@ extension Fastlane.Fastfile.ForApp
 
         //---
 
-        //swiftlint:disable line_length
-
         main <<< """
 
             lane :\(laneName) do
@@ -381,8 +379,6 @@ extension Fastlane.Fastfile.ForApp
 
             end # lane :\(laneName)
             """
-
-        //swiftlint:enable line_length
 
         //---
 

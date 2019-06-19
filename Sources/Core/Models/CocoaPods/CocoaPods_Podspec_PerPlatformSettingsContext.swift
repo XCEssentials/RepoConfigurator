@@ -154,7 +154,6 @@ extension CocoaPods.Podspec.PerPlatformSettingsContext
         }
     }
     
-    
     /**
      Adds platform specific settings for given platform.
      */

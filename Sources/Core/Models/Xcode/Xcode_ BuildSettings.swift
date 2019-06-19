@@ -39,7 +39,7 @@ extension Xcode
         case release
     }
 
-    typealias RawBuildSettings = [String : Any]
+    typealias RawBuildSettings = [String: Any]
     
     class BuildSettings
     {

@@ -222,6 +222,8 @@ extension Fastlane.Fastfile.ForLibrary
                 ])
                 .joined(separator: " ")
             
+            //swiftlint:disable line_length
+            
             main <<< """
                 # === Regenerate project
                 
@@ -230,6 +232,8 @@ extension Fastlane.Fastfile.ForLibrary
 
                 sh 'cd ./.. && \(cleanupCmd) && \(CocoaPods.call(callCocoaPods)) \(CocoaPods.Generate.gemCallName) \(genParams)'
                 """
+            
+            //swiftlint:enable line_length
             
             try scriptBuildPhases(
                 .init(

@@ -83,7 +83,7 @@ extension CocoaPodsTests
 
                 s.swift_version = '4.2'
 
-                s.cocoapods_version = '>= 1.5.3'
+                s.cocoapods_version = '>= 1.7.0'
 
                 # === ios
 
