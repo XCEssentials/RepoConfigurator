@@ -2,8 +2,7 @@ git:
   depth: 3
   submodules: false
 
+language: objective-c
+
 osx_image:
   - xcode10.2
-
-before_install:
-  bundle install --path .vendor/bundle --jobs=3 --retry=3
