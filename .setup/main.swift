@@ -11,16 +11,17 @@ print("--- BEGIN of '\(Executable.name)' script ---")
 
 // MARK: Parameters
 
-let bitrise = (
-    appId: "434645f081b33ed5",
-    statusImageToken: "1T4cZnBtaminrPsDwHYGYg",
-    branch: "master"
-)
-
 Spec.BuildSettings.swiftVersion.value = "4.2"
 let swiftLanguageVersionsForSPM = "[.v4, .v4_2]"
 
 let remoteRepo = try Spec.RemoteRepo()
+
+let travis = (
+    server: "https://travis-ci.com",
+    account: remoteRepo.accountName,
+    repo: remoteRepo.name,
+    branch: "master"
+)
 
 let company = try Spec.Company(
     prefix: "XCE",
@@ -108,7 +109,7 @@ try ReadMe()
         version: Spec.BuildSettings.swiftVersion.value
     )
     .add("""
-        [![Build Status](https://app.bitrise.io/app/\(bitrise.appId)/status.svg?token=\(bitrise.statusImageToken)&branch=\(bitrise.branch))](https://app.bitrise.io/app/\(bitrise.appId))
+        [![Build Status](\(travis.server)/\(travis.account)/\(travis.repo).svg?branch=\(travis.branch))](\(travis.server)/\(travis.account)/\(travis.repo))
         """
     )
     .add("""
@@ -272,6 +273,44 @@ try CustomTextFile("""
     """
     )
     .prepare(at: ["Package.swift"])
+    .writeToFileSystem()
+
+// MARK: Write - .travis.yml
+
+try CustomTextFile("""
+    # https://docs.travis-ci.com/user/customizing-the-build/
+    # https://docs.travis-ci.com/user/job-lifecycle/#the-job-lifecycle
+    # https://docs.travis-ci.com/user/languages/objective-c/
+
+    git:
+      depth: 3
+      submodules: false
+
+    language: objective-c
+
+    osx_image:
+      - xcode10.2
+      - xcode10.1
+
+    before_install:
+     - bundle install --path .vendor/bundle --jobs=3 --retry=3 --deployment
+     - bundle exec pod repo update
+
+    install:
+     - bundle exec pod install
+
+    before_script:
+      # cd ./.setup && swift run && cd ./.. # RUN this manually!
+      - bundle exec fastlane generateProjectViaSwiftPM
+      - swift --version
+
+    xcode_project: \(cocoaPod.product.name).\(Xcode.Project.extension)
+    xcode_scheme: \(cocoaPod.product.name)-Package
+    xcode_destination: platform=macOS
+    
+    """
+    )
+    .prepare(at: [".travis.yml"])
     .writeToFileSystem()
 
 // MARK: - POST-script invocation output
