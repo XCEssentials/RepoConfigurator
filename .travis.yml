@@ -9,7 +9,6 @@ git:
 language: objective-c
 
 osx_image:
-  - xcode11
   - xcode10.2
   - xcode10.1
 
