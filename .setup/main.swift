@@ -281,7 +281,14 @@ try CustomTextFile("""
     # https://docs.travis-ci.com/user/customizing-the-build/
     # https://docs.travis-ci.com/user/job-lifecycle/#the-job-lifecycle
     # https://docs.travis-ci.com/user/languages/objective-c/
-
+    
+    branches:
+      only:
+      - master
+      - /^hotfix.*$/
+      - /^release.*$/
+      - /^feature.*$/
+    
     git:
       depth: 3
       submodules: false
