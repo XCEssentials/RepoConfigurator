@@ -13,3 +13,11 @@ before_install:
 
 install:
  - bundle exec pod install
+
+before_script:
+  # cd ./.setup && swift run && cd ./.. # RUN this manually!
+  - bundle exec fastlane generateProjectViaSwiftPM
+
+xcode_project: XCERepoConfigurator.xcodeproj
+xcode_scheme: XCERepoConfigurator-Package
+xcode_destination: platform=macOS
