@@ -1,3 +1,7 @@
+# https://docs.travis-ci.com/user/customizing-the-build/
+# https://docs.travis-ci.com/user/job-lifecycle/#the-job-lifecycle
+# https://docs.travis-ci.com/user/languages/objective-c/
+
 git:
   depth: 3
   submodules: false
