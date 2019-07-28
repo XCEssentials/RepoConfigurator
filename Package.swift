@@ -1,4 +1,4 @@
-// swift-tools-version:4.2
+// swift-tools-version:5.0
 
 import PackageDescription
 
@@ -14,8 +14,8 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/kylef/PathKit", from: "1.0.0"),
-        .package(url: "https://github.com/nschum/SwiftHamcrest", .exact("2.1.1")),
-        .package(url: "https://github.com/mxcl/Version.git", from: "1.0.0")
+        .package(url: "https://github.com/mxcl/Version.git", from: "1.0.0"),
+        .package(url: "https://github.com/nschum/SwiftHamcrest", from: "2.2.1")
     ],
     targets: [
         .target(
@@ -36,5 +36,5 @@ let package = Package(
             path: "Tests/AllTests"
         ),
     ],
-    swiftLanguageVersions: [.v4, .v4_2]
+    swiftLanguageVersions: [.v5]
 )
