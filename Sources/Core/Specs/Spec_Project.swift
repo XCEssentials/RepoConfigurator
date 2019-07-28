@@ -70,7 +70,7 @@ extension Spec
             name: String? = nil,
             summary: String,
             copyrightYear: UInt? = nil,
-            deploymentTargets: DictionaryLiteral<OSIdentifier, VersionString>,
+            deploymentTargets: KeyValuePairs<OSIdentifier, VersionString>,
             location: Location? = nil,
             shouldReport: Bool = false
             ) throws
