@@ -4,6 +4,9 @@ import PackageDescription
 
 let package = Package(
     name: "RepoConfiguratorSetup",
+    platforms: [
+        .macOS(.v10_11),
+    ],
     products: [
         .executable(
             name: "RepoConfiguratorSetup",
