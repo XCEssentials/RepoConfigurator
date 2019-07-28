@@ -91,7 +91,7 @@ try ReadMe()
     )
     .addStaticShieldsBadge(
         "platforms",
-        status: "macOS | Linux",
+        status: "macOS",
         color: "blue",
         title: "Supported platforms",
         link: "Package.swift"
