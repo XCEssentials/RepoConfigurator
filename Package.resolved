@@ -24,8 +24,8 @@
         "repositoryURL": "https://github.com/nschum/SwiftHamcrest",
         "state": {
           "branch": null,
-          "revision": "034159ba9ac342372e3af119e7d80f38b5014782",
-          "version": "2.1.1"
+          "revision": "53e322984e000deefd3a5efaa777a7365c51aac9",
+          "version": "2.2.1"
         }
       },
       {
@@ -33,8 +33,8 @@
         "repositoryURL": "https://github.com/mxcl/Version.git",
         "state": {
           "branch": null,
-          "revision": "61140c9f8a94c0326076fd2d44817834f4c6aafc",
-          "version": "1.1.0"
+          "revision": "682f0da36005924672506b96fac93269831004b7",
+          "version": "1.1.1"
         }
       }
     ]

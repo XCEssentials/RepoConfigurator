@@ -13,24 +13,15 @@ git:
   depth: 3
   submodules: false
 
-language: objective-c
+language: objective-c # fine for Swift as well
 
 osx_image:
   - xcode10.2
-  - xcode10.1
-
-before_install:
- - bundle install --path .vendor/bundle --jobs=3 --retry=3 --deployment
- - bundle exec pod repo update
-
-install:
- - bundle exec pod install
+  - xcode11
 
 before_script:
   # cd ./.setup && swift run && cd ./.. # RUN this manually!
-  - bundle exec fastlane generateProjectViaSwiftPM
   - swift --version
 
-xcode_project: XCERepoConfigurator.xcodeproj
-xcode_scheme: XCERepoConfigurator-Package
-xcode_destination: platform=macOS
+script:
+  - swift test
