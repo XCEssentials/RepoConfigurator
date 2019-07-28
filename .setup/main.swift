@@ -43,7 +43,8 @@ let authors = [
     ("Maxim Khatskevich", "maxim@khatskevi.ch")
 ]
 
-let desktop: DeploymentTarget = (.macOS, "10.11")
+// swift-package-manager
+let desktop = ".macOS(.v10_11)" // DeploymentTarget = (.macOS, "10.11")
 
 typealias PerSubSpec<T> = (
     core: T,
@@ -157,6 +158,9 @@ try CustomTextFile("""
 
     let package = Package(
         name: "\(productName)",
+        platforms: [
+            \(desktop),
+        ],
         products: [
             .library(
                 name: "\(productName)",

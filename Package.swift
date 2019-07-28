@@ -4,6 +4,9 @@ import PackageDescription
 
 let package = Package(
     name: "XCERepoConfigurator",
+    platforms: [
+        .macOS(.v10_11),
+    ],
     products: [
         .library(
             name: "XCERepoConfigurator",
