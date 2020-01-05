@@ -172,6 +172,7 @@ try CustomTextFile("""
         dependencies: [
             .package(url: "https://github.com/kylef/PathKit", from: "1.0.0"),
             .package(url: "https://github.com/mxcl/Version.git", from: "1.0.0"),
+            .package(url: "https://github.com/JohnSundell/ShellOut.git", from: "2.0.0"),
             .package(url: "https://github.com/nschum/SwiftHamcrest", from: "2.2.1")
         ],
         targets: [
@@ -179,7 +180,8 @@ try CustomTextFile("""
                 name: "\(targetNames.core)",
                 dependencies: [
                     "Version",
-                    "PathKit"
+                    "PathKit",
+                    "ShellOut"
                 ],
                 path: "\(sourcesLocations.core)"
             ),

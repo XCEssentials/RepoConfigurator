@@ -173,9 +173,32 @@ extension Spec.CocoaPod
             contentsOfFile: targetLocation.string
         )
         
-        let result = try type(of: self).extracVersionString(
-            from: specContent
-        )
+        guard
+            let rawVersionString = specContent
+                .components(
+                    separatedBy: .newlines
+                )
+                .filter({
+                    $0.lowercased().contains("version")
+                })
+                .first?
+                .components(
+                    separatedBy: .whitespaces
+                )
+                .last?
+                .trimmingCharacters(
+                    in: .punctuationCharacters
+                ),
+            let result = Version(
+                rawVersionString
+                )?
+                .description
+        else
+        {
+            throw ReadCurrentVersionError.unableToDetectVersionString(
+                rawSpecContent: specContent
+            )
+        }
         
         //---
         
@@ -189,42 +212,57 @@ extension Spec.CocoaPod
             print("✅ Detected current pod version: \(currentVersion).")
         }
     }
-}
-
-//internal
-extension Spec.CocoaPod
-{
-    static
-    func extracVersionString(
-        from rawSpecContent: String
-        ) throws -> VersionString
+    
+    enum AutodetectTargetVersionFromBranchError: Error
     {
-        let rawVersionString = try rawSpecContent
-            .components(
-                separatedBy: .newlines
-            )
-            .filter{
-                $0.lowercased().contains("version")
-            }
-            .first?
-            .components(
-                separatedBy: .whitespaces
-            )
-            .last?
-            .trimmingCharacters(
-                in: .punctuationCharacters
-            )
-            ?! ReadCurrentVersionError.unableToDetectVersionString(
-                rawSpecContent: rawSpecContent
-            )
+        case failedToParseBranchName(String)
+        case unableToDetectVersionString(branchName: String)
+    }
+    
+    mutating
+    func autodetectTargetVersionFromBranch(
+        branchName: String? = nil,
+        shouldReport: Bool = true
+        ) throws
+    {
+        let branchName = try branchName
+            ?? Spec.LocalRepo.current().currentBranchName()
         
-        let result = try Version(
-            rawVersionString
-            )
-            ?! ReadCurrentVersionError.unableToDetectVersionString(
-                rawSpecContent: rawSpecContent
-            )
+        //---
         
-        return result.description
+        guard
+            let versionString = branchName
+                .split(separator: "/")
+                .last
+        else
+        {
+            throw AutodetectTargetVersionFromBranchError.failedToParseBranchName(
+                branchName
+            )
+        }
+        
+        //---
+        
+        guard
+            let result = Version(versionString)
+        else
+        {
+            throw AutodetectTargetVersionFromBranchError.unableToDetectVersionString(
+                branchName: branchName
+            )
+        }
+        
+        //---
+        
+        self.currentVersion = result.description
+        
+        //---
+        
+        if
+            shouldReport
+        {
+            print("✅ Detected current git branch: \(branchName)")
+            print("✅ Detected current pod version: \(currentVersion).")
+        }
     }
 }
