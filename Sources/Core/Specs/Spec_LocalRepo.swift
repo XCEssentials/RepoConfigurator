@@ -25,6 +25,7 @@
  */
 
 import PathKit
+import ShellOut
 
 //---
 
@@ -92,5 +93,35 @@ extension Spec.LocalRepo
         print("✅ Repo name: \(name)")
         print("✅ Repo location: \(location)")
         print("✅ Repo context: \(context)")
+    }
+    
+    enum CurrentBranchDetectionError: Error
+    {
+        case shellCommandExecutionError(Error)
+        case unableToDetectBranchName
+    }
+    
+    func currentBranchName() throws -> String
+    {
+        do
+        {
+            if
+                let currentBranchName = try shellOut(
+                    to: #"git status | grep "On branch ""#
+                    )
+                    .split(separator: " ")
+                    .last
+            {
+                return String(currentBranchName)
+            }
+            else
+            {
+                throw CurrentBranchDetectionError.unableToDetectBranchName
+            }
+        }
+        catch
+        {
+            throw CurrentBranchDetectionError.shellCommandExecutionError(error)
+        }
     }
 }
