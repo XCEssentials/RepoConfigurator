@@ -223,14 +223,26 @@ extension CocoaPodsTests
         }
     }
     
-    func testVersions()
+    func testVersionFromPospec()
     {
-        let rawPodspec = "app.version = '1.0.1;'"
+        let rawPodspec = "app.version = '1.0.1';"
         assertThat(
             try Spec
                 .CocoaPod
                 .RawVersionString
                 .extract(fromPodspec: rawPodspec)
+                .get(),
+            equalTo("1.0.1"))
+    }
+    
+    func testVersionFromBranchName()
+    {
+        let branchName = "hotfix/1.0.1"
+        assertThat(
+            try Spec
+                .CocoaPod
+                .RawVersionString
+                .extract(fromBranch: branchName)
                 .get(),
             equalTo("1.0.1"))
     }

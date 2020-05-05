@@ -31,60 +31,130 @@ import Version
 //internal
 extension Spec.CocoaPod
 {
-    enum RawVersionString
+    enum RawVersionString {}
+}
+
+// MARK: - ExtractFromPodspec
+
+//internal
+extension Spec.CocoaPod.RawVersionString
+{
+    enum ExtractFromPodspecError: Error
     {
-        enum ExtractFromPodspecError: Error
+        case specContentIsEmpty
+        case noVersionEntryFound
+        case unableToParseVersionEntry
+        case invalidRawVersionString
+    }
+    
+    static
+    func extract(
+        fromPodspec specContent: String
+    )
+        -> Result<String, ExtractFromPodspecError>
+    {
+        guard
+            !specContent.isEmpty
+        else
         {
-            case specContentIsEmpty
-            case noVersionEntryFound
-            case unableToParseVersionEntry
+            return .failure(.specContentIsEmpty)
         }
         
-        static
-        func extract(
-            fromPodspec specContent: String
-        )
-            -> Result<String, ExtractFromPodspecError>
+        //---
+        
+        enum Keyword: String
         {
-            guard
-                !specContent.isEmpty
-            else
-            {
-                return .failure(.specContentIsEmpty)
-            }
-            
-            //---
-            
-            enum Keyword: String
-            {
-                case version
-            }
-            
-            guard
-                let versionEntry = specContent
-                    .components(separatedBy: .newlines)
-                    .filter({ $0.lowercased().contains(Keyword.version.rawValue) })
-                    .first
-            else
-            {
-                return .failure(.noVersionEntryFound)
-            }
-            
-            //---
-            
-            guard
-                let result = versionEntry
-                    .components(separatedBy: .whitespaces)
-                    .last?
-                    .trimmingCharacters(in: .punctuationCharacters)
-            else
-            {
-                return .failure(.unableToParseVersionEntry)
-            }
-            
-            //---
-            
-            return .success(result)
+            case version
         }
+        
+        guard
+            let versionEntry = specContent
+                .components(separatedBy: .newlines)
+                .filter({ $0.lowercased().contains(Keyword.version.rawValue) })
+                .first
+        else
+        {
+            return .failure(.noVersionEntryFound)
+        }
+        
+        //---
+        
+        guard
+            let versionStringMaybe = versionEntry
+                .components(separatedBy: .whitespaces)
+                .last?
+                .trimmingCharacters(in: .punctuationCharacters)
+        else
+        {
+            return .failure(.unableToParseVersionEntry)
+        }
+        
+        //---
+        
+        guard
+            let result = Version
+                .init(versionStringMaybe)?
+                .description
+        else
+        {
+            return .failure(.invalidRawVersionString)
+        }
+        
+        //---
+        
+        return .success(result)
+    }
+}
+
+// MARK: - ExtractFromBranch
+
+//internal
+extension Spec.CocoaPod.RawVersionString
+{
+    enum ExtractFromBranchError: Error
+    {
+        case branchNameIsEmpty
+        case failedToParseVersionFromBranchName
+        case invalidRawVersionString
+    }
+        
+    static
+    func extract(
+        fromBranch branchName: String
+    )
+        -> Result<String, ExtractFromBranchError>
+    {
+        guard
+            !branchName.isEmpty
+        else
+        {
+            return .failure(.branchNameIsEmpty)
+        }
+        
+        //---
+        
+        guard
+            let versionStringMaybe = branchName
+                .split(separator: "/")
+                .last
+        else
+        {
+            return .failure(.failedToParseVersionFromBranchName)
+        }
+        
+        //---
+        
+        guard
+            let result = Version
+                .init(versionStringMaybe)?
+                .description
+        else
+        {
+            return .failure(.invalidRawVersionString)
+        }
+        
+        //---
+
+        return .success(result)
     }
 }
