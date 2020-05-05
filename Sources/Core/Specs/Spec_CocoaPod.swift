@@ -25,7 +25,6 @@
  */
 
 import PathKit
-import Version
 
 //---
 
@@ -174,25 +173,9 @@ extension Spec.CocoaPod
         )
         
         guard
-            let rawVersionString = specContent
-                .components(
-                    separatedBy: .newlines
-                )
-                .filter({
-                    $0.lowercased().contains("version")
-                })
-                .first?
-                .components(
-                    separatedBy: .whitespaces
-                )
-                .last?
-                .trimmingCharacters(
-                    in: .punctuationCharacters
-                ),
-            let result = Version(
-                rawVersionString
-                )?
-                .description
+            let rawVersionString = try? RawVersionString
+                .extract(fromPodspec: specContent)
+                .get()
         else
         {
             throw ReadCurrentVersionError.unableToDetectVersionString(
@@ -202,7 +185,7 @@ extension Spec.CocoaPod
         
         //---
         
-        self.currentVersion = result
+        self.currentVersion = rawVersionString
         
         //---
         
@@ -215,7 +198,6 @@ extension Spec.CocoaPod
     
     enum AutodetectTargetVersionFromBranchError: Error
     {
-        case failedToParseBranchName(String)
         case unableToDetectVersionString(branchName: String)
     }
     
@@ -231,20 +213,9 @@ extension Spec.CocoaPod
         //---
         
         guard
-            let versionString = branchName
-                .split(separator: "/")
-                .last
-        else
-        {
-            throw AutodetectTargetVersionFromBranchError.failedToParseBranchName(
-                branchName
-            )
-        }
-        
-        //---
-        
-        guard
-            let result = Version(versionString)
+            let versionString = try? RawVersionString
+                .extract(fromBranch: branchName)
+                .get()
         else
         {
             throw AutodetectTargetVersionFromBranchError.unableToDetectVersionString(
@@ -254,7 +225,7 @@ extension Spec.CocoaPod
         
         //---
         
-        self.currentVersion = result.description
+        self.currentVersion = versionString
         
         //---
         
