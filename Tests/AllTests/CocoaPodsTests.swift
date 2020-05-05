@@ -225,7 +225,13 @@ extension CocoaPodsTests
     
     func testVersions()
     {
-        let rawVer = "app.version = '1.0.1'"
-        assertThat(try Spec.CocoaPod.extracVersionString(from: rawVer), equalTo("1.0.1"))
+        let rawPodspec = "app.version = '1.0.1;'"
+        assertThat(
+            try Spec
+                .CocoaPod
+                .RawVersionString
+                .extract(fromPodspec: rawPodspec)
+                .get(),
+            equalTo("1.0.1"))
     }
 }

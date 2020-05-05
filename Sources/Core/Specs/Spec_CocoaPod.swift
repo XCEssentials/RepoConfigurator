@@ -174,21 +174,9 @@ extension Spec.CocoaPod
         )
         
         guard
-            let rawVersionString = specContent
-                .components(
-                    separatedBy: .newlines
-                )
-                .filter({
-                    $0.lowercased().contains("version")
-                })
-                .first?
-                .components(
-                    separatedBy: .whitespaces
-                )
-                .last?
-                .trimmingCharacters(
-                    in: .punctuationCharacters
-                ),
+            let rawVersionString = try? RawVersionString
+                .extract(fromPodspec: specContent)
+                .get(),
             let result = Version(
                 rawVersionString
                 )?
