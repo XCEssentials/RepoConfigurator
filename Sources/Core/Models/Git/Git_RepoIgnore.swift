@@ -232,6 +232,7 @@ extension Git.RepoIgnore
             #
             \((ignoreSources ? "" : "# "))Packages/
             \((ignoreSources ? "" : "# "))Package.pins
+            \((ignoreSources ? "" : "# ")).swiftpm/
             .build/
 
             ### Swift Package Manager ###
