@@ -1,4 +1,4 @@
-// swift-tools-version:5.0
+// swift-tools-version:5.3
 
 import PackageDescription
 
@@ -14,17 +14,13 @@ let package = Package(
         )
     ],
     dependencies: [
-        .package(path: "./../")
+        .package(name: "XCERepoConfigurator", path: "./../")
     ],
     targets: [
         .target(
             name: "RepoConfiguratorSetup",
             dependencies: ["XCERepoConfigurator"],
-            path: "./",
-            sources: ["main.swift"]
+            path: "Setup"
         )
-    ],
-    swiftLanguageVersions: [
-        .v5
     ]
 )
